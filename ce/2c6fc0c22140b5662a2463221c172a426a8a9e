@@ -1,0 +1,20 @@
+README.md
+  h_e41068bed968d7 48
+docs/NEAR_BUSINESS.md
+  h_e41068bed968d7 1-43
+src/routes/labs.tsx
+  h_e41068bed968d7 146-164
+wiki/index.md
+  h_e41068bed968d7 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ce2c6fc0c22140b5662a2463221c172a426a8a9e",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
