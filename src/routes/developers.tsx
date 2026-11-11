@@ -12,6 +12,7 @@ function DevelopersPage() {
       title="Source, install, and what is not a release yet."
       lede="The public repository is X3Lang. GitHub showed no releases when this page was written. Clone the commit. Do not treat a branch tip as a signed download."
     >
+      <div className="mx-auto max-w-6xl px-5 pt-8"><a href="/bootcamp" className="tap inline-flex min-h-11 items-center rounded-lg border border-border px-5 text-primary">Enter Bootcamp — the in-depth .x3 developer course →</a></div>
       <Section title="Repository">
         <div className="grid gap-3 sm:grid-cols-2">
           <p><OutLink href={LINKS.repo}>X3Lang / X3 Shield source</OutLink></p>
