@@ -162,8 +162,15 @@
       && typeof t.blockchain === "string" && /^[A-Za-z0-9_-]{1,24}$/.test(t.blockchain)
       && typeof t.assetId === "string" && /^[A-Za-z0-9:._-]{1,200}$/.test(t.assetId)
       && typeof t.price === "number" && Number.isFinite(t.price) && t.price > 0);
+    // One coin per symbol. When a symbol exists on several chains, the NEAR asset wins, then the
+    // lowest asset ID, so the pick never depends on the order 1Click returns.
     const bySymbol = new Map();
-    for (const t of ok) if (!bySymbol.has(t.symbol)) bySymbol.set(t.symbol, t);
+    const better = (a, b) => (a.blockchain === "near") !== (b.blockchain === "near")
+      ? a.blockchain === "near" : a.assetId < b.assetId;
+    for (const t of ok) {
+      const held = bySymbol.get(t.symbol);
+      if (!held || better(t, held)) bySymbol.set(t.symbol, t);
+    }
     const ranked = [...bySymbol.values()].sort((a, b) => {
       const pa = PREFERRED.indexOf(a.symbol), pb = PREFERRED.indexOf(b.symbol);
       return (pa < 0 ? 99 : pa) - (pb < 0 ? 99 : pb) || b.price - a.price;
@@ -192,8 +199,10 @@
     liveMode = true; liveAt = new Date();
   }
 
+  let refreshing = false;
   async function refreshLivePrices() {
-    if (!liveMode) return;
+    if (!liveMode || refreshing) return;
+    refreshing = true;
     try {
       const res = await fetch(ONE_CLICK_TOKENS, { headers: { Accept: "application/json" } });
       if (!res.ok) return;
@@ -206,6 +215,7 @@
       liveAt = new Date();
       renderSource();
     } catch { /* keep the last live prices; the source line shows their age */ }
+    finally { refreshing = false; }
   }
 
   // Price = live 1Click price x a game factor. The factor random-walks and drifts back to 1,

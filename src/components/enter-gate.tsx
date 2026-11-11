@@ -56,6 +56,7 @@ export function EnterGate() {
 
   useEffect(() => {
     if (!open) return;
+    const returnTo = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     enterRef.current?.focus();
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -73,6 +74,7 @@ export function EnterGate() {
       document.body.style.overflow = prev;
       behind.forEach((el) => el.removeAttribute("inert"));
       window.removeEventListener("keydown", onKey);
+      if (returnTo?.isConnected) returnTo.focus();
     };
   }, [open, enter]);
 
@@ -99,11 +101,11 @@ export function EnterGate() {
       role="dialog"
       aria-modal="true"
       aria-label="Enter dotx3"
-      className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-bg"
+      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-bg py-10 sm:items-center"
     >
       <video
         ref={videoRef}
-        className="absolute inset-0 h-full w-full object-cover opacity-60"
+        className="fixed inset-0 h-full w-full object-cover opacity-60"
         src={SONG.video ?? FALLBACK_LOOP}
         poster={SONG.poster}
         autoPlay
@@ -112,7 +114,7 @@ export function EnterGate() {
         playsInline
         aria-hidden="true"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-bg/40 via-bg/20 to-bg/90" />
+      <div className="fixed inset-0 bg-gradient-to-b from-bg/40 via-bg/20 to-bg/90" />
 
       <div className="relative z-10 mx-4 max-w-2xl text-center">
         <p className="font-display text-xs tracking-[0.3em] text-accent uppercase">dotx3 · NEAR Intents</p>
@@ -150,7 +152,10 @@ export function EnterGate() {
             {muted ? "Tap for sound" : "Mute"}
           </button>
         ) : null}
-        <p className="mt-6 text-xs text-muted">MEME COIN BLAST uses real NEAR Intents token names and live prices with play credits only. No wallet, no real money.</p>
+        <p className="mt-6 text-xs text-muted">
+          MEME COIN BLAST plays NEAR Intents tokens at their live 1Click prices when the token list loads, and made-up
+          coins when it doesn&apos;t. Play credits only: no wallet, no real money.
+        </p>
       </div>
     </div>,
     document.body,
