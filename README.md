@@ -16,10 +16,13 @@ A `.x3` file expresses an owner's spending mandate or a payment intent. The NEAR
 
 ## Run the website
 
-Use Node 24 or the deployment's supported Node version and npm. From this repository:
+Use Node 24 or the deployment's supported Node version, npm, and Python 3.12 with pip (the production build packages a pinned Python Function). From this repository:
 
 ```sh
 npm ci
+# For the real compiler API, run this in a second terminal:
+python3 scripts/dev-compiler.py
+# Then start the website:
 npm run dev
 ```
 
@@ -27,11 +30,14 @@ The dev script builds the embedded DEX and serves on port 8080. The public docum
 
 ```sh
 npm test
+python3 -m unittest discover -s tests -v
 npm run typecheck
 npm run build
 # Against a running local preview:
 node scripts/near-smoke.mjs http://127.0.0.1:8080
 node scripts/bootcamp-smoke.mjs http://127.0.0.1:8080/bootcamp
+# Against npm run dev plus scripts/dev-compiler.py:
+node scripts/compiler-smoke.mjs http://127.0.0.1:8080
 ```
 
 `build` installs the DEX's locked dependencies, builds both applications, and invokes the migration helper. See the helper for deployment-specific database behavior. Generated `.vercel/output` is rebuilt and ignored by Git. The build also packages the bounded Python compiler function; its production execution requires separate deployment verification.

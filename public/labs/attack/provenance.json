@@ -1,0 +1,25 @@
+{
+  "repository": "Cyptopimpinainteazy/x3lang",
+  "commit": "a120169cb41e8e30f7a5fd4002de2506388137b2",
+  "port_branch": "feat/x3lang-integrated-labs-20261111",
+  "port_commit": "520c72339df612eba38786eb99ba41c3fd9a14dc",
+  "files": [
+    {
+      "source": "docs/hackathon/attack-lab.html",
+      "destination": "public/labs/attack/attack-lab.html",
+      "source_sha256": "39a4c4d6cfcb6f0796d03519ca91ee8fe9a62a59e70149dfc8843aacab757449",
+      "sha256": "75f321e8f6c1159184968e943c1eef3c1a5eb9ee0ddac5049b9795953d2553a5",
+      "port_sha256": "92cd831ddaccf0487e054933907136ea4e2b5ef7ea75da75a24ce4ede37fd018"
+    },
+    {
+      "source": "docs/hackathon/attack-lab-policy.mjs",
+      "destination": "public/labs/attack/attack-lab-policy.mjs",
+      "source_sha256": "f271a8028d457b6e2191b54b7d97fd5a32af2d0ab04f1000c73ceb9296c87197",
+      "sha256": "f271a8028d457b6e2191b54b7d97fd5a32af2d0ab04f1000c73ceb9296c87197"
+    }
+  ],
+  "boundary": "Offline native-NEAR vault policy preview only. Browser ledger is not on-chain enforcement or settlement.",
+  "transformations": [
+    "Clarified that the original /docs/hackathon local-server instructions refer to an X3Lang checkout, not dotx3."
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "source_commit": "56cb688b01c1e2ad1504cd4ea3c189e8b679c0c9",
+  "main_merge": "1c4806be984ce3c6fb0adf490da2a96ca1353454",
+  "branch": "feat/dotx3-learning-labs",
+  "node_tests": {
+    "script": 210,
+    "typescript": 77,
+    "result": "pass"
+  },
+  "python_tests": {
+    "command": "python3 -m unittest discover -s tests -v",
+    "count": 8,
+    "result": "pass"
+  },
+  "build": {
+    "result": "pass",
+    "python_packaging": "pinned vercel-runtime 0.24.2 packaged for Python 3.12",
+    "environment_note": "active x3-tools Python lacked pip; isolated /tmp/dotx3-build-venv supplied pip without modifying user Python"
+  },
+  "typecheck": "pass",
+  "python_compileall": "pass",
+  "browser": {
+    "ok": true,
+    "results": [
+      {
+        "path": "/near",
+        "width": 1280,
+        "status": "pass"
+      },
+      {
+        "path": "/labs",
+        "width": 1280,
+        "status": "pass"
+      },
+      {
+        "path": "/security",
+        "width": 1280,
+        "status": "pass"
+      },
+      {
+        "path": "/agents",
+        "width": 1280,
+        "status": "pass"
+      },
+      {
+        "path": "/defi",
+        "width": 1280,
+        "status": "pass"
+      },
+      {
+        "path": "/docs",
+        "width": 1280,
+        "status": "pass"
+      },
+      {
+        "path": "/developers",
+        "width": 1280,
+        "status": "pass"
+      },
+      {
+        "path": "/labs/attack/attack-lab.html",
+        "width": 1280,
+        "status": "pass",
+        "scenarios": 10,
+        "replay": "refused"
+      },
+      {
+        "path": "/near",
+        "width": 390,
+        "status": "pass"
+      },
+      {
+        "path": "/labs",
+        "width": 390,
+        "status": "pass"
+      },
+      {
+        "path": "/security",
+        "width": 390,
+        "status": "pass"
+      },
+      {
+        "path": "/agents",
+        "width": 390,
+        "status": "pass"
+      },
+      {
+        "path": "/defi",
+        "width": 390,
+        "status": "pass"
+      },
+      {
+        "path": "/docs",
+        "width": 390,
+        "status": "pass"
+      },
+      {
+        "path": "/developers",
+        "width": 390,
+        "status": "pass"
+      },
+      {
+        "path": "/labs/attack/attack-lab.html",
+        "width": 390,
+        "status": "pass",
+        "scenarios": 10,
+        "replay": "refused"
+      }
+    ]
+  },
+  "bootcamp_smoke": "pass",
+  "compiler_browser_smoke": "pass: real Python API, source hashes, download, edited recipient/nonce refusals, stale-result clearing, embedded Attack Lab",
+  "hosted_compiler": {
+    "url": "https://dotx3-rlor6p5sf-cyptopimpinainteazys-projects.vercel.app",
+    "source_commit": "56cb688",
+    "results": [
+      {
+        "case": "allowed",
+        "http_status": 200,
+        "decision": "preflight_passed",
+        "wallet_authorized": false,
+        "settlement_proven": false,
+        "program_sha256": "2b0f946464b82f0fc0186d47a9f968c8cb3ab4c038668bcc361c293bbf83021d"
+      },
+      {
+        "case": "recipient",
+        "http_status": 200,
+        "decision": "denied_by_policy",
+        "wallet_authorized": false,
+        "settlement_proven": false,
+        "program_sha256": "02291bdee9fefe420a336b951104ab238c2301055cce02fb39c5064ba2f448f4"
+      },
+      {
+        "case": "nonce",
+        "http_status": 200,
+        "decision": "compile_error",
+        "wallet_authorized": false,
+        "settlement_proven": false,
+        "program_sha256": "3c3b8da31ac0a74d617f57325be1cbd9c7f2ad7e2def4d12f670892bf63295f9"
+      }
+    ]
+  },
+  "deployment_id": "dpl_C8hExEqLWgw7oHtHkPsKDqqFeZVP",
+  "protection": "Vercel authentication remains enabled; test-created automation bypass revoked",
+  "production": "not promoted by this work",
+  "custom_domain": "command.dotx3.net assigned; Cloudflare TXT/CNAME still pending",
+  "review": "Independent read-only review; corrected imported stale statements and instruction provenance"
+}

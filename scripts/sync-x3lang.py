@@ -31,6 +31,12 @@ def transform_ported_file(src, data, sha):
             data = data.replace(old.encode(), new.encode())
         transformations.append(GUARD_TRANSFORMATION)
     if src == 'docs/hackathon/attack-lab.html':
+        old = b'from a clone of this repository, serve its root'
+        new = b'from a clone of the X3Lang source repository, serve its root'
+        if data.count(old) != 1:
+            raise ValueError('Attack Lab instructions changed; review before syncing')
+        data = data.replace(old, new)
+        transformations.append('Clarify local-server instructions refer to the X3Lang source repository.')
         data = data.replace(b'href="../../evidence/', b'href="https://github.com/Cyptopimpinainteazy/x3lang/blob/' + sha.encode() + b'/evidence/')
         data = data.replace(b'href="FIRST_SWAP_JUDGE_WALKTHROUGH.md"', b'href="https://github.com/Cyptopimpinainteazy/x3lang/blob/' + sha.encode() + b'/docs/hackathon/FIRST_SWAP_JUDGE_WALKTHROUGH.md"')
     return data, transformations

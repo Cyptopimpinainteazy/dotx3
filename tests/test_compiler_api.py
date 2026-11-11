@@ -97,5 +97,33 @@ class GuardPortTransformation(unittest.TestCase):
         self.assertEqual(sync.transform_ported_file('x3-lang/near_intents.py', raw, 'abc'), (raw, []))
 
 
+class AttackPortTransformation(unittest.TestCase):
+    def setUp(self):
+        self.output = (ROOT / 'public/labs/attack/attack-lab.html').read_bytes()
+        manifest = json.loads((ROOT / 'x3lang-port.json').read_text())
+        self.commit = manifest['commit']
+        self.row = next(row for row in manifest['files']
+                        if row['destination'] == 'public/labs/attack/attack-lab.html')
+        prefix = ('https://github.com/Cyptopimpinainteazy/x3lang/blob/' + self.commit).encode()
+        self.upstream = self.output.replace(
+            prefix + b'/evidence/', b'../../evidence/').replace(
+            prefix + b'/docs/hackathon/FIRST_SWAP_JUDGE_WALKTHROUGH.md',
+            b'FIRST_SWAP_JUDGE_WALKTHROUGH.md').replace(
+            b'from a clone of the X3Lang source repository, serve its root',
+            b'from a clone of this repository, serve its root')
+
+    def test_instruction_clarification_is_reproducible_from_pinned_source(self):
+        self.assertEqual(hashlib.sha256(self.upstream).hexdigest(), self.row['source_sha256'])
+        output, transformations = sync.transform_ported_file(
+            self.row['source'], self.upstream, self.commit)
+        self.assertEqual(output, self.output)
+        self.assertEqual(transformations, self.row['local_transformations'])
+
+    def test_changed_source_instructions_require_review(self):
+        changed = self.upstream.replace(b'from a clone of this repository', b'other instructions')
+        with self.assertRaisesRegex(ValueError, 'review before syncing'):
+            sync.transform_ported_file(self.row['source'], changed, self.commit)
+
+
 if __name__ == '__main__':
     unittest.main()

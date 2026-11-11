@@ -6,16 +6,16 @@ The `/labs` route ports real demos from x3lang commit
 and records source/output hashes. It rewrites two Attack Lab evidence links to
 the pinned GitHub source. No private reports or wallet material are copied.
 
-| Surface | Implementation | Remaining boundary |
-| --- | --- | --- |
-| .x3 compiler | Editable mandate/intent → real Python frontend and policy evaluator at `/api/compile` | Deployment verification and review pending; no signing |
-| Signed quote demo | Same-origin port at `/labs/guard/index.html` | Dry quote preview; no settlement |
-| Judge/tests | Same-origin port at `/labs/guard/judge.html` | Local browser policy; operator evidence remains separate |
-| Attack Lab | Same-origin port at `/labs/attack/attack-lab.html` | Local policy scenarios; no real scan |
-| Control Room | Existing access-controlled site linked | Operational API/worker controls not ported |
-| Phantom | Integration state visible; no invented endpoint | Need canonical source, worker API and report-authentication contract |
-| Radar | Integration state visible; no invented telemetry | Need canonical source and data contract |
-| Eye | Existing desktop shell linked | No change to desktop/device permissions |
+| Surface           | Implementation                                                                        | Remaining boundary                                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| .x3 compiler      | Editable mandate/intent → real Python frontend and policy evaluator at `/api/compile` | Real local HTTP/browser compiler checks; no signing. Deployed Function verification is recorded separately. |
+| Signed quote demo | Same-origin port at `/labs/guard/index.html`                                          | Dry quote preview; no settlement                                                                            |
+| Judge/tests       | Same-origin port at `/labs/guard/judge.html`                                          | Local browser policy; operator evidence remains separate                                                    |
+| Attack Lab        | Same-origin port at `/labs/attack/attack-lab.html`                                    | Local policy scenarios; no real scan                                                                        |
+| Control Room      | Existing access-controlled site linked                                                | Operational API/worker controls not ported                                                                  |
+| Phantom           | Integration state visible; no invented endpoint                                       | Need canonical source, worker API and report-authentication contract                                        |
+| Radar             | Integration state visible; no invented telemetry                                      | Need canonical source and data contract                                                                     |
+| Eye               | Existing desktop shell linked                                                         | No change to desktop/device permissions                                                                     |
 
 Python Function packaging is appended after Nitro's production build by
 `scripts/package-compiler.py`, using pinned official `vercel-runtime` 0.24.2.
@@ -37,7 +37,6 @@ Tests: `python3 -m unittest discover -s tests -v`, `npm run typecheck`,
 `npm run build`. Browser smoke needs the browser binaries; unavailable binaries
 or failed downloads must remain a verification blocker.
 
-Live publication is blocked by Vercel team authorization, not by a request
-for signing/funding. No donation address, capital-return promise or flash-loan
+Vercel CLI and MCP are authenticated, and previews can be deployed. The combined Python Function executed the allowed, recipient-refused and missing-nonce examples on a protected Vercel preview. Production has not been promoted; the preview does not establish public access. Custom domain verification requires Cloudflare DNS records; production has not been promoted. No donation address, capital-return promise or flash-loan
 feature is enabled. Funding terms need an explicit cap, fee/loss treatment,
 return recipient and deadline before any public request.
