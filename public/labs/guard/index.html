@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X3 Guard | X3 Shield dry quote demo</title>
+<meta name="description" content="Try X3 Shield's X3Lang policy checks against signed NEAR Intents 1Click dry quotes and inspect the separate NEAR testnet evidence.">
+<link rel="canonical" href="https://x3-guard.pages.dev/">
+<link rel="alternate" type="text/markdown" href="/index.md" title="X3 Guard demo in Markdown">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://x3-guard.pages.dev/">
+<meta property="og:title" content="X3 Guard | X3 Shield dry quote demo">
+<meta property="og:description" content="Try X3Lang policy checks against signed NEAR Intents 1Click dry quotes.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "X3 Guard",
+  "url": "https://x3-guard.pages.dev/",
+  "description": "Browser demo for X3 Shield that checks signed NEAR Intents 1Click dry quotes against X3Lang policies.",
+  "inLanguage": "en",
+  "isBasedOn": "https://github.com/Cyptopimpinainteazy/x3lang"
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231C2631'/%3E%3Cpath d='M9 16.5l4.5 4.5L23 11' stroke='%2357B98F' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600&family=Schibsted+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #E8ECEF;
+    --sheet: #F4F6F8;
+    --ink: #1C2631;
+    --ink-soft: #4A5867;
+    --rule: #B7C1CA;
+    --pass: #1E6A4E;
+    --fail: #AE2F3B;
+    --seal: #3A4AA4;
+    --idle: #8794A1;
+    --focus: #3A4AA4;
+    --sans: "Schibsted Grotesk", system-ui, sans-serif;
+    --mono: "Martian Mono", ui-monospace, monospace;
+    --line: 1.75rem;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #131A21; --sheet: #1A232C; --ink: #DCE3E8; --ink-soft: #9DAAB6; --rule: #33414E;
+      --pass: #57B98F; --fail: #F0717C; --seal: #9AA6F2; --idle: #6C7A87; --focus: #9AA6F2;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #131A21; --sheet: #1A232C; --ink: #DCE3E8; --ink-soft: #9DAAB6; --rule: #33414E;
+    --pass: #57B98F; --fail: #F0717C; --seal: #9AA6F2; --idle: #6C7A87; --focus: #9AA6F2;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1rem/1.55 var(--sans); }
+  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--seal); }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 3px; }
+
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+
+  header.top { padding: clamp(28px, 5vw, 56px) 0 clamp(20px, 3vw, 32px); display: grid; gap: 14px; }
+  .brand { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .brand h1 { margin: 0; font-weight: 900; font-size: clamp(2.4rem, 5.4vw, 4rem); line-height: 0.95; letter-spacing: -0.035em; }
+  .brand .by { color: var(--ink-soft); font-size: 0.95rem; }
+  .lede { margin: 0; max-width: 46ch; font-size: clamp(1.1rem, 1.9vw, 1.35rem); line-height: 1.4; }
+
+  main.bench { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: start; padding-bottom: 48px; }
+  @media (max-width: 880px) { main.bench { grid-template-columns: minmax(0, 1fr); } }
+
+  /* The program, with its verdict gutter */
+  .program { background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+  .program-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--rule); }
+  .program-head h2 { margin: 0; font-size: 1rem; font-weight: 700; }
+  .program-head .file { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-soft); }
+  .editor { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); height: min(66vh, 640px); min-height: 420px; }
+  .editor.short { height: min(48vh, 460px); min-height: 300px; }
+  .left { display: grid; gap: 20px; min-width: 0; }
+  .program.mandate { border-color: var(--seal); }
+  .program.mandate .program-head h2 { color: var(--seal); }
+  .program-head .sub { margin: 2px 0 0; font-size: 0.85rem; color: var(--ink-soft); font-weight: 400; }
+  .checks-title { margin: 0; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); }
+  .gutter { margin: 0; padding: 14px 0; list-style: none; overflow: hidden; border-right: 1px solid var(--rule); font: 400 0.78rem/var(--line) var(--mono); color: var(--idle); user-select: none; }
+  .gutter li { display: grid; grid-template-columns: 1.6rem 2.2rem; align-items: center; height: var(--line); padding-right: 6px; }
+  .gutter .mark { justify-self: center; font-weight: 600; font-size: 0.95rem; }
+  .gutter .no { text-align: right; }
+  .gutter li.pass .mark { color: var(--pass); }
+  .gutter li.fail .mark { color: var(--fail); }
+  .gutter li.note .mark { color: var(--idle); }
+  .gutter li.fail .no, .gutter li.pass .no { color: var(--ink); }
+  .gutter li.land .mark { animation: land 380ms cubic-bezier(.2,.9,.3,1.3) both; animation-delay: calc(var(--i) * 55ms); }
+  @keyframes land { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: scale(1); } }
+  @media (prefers-reduced-motion: reduce) { .gutter li.land .mark { animation: none; } }
+  textarea.code { margin: 0; padding: 14px 16px; border: 0; resize: none; background: transparent; color: var(--ink); font: 400 0.82rem/var(--line) var(--mono); white-space: pre; overflow: auto; tab-size: 4; outline-offset: -3px; }
+  textarea.code:focus-visible { outline: 2px solid var(--focus); border-radius: 0; }
+  .diagnostic { margin: 0; padding: 12px 16px; border-top: 1px solid var(--rule); font-size: 0.95rem; }
+  .diagnostic:empty { display: none; }
+  .diagnostic .code-ref { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-soft); }
+  .diagnostic.fail { color: var(--fail); }
+
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; padding: 14px 16px; border-top: 1px solid var(--rule); }
+  button { font: 600 1rem/1 var(--sans); border-radius: 8px; cursor: pointer; }
+  .primary { background: var(--ink); color: var(--paper); border: 1px solid var(--ink); padding: 13px 20px; }
+  .primary:hover { background: var(--seal); border-color: var(--seal); }
+  .primary[disabled] { opacity: .6; cursor: progress; }
+  .quiet { background: transparent; color: var(--ink-soft); border: 1px solid var(--rule); padding: 12px 14px; font-weight: 500; }
+  .quiet:hover { color: var(--ink); border-color: var(--ink-soft); }
+  .actions .hint { color: var(--ink-soft); font-size: 0.9rem; }
+
+  /* What 1Click said */
+  .report { display: grid; gap: 22px; }
+  .status { margin: 0; font-size: 1.15rem; line-height: 1.4; font-weight: 500; min-height: 3.2em; }
+  .status.fail { color: var(--fail); }
+  .status.pass { color: var(--pass); }
+  .figures { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 24px; margin: 0; }
+  .figures div { border-top: 2px solid var(--ink); padding-top: 8px; }
+  .figures dt { color: var(--ink-soft); font-size: 0.88rem; }
+  .figures dd { margin: 2px 0 0; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+  .figures dd small { display: block; font-size: 0.85rem; font-weight: 400; color: var(--ink-soft); letter-spacing: 0; }
+
+  .seal { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: center; padding: 14px 16px; border: 1px solid var(--seal); border-radius: 10px; color: var(--seal); }
+  .seal svg { grid-row: span 2; }
+  .seal strong { font-size: 1rem; }
+  .seal .hash { font-family: var(--mono); font-size: 0.72rem; overflow-wrap: anywhere; color: var(--ink-soft); }
+  .seal.broken { border-color: var(--fail); color: var(--fail); }
+
+  .checks { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .checks li { display: grid; grid-template-columns: 1.6rem minmax(0, 1fr) auto; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+  .checks .mark { font-weight: 700; }
+  .checks li.pass .mark { color: var(--pass); }
+  .checks li.fail .mark { color: var(--fail); }
+  .checks li.note .mark { color: var(--idle); }
+  .checks .what { font-weight: 500; }
+  .checks .why { display: block; color: var(--ink-soft); font-size: 0.88rem; font-weight: 400; }
+  .checks .at { font-family: var(--mono); font-size: 0.72rem; color: var(--idle); }
+  .checks a.at { text-decoration: none; }
+
+  details.raw { border-top: 1px solid var(--rule); padding-top: 12px; }
+  details.raw summary { cursor: pointer; color: var(--ink-soft); }
+  details.raw pre { max-height: 320px; overflow: auto; background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 12px; font: 400 0.72rem/1.55 var(--mono); }
+
+  .empty { color: var(--ink-soft); margin: 0; }
+
+  /* How it works */
+  section.how { border-top: 2px solid var(--ink); padding: 32px 0 56px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px 48px; }
+  @media (max-width: 880px) { section.how { grid-template-columns: minmax(0, 1fr); } }
+  section.how h2 { margin: 0; font-size: 1.6rem; font-weight: 900; letter-spacing: -0.02em; line-height: 1.1; }
+  .steps { margin: 0; padding: 0; list-style: none; counter-reset: step; display: grid; gap: 20px; }
+  .steps li { counter-increment: step; display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); gap: 4px 12px; max-width: 70ch; }
+  .steps li::before { content: counter(step); grid-row: span 2; font-weight: 900; font-size: 1.6rem; line-height: 1; color: var(--seal); }
+  .steps strong { font-size: 1.05rem; }
+  .steps p { margin: 0; color: var(--ink-soft); }
+  .limits { grid-column: 2; max-width: 70ch; color: var(--ink-soft); margin: 8px 0 0; }
+  @media (max-width: 880px) { .limits { grid-column: 1; } }
+
+  footer { border-top: 1px solid var(--rule); padding: 20px 0 40px; color: var(--ink-soft); font-size: 0.9rem; display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  .theme { margin-left: auto; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>X3 Guard</h1>
+      <span class="by">X3 Lang on NEAR Intents</span>
+    </div>
+    <p class="lede">Write a swap's rules as a program. Before anyone deposits, a real 1Click quote has to satisfy every line of it.</p>
+  </header>
+
+  <main class="bench">
+    <div class="left">
+    <section class="program" aria-labelledby="program-title">
+      <div class="program-head">
+        <h2 id="program-title">Your rules</h2>
+        <span class="file" id="program-file">near_intents_sol_to_near.x3</span>
+      </div>
+      <div class="editor">
+        <ol class="gutter" id="gutter" aria-hidden="true"></ol>
+        <label class="sr" for="code">X3 program</label>
+        <textarea class="code" id="code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off"></textarea>
+      </div>
+      <p class="diagnostic" id="diagnostic" role="alert"></p>
+      <div class="actions">
+        <button class="primary" id="run" type="button">Get a dry quote</button>
+        <button class="quiet" id="reset" type="button">Restore the example</button>
+        <button class="quiet" id="agent" type="button">Try it as an AI agent</button>
+        <span class="hint">1Click signs the dry quote. No wallet signature, deposit or transfer is required.</span>
+      </div>
+    </section>
+
+    <section class="program mandate" id="mandate-panel" aria-labelledby="mandate-title" hidden>
+      <div class="program-head">
+        <div>
+          <h2 id="mandate-title">The owner's mandate</h2>
+          <p class="sub">What the agent above may spend. x3-guard enforces it on NEAR.</p>
+        </div>
+        <span class="file">near_mandate_agent.x3</span>
+      </div>
+      <div class="editor short">
+        <ol class="gutter" id="mgutter" aria-hidden="true"></ol>
+        <label class="sr" for="mcode">X3 mandate</label>
+        <textarea class="code" id="mcode" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off"></textarea>
+      </div>
+      <p class="diagnostic" id="mdiagnostic" role="alert"></p>
+    </section>
+    </div>
+
+    <section class="report" aria-labelledby="report-title">
+      <h2 id="report-title" class="sr">What 1Click quoted</h2>
+      <p class="status" id="status" aria-live="polite">Change any rule, then get a dry quote. Each line of the program gets its verdict in the margin.</p>
+      <div id="result"></div>
+    </section>
+  </main>
+
+  <section class="how" id="how">
+    <h2>What happens when you press the button</h2>
+    <div>
+      <ol class="steps">
+        <li><strong>Your program becomes a quote request</strong><p>The page compiles the X3 intent in your browser. <code>require slippage</code> becomes 1Click's tolerance in whole basis points, rounded toward the stricter side. <code>timeout</code> becomes the deadline after which 1Click refunds. A rule NEAR Intents cannot enforce is refused, not dropped.</p></li>
+        <li><strong>1Click quotes it, and signs the quote</strong><p>The request goes straight from your browser to the 1Click API. 1Click signs every quote with its Ed25519 manager key.</p></li>
+        <li><strong>This page checks the signature before reading a number</strong><p>It rebuilds the exact bytes 1Click signed, using the same steps as NEAR's official SDK, and verifies them with your browser's own cryptography. A forged or altered quote stops here.</p></li>
+        <li><strong>Every rule is checked against the signed numbers</strong><p>The amount, the floor, slippage, the cost of the swap and of a refund, and whether the quote is fresh. Each verdict lands on the line of the program it came from.</p></li>
+        <li><strong>The demo checks the owner’s mandate</strong><p>A program that says <code>under mandate &lt;owner&gt;</code> was written by an agent. Before 1Click is asked for anything, the page checks it against the owner's mandate: who may be paid, in what, how much per payment and per 24 hours, where refunds go, and the loosest slippage and fees allowed. On NEAR, x3-guard runs the same checks when the agent registers and again when it accepts a quote. An owner can revoke the agent’s mandate for later Guard-mediated requests.</p></li>
+      </ol>
+      <p class="limits">For a real swap, the <a href="https://github.com/Cyptopimpinainteazy/x3lang/tree/master/x3-lang/near/x3-guard">x3-guard contract</a> does step 3 and step 4 again on NEAR, with <code>env::ed25519_verify</code>, and lets each nonce open only one deposit address. Spending over 24 hours, approvals and revocation live in the contract, so this page checks a mandate as written, with nothing spent yet. It stays on dry quotes, so it never holds keys or moves funds. An unrestricted key with access to the funds can still transfer them directly.</p>
+    </div>
+  </section>
+
+  <section class="how" aria-labelledby="evidence-title">
+    <h2 id="evidence-title">What each demonstration proves</h2>
+    <div>
+      <ul>
+        <li><a href="./judge.html">Local policy evaluation</a>: the browser shows how an owner mandate rules out a payment to an unlisted recipient.</li>
+        <li><a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/master/docs/hackathon/GUARD_TESTNET_EVIDENCE.md">NEAR testnet Guard decisions</a>: the deployed contract refused a signed 1Click dry quote with a mismatched recipient. A separate accepted quote stopped before deposit.</li>
+        <li><a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/master/docs/hackathon/FIRST_FINALIZED_SWAP_EVIDENCE.md">Finalized testnet settlement</a>: a separate transfer sent 1.000000 test USDC on Base Sepolia, and 0.997400 test USDC arrived on NEAR testnet. The route relied on the trusted Tidepool relayer. The receipts show the finalized transfers on each chain and leave cross-chain causality dependent on the relay.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <a href="https://github.com/Cyptopimpinainteazy/x3lang">Source</a>
+    <a href="https://docs.near-intents.org/integration/distribution-channels/1click-api/verify-quote-signature">How 1Click signs quotes</a>
+    <a href="./index.md">Markdown overview</a>
+    <span>Built at NEAR HACKATHON, November 2026</span>
+    <button class="quiet theme" id="theme" type="button" aria-label="Switch color theme">Theme: system</button>
+  </footer>
+</div>
+
+<script type="module">
+import * as x3 from "./x3guard.mjs";
+
+const EXAMPLE = `// 25 USDC on Solana, delivered as USDC on NEAR.
+// For a dry quote, any NEAR account that exists works as the receiver.
+intent near_intents_sol_to_near {
+    from Solana.USDC amount 25000000 receiver 4Nd1mzi8Y1QYxJt9wZWBYZpG7S4pYkZs6YzD3Vt9aBcD
+    to Near.USDC receiver wrap.near
+    route {
+        bridge NearIntents Solana.USDC -> Near.USDC min_receive 24800000;
+    }
+    require slippage <= 0.5%
+    require fees <= 100 bps
+    require nonce unused demo_001
+    timeout 10m refund Solana.USDC
+    on_fail rollback
+}
+`;
+
+const AGENT_EXAMPLE = `// An AI agent's payment, under its owner's mandate (below).
+// Try paying someone the mandate doesn't list, or raising the amount.
+intent agent_payment {
+    from Solana.USDC amount 25000000 receiver 4Nd1mzi8Y1QYxJt9wZWBYZpG7S4pYkZs6YzD3Vt9aBcD
+    to Near.USDC receiver wrap.near
+    route {
+        bridge NearIntents Solana.USDC -> Near.USDC min_receive 24800000;
+    }
+    under mandate x3-owner.near
+    require slippage <= 0.5%
+    require fees <= 100 bps
+    require nonce unused agent_001
+    timeout 10m refund Solana.USDC
+    on_fail rollback
+}
+`;
+
+const MANDATE_EXAMPLE = `// What x3-owner.near lets its agent spend.
+mandate shopping_agent {
+    owner x3-owner.near
+    agent x3-agent.near
+    spend Solana.USDC
+    per_payment 50000000
+    per_24h 200000000
+    allow recipients wrap.near
+    allow assets Near.USDC
+    refund_to 4Nd1mzi8Y1QYxJt9wZWBYZpG7S4pYkZs6YzD3Vt9aBcD
+    require slippage <= 1%
+    require fees <= 100 bps
+    approve above 30000000 by 1 of x3-owner.near
+    expires 30d
+}
+`;
+
+const $ = (id) => document.getElementById(id);
+const code = $("code"), gutter = $("gutter"), statusEl = $("status"), result = $("result"), diag = $("diagnostic"), run = $("run");
+const mcode = $("mcode"), mgutter = $("mgutter"), mdiag = $("mdiagnostic"), mpanel = $("mandate-panel");
+const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
+
+code.value = store.get("x3guard.program") ?? EXAMPLE;
+mcode.value = store.get("x3guard.mandate") ?? MANDATE_EXAMPLE;
+let marks = {};
+let mmarks = {};
+
+function paint(area, list, m, animate) {
+  const n = area.value.split("\n").length;
+  list.replaceChildren();
+  let order = 0;
+  for (let i = 1; i <= n; i++) {
+    const li = document.createElement("li");
+    const v = m[i];
+    if (v) { li.className = v.state + (animate ? " land" : ""); li.style.setProperty("--i", order++); }
+    li.innerHTML = `<span class="mark">${v ? { pass: "✓", fail: "✗", note: "○" }[v.state] : ""}</span><span class="no">${i}</span>`;
+    list.append(li);
+  }
+  list.scrollTop = area.scrollTop;
+}
+const underMandate = () => /^\s*under\s+mandate\b/m.test(code.value);
+function renderGutter(animate = false) {
+  paint(code, gutter, marks, animate);
+  mpanel.hidden = !underMandate();
+  if (!mpanel.hidden) paint(mcode, mgutter, mmarks, animate);
+}
+const clearMarks = () => { marks = {}; mmarks = {}; for (const d of [diag, mdiag]) { d.textContent = ""; d.className = "diagnostic"; } };
+code.addEventListener("scroll", () => { gutter.scrollTop = code.scrollTop; });
+mcode.addEventListener("scroll", () => { mgutter.scrollTop = mcode.scrollTop; });
+code.addEventListener("input", () => { store.set("x3guard.program", code.value); clearMarks(); renderGutter(); });
+mcode.addEventListener("input", () => { store.set("x3guard.mandate", mcode.value); clearMarks(); renderGutter(); });
+$("reset").addEventListener("click", () => { code.value = EXAMPLE; $("program-file").textContent = "near_intents_sol_to_near.x3"; code.dispatchEvent(new Event("input")); });
+$("agent").addEventListener("click", () => {
+  code.value = AGENT_EXAMPLE; mcode.value = MANDATE_EXAMPLE; $("program-file").textContent = "near_intents_agent_payment.x3";
+  store.set("x3guard.mandate", mcode.value); code.dispatchEvent(new Event("input"));
+});
+
+function goTo(line, area = code) {
+  const lines = area.value.split("\n");
+  const start = lines.slice(0, line - 1).reduce((a, l) => a + l.length + 1, 0);
+  area.focus();
+  area.setSelectionRange(start, start + (lines[line - 1]?.length ?? 0));
+  const lh = parseFloat(getComputedStyle(area).lineHeight);
+  area.scrollTop = Math.max(0, (line - 4) * lh);
+}
+
+function setStatus(text, kind = "") { statusEl.textContent = text; statusEl.className = "status" + (kind ? " " + kind : ""); }
+
+function fail(e, inMandate = false) {
+  run.disabled = false;
+  const line = e.line ?? null;
+  marks = {}; mmarks = {};
+  if (line) (inMandate ? mmarks : marks)[line] = { state: "fail" };
+  renderGutter(true);
+  const d = inMandate ? mdiag : diag;
+  d.className = "diagnostic fail";
+  d.innerHTML = "";
+  d.append(document.createTextNode(e.message + " "));
+  const ref = document.createElement("span");
+  ref.className = "code-ref";
+  ref.textContent = `${e.code ?? "error"}${line ? `, line ${line}` : ""}`;
+  d.append(ref);
+  setStatus(inMandate ? "The mandate can't be honoured as written. Nothing was quoted."
+    : line ? "The program can't be honoured as written. Nothing was quoted." : e.message, "fail");
+}
+
+const units = (raw, decimals) => {
+  const s = BigInt(raw).toString().padStart(decimals + 1, "0");
+  const whole = s.slice(0, s.length - decimals), frac = s.slice(s.length - decimals).replace(/0+$/, "");
+  return frac ? `${whole}.${frac}` : whole;
+};
+
+const LABELS = {
+  quote_signature: () => "Signed by 1Click",
+  quote_freshness: (r) => `Issued ${Math.max(0, r.age_s)} seconds ago`,
+  quote_request_echo: (r) => r.ok ? "Quote is for exactly what we asked" : `1Click changed: ${r.mismatched.join(", ")}`,
+  amount_in: (r, t) => `Spends exactly ${units(r.expected, t.oDec)} ${t.oSym}`,
+  min_receive: (r, t) => `Guarantees ${units(r.guaranteed, t.dDec)}, floor ${units(r.floor, t.dDec)} ${t.dSym}`,
+  slippage: (r) => r.quoted_spread_bps ? `Slippage ${r.quoted_spread_bps} bps, limit ${r.bound_bps}` : r.reason,
+  fees: (r) => r.effective_cost_bps ? `Swap costs ${r.effective_cost_bps} bps, limit ${r.cap_bps}` : r.reason,
+  refund_fee: (r) => r.refund_fee_bps ? `A refund would cost ${r.refund_fee_bps} bps, limit ${r.cap_bps}` : r.reason,
+  deposit_address: (r) => r.ok ? `Deposit address ${r.deposit_address}` : "No deposit address",
+  deadline: (r) => r.ok ? `Deadline fits, ${r.seconds_remaining} s left` : (r.reason ?? "Deadline does not fit the program's timeout"),
+};
+const WHY = {
+  quote_freshness: "Older than 5 minutes, or dated in the future, is refused.",
+  refund_fee: (r) => r.signed === false ? "A dry quote's refund fee isn't signed by 1Click; a live one's is." : "",
+};
+
+const MANDATE_LABELS = {
+  mandate_active: (r) => r.ok ? "The mandate is in force" : "The mandate has expired",
+  mandate_asset: (r, t) => r.ok ? `Spends ${t.oSym} on ${t.oChain}, the only asset allowed` : `Spends an asset the mandate doesn't allow`,
+  mandate_destination_asset: (r, t) => r.ok ? `Pays out in ${t.dSym}, which the mandate allows` : `Pays out in ${t.dSym}, which the mandate doesn't allow`,
+  mandate_recipient: (r, t) => r.ok ? `${t.recipient} is on the owner's list` : `${t.recipient} is not on the owner's list`,
+  mandate_refund_to: (r) => r.ok ? "Refunds go to the owner's address" : "Refunds would go to an address the owner didn't pin",
+  mandate_per_payment: (r, t) => `${units(t.amount, t.oDec)} ${t.oSym}, limit ${units(t.m.per_payment_cap, t.oDec)} a payment`,
+  mandate_daily: (r, t) => `Fits ${units(t.m.daily_cap, t.oDec)} ${t.oSym} per 24 hours`,
+  mandate_slippage: (r, t) => `Slippage limit ${t.slip} bps, the owner allows ${t.m.max_slippage_bps}`,
+  mandate_fees: (r, t) => t.fee == null ? "No fee cap: the owner requires one" : `Fee cap ${t.fee} bps, the owner allows ${t.m.max_fee_bps}`,
+  mandate_deadline: (r) => r.ok ? "Settles before the mandate expires" : "The deadline outlives the mandate",
+};
+const MANDATE_WHY = { mandate_daily: "x3-guard counts what the agent already spent; this page assumes nothing yet." };
+
+function mandateLines(intent, parsed) {
+  const L = intent.lines, by = Object.fromEntries(intent.requires.map((r) => [r.kind, r.line]));
+  const M = parsed.line_of, mreq = Object.fromEntries(parsed.requires.map((r) => [r.kind, r.line]));
+  return {
+    mandate_active: [L.mandate, M.expires], mandate_asset: [L.from, M.spend], mandate_destination_asset: [L.to, M.allow_assets],
+    mandate_recipient: [L.to, M.allow_recipients], mandate_refund_to: [L.timeout, M.refund_to], mandate_per_payment: [L.from, M.per_payment],
+    mandate_daily: [L.from, M.per_24h], mandate_slippage: [by.slippage, mreq.slippage], mandate_fees: [by.fees, mreq.fees],
+    mandate_deadline: [L.timeout, M.expires],
+  };
+}
+
+function lineFor(guard, intent, req) {
+  const L = intent.lines, by = Object.fromEntries(intent.requires.map((r) => [r.kind, r.line]));
+  return {
+    quote_signature: L.intent, quote_freshness: L.intent, quote_request_echo: L.to, amount_in: L.from,
+    min_receive: intent.route[0]?.line, deposit_address: intent.route[0]?.line, slippage: by.slippage,
+    fees: by.fees, refund_fee: by.fees, deadline: L.timeout,
+  }[guard];
+}
+
+async function quote() {
+  diag.textContent = ""; diag.className = "diagnostic"; result.replaceChildren(); marks = {}; renderGutter();
+  // Without WebCrypto no signature can be checked, so don't ask 1Click for a quote at all.
+  const noCrypto = x3.webCryptoProblem();
+  if (noCrypto) return fail(new x3.X3Error("X3_NO_WEBCRYPTO", noCrypto));
+  let intent, leg;
+  try {
+    intent = x3.parse(code.value);
+    const errs = x3.typecheck(intent);
+    if (errs.length) throw new x3.X3Error(errs[0].code, errs[0].message, { line: errs[0].line });
+    leg = x3.lower(intent, Date.now());
+  } catch (e) { return fail(e); }
+
+  run.disabled = true;
+  let mandate = null;
+  if (leg.mandate_owner) {
+    setStatus("Checking the owner's mandate…");
+    let parsed, compiled, tokens;
+    try { parsed = x3.parseMandate(mcode.value); } catch (e) { return fail(e, true); }
+    try { tokens = await x3.fetchTokens(); } catch (e) { return fail(new x3.X3Error("X3_NEAR_UNREACHABLE", "The 1Click API couldn't be reached from this page. Check your connection and try again.")); }
+    try { compiled = x3.lowerMandate(parsed, tokens, Date.now(), await x3.sha256Hex(mcode.value)); } catch (e) { return fail(e, true); }
+    if (compiled.owner !== leg.mandate_owner) return fail(new x3.X3Error("X3_MANDATE_OWNER", `The program is under ${leg.mandate_owner}'s mandate, but this mandate is ${compiled.owner}'s.`, { line: intent.lines.mandate }));
+    let request;
+    try { request = x3.buildQuoteRequest(leg, tokens, { dry: true }); } catch (e) { return fail(e); }
+    const policy = x3.policyFor(leg, request, await x3.sha256Hex(code.value));
+    const m = { ...compiled, version: null, revoked: false, spends: [] };
+    const o = x3.resolveAsset(tokens, leg.origin.chain, leg.origin.asset), d = x3.resolveAsset(tokens, leg.destination.chain, leg.destination.asset);
+    mandate = { parsed, compiled, checks: x3.checkMandate(m, policy, Date.now()), approvals: x3.approvalsNeeded(m, policy.amount),
+      t: { oDec: o.decimals, oSym: o.symbol, oChain: leg.origin.chain.charAt(0).toUpperCase() + leg.origin.chain.slice(1), dSym: d.symbol, recipient: leg.recipient, amount: policy.amount,
+           slip: policy.slippage_bps, fee: policy.fee_cap_bps, m: compiled.terms } };
+    if (mandate.checks.some((c) => !c.ok)) {
+      run.disabled = false;
+      return renderMandateOnly(intent, mandate);
+    }
+  }
+  setStatus("Asking 1Click for a quote…");
+  try {
+    if (leg.destination.chain === "near") {
+      const exists = await x3.nearAccountExists(leg.recipient);
+      if (exists === false) throw new x3.X3Error("X3_NEAR_ACCOUNT_UNKNOWN", `NEAR account ${leg.recipient} doesn't exist, so 1Click can't deliver to it.`, { line: intent.lines.to });
+    }
+    const tokens = await x3.fetchTokens();
+    const request = x3.buildQuoteRequest(leg, tokens, { dry: true });
+    const response = await x3.requestQuote(request);
+    const verdict = await x3.verifyQuote(leg, request, response, { nowMs: Date.now() });
+    const o = x3.resolveAsset(tokens, leg.origin.chain, leg.origin.asset), d = x3.resolveAsset(tokens, leg.destination.chain, leg.destination.asset);
+    render(intent, leg, request, response, verdict, { oDec: o.decimals, oSym: o.symbol, dDec: d.decimals, dSym: d.symbol }, mandate);
+  } catch (e) {
+    if (e.code === "X3_NEAR_HTTP") e.message += ". 1Click also answers this way when a receiver doesn't exist.";
+    if (e instanceof TypeError) e = new x3.X3Error("X3_NEAR_UNREACHABLE", "The 1Click API couldn't be reached from this page. Check your connection and try again.");
+    return fail(e);
+  } finally { run.disabled = false; }
+}
+
+function markOn(target, line, state) {
+  if (!line) return;
+  const cur = target[line]?.state;
+  if (cur === "fail") return;
+  if (cur === "pass" && state === "note") return;
+  target[line] = { state };
+}
+
+function mandateList(intent, mandate) {
+  const where = mandateLines(intent, mandate.parsed);
+  for (const c of mandate.checks) {
+    const [pl, ml] = where[c.guard] ?? [];
+    markOn(marks, pl, c.ok ? "pass" : "fail");
+    markOn(mmarks, ml, c.ok ? "pass" : "fail");
+  }
+  markOn(marks, intent.lines.mandate, mandate.checks.every((c) => c.ok) ? "pass" : "fail");
+  const items = mandate.checks.map((c) => {
+    const [pl, ml] = where[c.guard] ?? [];
+    const label = (MANDATE_LABELS[c.guard] ?? (() => c.guard))(c, mandate.t);
+    const why = MANDATE_WHY[c.guard] ?? "";
+    const at = ml ? `<a class="at" href="#mcode" data-mline="${ml}">mandate ${ml}</a>` : pl ? `<a class="at" href="#code" data-line="${pl}">line ${pl}</a>` : "";
+    return `<li class="${c.ok ? "pass" : "fail"}"><span class="mark">${c.ok ? "✓" : "✗"}</span><span class="what">${esc(label)}${why ? `<span class="why">${esc(why)}</span>` : ""}</span>${at}</li>`;
+  });
+  if (mandate.approvals) items.push(`<li class="note"><span class="mark">○</span><span class="what">Needs ${mandate.approvals} approval${mandate.approvals > 1 ? "s" : ""} on NEAR<span class="why">Above the mandate's approval threshold, x3-guard waits for the listed approvers before the agent can accept a quote.</span></span><a class="at" href="#mcode" data-mline="${mandate.parsed.line_of.approve}">mandate ${mandate.parsed.line_of.approve}</a></li>`);
+  return `<p class="checks-title">The owner's mandate</p><ul class="checks">${items.join("")}</ul>`;
+}
+
+function wireLinks() {
+  result.querySelectorAll("a.at").forEach((a) => a.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    if (a.dataset.mline) goTo(Number(a.dataset.mline), mcode); else goTo(Number(a.dataset.line));
+  }));
+}
+
+function renderMandateOnly(intent, mandate) {
+  marks = {}; mmarks = {};
+  const html = mandateList(intent, mandate);
+  renderGutter(true);
+  const failed = mandate.checks.filter((c) => !c.ok).length;
+  setStatus(`The local mandate preview refuses this payment (${failed === 1 ? "one term" : failed + " terms"}). 1Click was never asked for a quote. No on-chain Guard decision was requested or verified.`, "fail");
+  result.innerHTML = html;
+  wireLinks();
+}
+
+function render(intent, leg, request, response, { results, verdict }, t, mandate = null) {
+  const L = intent.lines;
+  marks = {}; mmarks = {};
+  const set = (line, state) => markOn(marks, line, state);
+  const mandateHtml = mandate ? mandateList(intent, mandate) : "";
+  for (const r of results) set(lineFor(r.guard, intent, request), r.ok ? "pass" : "fail");
+  if (verdict !== "invalid_signature") {
+    set(intent.requires.find((r) => r.kind === "nonce")?.line, "note");
+    set(L.on_fail, "note");
+    if (request.dry) set(L.timeout, "note");
+  }
+  renderGutter(true);
+
+  const sig = results[0];
+  const q = response.quote ?? {};
+  const failed = results.filter((r) => !r.ok);
+  if (verdict === "invalid_signature") setStatus("Refused: the quote's signature does not verify. Nothing else in it was read.", "fail");
+  else if (failed.length) setStatus(`Refused by ${failed.length === 1 ? "one rule" : failed.length + " rules"} in this dry preview. No live quote, on-chain authorization or deposit was verified.`, "fail");
+  else setStatus(mandate
+    ? "Dry quote and local mandate checks passed under the stated assumptions. Required approvals, current on-chain state, live quote deposit/deadline checks and settlement remain unverified. This is not authorization."
+    : "Dry quote checks passed. Live quote deposit/deadline checks, owner approval and settlement remain unverified. This is not authorization.", "pass");
+
+  const parts = [];
+  if (verdict !== "invalid_signature") {
+    parts.push(`<dl class="figures">
+      <div><dt>You send</dt><dd>${units(q.amountIn, t.oDec)} ${t.oSym}<small>on ${leg.origin.chain}</small></dd></div>
+      <div><dt>You get at least</dt><dd>${units(q.minAmountOut, t.dDec)} ${t.dSym}<small>expected ${units(q.amountOut, t.dDec)}, on ${leg.destination.chain}</small></dd></div>
+    </dl>`);
+  }
+  parts.push(`<div class="seal${sig.ok ? "" : " broken"}">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="15" fill="none" stroke="currentColor" stroke-width="2"/>${sig.ok ? '<path d="M10.5 17.5l4.5 4.5 8.5-9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>' : '<path d="M12 12l10 10M22 12l-10 10" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>'}</svg>
+    <strong>${sig.ok ? "Signed by 1Click, verified in this browser" : "Signature failed: " + esc(sig.reason)}</strong>
+    <span class="hash">${sig.ok ? "quote hash " + esc(sig.quote_hash) + "<br>manager key " + esc(sig.manager_public_key) : ""}</span>
+  </div>`);
+  // The seal above reports the signature; the list holds the rules it unlocked.
+  if (verdict !== "invalid_signature") parts.push(`<ul class="checks">${results.filter((r) => r.guard !== "quote_signature").map((r) => {
+    const line = lineFor(r.guard, intent, request);
+    const label = (LABELS[r.guard] ?? (() => r.guard))(r, t);
+    const why = typeof WHY[r.guard] === "function" ? WHY[r.guard](r) : (WHY[r.guard] ?? "");
+    return `<li class="${r.ok ? "pass" : "fail"}"><span class="mark">${r.ok ? "✓" : "✗"}</span><span class="what">${esc(label)}${why ? `<span class="why">${esc(why)}</span>` : ""}</span>${line ? `<a class="at" href="#code" data-line="${line}">line ${line}</a>` : ""}</li>`;
+  }).join("")}
+    ${intent.requires.some((r) => r.kind === "nonce") ? `<li class="note"><span class="mark">○</span><span class="what">One deposit address per nonce<span class="why">Enforced on NEAR by the x3-guard contract when a live quote is accepted.</span></span><a class="at" href="#code" data-line="${intent.requires.find((r) => r.kind === "nonce").line}">line ${intent.requires.find((r) => r.kind === "nonce").line}</a></li>` : ""}
+  </ul>`);
+  if (mandateHtml) parts.push(mandateHtml);
+  parts.push(`<details class="raw"><summary>Request and signed response</summary><pre>${esc(JSON.stringify({ request, response }, null, 2))}</pre></details>`);
+  result.innerHTML = parts.join("");
+  wireLinks();
+}
+
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+run.addEventListener("click", quote);
+for (const area of [code, mcode]) area.addEventListener("keydown", (e) => { if ((e.metaKey || e.ctrlKey) && e.key === "Enter") quote(); });
+
+const themes = ["system", "light", "dark"];
+let theme = store.get("x3guard.theme") ?? "system";
+const applyTheme = () => {
+  if (theme === "system") document.documentElement.removeAttribute("data-theme"); else document.documentElement.dataset.theme = theme;
+  $("theme").textContent = `Theme: ${theme}`;
+};
+$("theme").addEventListener("click", () => { theme = themes[(themes.indexOf(theme) + 1) % 3]; store.set("x3guard.theme", theme); applyTheme(); });
+applyTheme();
+renderGutter();
+</script>
+</body>
+</html>

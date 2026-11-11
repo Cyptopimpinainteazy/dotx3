@@ -4,6 +4,12 @@ node_modules/
 .env
 .env.*
 
+# Python compiler runtime caches
+**/__pycache__/
+**/*.pyc
+
+# Build artifacts are generated from source on Vercel
+.vercel/output/
 # Live gallery builds come from private repos; rebuild with scripts/build-gallery.sh
 public/gallery/apps/
 /integrations/x3dex/node_modules/

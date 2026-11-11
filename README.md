@@ -4,10 +4,10 @@ dotx3 is the public website for the .x3 language and X3 Shield: documentation, d
 
 ## Start here
 
+- `/labs`: vendored Python compiler API, signed-quote demo, judge policy cases and attack lab.
 - `/docs`: what .x3 does, installation and language examples.
 - `/bootcamp`: the detailed source-backed developer course.
 - `/playground`: edit a policy and inspect local deterministic verdicts.
-- `/labs`: browser learning tools and the offline native-NEAR Attack Lab.
 - `/near`: NEAR competition hub with `/security`, `/agents` and `/defi` track pages.
 - `/proof`: historical Guard and finalized testnet transfer records.
 - `/dex`: read-only market interface; market observations do not authorize a trade.
@@ -16,10 +16,13 @@ A `.x3` file expresses an owner's spending mandate or a payment intent. The NEAR
 
 ## Run the website
 
-Use Node 24 or the deployment's supported Node version and npm. From this repository:
+Use Node 24 or the deployment's supported Node version, npm, and Python 3.12 with pip (the production build packages a pinned Python Function). From this repository:
 
 ```sh
 npm ci
+# For the real compiler API, run this in a second terminal:
+python3 scripts/dev-compiler.py
+# Then start the website:
 npm run dev
 ```
 
@@ -27,14 +30,17 @@ The dev script builds the embedded DEX and serves on port 8080. The public docum
 
 ```sh
 npm test
+python3 -m unittest discover -s tests -v
 npm run typecheck
 npm run build
 # Against a running local preview:
 node scripts/near-smoke.mjs http://127.0.0.1:8080
 node scripts/bootcamp-smoke.mjs http://127.0.0.1:8080/bootcamp
+# Against npm run dev plus scripts/dev-compiler.py:
+node scripts/compiler-smoke.mjs http://127.0.0.1:8080
 ```
 
-`build` installs the DEX's locked dependencies, builds both applications, and invokes the migration helper. See the helper for deployment-specific database behavior. Generated `.vercel/output` is present in the inherited tree; do not hand-edit build output.
+`build` installs the DEX's locked dependencies, builds both applications, and invokes the migration helper. See the helper for deployment-specific database behavior. Generated `.vercel/output` is rebuilt and ignored by Git. The build also packages the bounded Python compiler function; its production execution requires separate deployment verification.
 
 ## Documentation
 

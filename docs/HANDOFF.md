@@ -19,4 +19,4 @@ Vercel CLI 65.14.0 and official MCP OAuth are authenticated. The checkout is lin
 
 Keep the website and X3Lang source repositories distinct in install commands. Update browser vendors from a pinned source revision with provenance and parity tests. Never replace historical execution artifacts or present a local preview as on-chain enforcement. Contract names in historical receipts remain unchanged.
 
-The separate compiler-API portion of `feat/x3lang-integrated-labs-20261111` has not been integrated: its Python Function packaging, request limits and deployment behavior require their own review. The static Attack Lab does not depend on that API. See [the branch assessment](BRANCH_ASSESSMENT.md).
+The full compiler-API portion of `feat/x3lang-integrated-labs-20261111` landed concurrently through PR #1 and is preserved in this branch. Its real Python function, source fixtures and static labs are integrated; local and Vercel verification of the combined source are recorded separately. The offline Attack Lab does not depend on that API. See [the branch assessment](BRANCH_ASSESSMENT.md).
