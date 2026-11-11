@@ -1,0 +1,40 @@
+// Interactive regression for the Bootcamp portal. Run against a local dev/preview server.
+import assert from 'node:assert/strict';
+import { chromium } from 'playwright';
+const target = new URL(process.argv[2] || 'http://127.0.0.1:18084/bootcamp');
+assert.ok(['127.0.0.1','localhost'].includes(target.hostname), 'Use a local preview');
+const browser = await chromium.launch({headless:true,args:['--no-sandbox']});
+try {
+ const page = await browser.newPage(); const errors=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(target.href); await page.getByRole('heading',{name:'Bootcamp',exact:true}).waitFor();
+ const run=page.getByRole('button',{name:'Run local check',exact:true});
+ await run.click(); await page.getByRole('heading',{name:'preflight passed',exact:true}).waitFor();
+ await page.getByRole('button',{name:'Pay attacker.near',exact:true}).click();
+ await page.getByRole('heading',{name:'Ready to check',exact:true}).waitFor();
+ await run.click(); await page.getByRole('heading',{name:'denied by policy',exact:true}).waitFor();
+ assert.match(await page.locator('#lab [role=status]').innerText(),/REFUSE · mandate_recipient/);
+ await page.getByRole('button',{name:'Drop the nonce',exact:true}).click();
+ await run.click(); await page.getByRole('heading',{name:'Compile refusal',exact:true}).waitFor();
+ assert.match(await page.locator('#lab [role=status]').innerText(),/X3_NEAR_NONCE/);
+ await page.getByRole('button',{name:'Reset example',exact:true}).click();
+ await page.getByRole('textbox',{name:'Owner mandate source'}).fill('');
+ await run.click(); await page.getByRole('heading',{name:'Compile refusal',exact:true}).waitFor();
+ await page.getByRole('button',{name:'Reset example',exact:true}).click();
+ await page.locator('#orientation').getByRole('button',{name:'Mark lesson complete',exact:true}).click();
+ await page.reload(); await page.locator('#orientation').getByRole('button',{name:'Marked complete',exact:true}).waitFor();
+ await page.getByRole('searchbox',{name:'Search lessons and rules'}).fill('X3_NEAR_NONCE');
+ assert.ok(await page.locator('#rules article').count()>0);
+ assert.equal(await page.locator('#curriculum article').count(),0);
+ await page.getByRole('searchbox',{name:'Search lessons and rules'}).fill('no-such-rule-43851');
+ await page.getByText('No matching refusal codes.',{exact:true}).waitFor();
+ await page.getByRole('searchbox',{name:'Search lessons and rules'}).fill('');
+ await page.locator('#examples summary').first().click();
+ const download=page.waitForEvent('download'); await page.locator('#examples').getByRole('button',{name:'Download .x3'}).first().click();
+ assert.equal((await download).suggestedFilename(),'near_mandate_agent.x3');
+ await page.setViewportSize({width:390,height:844});
+ await page.getByRole('button',{name:'Open menu',exact:true}).click();
+ await page.getByRole('link',{name:'Bootcamp',exact:true}).waitFor({state:'visible'});
+ assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth));
+ assert.deepEqual(errors,[]); console.log('PASS: baseline, recipient refusal, nonce refusal, invalid mandate, stale-result reset, persistent progress, search, download, mobile navigation, no page errors');
+} finally {await browser.close();}

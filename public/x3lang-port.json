@@ -121,7 +121,10 @@
       "source": "x3-lang/near/demo/index.html",
       "destination": "public/labs/guard/index.html",
       "source_sha256": "5b21f62e7275cdcb065f050b650fae766f5192f74f83f1b39a09dd9bee46b64b",
-      "sha256": "5b21f62e7275cdcb065f050b650fae766f5192f74f83f1b39a09dd9bee46b64b"
+      "sha256": "a79744d5c161d7b85163e5a374b0cef616099b27e63a2d166aec038a74143c01",
+      "local_transformations": [
+        "Clarify dry quote and local mandate verdicts never establish live eligibility, on-chain authorization or settlement; upstream source_sha256 is retained."
+      ]
     },
     {
       "source": "x3-lang/near/demo/index.md",

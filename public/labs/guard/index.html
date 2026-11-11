@@ -525,7 +525,7 @@ function renderMandateOnly(intent, mandate) {
   const html = mandateList(intent, mandate);
   renderGutter(true);
   const failed = mandate.checks.filter((c) => !c.ok).length;
-  setStatus(`The owner's mandate refuses this payment (${failed === 1 ? "one term" : failed + " terms"}). 1Click was never asked for a quote, and x3-guard would refuse it on NEAR the same way.`, "fail");
+  setStatus(`The local mandate preview refuses this payment (${failed === 1 ? "one term" : failed + " terms"}). 1Click was never asked for a quote. No on-chain Guard decision was requested or verified.`, "fail");
   result.innerHTML = html;
   wireLinks();
 }
@@ -547,10 +547,10 @@ function render(intent, leg, request, response, { results, verdict }, t, mandate
   const q = response.quote ?? {};
   const failed = results.filter((r) => !r.ok);
   if (verdict === "invalid_signature") setStatus("Refused: the quote's signature does not verify. Nothing else in it was read.", "fail");
-  else if (failed.length) setStatus(`Refused by ${failed.length === 1 ? "one rule" : failed.length + " rules"}. A live quote like this could not be deposited to.`, "fail");
+  else if (failed.length) setStatus(`Refused by ${failed.length === 1 ? "one rule" : failed.length + " rules"} in this dry preview. No live quote, on-chain authorization or deposit was verified.`, "fail");
   else setStatus(mandate
-    ? "Every rule and every term of the mandate holds. As a live quote, the agent could register and accept it on NEAR; the deposit still needs the owner's wallet."
-    : "Every rule holds. As a live quote, this would be eligible for a wallet signature, and nothing moves without one.", "pass");
+    ? "Dry quote and local mandate checks passed under the stated assumptions. Required approvals, current on-chain state, live quote deposit/deadline checks and settlement remain unverified. This is not authorization."
+    : "Dry quote checks passed. Live quote deposit/deadline checks, owner approval and settlement remain unverified. This is not authorization.", "pass");
 
   const parts = [];
   if (verdict !== "invalid_signature") {
