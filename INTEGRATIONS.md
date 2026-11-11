@@ -37,6 +37,6 @@ Tests: `python3 -m unittest discover -s tests -v`, `npm run typecheck`,
 `npm run build`. Browser smoke needs the browser binaries; unavailable binaries
 or failed downloads must remain a verification blocker.
 
-Vercel CLI and MCP are authenticated, and previews can be deployed. The combined Python Function still requires an actual deployed request before claiming production execution. Custom domain verification requires Cloudflare DNS records; production has not been promoted. No donation address, capital-return promise or flash-loan
+Vercel CLI and MCP are authenticated, and previews can be deployed. The combined Python Function executed the allowed, recipient-refused and missing-nonce examples on a protected Vercel preview. Production has not been promoted; the preview does not establish public access. Custom domain verification requires Cloudflare DNS records; production has not been promoted. No donation address, capital-return promise or flash-loan
 feature is enabled. Funding terms need an explicit cap, fee/loss treatment,
 return recipient and deadline before any public request.

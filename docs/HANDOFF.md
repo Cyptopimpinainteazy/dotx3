@@ -2,7 +2,7 @@
 
 ## Current work
 
-The documentation and NEAR competition updates are on `docs/dotx3-near-tracks` in [draft PR #7](https://github.com/Cyptopimpinainteazy/dotx3/pull/7). Main was inspected at `2391a45`. The bootcamp, playground, DEX and gallery changes previously described here are already in that base; do not try to merge them a second time.
+The original documentation and NEAR competition updates landed in [PR #7](https://github.com/Cyptopimpinainteazy/dotx3/pull/7), externally merged at `1c4806b`. Further lab integration, full writing examples and stale-doc corrections are on `feat/dotx3-learning-labs`. The bootcamp, playground, DEX and gallery changes previously described here are already in that base; do not try to merge them a second time.
 
 - `/near` links the AI Security & Defense, Agent Economy and Unstoppable DeFi pages.
 - `/docs`, `/language`, `/bootcamp` and [the writing guide](X3_GUIDE.md) describe syntax, tooling and execution boundaries.
@@ -13,7 +13,7 @@ The documentation and NEAR competition updates are on `docs/dotx3-near-tracks` i
 
 See `audit-artifacts/dotx3-docs-20261111/` for local verification and deployment evidence. The first source commit passed 197 script tests and 77 TypeScript tests, typecheck, production build, desktop/mobile route checks and the interactive bootcamp smoke; GitHub Site checks also passed. These are results for the named source commit, not perpetual pass counts.
 
-Vercel CLI 65.14.0 and official MCP OAuth are authenticated. The checkout is linked to project `dotx3`. The verified preview is protected by Vercel authentication. `command.dotx3.net` is assigned but still needs its Cloudflare TXT/CNAME records; [deployment instructions](DEPLOYMENT.md) record the returned values. Production has not been promoted and PR #7 remains draft.
+Vercel CLI 65.14.0 and official MCP OAuth are authenticated. The checkout is linked to project `dotx3`. The verified preview is protected by Vercel authentication. `command.dotx3.net` is assigned but still needs its Cloudflare TXT/CNAME records; [deployment instructions](DEPLOYMENT.md) record the returned values. PR #7 is merged. The follow-up preview contains the combined Python compiler and expanded learning guides; production promotion and domain DNS remain separate steps.
 
 ## Maintaining the site
 
