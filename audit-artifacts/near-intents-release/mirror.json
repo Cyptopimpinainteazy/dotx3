@@ -1,0 +1,37 @@
+{
+  "source_commit": "7f2e6d1fefb9d2b8f1207ae9cf8e552d69bad9fd",
+  "peer_commit": "b6e6aff86ce4fd6edebaf19516fec3c7c9bf9672",
+  "recorded_at": "2026-11-11T10:55:54.123938+00:00",
+  "command": [
+    "python3",
+    "scripts/proof/check_x3lang_mirror.py",
+    "--peer-repo",
+    "/home/lojak/Documents/ChatGPT/x3langnearhackathon/xxxstar-pr200-mirror",
+    "--base-ref",
+    "origin/master",
+    "--peer-base-ref",
+    "origin/master"
+  ],
+  "exit_code": 0,
+  "output_sha256": "9566a3aafc60259496b81e25545896b480b4e9630def60ec38d0ad0fa3e86446",
+  "required_files": 14,
+  "changed_paths_checked": 11,
+  "guidance_tests": {
+    "source_passed": 9,
+    "peer_passed": 9
+  },
+  "independent_review": "No blocking findings in latest guidance changes; runtime boolean checks, corrected rounding, contradictory response rejection and streamed response limits verified.",
+  "github_mirror_rerun": {
+    "run_id": 43007427667,
+    "prior_job_id": 130478278620,
+    "requested": true,
+    "attempt": 2,
+    "status": "completed",
+    "conclusion": "success",
+    "job_id": 130479043068,
+    "url": "https://github.com/Cyptopimpinainteazy/x3lang/actions/runs/43007427667/job/130479043068",
+    "execution_proof": "success"
+  },
+  "no_merge": true,
+  "required_pr200_checks": "All9 listedrequiredcontextsSUCCESS at7f2e6d1"
+}

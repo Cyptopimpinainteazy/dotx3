@@ -72,7 +72,7 @@ class GuardPortTransformation(unittest.TestCase):
         self.manifest = json.loads((ROOT / 'x3lang-port.json').read_text())
         self.row = next(row for row in self.manifest['files']
                         if row['destination'] == 'public/labs/guard/index.html')
-        self.upstream = self.output
+        self.upstream = sync.remove_export_controls(self.output)
         for old, new in sync.GUARD_VERDICT_REPLACEMENTS.items():
             self.upstream = self.upstream.replace(new.encode(), old.encode())
 
@@ -105,7 +105,7 @@ class AttackPortTransformation(unittest.TestCase):
         self.row = next(row for row in manifest['files']
                         if row['destination'] == 'public/labs/attack/attack-lab.html')
         prefix = ('https://github.com/Cyptopimpinainteazy/x3lang/blob/' + self.commit).encode()
-        self.upstream = self.output.replace(
+        self.upstream = sync.remove_export_controls(self.output).replace(
             prefix + b'/evidence/', b'../../evidence/').replace(
             prefix + b'/docs/hackathon/FIRST_SWAP_JUDGE_WALKTHROUGH.md',
             b'FIRST_SWAP_JUDGE_WALKTHROUGH.md').replace(

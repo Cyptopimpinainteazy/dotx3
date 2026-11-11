@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Copy, Check, Download } from "lucide-react";
 import { pageMarkdown } from "@/lib/copy-page";
+import { downloadMarkdown } from "@/lib/page-export.mjs";
 export function CopyPage() {
   const [message, setMessage] = useState("");
   function content() {
@@ -18,16 +19,7 @@ export function CopyPage() {
   }
   function download() {
     try {
-      const url = URL.createObjectURL(
-        new Blob([content()], { type: "text/markdown;charset=utf-8" }),
-      );
-      const a = document.createElement("a");
-      a.href = url;
-      a.download =
-        (location.pathname.replaceAll("/", "-").replace(/^-|-$|[^a-z0-9-]/gi, "") || "home") +
-        ".md";
-      a.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      downloadMarkdown(content(), location.pathname);
       setMessage("Page downloaded");
     } catch {
       setMessage("Page content is unavailable.");

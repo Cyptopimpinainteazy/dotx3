@@ -19,8 +19,11 @@ ol{padding-left:22px}li{margin-bottom:10px}
 .banner{border-left:4px solid #f4a660;background:#30251b;padding:14px 18px;border-radius:7px}
 small{color:#a7b4c9}
 </style>
+<link rel="stylesheet" href="/page-export.css">
 </head>
-<body><div class="wrap">
+<body>
+<div data-copy-exclude data-page-export-controls class="page-export-controls"><button type="button" data-export-copy>Copy page</button><button type="button" data-export-download>Download Markdown</button><span role="status" aria-live="polite"></span></div>
+<div class="wrap">
 <header><strong>X3 SHIELD / NEAR INTENTS</strong><nav><a href="./judge.html#nonce-reuse">Nonce-reuse scenario</a> · <a href="./index.html">Guard console</a></nav></header>
 <h1>BNB → NEAR <span class="flag">Live readiness gate</span></h1>
 <p class="lede">Real BSC token mapping, NEAR account validation, and a read-only 1Click quote attempt. No wallet signing, deposits, transfers, or settlement are performed by this page.</p>
@@ -59,4 +62,5 @@ rows("checks",[["Owner BSC wallet",d.wallet_ownership_proven?"Verified":"Not ver
 put("metadata","Observed "+d.recorded_at+" · Connector "+d.connector_revision+" · Clean worktree: "+d.connector_worktree_clean);
 }catch(e){put("route","Evidence unavailable: "+e.message);put("quote","No claim");put("proof","No claim");}
 </script>
+<script type="module" src="/page-export-controls.mjs"></script>
 </body></html>
