@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { CodeBlock, OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell } from "@/components/site-shell";
@@ -12,6 +12,7 @@ const RULES = [
   "Owner x3-owner.near. Agent x3-agent.near.",
   "Spend Solana.USDC. At most 50 USDC a payment, 200 USDC in 24 hours.",
   "Only recipient x3-demo.near. Only destination asset Near.USDC.",
+  "A failed swap refunds only to the owner's pinned Solana address.",
   "Slippage at most 1%. Fees at most 100 bps.",
   "Anything above 30 USDC needs the owner. Mandate expires in 30 days.",
 ];
@@ -93,7 +94,11 @@ function DemoPage() {
           </article>
         ) : (
           <p className="mx-auto mt-8 max-w-3xl text-center text-muted">
-            Neither button calls Guard. They replay the published local decision and point at the testnet receipts.
+            Neither button calls Guard. They replay the published local decision and point at the testnet receipts. To run the checker yourself on edited programs, open the{" "}
+            <Link to="/playground" className="text-primary underline underline-offset-4">
+              playground
+            </Link>
+            .
           </p>
         )}
       </Section>

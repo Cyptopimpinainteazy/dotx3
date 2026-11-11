@@ -8,6 +8,9 @@ const LINKS = [
   { to: "/docs", label: "Learn .x3" },
   { to: "/developers", label: "View the Code" },
   { to: "/proof", label: "Inspect the Proof" },
+  { to: "/playground", label: "Playground" },
+  { to: "/language", label: "Language" },
+  { to: "/back", label: "Back .x3" },
 ] as const;
 
 function isActive(path: string, to: string) {

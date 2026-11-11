@@ -11,10 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AgentsRouteImport } from './routes/agents'
+import { Route as BackRouteImport } from './routes/back'
 import { Route as DefiRouteImport } from './routes/defi'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DocsRouteImport } from './routes/docs'
+import { Route as LanguageRouteImport } from './routes/language'
+import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as ProofRouteImport } from './routes/proof'
 import { Route as ProofsRouteImport } from './routes/proofs'
 
@@ -26,6 +29,11 @@ const IndexRoute = IndexRouteImport.update({
 const AgentsRoute = AgentsRouteImport.update({
   id: '/agents',
   path: '/agents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BackRoute = BackRouteImport.update({
+  id: '/back',
+  path: '/back',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DefiRoute = DefiRouteImport.update({
@@ -48,6 +56,16 @@ const DocsRoute = DocsRouteImport.update({
   path: '/docs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LanguageRoute = LanguageRouteImport.update({
+  id: '/language',
+  path: '/language',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlaygroundRoute = PlaygroundRouteImport.update({
+  id: '/playground',
+  path: '/playground',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProofRoute = ProofRouteImport.update({
   id: '/proof',
   path: '/proof',
@@ -62,20 +80,26 @@ const ProofsRoute = ProofsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
+  '/back': typeof BackRoute
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
   '/docs': typeof DocsRoute
+  '/language': typeof LanguageRoute
+  '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
+  '/back': typeof BackRoute
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
   '/docs': typeof DocsRoute
+  '/language': typeof LanguageRoute
+  '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
 }
@@ -83,10 +107,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
+  '/back': typeof BackRoute
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
   '/docs': typeof DocsRoute
+  '/language': typeof LanguageRoute
+  '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
 }
@@ -95,30 +122,39 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/agents'
+    | '/back'
     | '/defi'
     | '/demo'
     | '/developers'
     | '/docs'
+    | '/language'
+    | '/playground'
     | '/proof'
     | '/proofs'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/agents'
+    | '/back'
     | '/defi'
     | '/demo'
     | '/developers'
     | '/docs'
+    | '/language'
+    | '/playground'
     | '/proof'
     | '/proofs'
   id:
     | '__root__'
     | '/'
     | '/agents'
+    | '/back'
     | '/defi'
     | '/demo'
     | '/developers'
     | '/docs'
+    | '/language'
+    | '/playground'
     | '/proof'
     | '/proofs'
   fileRoutesById: FileRoutesById
@@ -126,10 +162,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AgentsRoute: typeof AgentsRoute
+  BackRoute: typeof BackRoute
   DefiRoute: typeof DefiRoute
   DemoRoute: typeof DemoRoute
   DevelopersRoute: typeof DevelopersRoute
   DocsRoute: typeof DocsRoute
+  LanguageRoute: typeof LanguageRoute
+  PlaygroundRoute: typeof PlaygroundRoute
   ProofRoute: typeof ProofRoute
   ProofsRoute: typeof ProofsRoute
 }
@@ -148,6 +187,13 @@ declare module '@tanstack/react-router' {
       path: '/agents'
       fullPath: '/agents'
       preLoaderRoute: typeof AgentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/back': {
+      id: '/back'
+      path: '/back'
+      fullPath: '/back'
+      preLoaderRoute: typeof BackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/defi': {
@@ -178,6 +224,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/language': {
+      id: '/language'
+      path: '/language'
+      fullPath: '/language'
+      preLoaderRoute: typeof LanguageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/playground': {
+      id: '/playground'
+      path: '/playground'
+      fullPath: '/playground'
+      preLoaderRoute: typeof PlaygroundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/proof': {
       id: '/proof'
       path: '/proof'
@@ -198,10 +258,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgentsRoute: AgentsRoute,
+  BackRoute: BackRoute,
   DefiRoute: DefiRoute,
   DemoRoute: DemoRoute,
   DevelopersRoute: DevelopersRoute,
   DocsRoute: DocsRoute,
+  LanguageRoute: LanguageRoute,
+  PlaygroundRoute: PlaygroundRoute,
   ProofRoute: ProofRoute,
   ProofsRoute: ProofsRoute,
 }
