@@ -1,3 +1,4 @@
+import { ProviderIncidents } from '@/components/provider-incidents';
 import { createFileRoute } from "@tanstack/react-router";
 import { OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell } from "@/components/site-shell";
@@ -34,6 +35,7 @@ function ProofPage() {
       title="Testnet and local. Not mainnet."
       lede="Each row says which network it is. A signed 1Click quote is not a settlement. A Guard acceptance is not a transfer."
     >
+      <div className="mx-auto max-w-6xl px-5"><ProviderIncidents /></div>
       <Section title="CI and local gates">
         <div className="grid gap-4 md:grid-cols-2">
           <Row
