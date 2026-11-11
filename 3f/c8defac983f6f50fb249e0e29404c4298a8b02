@@ -1,0 +1,16 @@
+docs/REFERRALS.md
+  h_e41068bed968d7 4,6,12-17
+src/lib/partner-links.ts
+  h_e41068bed968d7 10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3fc8defac983f6f50fb249e0e29404c4298a8b02",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
