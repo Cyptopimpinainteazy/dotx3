@@ -19,3 +19,7 @@ jobs:
       - run: npm run test:x3
       - run: npm run typecheck
       - run: npm run build
+      - name: DEX regression suites
+        run: |
+          npm --prefix integrations/x3dex test
+          npm --prefix integrations/x3dex run test:server
