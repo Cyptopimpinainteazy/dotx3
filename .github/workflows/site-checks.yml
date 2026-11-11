@@ -46,7 +46,5 @@ jobs:
         run: test -s public/dex-terminal/index.html
       - name: Build the explicit standalone package
         run: npm --prefix integrations/x3dex run build:standalone
-      - name: Check both build artifacts remain available
-        run: |
-          test -s public/dex-terminal/index.html
-          test -s integrations/x3dex/dist/index.html
+      - name: Check both output layouts and asset URLs
+        run: node integrations/x3dex/scripts/check-build-outputs.mjs
