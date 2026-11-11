@@ -35,6 +35,30 @@ export const LINKS = {
   browserDemo: "https://x3-guard.pages.dev",
 } as const;
 
+/**
+ * The .X3 token and its liquidity pool. Both are null until they exist on NEAR mainnet.
+ * /back shows "not live" for each null field and never invents a value. When the token is
+ * deployed and the Rhea pool is created, set these from the finalized transactions.
+ */
+export const TOKEN: {
+  symbol: string;
+  standard: string;
+  contract: string | null;
+  deployTx: string | null;
+  rheaPoolId: number | null;
+  poolTx: string | null;
+} = {
+  symbol: ".X3",
+  standard: "NEP-141",
+  contract: null,
+  deployTx: null,
+  rheaPoolId: null,
+  poolTx: null,
+};
+
+export const RHEA_APP = "https://app.rhea.finance";
+export const NEAR_WALLETS = "https://wallet.near.org";
+
 export const PROGRAM_SHA = "1398f64e7e208d3796883aa59cb169187c1042ac1af3781bd6efc014755df860";
 
 export const MANDATE = `mandate x3_shopping_agent {
@@ -45,6 +69,7 @@ export const MANDATE = `mandate x3_shopping_agent {
     per_24h 200000000
     allow recipients x3-demo.near
     allow assets Near.USDC
+    refund_to 4Nd1mzi8Y1QYxJt9wZWBYZpG7S4pYkZs6YzD3Vt9aBcD
     require slippage <= 1%
     require fees <= 100 bps
     approve above 30000000 by 1 of x3-owner.near

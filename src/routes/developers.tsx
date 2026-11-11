@@ -43,7 +43,7 @@ python3 x3-lang/cli.py x3-lang/examples/arb_solana_eth.x3`}
         <CodeBlock
           title="Rust surface, workspace only"
           code={`cargo test --manifest-path x3-lang/Cargo.toml
-cargo run -p x3-tools --bin x3c -- parse x3-lang/examples/trading_core_v1.x3`}
+cargo run --manifest-path x3-lang/Cargo.toml -p x3-tools --bin x3c -- parse x3-lang/examples/trading_core_v1.x3`}
         />
         <p className="mt-4 text-sm text-muted">
           Releases page: <OutLink href={`${LINKS.repo}/releases`}>github.com/Cyptopimpinainteazy/x3lang/releases</OutLink>. Empty at last check. No checksum, no provenance file, no download.
@@ -85,10 +85,10 @@ cargo run -p x3-tools --bin x3c -- parse x3-lang/examples/trading_core_v1.x3`}
 
       <Section title="Doors that are not up yet" alt>
         <p className="text-muted">
-          {SITE} ships four working pages first: demo, docs, code, proof. These proposed routes are named so they are not pretended:
+          {SITE} ships the four working doors (demo, docs, code, proof) plus /playground, /language and /back. These proposed routes are named so they are not pretended:
         </p>
         <ul className="mt-4 grid gap-2 text-sm text-muted md:grid-cols-2">
-          <li>/about — language overview is the docs page for now</li>
+          <li>/about — the language overview is /language</li>
           <li>/shield — mandate and Guard limits are on the demo and proof pages</li>
           <li>/hackathon — one demo covers security, agents, and DeFi</li>
           <li>/security — reporting steps are in the repo SECURITY.md</li>

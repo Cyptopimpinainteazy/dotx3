@@ -11,11 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AgentsRouteImport } from './routes/agents'
+import { Route as BackRouteImport } from './routes/back'
 import { Route as DefiRouteImport } from './routes/defi'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DexRouteImport } from './routes/dex'
 import { Route as DocsRouteImport } from './routes/docs'
+import { Route as LanguageRouteImport } from './routes/language'
+import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as ProofRouteImport } from './routes/proof'
 import { Route as ProofsRouteImport } from './routes/proofs'
 import { Route as ApiX3dexSplatRouteImport } from './routes/api/x3dex/$'
@@ -28,6 +31,11 @@ const IndexRoute = IndexRouteImport.update({
 const AgentsRoute = AgentsRouteImport.update({
   id: '/agents',
   path: '/agents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BackRoute = BackRouteImport.update({
+  id: '/back',
+  path: '/back',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DefiRoute = DefiRouteImport.update({
@@ -55,6 +63,16 @@ const DocsRoute = DocsRouteImport.update({
   path: '/docs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LanguageRoute = LanguageRouteImport.update({
+  id: '/language',
+  path: '/language',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlaygroundRoute = PlaygroundRouteImport.update({
+  id: '/playground',
+  path: '/playground',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProofRoute = ProofRouteImport.update({
   id: '/proof',
   path: '/proof',
@@ -74,11 +92,14 @@ const ApiX3dexSplatRoute = ApiX3dexSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
+  '/back': typeof BackRoute
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/language': typeof LanguageRoute
+  '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
@@ -86,11 +107,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
+  '/back': typeof BackRoute
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/language': typeof LanguageRoute
+  '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
@@ -99,11 +123,14 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
+  '/back': typeof BackRoute
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/language': typeof LanguageRoute
+  '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
@@ -113,11 +140,14 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/agents'
+    | '/back'
     | '/defi'
     | '/demo'
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/language'
+    | '/playground'
     | '/proof'
     | '/proofs'
     | '/api/x3dex/$'
@@ -125,11 +155,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/agents'
+    | '/back'
     | '/defi'
     | '/demo'
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/language'
+    | '/playground'
     | '/proof'
     | '/proofs'
     | '/api/x3dex/$'
@@ -137,11 +170,14 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/agents'
+    | '/back'
     | '/defi'
     | '/demo'
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/language'
+    | '/playground'
     | '/proof'
     | '/proofs'
     | '/api/x3dex/$'
@@ -150,11 +186,14 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AgentsRoute: typeof AgentsRoute
+  BackRoute: typeof BackRoute
   DefiRoute: typeof DefiRoute
   DemoRoute: typeof DemoRoute
   DevelopersRoute: typeof DevelopersRoute
   DexRoute: typeof DexRoute
   DocsRoute: typeof DocsRoute
+  LanguageRoute: typeof LanguageRoute
+  PlaygroundRoute: typeof PlaygroundRoute
   ProofRoute: typeof ProofRoute
   ProofsRoute: typeof ProofsRoute
   ApiX3dexSplatRoute: typeof ApiX3dexSplatRoute
@@ -174,6 +213,13 @@ declare module '@tanstack/react-router' {
       path: '/agents'
       fullPath: '/agents'
       preLoaderRoute: typeof AgentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/back': {
+      id: '/back'
+      path: '/back'
+      fullPath: '/back'
+      preLoaderRoute: typeof BackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/defi': {
@@ -211,6 +257,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/language': {
+      id: '/language'
+      path: '/language'
+      fullPath: '/language'
+      preLoaderRoute: typeof LanguageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/playground': {
+      id: '/playground'
+      path: '/playground'
+      fullPath: '/playground'
+      preLoaderRoute: typeof PlaygroundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/proof': {
       id: '/proof'
       path: '/proof'
@@ -238,11 +298,14 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgentsRoute: AgentsRoute,
+  BackRoute: BackRoute,
   DefiRoute: DefiRoute,
   DemoRoute: DemoRoute,
   DevelopersRoute: DevelopersRoute,
   DexRoute: DexRoute,
   DocsRoute: DocsRoute,
+  LanguageRoute: LanguageRoute,
+  PlaygroundRoute: PlaygroundRoute,
   ProofRoute: ProofRoute,
   ProofsRoute: ProofsRoute,
   ApiX3dexSplatRoute: ApiX3dexSplatRoute,
