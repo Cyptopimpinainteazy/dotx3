@@ -2,7 +2,7 @@ import { S as require_jsx_runtime } from "../_libs/@tanstack/react-router+[...].
 import { o as Section, s as SiteShell } from "./site-shell-DW70_4Ol.mjs";
 import { n as OutLink, r as Tag, t as CodeBlock } from "./code-block-AVKNKds0.mjs";
 import { o as SITE, t as LINKS } from "./front-door-Q62Z724k.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/developers-pEyYpVEO.js
+//#region node_modules/.nitro/vite/services/ssr/assets/developers-DSPeB0C4.js
 var import_jsx_runtime = require_jsx_runtime();
 function DevelopersPage() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SiteShell, {
@@ -71,7 +71,7 @@ python3 x3-lang/cli.py x3-lang/examples/arb_solana_eth.x3`
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CodeBlock, {
 						title: "Rust surface, workspace only",
 						code: `cargo test --manifest-path x3-lang/Cargo.toml
-cargo run -p x3-tools --bin x3c -- parse x3-lang/examples/trading_core_v1.x3`
+cargo run --manifest-path x3-lang/Cargo.toml -p x3-tools --bin x3c -- parse x3-lang/examples/trading_core_v1.x3`
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 						className: "mt-4 text-sm text-muted",

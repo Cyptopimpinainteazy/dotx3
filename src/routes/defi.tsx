@@ -12,7 +12,7 @@ function DefiPage() {
       lede="The published route is one .x3 program: 1 test USDC from Base Sepolia to NEAR testnet. It is not an official 1Click mainnet settlement."
     >
       <RouteTicker />
-      <Section title="Hackathon mainnet trade">
+      <Section title="Hackathon testnet trade">
         <CardGrid>
           <Card title="What finalized">
             1.000000 test USDC left Base Sepolia. 0.997400 arrived on NEAR testnet. The relay was trusted. That is not atomic settlement.

@@ -146,3 +146,8 @@ export const QUOTES: { id: string; label: string; json: string }[] = [
   { id: "live", label: "25 USDC, Solana to NEAR", json: JSON.stringify(liveQuote, null, 2) },
   { id: "implicit", label: "Second captured quote", json: JSON.stringify(implicitQuote, null, 2) },
 ];
+
+// A fixture-only contract verdict applies only to its original programs.
+export function displayDecision(pristine: boolean, contractOnly: boolean, decision: import("./vendor/judge/judge.mjs").Decision): import("./vendor/judge/judge.mjs").ShownDecision {
+  return pristine && contractOnly ? "contract_only" : decision;
+}

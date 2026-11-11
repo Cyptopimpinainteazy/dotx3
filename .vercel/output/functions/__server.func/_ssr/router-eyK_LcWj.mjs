@@ -2,8 +2,8 @@ import { i as __toESM, n as __exportAll } from "../_runtime.mjs";
 import { J as require_react, S as require_jsx_runtime, _ as lazyRouteComponent, d as Scripts, f as HeadContent, g as Outlet, h as createRouter, v as createFileRoute, x as useRouter, y as createRootRoute } from "../_libs/@tanstack/react-router+[...].mjs";
 import { n as TriangleAlert } from "../_libs/lucide-react.mjs";
 import { a as union, i as string, n as number, r as object, t as literal } from "../_libs/zod.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-CbdTvJxt.js
-var router_CbdTvJxt_exports = /* @__PURE__ */ __exportAll({ getRouter: () => getRouter });
+//#region node_modules/.nitro/vite/services/ssr/assets/router-eyK_LcWj.js
+var router_eyK_LcWj_exports = /* @__PURE__ */ __exportAll({ getRouter: () => getRouter });
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var FALLBACK_MESSAGE = "An unexpected error occurred. Try reloading the page.";
@@ -385,23 +385,23 @@ var Route$11 = createRootRoute({
 		] })]
 	})
 });
-var $$splitComponentImporter$10 = () => import("./routes-DH6R47Kn.mjs");
+var $$splitComponentImporter$10 = () => import("./routes-C8P1rKQJ.mjs");
 var Route$10 = createFileRoute("/")({ component: lazyRouteComponent($$splitComponentImporter$10, "component") });
 var $$splitComponentImporter$9 = () => import("./agents-BWkQ1CwP.mjs");
 var Route$9 = createFileRoute("/agents")({ component: lazyRouteComponent($$splitComponentImporter$9, "component") });
-var $$splitComponentImporter$8 = () => import("./back-B76mKZt2.mjs");
+var $$splitComponentImporter$8 = () => import("./back-VWMhx_7A.mjs");
 var Route$8 = createFileRoute("/back")({ component: lazyRouteComponent($$splitComponentImporter$8, "component") });
-var $$splitComponentImporter$7 = () => import("./defi-Dtu583Az.mjs");
+var $$splitComponentImporter$7 = () => import("./defi-D328OOcM.mjs");
 var Route$7 = createFileRoute("/defi")({ component: lazyRouteComponent($$splitComponentImporter$7, "component") });
 var $$splitComponentImporter$6 = () => import("./demo-BhAKrXkj.mjs");
 var Route$6 = createFileRoute("/demo")({ component: lazyRouteComponent($$splitComponentImporter$6, "component") });
-var $$splitComponentImporter$5 = () => import("./developers-pEyYpVEO.mjs");
+var $$splitComponentImporter$5 = () => import("./developers-DSPeB0C4.mjs");
 var Route$5 = createFileRoute("/developers")({ component: lazyRouteComponent($$splitComponentImporter$5, "component") });
 var $$splitComponentImporter$4 = () => import("./docs-DpX-abMn.mjs");
 var Route$4 = createFileRoute("/docs")({ component: lazyRouteComponent($$splitComponentImporter$4, "component") });
 var $$splitComponentImporter$3 = () => import("./language-BOY7rOHc.mjs");
 var Route$3 = createFileRoute("/language")({ component: lazyRouteComponent($$splitComponentImporter$3, "component") });
-var $$splitComponentImporter$2 = () => import("./playground-B3AlYxlw.mjs");
+var $$splitComponentImporter$2 = () => import("./playground-B0BbvxaM.mjs");
 var Route$2 = createFileRoute("/playground")({ component: lazyRouteComponent($$splitComponentImporter$2, "component") });
 var $$splitComponentImporter$1 = () => import("./proof-cmJm2lw4.mjs");
 var Route$1 = createFileRoute("/proof")({ component: lazyRouteComponent($$splitComponentImporter$1, "component") });
@@ -473,4 +473,4 @@ function getRouter() {
 	});
 }
 //#endregion
-export { getRouter, router_CbdTvJxt_exports as t };
+export { getRouter, router_eyK_LcWj_exports as t };

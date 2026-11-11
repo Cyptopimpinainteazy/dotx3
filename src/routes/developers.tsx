@@ -43,7 +43,7 @@ python3 x3-lang/cli.py x3-lang/examples/arb_solana_eth.x3`}
         <CodeBlock
           title="Rust surface, workspace only"
           code={`cargo test --manifest-path x3-lang/Cargo.toml
-cargo run -p x3-tools --bin x3c -- parse x3-lang/examples/trading_core_v1.x3`}
+cargo run --manifest-path x3-lang/Cargo.toml -p x3-tools --bin x3c -- parse x3-lang/examples/trading_core_v1.x3`}
         />
         <p className="mt-4 text-sm text-muted">
           Releases page: <OutLink href={`${LINKS.repo}/releases`}>github.com/Cyptopimpinainteazy/x3lang/releases</OutLink>. Empty at last check. No checksum, no provenance file, no download.

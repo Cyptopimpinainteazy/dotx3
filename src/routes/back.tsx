@@ -77,7 +77,7 @@ const MILESTONES: { title: string; proof: string }[] = [
 
 function BackPage() {
   const tokenLive = TOKEN.contract !== null;
-  const poolLive = TOKEN.rheaPoolId !== null;
+  const poolLive = tokenLive && TOKEN.rheaPoolId !== null;
 
   return (
     <SiteShell

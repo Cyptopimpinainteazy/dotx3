@@ -2,7 +2,7 @@ import { S as require_jsx_runtime, b as Link } from "../_libs/@tanstack/react-ro
 import { o as Section, s as SiteShell } from "./site-shell-DW70_4Ol.mjs";
 import { n as OutLink, r as Tag } from "./code-block-AVKNKds0.mjs";
 import { a as RHEA_APP, r as NEAR_WALLETS, s as TOKEN, t as LINKS } from "./front-door-Q62Z724k.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/back-B76mKZt2.js
+//#region node_modules/.nitro/vite/services/ssr/assets/back-VWMhx_7A.js
 var import_jsx_runtime = require_jsx_runtime();
 function StatusRow({ label, status, detail }) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
@@ -67,7 +67,7 @@ var MILESTONES = [
 ];
 function BackPage() {
 	const tokenLive = TOKEN.contract !== null;
-	const poolLive = TOKEN.rheaPoolId !== null;
+	const poolLive = tokenLive && TOKEN.rheaPoolId !== null;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SiteShell, {
 		eyebrow: "Back .x3",
 		title: "Provide liquidity, invest, or build with us.",
