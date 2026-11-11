@@ -1,0 +1,20 @@
+INTEGRATIONS.md
+  h_e41068bed968d7 40
+audit-artifacts/dotx3-docs-20261111/combined-verification.json
+  h_e41068bed968d7 1-148
+docs/HANDOFF.md
+  h_e41068bed968d7 5,16
+tests/test_compiler_api.py
+  h_e41068bed968d7 100-127
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e2c1dc5e47b41f77766780621efbb8e4e6faf103",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
