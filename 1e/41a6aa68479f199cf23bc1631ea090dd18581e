@@ -1,0 +1,20 @@
+.codex/config.toml
+  h_e41068bed968d7 1-12
+README.md
+  h_e41068bed968d7 47-48
+docs/NEAR_BUILDERS_MCP.md
+  h_e41068bed968d7 1-31
+scripts/codex-near-builders.py
+  h_e41068bed968d7 1-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1e41a6aa68479f199cf23bc1631ea090dd18581e",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
