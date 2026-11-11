@@ -6,7 +6,7 @@ import { Circuit } from "@/components/circuit";
 const LINKS = [
   { to: "/dex", label: "DEX" },
   { to: "/demo", label: "Try the Demo" },
-  { to: "/docs", label: "Learn .x3" },
+  { to: "/bootcamp", label: "Bootcamp" },
   { to: "/developers", label: "View the Code" },
   { to: "/proof", label: "Inspect the Proof" },
   { to: "/playground", label: "Playground" },

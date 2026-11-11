@@ -12,6 +12,7 @@ function DocsPage() {
       title="Write the rule. The agent does not get to waive it."
       lede="X3 is the owner's typed policy and the agent's payment program. A deterministic compiler and x3-guard on NEAR compare them. Model output never authorizes a deposit."
     >
+      <div className="mx-auto max-w-6xl px-5 pt-8"><a href="/bootcamp" className="tap inline-flex min-h-11 items-center rounded-lg border border-border px-5 text-primary">Enter Bootcamp — the in-depth .x3 developer course →</a></div>
       <Section title="Quickstart">
         <p className="text-muted">
           From the repository root. Steps 1 to 8 in the README are offline after install: no wallet, no API key, nothing signed. The README records that walkthrough at commit <span className="text-fg">c5a4e39</span>. Confirm the current tip before you quote a pass count.
