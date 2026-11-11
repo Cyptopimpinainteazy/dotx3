@@ -83,6 +83,26 @@ cargo run --manifest-path x3-lang/Cargo.toml -p x3-tools --bin x3c -- parse x3-l
         </p>
       </Section>
 
+      <Section title="Choose the NEAR integration level">
+        <p className="text-muted">
+          1Click handles the higher-level swap workflow. The separate{" "}
+          <OutLink href="https://docs.near-intents.org/integration/devkit/intents-sdk">
+            Intents SDK
+          </OutLink>{" "}
+          exposes lower-level intent execution and withdrawals. Official NEAR Intents has no testnet
+          version; our historical Tidepool testnet delivery is a separate trusted-relay experiment.
+          X3 Shield is also separate from{" "}
+          <OutLink href="https://docs.near-intents.org/security-compliance/proactive-intents-security">
+            official NEAR SHIELD
+          </OutLink>
+          .
+        </p>
+        <p className="mt-4 text-sm text-muted">
+          An explorer helps inspect records; an API key enables provider access. Neither establishes
+          a funded swap or destination settlement. Keep distribution-channel credentials on the
+          server.
+        </p>
+      </Section>
       <Section title="1Click integration">
         <p className="text-muted">
           Same four calls a person or an agent uses. Docs:{" "}
