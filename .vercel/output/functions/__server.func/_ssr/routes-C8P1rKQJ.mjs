@@ -3,7 +3,7 @@ import { J as require_react, S as require_jsx_runtime } from "../_libs/@tanstack
 import { a as RouteTicker, i as ProofFlow, n as Card, o as Section, r as CardGrid, s as SiteShell, t as ActionLink } from "./site-shell-DW70_4Ol.mjs";
 import { o as SITE } from "./front-door-Q62Z724k.mjs";
 import { a as Group, c as LineSegments, d as OctahedronGeometry, f as PerspectiveCamera, h as TorusGeometry, i as Float32BufferAttribute, l as Mesh, m as SphereGeometry, n as BufferGeometry, o as IcosahedronGeometry, p as Scene, r as Clock, s as LineBasicMaterial, t as WebGLRenderer, u as MeshBasicMaterial } from "../_libs/three.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-DH6R47Kn.js
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-C8P1rKQJ.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function fit(renderer, camera, el) {
@@ -287,7 +287,7 @@ function Meter() {
 				"aria-valuenow": raised,
 				"aria-valuemin": 0,
 				"aria-valuemax": GOAL,
-				"aria-label": "Raised from Base, Solana, and NEAR toward $100,000,000,000",
+				"aria-label": "Marked in this browser toward the displayed goal; not verified funds raised",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: `flex h-full items-center justify-end bg-primary pr-3 text-xs font-semibold text-bg transition-[width] duration-500 ${raised > 0 ? "meter-sheen" : ""}`,
 					style: { width: `${Math.max(pct, raised > 0 ? 8 : 0)}%` },
@@ -487,7 +487,7 @@ function Home() {
 				] })
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
-				title: "Mainnet trade demo",
+				title: "Testnet trade demo",
 				alt: true,
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("figure", {
 					className: "mx-auto max-w-3xl overflow-hidden rounded-xl border border-border bg-bg",

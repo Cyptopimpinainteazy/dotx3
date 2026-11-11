@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell } from "@/components/site-shell";
 import { LINKS } from "@/lib/front-door";
-import { ATTACKS, DATA, PRESETS, QUOTES, applyAttack, type Attack } from "@/lib/x3/playground";
+import { ATTACKS, DATA, PRESETS, QUOTES, applyAttack, displayDecision, type Attack } from "@/lib/x3/playground";
 import * as judge from "@/lib/x3/vendor/judge/judge.mjs";
 import * as x3 from "@/lib/x3/vendor/x3guard.mjs";
 
@@ -14,6 +14,7 @@ const VENDOR_URL = `${LINKS.repo}/blob/${VENDOR_COMMIT}/x3-lang/near/demo/x3guar
 
 type Outcome =
   | { kind: "idle" }
+  | { kind: "runtime_error"; code: string; message: string; line: number | null }
   | { kind: "compile_error"; code: string; message: string; line: number | null }
   | {
       kind: "evaluated";
@@ -83,14 +84,14 @@ function PlaygroundPage() {
         const pristine = intent === preset.intent && mandate === DATA.mandate.source;
         setOutcome({
           kind: "evaluated",
-          shown: judge.shownDecision(preset.scenario, result),
+          shown: displayDecision(pristine, preset.scenario.contract_only, result.decision),
           result,
           matchesPython: pristine ? judge.agrees(preset.scenario, result) : null,
           intentSha,
           mandateSha,
         });
       } catch (e) {
-        if (!cancelled) setOutcome({ kind: "compile_error", ...errorOf(e) });
+        if (!cancelled) setOutcome({ kind: e instanceof x3.X3Error ? "compile_error" : "runtime_error", ...errorOf(e) });
       }
     }, 150);
     return () => {
@@ -278,6 +279,12 @@ function Verdict({
   contractTests: string[];
 }) {
   if (outcome.kind === "idle") return <p className="text-center text-muted">Checking…</p>;
+  if (outcome.kind === "runtime_error") return (
+    <article aria-live="polite" className="mx-auto max-w-3xl rounded-xl border border-accent p-6">
+      <h3>Checker unavailable</h3><p>{outcome.message}</p>
+      <p>No policy verdict was produced. Use HTTPS or localhost with WebCrypto support.</p>
+    </article>
+  );
   if (outcome.kind === "compile_error") {
     return (
       <article

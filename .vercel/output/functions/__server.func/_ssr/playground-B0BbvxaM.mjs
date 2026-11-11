@@ -3,7 +3,7 @@ import { J as require_react, S as require_jsx_runtime, b as Link } from "../_lib
 import { o as Section, s as SiteShell } from "./site-shell-DW70_4Ol.mjs";
 import { n as OutLink, r as Tag } from "./code-block-AVKNKds0.mjs";
 import { t as LINKS } from "./front-door-Q62Z724k.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/playground-B3AlYxlw.js
+//#region node_modules/.nitro/vite/services/ssr/assets/playground-B0BbvxaM.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var scenarios_default = {
@@ -1118,6 +1118,9 @@ var QUOTES = [{
 	label: "Second captured quote",
 	json: JSON.stringify(near_intents_quote_dry_implicit_capture_default, null, 2)
 }];
+function displayDecision(pristine, contractOnly, decision) {
+	return pristine && contractOnly ? "contract_only" : decision;
+}
 var ONE_CLICK_MANAGER_PUBLIC_KEY = "ed25519:reYaWhvwu8Jzo3WUM3zhn6VrhuMEF4eADL17qtRVifc";
 var X3Error = class extends Error {
 	constructor(code, message, { line = null, field = null, detail = null } = {}) {
@@ -2453,10 +2456,6 @@ async function evaluate(data, scenario) {
 		decision
 	};
 }
-/** The decision a judge should see. A contract-only case never shows as "passed". */
-function shownDecision(scenario, result) {
-	return scenario.contract_only ? "contract_only" : result.decision;
-}
 /** True when the browser and Python reached the same decision through the same guards. */
 function agrees(scenario, result) {
 	const py = scenario.python;
@@ -2534,7 +2533,7 @@ function PlaygroundPage() {
 				const pristine = intent === preset.intent && mandate === DATA.mandate.source;
 				setOutcome({
 					kind: "evaluated",
-					shown: shownDecision(preset.scenario, result),
+					shown: displayDecision(pristine, preset.scenario.contract_only, result.decision),
 					result,
 					matchesPython: pristine ? agrees(preset.scenario, result) : null,
 					intentSha,
@@ -2542,7 +2541,7 @@ function PlaygroundPage() {
 				});
 			} catch (e) {
 				if (!cancelled) setOutcome({
-					kind: "compile_error",
+					kind: e instanceof X3Error ? "compile_error" : "runtime_error",
 					...errorOf(e)
 				});
 			}
@@ -2740,6 +2739,15 @@ function Verdict({ outcome, expected, contractNote, contractTests }) {
 	if (outcome.kind === "idle") return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 		className: "text-center text-muted",
 		children: "Checking…"
+	});
+	if (outcome.kind === "runtime_error") return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
+		"aria-live": "polite",
+		className: "mx-auto max-w-3xl rounded-xl border border-accent p-6",
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { children: "Checker unavailable" }),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: outcome.message }),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "No policy verdict was produced. Use HTTPS or localhost with WebCrypto support." })
+		]
 	});
 	if (outcome.kind === "compile_error") return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {
 		className: "mx-auto max-w-3xl rounded-xl border border-accent bg-surface p-6",

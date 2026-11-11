@@ -11,7 +11,7 @@ import { readFileSync } from "node:fs";
 import * as judge from "./vendor/judge/judge.mjs";
 import * as x3 from "./vendor/x3guard.mjs";
 import { MANDATE } from "../front-door.ts";
-import { PRESETS, applyAttack, ATTACKS } from "./playground.ts";
+import { PRESETS, applyAttack, ATTACKS, displayDecision } from "./playground.ts";
 
 const vendor = new URL("./vendor/", import.meta.url);
 const read = (path: string) => readFileSync(new URL(path, vendor));
@@ -91,4 +91,20 @@ test("both captured 1Click quotes verify, and one changed digit breaks the signa
     quote.quote.minAmountOut = String(BigInt(quote.quote.minAmountOut) + 1n);
     assert.equal((await x3.checkQuoteSignature(quote)).valid, false, name);
   }
+});
+
+test("editing the replay fixture exposes the actual local refusal", async () => {
+  const scenario = DATA.scenarios.find(s => s.contract_only);
+  assert.ok(scenario);
+  const pristine = await judge.evaluate(DATA, scenario);
+  assert.equal(displayDecision(true, true, pristine.decision), "contract_only");
+  const attack = ATTACKS.find(a => a.stop === "mandate_recipient");
+  assert.ok(attack);
+  const result = await judge.evaluate(DATA, {
+    intent: { ...scenario.intent, source: applyAttack(scenario.intent.source, attack) },
+    assumed_guard_state: scenario.assumed_guard_state,
+  });
+  assert.equal(result.decision, "denied_by_policy");
+  assert.equal(displayDecision(false, true, result.decision), "denied_by_policy");
+  assert.equal(displayDecision(false, true, "preflight_passed"), "preflight_passed");
 });

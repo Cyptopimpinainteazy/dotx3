@@ -125,7 +125,7 @@ function Meter() {
   return (
     <div className="mx-auto max-w-4xl">
       <MeterScene progress={raised / GOAL} />
-      <div className="h-8 overflow-hidden rounded-full bg-surface-2" role="meter" aria-valuenow={raised} aria-valuemin={0} aria-valuemax={GOAL} aria-label="Raised from Base, Solana, and NEAR toward $100,000,000,000">
+      <div className="h-8 overflow-hidden rounded-full bg-surface-2" role="meter" aria-valuenow={raised} aria-valuemin={0} aria-valuemax={GOAL} aria-label="Marked in this browser toward the displayed goal; not verified funds raised">
         <div
           className={`flex h-full items-center justify-end bg-primary pr-3 text-xs font-semibold text-bg transition-[width] duration-500 ${raised > 0 ? "meter-sheen" : ""}`}
           style={{ width: `${Math.max(pct, raised > 0 ? 8 : 0)}%` }}
@@ -278,7 +278,7 @@ function Home() {
         />
       </Section>
 
-      <Section title="Mainnet trade demo" alt>
+      <Section title="Testnet trade demo" alt>
         <figure className="mx-auto max-w-3xl overflow-hidden rounded-xl border border-border bg-bg">
           <video
             className="scan aspect-video w-full bg-bg"
