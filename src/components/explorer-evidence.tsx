@@ -28,7 +28,7 @@ export function ExplorerEvidence() {
     finally {setBusy(false);}
   }
   return <div className="space-y-4">
-    <p className="text-muted">Historical 1Click records · provider-reported · independently verified: no. These records do not establish X3 Guard authorization or cross-chain atomicity.</p>
+    <p className="text-muted">This panel reads live NEAR Intents Explorer history when configured. Records are provider-reported · network and chain finality: unverified · independently verified: no. They do not establish X3 Guard authorization or cross-chain atomicity.</p>
     <div className="flex flex-wrap items-end gap-3">
       <label className="text-sm text-muted">Reported status
         <select className="ml-3 min-h-11 rounded border border-border bg-surface p-2 text-fg" value={status} disabled={busy}

@@ -32,8 +32,8 @@ function ProofPage() {
   return (
     <SiteShell
       eyebrow="Inspect the Proof"
-      title="Testnet and local. Not mainnet."
-      lede="Each row says which network it is. A signed 1Click quote is not a settlement. A Guard acceptance is not a transfer."
+      title="Evidence by source and network."
+      lede="Local tests, testnet receipts and live provider history are labeled separately. A signed 1Click quote is not a settlement. A Guard acceptance is not a transfer."
     >
       <Section title="1Click Explorer history"><ExplorerEvidence /></Section>
 

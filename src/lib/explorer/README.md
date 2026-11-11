@@ -32,6 +32,11 @@ lock before contacting the provider, and retains at least five seconds of
 cooldown after completion. HTTP 429 extends cooldown using Retry-After.
 There is no background polling or automatic retry storm.
 
+Cache hits are validated again before the API returns them. The client rebuilds
+the fixed provider-reported evidence fields and cursor, drops unknown fields,
+and refuses malformed records or timestamps. Cached data cannot enable execution
+or claim independent verification.
+
 ## Read history
 
 ```sh
@@ -70,4 +75,6 @@ https://explorer.near-intents.org/api/v0/openapi.yaml
 https://docs.near-intents.org/integration/distribution-channels/1click-api/explorer/introduction
 
 Vendored from x3lang `x3-lang/near/explorer/client.mjs`.
-SHA-256: `300001da73192ab1ca0234f871f317d0f63aedd8958f4b8c44e08f398ab67924`.
+Source commit: `d485571148158a52c7df0276a0597480893d2a4a`.
+[Exact upstream source](https://github.com/Cyptopimpinainteazy/x3lang/blob/d485571148158a52c7df0276a0597480893d2a4a/x3-lang/near/explorer/client.mjs).
+SHA-256: `419da121042c0127088d9dfee2320b90ac71423d37f28c3dab5736428cc539d1`.
