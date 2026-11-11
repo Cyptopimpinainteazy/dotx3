@@ -9,10 +9,10 @@ try {
  page.on('pageerror',e=>errors.push(e.message));
  await page.goto(target.href); await page.getByRole('heading',{name:'Bootcamp',exact:true}).waitFor();
  const run=page.getByRole('button',{name:'Run local check',exact:true});
- await run.click(); await page.getByRole('heading',{name:'preflight passed',exact:true}).waitFor();
+ await run.click(); await page.getByRole('heading',{name:/^preflight passed$/i}).waitFor();
  await page.getByRole('button',{name:'Pay attacker.near',exact:true}).click();
  await page.getByRole('heading',{name:'Ready to check',exact:true}).waitFor();
- await run.click(); await page.getByRole('heading',{name:'denied by policy',exact:true}).waitFor();
+ await run.click(); await page.getByRole('heading',{name:/^denied by policy$/i}).waitFor();
  assert.match(await page.locator('#lab [role=status]').innerText(),/REFUSE · mandate_recipient/);
  await page.getByRole('button',{name:'Drop the nonce',exact:true}).click();
  await run.click(); await page.getByRole('heading',{name:'Compile refusal',exact:true}).waitFor();

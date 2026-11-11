@@ -147,6 +147,7 @@ function authPopupPlugin(): Plugin {
 // AGENTS.md § "First scaffold".
 export default defineConfig(({ command, isPreview }) => ({
   server: {
+    proxy: { "/api/compile": { target: "http://127.0.0.1:8794" } },
     host: "0.0.0.0",
     port: 8080,
     strictPort: true,

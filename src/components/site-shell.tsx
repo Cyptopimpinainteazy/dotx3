@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Circuit } from "@/components/circuit";
 
 const LINKS = [
+  { to: "/labs", label: "Labs & integrations" },
   { to: "/dex", label: "DEX" },
   { to: "/demo", label: "Try the Demo" },
   { to: "/bootcamp", label: "Bootcamp" },
