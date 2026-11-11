@@ -44,3 +44,9 @@ jobs:
         run: npm --prefix integrations/x3dex run build
       - name: Check embedded output
         run: test -s public/dex-terminal/index.html
+      - name: Build the explicit standalone package
+        run: npm --prefix integrations/x3dex run build:standalone
+      - name: Check both build artifacts remain available
+        run: |
+          test -s public/dex-terminal/index.html
+          test -s integrations/x3dex/dist/index.html

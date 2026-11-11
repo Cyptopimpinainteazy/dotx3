@@ -12,7 +12,8 @@
     "start": "node server/index.mjs",
     "test:server": "node --test server/*.test.mjs",
     "test:gate": "node --test scripts/*.test.mjs",
-    "gate:mainnet": "node scripts/mainnet-gate.mjs"
+    "gate:mainnet": "node scripts/mainnet-gate.mjs",
+    "build:standalone": "tsc -b && vite build --mode standalone"
   },
   "dependencies": {
     "@types/node": "^24.19.2",

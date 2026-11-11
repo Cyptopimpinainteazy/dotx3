@@ -63,8 +63,14 @@ The separate `dex-production-install` CI job installs only this package with
 packages. This reproduces the missing-`tsc` failure seen in the Vercel `x3dex`
 project on 2026-11-11 without deploying anything.
 
-This verifies the existing embedded output at `public/dex-terminal`, served under
-`/dex-terminal/` by dotx3. It does not establish a standalone `x3dex` deployment:
-that project's intended root, output directory, route base and access settings
-still need to be checked before publication. No hosting settings, domains,
-analytics collection or execution permissions are changed by this build repair.
+The default `npm run build` retains embedded output at `public/dex-terminal`,
+served under `/dex-terminal/` by dotx3. The explicit `npm run build:standalone`
+uses Vite's `standalone` mode to emit `integrations/x3dex/dist` with `/` as the
+route base. The nested `integrations/x3dex/vercel.json` selects that command and
+output for the separate Vercel project rooted in this package. Root dotx3 builds
+do not infer standalone mode from Vercel environment variables.
+
+Both artifact layouts are checked in CI. No Vercel project settings, custom domains,
+analytics collection or execution permissions are changed. A successful build is
+not evidence of public publication; record preview protection and the served
+commit separately before promoting a release.
