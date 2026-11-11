@@ -74,3 +74,27 @@ Both artifact layouts are checked in CI. No Vercel project settings, custom doma
 analytics collection or execution permissions are changed. A successful build is
 not evidence of public publication; record preview protection and the served
 commit separately before promoting a release.
+
+
+## Optional telemetry stays off until verified
+
+Speed Insights in the root site and Web Analytics in the embedded DEX are
+implemented integrations, disabled by default. Local production browser checks
+on 2026-11-11 observed 404 responses from their provider-only paths,
+`/_vercel/speed-insights/script.js` and `/_vercel/insights/script.js`, when mounted
+on a local server. A package import or successful build does not verify those
+endpoints, project enablement, or collection.
+
+Only the exact build-time string `true` enables the corresponding mount:
+
+| Build target | Opt-in variable |
+| --- | --- |
+| Root dotx3 site | `VITE_ENABLE_SPEED_INSIGHTS=true` |
+| Embedded or standalone x3dex | `VITE_ENABLE_WEB_ANALYTICS=true` |
+
+Leave these variables unset for local review and hosts without verified provider
+endpoints. Before enabling collection, verify the intended deployment, provider
+configuration and applicable approval. These flags contain no credentials and
+require rebuilding the relevant target; they do not enable a provider project.
+A browser test using an intercepted script response proves only that the opt-in
+mount works with a fixture. It does not establish live telemetry delivery.

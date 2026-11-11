@@ -37,7 +37,7 @@ export const Route = createRootRoute({
           <Outlet />
         </AuthProvider>
         <Scripts />
-        <SpeedInsights />
+        {import.meta.env.VITE_ENABLE_SPEED_INSIGHTS === "true" && <SpeedInsights />}
       </body>
     </html>
   ),

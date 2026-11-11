@@ -7,6 +7,6 @@ import App from './App.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
-    <Analytics />
+    {import.meta.env.VITE_ENABLE_WEB_ANALYTICS === 'true' && <Analytics />}
   </StrictMode>,
 )
