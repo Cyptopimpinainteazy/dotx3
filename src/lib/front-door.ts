@@ -56,6 +56,56 @@ export const TOKEN: {
   poolTx: null,
 };
 
+export interface Milestone {
+  title: string;
+  /** What has to be published for this milestone to count. */
+  proof: string;
+  /** Set only when that proof is public: a finalized transaction, a merged PR, a report. */
+  evidence: { label: string; href: string } | null;
+}
+
+/**
+ * The milestones backers can watch. /back lists them and the home page meter counts the
+ * ones with evidence. A milestone without a public link stays pending.
+ */
+export const MILESTONES: Milestone[] = [
+  {
+    title: "Scoped agent vault on testnet",
+    proof:
+      "One allowed payment, plus recorded refusals for over-cap, wrong recipient, 24-hour window and redirected refund.",
+    evidence: null,
+  },
+  {
+    title: "One mainnet 1Click swap through Guard",
+    proof:
+      "The signed quote, the Guard authorization, the deposit, and the delivery, each with a finalized transaction hash.",
+    evidence: null,
+  },
+  {
+    title: "Hostile model refused on mainnet",
+    proof:
+      "A red-team model's payments go through the same restricted key, and each refusal is on chain with an attack label.",
+    evidence: null,
+  },
+  {
+    title: "Guard checks the program hash",
+    proof:
+      "An approved mandate carries only the exact .x3 program the owner saw. Contract tests cover a mismatched hash.",
+    evidence: null,
+  },
+  {
+    title: "Independent security review",
+    proof: "A published report on Guard and the vault, with every finding and its fix.",
+    evidence: null,
+  },
+  {
+    title: "Tagged release",
+    proof:
+      "A GitHub release with a checksum and build provenance, so nobody has to trust a branch tip.",
+    evidence: null,
+  },
+];
+
 export const RHEA_APP = "https://app.rhea.finance";
 export const NEAR_WALLETS = "https://wallet.near.org";
 
