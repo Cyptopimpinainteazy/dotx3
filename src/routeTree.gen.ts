@@ -14,9 +14,11 @@ import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as DefiRouteImport } from './routes/defi'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as DevelopersRouteImport } from './routes/developers'
+import { Route as DexRouteImport } from './routes/dex'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as ProofRouteImport } from './routes/proof'
 import { Route as ProofsRouteImport } from './routes/proofs'
+import { Route as ApiX3dexSplatRouteImport } from './routes/api/x3dex/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -43,6 +45,11 @@ const DevelopersRoute = DevelopersRouteImport.update({
   path: '/developers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DexRoute = DexRouteImport.update({
+  id: '/dex',
+  path: '/dex',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DocsRoute = DocsRouteImport.update({
   id: '/docs',
   path: '/docs',
@@ -58,6 +65,11 @@ const ProofsRoute = ProofsRouteImport.update({
   path: '/proofs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiX3dexSplatRoute = ApiX3dexSplatRouteImport.update({
+  id: '/api/x3dex/$',
+  path: '/api/x3dex/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -65,9 +77,11 @@ export interface FileRoutesByFullPath {
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
+  '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
+  '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -75,9 +89,11 @@ export interface FileRoutesByTo {
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
+  '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
+  '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -86,9 +102,11 @@ export interface FileRoutesById {
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
+  '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
+  '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -98,9 +116,11 @@ export interface FileRouteTypes {
     | '/defi'
     | '/demo'
     | '/developers'
+    | '/dex'
     | '/docs'
     | '/proof'
     | '/proofs'
+    | '/api/x3dex/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -108,9 +128,11 @@ export interface FileRouteTypes {
     | '/defi'
     | '/demo'
     | '/developers'
+    | '/dex'
     | '/docs'
     | '/proof'
     | '/proofs'
+    | '/api/x3dex/$'
   id:
     | '__root__'
     | '/'
@@ -118,9 +140,11 @@ export interface FileRouteTypes {
     | '/defi'
     | '/demo'
     | '/developers'
+    | '/dex'
     | '/docs'
     | '/proof'
     | '/proofs'
+    | '/api/x3dex/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -129,9 +153,11 @@ export interface RootRouteChildren {
   DefiRoute: typeof DefiRoute
   DemoRoute: typeof DemoRoute
   DevelopersRoute: typeof DevelopersRoute
+  DexRoute: typeof DexRoute
   DocsRoute: typeof DocsRoute
   ProofRoute: typeof ProofRoute
   ProofsRoute: typeof ProofsRoute
+  ApiX3dexSplatRoute: typeof ApiX3dexSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -171,6 +197,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DevelopersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dex': {
+      id: '/dex'
+      path: '/dex'
+      fullPath: '/dex'
+      preLoaderRoute: typeof DexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/docs': {
       id: '/docs'
       path: '/docs'
@@ -192,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProofsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/x3dex/$': {
+      id: '/api/x3dex/$'
+      path: '/api/x3dex/$'
+      fullPath: '/api/x3dex/$'
+      preLoaderRoute: typeof ApiX3dexSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -201,9 +241,11 @@ const rootRouteChildren: RootRouteChildren = {
   DefiRoute: DefiRoute,
   DemoRoute: DemoRoute,
   DevelopersRoute: DevelopersRoute,
+  DexRoute: DexRoute,
   DocsRoute: DocsRoute,
   ProofRoute: ProofRoute,
   ProofsRoute: ProofsRoute,
+  ApiX3dexSplatRoute: ApiX3dexSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
