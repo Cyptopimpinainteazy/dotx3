@@ -15,6 +15,7 @@
     "gate:mainnet": "node scripts/mainnet-gate.mjs"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "lightweight-charts": "^5.2.1",
     "lucide-react": "^1.70.0",
     "react": "^19.3.1",
