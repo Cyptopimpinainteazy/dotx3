@@ -48,3 +48,23 @@ Use DNS-only while verifying. Preserve other TXT verification values. Re-run pro
 Vercel CLI 65.14.0 is installed and authenticated as `cyptopimpinainteazy`. This checkout is linked to the existing `dotx3` project. The official shared `https://mcp.vercel.com` endpoint was added to user-wide Codex configuration and OAuth completed. The existing Vercel plugin guidance remains installed. Documentation search and authenticated team listing succeeded through the connected Vercel app. Setup followed [Vercel's onboarding guide](https://vercel.com/get-started.md).
 
 Vercel also returned a Cloudflare Domain Connect flow for this project domain. Use the project dashboard's Domains page to apply that flow; the required DNS records above remain the manual alternative.
+
+## Embedded DEX build dependency contract
+
+The embedded DEX is built from `integrations/x3dex`. Its build runs TypeScript
+before Vite, including the existing source test files. TypeScript, Vite, the React
+plugin, their type packages and Vitest therefore belong to its installed build
+dependencies even when the hosting install uses `--omit=dev`. The lockfile keeps
+the same package versions; only dependency classification changes. Oxlint stays
+an optional development dependency.
+
+The separate `dex-production-install` CI job installs only this package with
+`--omit=dev --ignore-scripts` and builds it before installing any parent app
+packages. This reproduces the missing-`tsc` failure seen in the Vercel `x3dex`
+project on 2026-11-11 without deploying anything.
+
+This verifies the existing embedded output at `public/dex-terminal`, served under
+`/dex-terminal/` by dotx3. It does not establish a standalone `x3dex` deployment:
+that project's intended root, output directory, route base and access settings
+still need to be checked before publication. No hosting settings, domains,
+analytics collection or execution permissions are changed by this build repair.
