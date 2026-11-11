@@ -7,7 +7,7 @@ Everything below is pushed. Pick up from here.
 | PR | Branch | What | Status |
 |---|---|---|---|
 | #3 | `claude/playground-language-backers` | `/playground` (real X3 checker in the browser, 12 scenarios, 9 attacks, 1Click quote signature check), `/language`, `/back` (LP onboarding, investors, milestones), fix for the mandate missing `refund_to` | Open, mergeable. `npm run test:x3` 17/17 |
-| #4 | `claude/frontend-gallery` (stacked on #3) | `public/gallery/`: X3 Frontend Gallery + MEME COIN BLAST, `scripts/build-gallery.sh` | Open |
+| #5 | `claude/frontend-gallery` (stacked on #3) | `public/gallery/`: X3 Frontend Gallery + MEME COIN BLAST, `scripts/build-gallery.sh` | Open |
 
 Merge #3 first if you want it live before the NEAR deadline (Nov 14 23:59 UTC).
 
