@@ -1,0 +1,38 @@
+{
+  "source_commit": "f8651717fd3099d0be2e12a26c6d127fcd29530c",
+  "environment": "preview",
+  "deployment_id": "dpl_CAmNgJeLrAf51eRC46JwSf49DezH",
+  "url": "https://dotx3-msh7yxt83-cyptopimpinainteazys-projects.vercel.app",
+  "ready_state": "READY",
+  "created_at_local": "2026-11-11T00:13:51-07:00",
+  "smoke": [
+    {
+      "path": "/near",
+      "result": "authenticated HTTP response contains new hub heading"
+    },
+    {
+      "path": "/docs",
+      "result": "authenticated HTTP response contains new dotx3 explanation"
+    }
+  ],
+  "protection": "Vercel authentication remains enabled; test-created automation bypass revoked",
+  "github_ci": {
+    "run_id": 42978009182,
+    "source_commit": "f8651717fd3099d0be2e12a26c6d127fcd29530c",
+    "conclusion": "success",
+    "gates": [
+      "npm test",
+      "npm run typecheck",
+      "npm run build",
+      "DEX regression suites"
+    ]
+  },
+  "draft_pr": "https://github.com/Cyptopimpinainteazy/dotx3/pull/7",
+  "domain": {
+    "name": "command.dotx3.net",
+    "assigned_to": "dotx3",
+    "verified": false,
+    "remaining": "Cloudflare TXT and CNAME records required"
+  },
+  "production": "not promoted"
+}
