@@ -1,0 +1,74 @@
+audit-artifacts/near-intents-release/mirror.json
+  h_e41068bed968d7 1-37
+audit-artifacts/near-intents-release/redis.json
+  h_e41068bed968d7 1-26
+docs/NEAR_INTENTS_RELEASE.md
+  h_e41068bed968d7 1-73
+docs/intents-integration.md
+  h_e41068bed968d7 3,9,20-36
+integrations/x3dex/src/App.tsx
+  h_e41068bed968d7 1,83-84
+integrations/x3dex/src/PageExport.tsx
+  h_e41068bed968d7 1-54
+public/labs/attack/attack-lab.html
+  h_e41068bed968d7 123,126-127,527
+public/labs/attack/provenance.json
+  h_e41068bed968d7 11,23-24
+public/labs/guard/bnb.html
+  h_e41068bed968d7 22,24-26,65
+public/labs/guard/index.html
+  h_e41068bed968d7 166,169-170,600
+public/labs/guard/judge.html
+  h_e41068bed968d7 122,125-126,412
+public/page-export-controls.mjs
+  h_e41068bed968d7 1-25
+public/page-export.css
+  h_e41068bed968d7 1-28
+public/page-export.mjs
+  h_e41068bed968d7 1-77
+public/x3lang-port.json
+  h_e41068bed968d7 112-115,127,129-130,161-164,176,178-179
+scripts/explorer-client.test.mjs
+  h_e41068bed968d7 1-56,58-67,69-78,80-84,86-99,101-108,110-121,123-128,130-142,146-162,164-178,180-199,201-239
+scripts/explorer-provenance.test.mjs
+  h_e41068bed968d7 1-4,6-14,16-27
+scripts/explorer-redis-integration.mjs
+  h_e41068bed968d7 1-88
+scripts/page-export.test.mjs
+  h_e41068bed968d7 1-43
+scripts/sync-x3lang.py
+  h_e41068bed968d7 23-38,58-60
+src/components/copy-page.tsx
+  h_e41068bed968d7 4,22
+src/components/explorer-evidence.tsx
+  h_e41068bed968d7 1-2,5-11,13-16,18-20,23,26-34,36-46,48-162,164
+src/components/site-shell.tsx
+  h_e41068bed968d7 46
+src/lib/copy-page.ts
+  h_e41068bed968d7 1
+src/lib/explorer/README.md
+  h_e41068bed968d7 16,46,60,80-87
+src/lib/explorer/client.mjs
+  h_e41068bed968d7 2-11,14-17,20,23-62,64-77,79-82,85-106,109-110,116-127,131-132,134-151,153,158-168,170,173-174,176-194,196-247,249-250
+src/lib/explorer/upstream/client.mjs.txt
+  h_e41068bed968d7 1-114
+src/lib/page-export.d.mts
+  h_e41068bed968d7 1-3
+src/lib/page-export.mjs
+  h_e41068bed968d7 1-77
+tests/test_compiler_api.py
+  h_e41068bed968d7 75,108
+x3lang-port.json
+  h_e41068bed968d7 112-115,127,129-130,161-164,176,178-179
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "cea3e444a817c63ebbf8846970747ad2bfff9470",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
