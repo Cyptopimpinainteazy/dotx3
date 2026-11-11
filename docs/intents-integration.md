@@ -6,7 +6,7 @@ The embedded DEX is a separate application: copying its parent page includes a l
 
 ## Server configuration
 
-Set `NEAR_INTENTS_SHIELD_JWT` in the hosting secret manager for the server. Obtain a SHIELD-type key; the Explorer key cannot substitute. No credential is bundled or required for tests. Missing/invalid access produces unknown. This integration supports GET only and exposes public incident fields only. The cache is per server instance, lasts 30 seconds, and is not a shared Redis deployment. Redis provisioning and integration remain outstanding.
+Set `NEAR_INTENTS_SHIELD_JWT` in the hosting secret manager for the server. Obtain a SHIELD-type key; the Explorer key cannot substitute. No credential is bundled or required for tests. Missing/invalid access produces unknown. This integration supports GET only and exposes public incident fields only. Contradictory operational/incident data, blank scopes and responses over 1 MiB produce unknown. The cache is per server instance, lasts 30 seconds, and is not a shared Redis deployment. Redis provisioning and integration remain outstanding.
 
 ## Execution boundaries
 
@@ -16,4 +16,6 @@ An incident feed does not prove provider mode, chain finality, compliance cleara
 
 ## Verification
 
-Run `npm run typecheck`, `npm test`, and `npm run build`. Browser review must cover DEX/Proof status refresh and expiration, Bootcamp search/planner, Copy page and download fallback, and narrow-screen layout. Local browser review was blocked by the workspace browser/network restrictions; a production preview must be checked before merge.
+Run `npm run typecheck`, `npm test`, and `npm run build`. Browser review must cover DEX/Proof status refresh and expiration, Bootcamp search/planner, Copy page and download fallback, and narrow-screen layout. Local dev and production browser review passed on desktop (1280 px) and mobile (390 px): DEX, Proof, Bootcamp and Back returned 200 without console errors or horizontal overflow. Checked local planning/refusals, Bootcamp search, copy excluding form values, iframe reference export, clipboard-denial download fallback and simulated incident expiry. Missing SHIELD credentials returned unknown. Simulated provider responses are UI tests, not live provider verification. No database migration ran; DATABASE_URL was unset for the build.
+
+The paired planning and SHIELD helpers match [X3Lang source 7f2e6d1](https://github.com/Cyptopimpinainteazy/x3lang/tree/7f2e6d1fefb9d2b8f1207ae9cf8e552d69bad9fd/x3-lang/near/integration-guidance). SHA-256: planning.ts `643cab107d47433dd4e56bff278011abb3b8d81f943ec026c209b9afa3b959ef`; shield.mjs `cdd6403497b15adf07f376608148d95d0da3c8a68722dec9d5f9540eda10069f`.
