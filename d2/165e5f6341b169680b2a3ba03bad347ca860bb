@@ -1,0 +1,24 @@
+docs/NEAR_INTEGRATION_SCOPE.md
+  h_e41068bed968d7 1-36
+src/lib/bootcamp/lessons.ts
+  h_e41068bed968d7 5,7,31,35
+src/routes/bootcamp.tsx
+  h_e41068bed968d7 40
+src/routes/developers.tsx
+  h_e41068bed968d7 86-105
+src/routes/near.tsx
+  h_e41068bed968d7 17
+wiki/index.md
+  h_e41068bed968d7 11-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d2165e5f6341b169680b2a3ba03bad347ca860bb",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
