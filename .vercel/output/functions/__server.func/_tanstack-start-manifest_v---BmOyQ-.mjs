@@ -1,4 +1,4 @@
-//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-wxzgV2xc.js
+//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v---BmOyQ-.js
 var tsrStartManifest = () => ({ routes: {
 	__root__: {
 		filePath: "/home/claude/dotx3/src/routes/__root.tsx",
@@ -15,49 +15,49 @@ var tsrStartManifest = () => ({ routes: {
 			"/proof",
 			"/proofs"
 		],
-		preloads: ["/assets/index-GF6xW6wF.js", "/assets/rolldown-runtime-CbXtAM7H.js"],
+		preloads: ["/assets/index-z2FUwp3A.js", "/assets/rolldown-runtime-CbXtAM7H.js"],
 		scripts: [{ attrs: {
 			type: "module",
 			async: !0,
-			src: "/assets/index-GF6xW6wF.js"
+			src: "/assets/index-z2FUwp3A.js"
 		} }]
 	},
 	"/": {
 		filePath: "/home/claude/dotx3/src/routes/index.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/routes-Brqrj6sJ.js",
-			"/assets/site-shell-C9lsTB_y.js",
+			"/assets/routes-BCTgm0w4.js",
+			"/assets/site-shell-D7qVxUhY.js",
 			"/assets/front-door-Ckx5sm7d.js"
 		]
 	},
 	"/agents": {
 		filePath: "/home/claude/dotx3/src/routes/agents.tsx",
 		children: void 0,
-		preloads: ["/assets/agents-Q6QOLEy6.js", "/assets/site-shell-C9lsTB_y.js"]
+		preloads: ["/assets/agents-CuUPUv7x.js", "/assets/site-shell-D7qVxUhY.js"]
 	},
 	"/back": {
 		filePath: "/home/claude/dotx3/src/routes/back.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/back-Cl7RB5kn.js",
-			"/assets/site-shell-C9lsTB_y.js",
-			"/assets/code-block-ZYSD6D9K.js",
+			"/assets/back-CeZxQtQz.js",
+			"/assets/site-shell-D7qVxUhY.js",
+			"/assets/code-block-CaGL-AMb.js",
 			"/assets/front-door-Ckx5sm7d.js"
 		]
 	},
 	"/defi": {
 		filePath: "/home/claude/dotx3/src/routes/defi.tsx",
 		children: void 0,
-		preloads: ["/assets/defi-yj1HaEwS.js", "/assets/site-shell-C9lsTB_y.js"]
+		preloads: ["/assets/defi-C6w6331B.js", "/assets/site-shell-D7qVxUhY.js"]
 	},
 	"/demo": {
 		filePath: "/home/claude/dotx3/src/routes/demo.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/demo-DfqDzW7k.js",
-			"/assets/site-shell-C9lsTB_y.js",
-			"/assets/code-block-ZYSD6D9K.js",
+			"/assets/demo-BfCFb31I.js",
+			"/assets/site-shell-D7qVxUhY.js",
+			"/assets/code-block-CaGL-AMb.js",
 			"/assets/front-door-Ckx5sm7d.js"
 		]
 	},
@@ -65,9 +65,9 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "/home/claude/dotx3/src/routes/developers.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/developers-C_3Dz-iK.js",
-			"/assets/site-shell-C9lsTB_y.js",
-			"/assets/code-block-ZYSD6D9K.js",
+			"/assets/developers-B3RGlxBC.js",
+			"/assets/site-shell-D7qVxUhY.js",
+			"/assets/code-block-CaGL-AMb.js",
 			"/assets/front-door-Ckx5sm7d.js"
 		]
 	},
@@ -75,9 +75,9 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "/home/claude/dotx3/src/routes/docs.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/docs-CQ6lFpl5.js",
-			"/assets/site-shell-C9lsTB_y.js",
-			"/assets/code-block-ZYSD6D9K.js",
+			"/assets/docs-BHcxwpWB.js",
+			"/assets/site-shell-D7qVxUhY.js",
+			"/assets/code-block-CaGL-AMb.js",
 			"/assets/front-door-Ckx5sm7d.js"
 		]
 	},
@@ -85,9 +85,9 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "/home/claude/dotx3/src/routes/language.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/language-DmXAFJWM.js",
-			"/assets/site-shell-C9lsTB_y.js",
-			"/assets/code-block-ZYSD6D9K.js",
+			"/assets/language-CMuNNNa8.js",
+			"/assets/site-shell-D7qVxUhY.js",
+			"/assets/code-block-CaGL-AMb.js",
 			"/assets/front-door-Ckx5sm7d.js"
 		]
 	},
@@ -95,9 +95,9 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "/home/claude/dotx3/src/routes/playground.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/playground-6Dg8wCox.js",
-			"/assets/site-shell-C9lsTB_y.js",
-			"/assets/code-block-ZYSD6D9K.js",
+			"/assets/playground-CueeI-Z5.js",
+			"/assets/site-shell-D7qVxUhY.js",
+			"/assets/code-block-CaGL-AMb.js",
 			"/assets/front-door-Ckx5sm7d.js"
 		]
 	},
@@ -105,16 +105,16 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "/home/claude/dotx3/src/routes/proof.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/proof-Dk56nxzp.js",
-			"/assets/site-shell-C9lsTB_y.js",
-			"/assets/code-block-ZYSD6D9K.js",
+			"/assets/proof-DCmVHzRE.js",
+			"/assets/site-shell-D7qVxUhY.js",
+			"/assets/code-block-CaGL-AMb.js",
 			"/assets/front-door-Ckx5sm7d.js"
 		]
 	},
 	"/proofs": {
 		filePath: "/home/claude/dotx3/src/routes/proofs.tsx",
 		children: void 0,
-		preloads: ["/assets/proofs-RrnM_nY5.js", "/assets/site-shell-C9lsTB_y.js"]
+		preloads: ["/assets/proofs-CkDuirWG.js", "/assets/site-shell-D7qVxUhY.js"]
 	}
 } });
 //#endregion
