@@ -159,7 +159,8 @@
   const PREFERRED = ["wNEAR", "BTC", "ETH", "SOL", "USDC", "ZEC", "XRP", "DOGE", "TRX", "SUI", "TON", "AURORA"];
   function pickTokens(list) {
     const ok = list.filter((t) => t && typeof t.symbol === "string" && /^[A-Za-z0-9.$-]{1,12}$/.test(t.symbol)
-      && typeof t.blockchain === "string" && typeof t.assetId === "string"
+      && typeof t.blockchain === "string" && /^[A-Za-z0-9_-]{1,24}$/.test(t.blockchain)
+      && typeof t.assetId === "string" && /^[A-Za-z0-9:._-]{1,200}$/.test(t.assetId)
       && typeof t.price === "number" && Number.isFinite(t.price) && t.price > 0);
     const bySymbol = new Map();
     for (const t of ok) if (!bySymbol.has(t.symbol)) bySymbol.set(t.symbol, t);
@@ -264,6 +265,9 @@
   }
 
   // ---- Formatting ----
+  // Every string from the 1Click list is validated in pickTokens and escaped again here
+  // before it reaches innerHTML.
+  const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const fmt = (n) => (Math.abs(n) >= 1000 ? Math.round(n).toLocaleString() : n.toFixed(Math.abs(n) < 10 ? 2 : 1));
   const fmtP = (p) => (p >= 1 ? p.toFixed(3) : p >= 0.01 ? p.toFixed(4) : p.toExponential(2));
   function log(msg, cls = "") {
@@ -378,12 +382,12 @@
     $("tick").textContent = `tick ${tick}`;
     $("market").innerHTML = SPECIES.map((s) => {
       const m = market[s.sym], ch = (m.factor / m.open - 1) * 100;
-      return `<tr><td style="color:hsl(${s.hue} 90% 65%)" title="${s.live ? `${s.chain} · ${s.assetId}` : "made-up coin"}">$${s.sym}${s.live ? `<span class="chain"> ${s.chain}</span>` : ""}${m.rugged ? " ☠" : ""}</td><td>${s.mult}</td><td>${fmtP(priceOf(s.sym))}</td><td class="${ch >= 0 ? "up" : "dn"}">${ch >= 0 ? "+" : ""}${ch.toFixed(1)}%</td><td>${spark(m.hist)}</td></tr>`;
+      return `<tr><td style="color:hsl(${s.hue} 90% 65%)" title="${s.live ? `${esc(s.chain)} · ${esc(s.assetId)}` : "made-up coin"}">$${esc(s.sym)}${s.live ? `<span class="chain"> ${esc(s.chain)}</span>` : ""}${m.rugged ? " ☠" : ""}</td><td>${s.mult}</td><td>${fmtP(priceOf(s.sym))}</td><td class="${ch >= 0 ? "up" : "dn"}">${ch >= 0 ? "+" : ""}${ch.toFixed(1)}%</td><td>${spark(m.hist)}</td></tr>`;
     }).join("");
     let bagValue = 0;
     const rows = Object.entries(state.bags).filter(([, b]) => b.qty > 1e-12).map(([sym, b]) => {
       const v = b.qty * priceOf(sym), pnl = v - b.cost; bagValue += v;
-      return `<tr><td style="color:hsl(${BY_SYM[sym].hue} 90% 65%)">$${sym}</td><td>${fmt(b.qty)}</td><td>${fmt(v)}</td><td class="${pnl >= 0 ? "up" : "dn"}">${pnl >= 0 ? "+" : ""}${fmt(pnl)}</td><td><button class="sell" data-sell="${sym}">Sell</button></td></tr>`;
+      return `<tr><td style="color:hsl(${BY_SYM[sym].hue} 90% 65%)">$${esc(sym)}</td><td>${fmt(b.qty)}</td><td>${fmt(v)}</td><td class="${pnl >= 0 ? "up" : "dn"}">${pnl >= 0 ? "+" : ""}${fmt(pnl)}</td><td><button class="sell" data-sell="${esc(sym)}">Sell</button></td></tr>`;
     });
     $("bags").innerHTML = rows.join("");
     $("bagsEmpty").hidden = rows.length > 0;
