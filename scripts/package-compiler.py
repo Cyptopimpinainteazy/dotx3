@@ -33,8 +33,8 @@ from vercel_runtime.vc_init import vc_handler
     'handler': 'vc__handler__python.vc_handler', 'maxDuration': 10,
     'supportsResponseStreaming': True}) + '\n')
 config = json.loads((output / 'config.json').read_text())
-# Explicitly route the TanStack DEX API ahead of Vercel's native /api handling.
-config['routes'].insert(0, {'src': '/api/x3dex/(.*)', 'dest': '/__server'})
+# Keep TanStack APIs reachable beside the separately packaged compiler.
+config['routes'].insert(0, {'src': '/api/(.*)', 'dest': '/__server'})
 config['routes'].insert(0, {'src': '/api/compile', 'dest': '/api/compile'})
 (output / 'config.json').write_text(json.dumps(config, indent=2) + '\n')
 print('Packaged bounded .x3 compiler Function')
