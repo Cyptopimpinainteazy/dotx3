@@ -1,0 +1,14 @@
+audit-artifacts/dotx3-docs-20261111/deployment.json
+  h_e41068bed968d7 1-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "68a595bc8fd082220dd3acdd7a17ecbbc037fbff",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
