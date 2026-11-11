@@ -18,7 +18,7 @@ Historical testnet delivery is evidence for the DeFi assessment, not merely a fu
 
 ## Explorer and distribution access
 
-The owner reports an explorer and a distribution-channel API key. The explorer URL and key provider are not yet identified. No authenticated integration or provider enrollment is verified by this statement. An explorer can support transaction inspection; credentials can enable quotes. Neither alone demonstrates deposit, destination delivery or causal binding.
+The provider is NEAR Intents, with the official Explorer at https://explorer.near-intents.org/. The read-only Explorer tool authenticated successfully and returned no matching records for the initial `dotx3.near` search. See [Explorer setup and verification](NEAR_INTENTS_EXPLORER.md). Distribution-channel quote access remains separate and unverified. Neither Explorer access nor quote credentials alone demonstrate deposit, destination delivery or causal binding.
 
 Configure credentials only in the provider's documented server-side secret mechanism after identifying the provider. Do not put keys in browser-prefixed environment variables, client bundles, source links, screenshots or evidence artifacts. Do not attach a new fee or initiate a funded trade from this documentation update.
 
