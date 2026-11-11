@@ -1,0 +1,110 @@
+.github/workflows/site-checks.yml
+  h_e41068bed968d7 18-22
+.gitignore
+  h_e41068bed968d7 7-12
+INTEGRATIONS.md
+  h_e41068bed968d7 1-42
+README.md
+  h_e41068bed968d7 7,19,23-25,33,39-40,43
+api/compile.py
+  h_e41068bed968d7 1-46
+docs/BRANCH_ASSESSMENT.md
+  h_e41068bed968d7 5-13,19-23
+docs/HANDOFF.md
+  h_e41068bed968d7 22
+package.json
+  h_e41068bed968d7 11
+public/labs/compiler/examples.json
+  h_e41068bed968d7 1-5
+public/labs/guard/404.html
+  h_e41068bed968d7 3-13
+public/labs/guard/README.md
+  h_e41068bed968d7 1-92
+public/labs/guard/bnb.html
+  h_e41068bed968d7 1,4-6,8-20,23-31,33-60,62
+public/labs/guard/cli.mjs
+  h_e41068bed968d7 1-54
+public/labs/guard/index.html
+  h_e41068bed968d7 1-22,24-50,52-261,263,269,273-277,279,286,290-302,304-305,307-330,332-336,338-355,357-375,377-423,425-467,469-579,581-598
+public/labs/guard/index.md
+  h_e41068bed968d7 1-17
+public/labs/guard/judge.html
+  h_e41068bed968d7 1,4-11,14-33,36-120,125-132,136-155,157,159-167,169-178,180-187,189,191,194-196,198-201,203-208,210-236,238-239,241-247,249-254,256,258-267,269-270,272-276,278-281,283-287,289-296,298-302,304-310,312-313,315-320,322-335,337-348,350-361,363-399,401-407
+public/labs/guard/judge/bnb-readiness.json
+  h_e41068bed968d7 2-15,17-23,25-31
+public/labs/guard/judge/judge.mjs
+  h_e41068bed968d7 1-76
+public/labs/guard/judge/scenarios.json
+  h_e41068bed968d7 1-950
+public/labs/guard/x3guard.mjs
+  h_e41068bed968d7 1-41,43,45-56,58-66,68-97,99-109,111-113,115,117-126,128-140,142-153,155-168,170-195,197-248,250-282,285-301,304-316,318-346,348-352,354,356-482,484-497,499-510,512-558,560-563,565,567-579,581-598,600-785,787-832,834-838,840,842-843,845,847-859,861-939,941-955,957-959,961,963-985
+public/x3lang-port.json
+  h_e41068bed968d7 1-191
+requirements.txt
+  h_e41068bed968d7 1
+scripts/bootcamp-smoke.mjs
+  h_e41068bed968d7 12,15
+scripts/compiler-smoke.mjs
+  h_e41068bed968d7 1-74
+scripts/dev-compiler.py
+  h_e41068bed968d7 1-9
+scripts/package-compiler.py
+  h_e41068bed968d7 1-38
+scripts/sync-x3lang.py
+  h_e41068bed968d7 1-93
+src/components/compiler-workbench.tsx
+  h_e41068bed968d7 1-72
+src/components/site-shell.tsx
+  h_e41068bed968d7 9
+src/routes/demo.tsx
+  h_e41068bed968d7 30
+src/routes/labs.tsx
+  h_e41068bed968d7 2,5,7-31,34,36,38-76,139-201
+tests/test_compiler_api.py
+  h_e41068bed968d7 1-101
+vendor/x3lang/LICENSE
+  h_e41068bed968d7 1-21
+vendor/x3lang/scripts/hackathon/dotx3_workbench.py
+  h_e41068bed968d7 1-175
+vendor/x3lang/scripts/hackathon/mainnet_agent_preflight.py
+  h_e41068bed968d7 1-274
+vendor/x3lang/x3-lang/chain_evidence.py
+  h_e41068bed968d7 1-468
+vendor/x3lang/x3-lang/cli.py
+  h_e41068bed968d7 1-508
+vendor/x3lang/x3-lang/ed25519.py
+  h_e41068bed968d7 1-255
+vendor/x3lang/x3-lang/examples/near_intents_agent_payment.x3
+  h_e41068bed968d7 1-24
+vendor/x3lang/x3-lang/examples/near_mandate_agent.x3
+  h_e41068bed968d7 1-18,31
+vendor/x3lang/x3-lang/helius_evidence.py
+  h_e41068bed968d7 1-130
+vendor/x3lang/x3-lang/near_mandate.py
+  h_e41068bed968d7 1-350
+vendor/x3lang/x3-lang/numeric.py
+  h_e41068bed968d7 1-47
+vendor/x3lang/x3-lang/registry.py
+  h_e41068bed968d7 1-16,18-165
+vendor/x3lang/x3-lang/tests/fixtures/near_intents_tokens.json
+  h_e41068bed968d7 1-8
+vendor/x3lang/x3-lang/track_control.py
+  h_e41068bed968d7 1-106
+vendor/x3lang/x3-lang/typechecker.py
+  h_e41068bed968d7 1-164
+vite.config.ts
+  h_e41068bed968d7 150
+x3lang-port.json
+  h_e41068bed968d7 1-191
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "56cb688b01c1e2ad1504cd4ea3c189e8b679c0c9",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
