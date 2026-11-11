@@ -25,6 +25,7 @@ import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as ProofRouteImport } from './routes/proof'
 import { Route as ProofsRouteImport } from './routes/proofs'
 import { Route as SecurityRouteImport } from './routes/security'
+import { Route as ApiExplorerTransactionsRouteImport } from './routes/api/explorer/transactions'
 import { Route as ApiX3dexSplatRouteImport } from './routes/api/x3dex/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -107,6 +108,11 @@ const SecurityRoute = SecurityRouteImport.update({
   path: '/security',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiExplorerTransactionsRoute = ApiExplorerTransactionsRouteImport.update({
+  id: '/api/explorer/transactions',
+  path: '/api/explorer/transactions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiX3dexSplatRoute = ApiX3dexSplatRouteImport.update({
   id: '/api/x3dex/$',
   path: '/api/x3dex/$',
@@ -130,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
 export interface FileRoutesByTo {
@@ -149,6 +156,7 @@ export interface FileRoutesByTo {
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
 export interface FileRoutesById {
@@ -169,6 +177,7 @@ export interface FileRoutesById {
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
 export interface FileRouteTypes {
@@ -190,6 +199,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/explorer/transactions'
     | '/api/x3dex/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -209,6 +219,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/explorer/transactions'
     | '/api/x3dex/$'
   id:
     | '__root__'
@@ -228,6 +239,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/explorer/transactions'
     | '/api/x3dex/$'
   fileRoutesById: FileRoutesById
 }
@@ -248,6 +260,7 @@ export interface RootRouteChildren {
   ProofRoute: typeof ProofRoute
   ProofsRoute: typeof ProofsRoute
   SecurityRoute: typeof SecurityRoute
+  ApiExplorerTransactionsRoute: typeof ApiExplorerTransactionsRoute
   ApiX3dexSplatRoute: typeof ApiX3dexSplatRoute
 }
 
@@ -365,6 +378,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/explorer/transactions': {
+      id: '/api/explorer/transactions'
+      path: '/api/explorer/transactions'
+      fullPath: '/api/explorer/transactions'
+      preLoaderRoute: typeof ApiExplorerTransactionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/x3dex/$': {
       id: '/api/x3dex/$'
       path: '/api/x3dex/$'
@@ -392,6 +412,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProofRoute: ProofRoute,
   ProofsRoute: ProofsRoute,
   SecurityRoute: SecurityRoute,
+  ApiExplorerTransactionsRoute: ApiExplorerTransactionsRoute,
   ApiX3dexSplatRoute: ApiX3dexSplatRoute,
 }
 export const routeTree = rootRouteImport
