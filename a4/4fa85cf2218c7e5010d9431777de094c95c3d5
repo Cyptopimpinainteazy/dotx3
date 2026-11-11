@@ -1,0 +1,50 @@
+README.md
+  h_e41068bed968d7 10
+SECURITY.md
+  h_e41068bed968d7 1,3,5,7,9,11,13-17
+audit-artifacts/dotx3-docs-20261111/labs-verification.json
+  h_e41068bed968d7 1-135
+docs/BRANCH_ASSESSMENT.md
+  h_e41068bed968d7 5-13,19
+docs/HANDOFF.md
+  h_e41068bed968d7 1,3,5,7-10,12,14,16,18,20,22
+docs/X3_GUIDE.md
+  h_e41068bed968d7 11-64
+public/labs/attack/LICENSE
+  h_e41068bed968d7 1-21
+public/labs/attack/attack-lab-policy.mjs
+  h_e41068bed968d7 1-211
+public/labs/attack/attack-lab.html
+  h_e41068bed968d7 1-525
+public/labs/attack/provenance.json
+  h_e41068bed968d7 1-25
+scripts/attack-lab.test.mjs
+  h_e41068bed968d7 1-67
+scripts/near-smoke.mjs
+  h_e41068bed968d7 16,21,26,56-79,85
+src/components/track-page.tsx
+  h_e41068bed968d7 49-53
+src/routeTree.gen.ts
+  h_e41068bed968d7 21,75-79,126,145,165,186,205,224,244,319-325,388
+src/routes/developers.tsx
+  h_e41068bed968d7 12-13,15-22,25-53,56-58,77-82,88-92,119-122,128-129,139-146,148-149,158-160
+src/routes/docs.tsx
+  h_e41068bed968d7 5,71-74,120-121
+src/routes/labs.tsx
+  h_e41068bed968d7 1-77
+src/routes/near.tsx
+  h_e41068bed968d7 41-43
+wiki/index.md
+  h_e41068bed968d7 8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a44fa85cf2218c7e5010d9431777de094c95c3d5",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
