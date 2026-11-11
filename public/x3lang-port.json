@@ -1,0 +1,185 @@
+{
+  "schema": "dotx3.x3lang-port.v1",
+  "repository": "Cyptopimpinainteazy/x3lang",
+  "commit": "a120169cb41e8e30f7a5fd4002de2506388137b2",
+  "files": [
+    {
+      "source": "x3-lang/near_intents.py",
+      "destination": "vendor/x3lang/x3-lang/near_intents.py",
+      "source_sha256": "ed7add33417f79ce432de647880d67d79ecbe68401e72a252ef745d03e76099d",
+      "sha256": "ed7add33417f79ce432de647880d67d79ecbe68401e72a252ef745d03e76099d"
+    },
+    {
+      "source": "x3-lang/near_mandate.py",
+      "destination": "vendor/x3lang/x3-lang/near_mandate.py",
+      "source_sha256": "7149c175f5352e0076b5be7caa07b7b65924190e79b75b2a8b6d3ac04e9a0c2c",
+      "sha256": "7149c175f5352e0076b5be7caa07b7b65924190e79b75b2a8b6d3ac04e9a0c2c"
+    },
+    {
+      "source": "x3-lang/cli.py",
+      "destination": "vendor/x3lang/x3-lang/cli.py",
+      "source_sha256": "018484bb6597c34e39f12837a64e10b89d26f2e711c1e8639e6452f89e7ef0df",
+      "sha256": "018484bb6597c34e39f12837a64e10b89d26f2e711c1e8639e6452f89e7ef0df"
+    },
+    {
+      "source": "x3-lang/registry.py",
+      "destination": "vendor/x3lang/x3-lang/registry.py",
+      "source_sha256": "a31badc07426f1060532b9f9cc04fb9e2d88195227670360f0a1f290cee1a8b8",
+      "sha256": "a31badc07426f1060532b9f9cc04fb9e2d88195227670360f0a1f290cee1a8b8"
+    },
+    {
+      "source": "x3-lang/numeric.py",
+      "destination": "vendor/x3lang/x3-lang/numeric.py",
+      "source_sha256": "933a26de36f7a3e72cc5a31b7b5b9f97cb1b2b0d178b48ad9b8909a4d1a58b47",
+      "sha256": "933a26de36f7a3e72cc5a31b7b5b9f97cb1b2b0d178b48ad9b8909a4d1a58b47"
+    },
+    {
+      "source": "x3-lang/typechecker.py",
+      "destination": "vendor/x3lang/x3-lang/typechecker.py",
+      "source_sha256": "69450656efcd8db9a51f05fbbc58fd32b849fcc54feb91e711d65001279e83a3",
+      "sha256": "69450656efcd8db9a51f05fbbc58fd32b849fcc54feb91e711d65001279e83a3"
+    },
+    {
+      "source": "x3-lang/ed25519.py",
+      "destination": "vendor/x3lang/x3-lang/ed25519.py",
+      "source_sha256": "ed297be4155d986491e6871415ca15b5fc2c8852556e465183ea670762f802f6",
+      "sha256": "ed297be4155d986491e6871415ca15b5fc2c8852556e465183ea670762f802f6"
+    },
+    {
+      "source": "x3-lang/chain_evidence.py",
+      "destination": "vendor/x3lang/x3-lang/chain_evidence.py",
+      "source_sha256": "007be7a439c59d9ae83b57140f2f974758bfd9448ade9f1fafa66b9196d32a4c",
+      "sha256": "007be7a439c59d9ae83b57140f2f974758bfd9448ade9f1fafa66b9196d32a4c"
+    },
+    {
+      "source": "x3-lang/helius_evidence.py",
+      "destination": "vendor/x3lang/x3-lang/helius_evidence.py",
+      "source_sha256": "cb47171a496567affa25f4fb86db380fb16a962912ad1f5c0a22d5423ef0917a",
+      "sha256": "cb47171a496567affa25f4fb86db380fb16a962912ad1f5c0a22d5423ef0917a"
+    },
+    {
+      "source": "x3-lang/track_control.py",
+      "destination": "vendor/x3lang/x3-lang/track_control.py",
+      "source_sha256": "b142b705e95f0b9bd67680c23a2d70fb320cf0975ea4c4658ad5a1039edab09e",
+      "sha256": "b142b705e95f0b9bd67680c23a2d70fb320cf0975ea4c4658ad5a1039edab09e"
+    },
+    {
+      "source": "scripts/hackathon/dotx3_workbench.py",
+      "destination": "vendor/x3lang/scripts/hackathon/dotx3_workbench.py",
+      "source_sha256": "4bcf006adb73a5cc70ea6c023084b8bd9256cef5a01a464c79992ea578b00312",
+      "sha256": "4bcf006adb73a5cc70ea6c023084b8bd9256cef5a01a464c79992ea578b00312"
+    },
+    {
+      "source": "scripts/hackathon/mainnet_agent_preflight.py",
+      "destination": "vendor/x3lang/scripts/hackathon/mainnet_agent_preflight.py",
+      "source_sha256": "f726827f8f6e2b72d41bd8cf237f3b01668545f1087652867227ec4c3b5988da",
+      "sha256": "f726827f8f6e2b72d41bd8cf237f3b01668545f1087652867227ec4c3b5988da"
+    },
+    {
+      "source": "x3-lang/examples/near_mandate_agent.x3",
+      "destination": "vendor/x3lang/x3-lang/examples/near_mandate_agent.x3",
+      "source_sha256": "629c008639c5fea35c1f2f9f1e9e3c67717860f72b1b7e14450db042f17012d4",
+      "sha256": "629c008639c5fea35c1f2f9f1e9e3c67717860f72b1b7e14450db042f17012d4"
+    },
+    {
+      "source": "x3-lang/examples/near_intents_agent_payment.x3",
+      "destination": "vendor/x3lang/x3-lang/examples/near_intents_agent_payment.x3",
+      "source_sha256": "2b0f946464b82f0fc0186d47a9f968c8cb3ab4c038668bcc361c293bbf83021d",
+      "sha256": "2b0f946464b82f0fc0186d47a9f968c8cb3ab4c038668bcc361c293bbf83021d"
+    },
+    {
+      "source": "x3-lang/tests/fixtures/near_intents_tokens.json",
+      "destination": "vendor/x3lang/x3-lang/tests/fixtures/near_intents_tokens.json",
+      "source_sha256": "fbffc56be8579c07165e8e38fc7661dd2242957df465809e75f4b5f8fd94f8f2",
+      "sha256": "fbffc56be8579c07165e8e38fc7661dd2242957df465809e75f4b5f8fd94f8f2"
+    },
+    {
+      "source": "x3-lang/near/demo/404.html",
+      "destination": "public/labs/guard/404.html",
+      "source_sha256": "bebe3609ecd8dcae6ed5b7ab434ee289f30507a3b3b995f6e75ea68ff6eb61e2",
+      "sha256": "bebe3609ecd8dcae6ed5b7ab434ee289f30507a3b3b995f6e75ea68ff6eb61e2"
+    },
+    {
+      "source": "x3-lang/near/demo/README.md",
+      "destination": "public/labs/guard/README.md",
+      "source_sha256": "f70dae70a96f0b1e394fbc7c6efd8789e84a5393224d4464ef19588c900c7401",
+      "sha256": "f70dae70a96f0b1e394fbc7c6efd8789e84a5393224d4464ef19588c900c7401"
+    },
+    {
+      "source": "x3-lang/near/demo/bnb.html",
+      "destination": "public/labs/guard/bnb.html",
+      "source_sha256": "8b1cfd4b267a3fdf1c391209497fed3faf80f017484a7ae72af11d370972200e",
+      "sha256": "8b1cfd4b267a3fdf1c391209497fed3faf80f017484a7ae72af11d370972200e"
+    },
+    {
+      "source": "x3-lang/near/demo/cli.mjs",
+      "destination": "public/labs/guard/cli.mjs",
+      "source_sha256": "60fc6d114f8ccc98a75a7a8cc45d90e2a076ed0ae1404fc5f0e7a34b98f1b8fb",
+      "sha256": "60fc6d114f8ccc98a75a7a8cc45d90e2a076ed0ae1404fc5f0e7a34b98f1b8fb"
+    },
+    {
+      "source": "x3-lang/near/demo/index.html",
+      "destination": "public/labs/guard/index.html",
+      "source_sha256": "5b21f62e7275cdcb065f050b650fae766f5192f74f83f1b39a09dd9bee46b64b",
+      "sha256": "5b21f62e7275cdcb065f050b650fae766f5192f74f83f1b39a09dd9bee46b64b"
+    },
+    {
+      "source": "x3-lang/near/demo/index.md",
+      "destination": "public/labs/guard/index.md",
+      "source_sha256": "a75b4463d9a586b4d2db806b6a19faea7080d71a85eec13c5ddedc18f2a9b79e",
+      "sha256": "a75b4463d9a586b4d2db806b6a19faea7080d71a85eec13c5ddedc18f2a9b79e"
+    },
+    {
+      "source": "x3-lang/near/demo/judge/bnb-readiness.json",
+      "destination": "public/labs/guard/judge/bnb-readiness.json",
+      "source_sha256": "09c1a84b4b53c2e69ac9315b9cc2da12a90b89bff38899ad424597d002492f7a",
+      "sha256": "09c1a84b4b53c2e69ac9315b9cc2da12a90b89bff38899ad424597d002492f7a"
+    },
+    {
+      "source": "x3-lang/near/demo/judge/judge.mjs",
+      "destination": "public/labs/guard/judge/judge.mjs",
+      "source_sha256": "523b8e117fff2fcf8034d6a110d932cafe211974fb12e60af951c284ffdc6d92",
+      "sha256": "523b8e117fff2fcf8034d6a110d932cafe211974fb12e60af951c284ffdc6d92"
+    },
+    {
+      "source": "x3-lang/near/demo/judge/scenarios.json",
+      "destination": "public/labs/guard/judge/scenarios.json",
+      "source_sha256": "ee0c2d3d5019bd7e032666b9ac930d58fd9b5dbb63d44a329b92ebaa5daa6d06",
+      "sha256": "ee0c2d3d5019bd7e032666b9ac930d58fd9b5dbb63d44a329b92ebaa5daa6d06"
+    },
+    {
+      "source": "x3-lang/near/demo/judge.html",
+      "destination": "public/labs/guard/judge.html",
+      "source_sha256": "1950cd0daad919214fd0b299bf199000bb0551ebc66612a2adf6f03016be1d1f",
+      "sha256": "1950cd0daad919214fd0b299bf199000bb0551ebc66612a2adf6f03016be1d1f"
+    },
+    {
+      "source": "x3-lang/near/demo/x3guard.mjs",
+      "destination": "public/labs/guard/x3guard.mjs",
+      "source_sha256": "790e5e5b6a13602f590a9bfebdb0338116fc999da1e773ac3f2368ad8cf5b9c3",
+      "sha256": "790e5e5b6a13602f590a9bfebdb0338116fc999da1e773ac3f2368ad8cf5b9c3"
+    },
+    {
+      "source": "docs/hackathon/attack-lab.html",
+      "destination": "public/labs/attack/attack-lab.html",
+      "source_sha256": "39a4c4d6cfcb6f0796d03519ca91ee8fe9a62a59e70149dfc8843aacab757449",
+      "sha256": "92cd831ddaccf0487e054933907136ea4e2b5ef7ea75da75a24ce4ede37fd018"
+    },
+    {
+      "source": "docs/hackathon/attack-lab-policy.mjs",
+      "destination": "public/labs/attack/attack-lab-policy.mjs",
+      "source_sha256": "f271a8028d457b6e2191b54b7d97fd5a32af2d0ab04f1000c73ceb9296c87197",
+      "sha256": "f271a8028d457b6e2191b54b7d97fd5a32af2d0ab04f1000c73ceb9296c87197"
+    },
+    {
+      "source": "LICENSE",
+      "destination": "vendor/x3lang/LICENSE",
+      "source_sha256": "29e9224adbf45e9e4cfb1b8a0678d4f108560d823d86c400fae1c9192e8b42f4",
+      "sha256": "29e9224adbf45e9e4cfb1b8a0678d4f108560d823d86c400fae1c9192e8b42f4"
+    }
+  ],
+  "limits": [
+    "No wallet signing",
+    "No Phantom/Radar worker port claimed"
+  ]
+}

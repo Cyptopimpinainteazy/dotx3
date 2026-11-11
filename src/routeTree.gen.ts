@@ -15,6 +15,7 @@ import { Route as DefiRouteImport } from './routes/defi'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DocsRouteImport } from './routes/docs'
+import { Route as LabsRouteImport } from './routes/labs'
 import { Route as ProofRouteImport } from './routes/proof'
 import { Route as ProofsRouteImport } from './routes/proofs'
 
@@ -48,6 +49,11 @@ const DocsRoute = DocsRouteImport.update({
   path: '/docs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LabsRoute = LabsRouteImport.update({
+  id: '/labs',
+  path: '/labs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProofRoute = ProofRouteImport.update({
   id: '/proof',
   path: '/proof',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
   '/docs': typeof DocsRoute
+  '/labs': typeof LabsRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
   '/docs': typeof DocsRoute
+  '/labs': typeof LabsRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
   '/docs': typeof DocsRoute
+  '/labs': typeof LabsRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/demo'
     | '/developers'
     | '/docs'
+    | '/labs'
     | '/proof'
     | '/proofs'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/demo'
     | '/developers'
     | '/docs'
+    | '/labs'
     | '/proof'
     | '/proofs'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/demo'
     | '/developers'
     | '/docs'
+    | '/labs'
     | '/proof'
     | '/proofs'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   DemoRoute: typeof DemoRoute
   DevelopersRoute: typeof DevelopersRoute
   DocsRoute: typeof DocsRoute
+  LabsRoute: typeof LabsRoute
   ProofRoute: typeof ProofRoute
   ProofsRoute: typeof ProofsRoute
 }
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/labs': {
+      id: '/labs'
+      path: '/labs'
+      fullPath: '/labs'
+      preLoaderRoute: typeof LabsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/proof': {
       id: '/proof'
       path: '/proof'
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   DemoRoute: DemoRoute,
   DevelopersRoute: DevelopersRoute,
   DocsRoute: DocsRoute,
+  LabsRoute: LabsRoute,
   ProofRoute: ProofRoute,
   ProofsRoute: ProofsRoute,
 }

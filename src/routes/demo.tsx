@@ -26,6 +26,7 @@ function DemoPage() {
       title="Accepted payment. Rejected attack."
       lede="The rules stay on screen. Pick a payment. The verdict is the same one the published checks already returned. This page does not send a transaction."
     >
+      <Section title="Run the integrated demos"><p className="text-center text-muted">The original page below replays published decisions. <a className="text-primary underline" href="/labs">Open the actual compiler, signed-quote demo, judge tests and attack lab →</a></p></Section>
       <Section title="The owner's .x3 rules">
         <ul className="mx-auto grid max-w-3xl gap-3">
           {RULES.map((rule) => (
