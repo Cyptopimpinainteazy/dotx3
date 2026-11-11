@@ -57,9 +57,15 @@
           border: 1px solid var(--cyan); color: var(--cyan); text-decoration: none; font-size: 12px; }
   .small-btn { min-height: 30px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel2); color: var(--fg); padding: 0 10px; font-size: 11px; }
 </style>
+<link rel="stylesheet" href="/page-export.css">
 </head>
 <body>
 <div class="wrap">
+<div class="page-export-controls" data-page-export-controls data-copy-exclude>
+  <button type="button" data-export-copy>Copy page</button>
+  <button type="button" data-export-download>Download Markdown</button>
+  <span role="status" aria-live="polite"></span>
+</div>
   <header>
     <a href="../index.html" style="color:var(--cyan);text-decoration:none;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:8px 12px">&larr; Gallery</a>
     <h1>MEME COIN BLAST</h1>
@@ -611,5 +617,6 @@
     .finally(() => { $("go").disabled = false; boot(); });
 })();
 </script>
+<script type="module" src="/page-export-controls.mjs"></script>
 </body>
 </html>

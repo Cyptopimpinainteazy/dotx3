@@ -41,9 +41,15 @@
   footer { margin-top: 40px; color: var(--muted); font-size: 12px; line-height: 1.6; }
   code { color: var(--fg); }
 </style>
+<link rel="stylesheet" href="/page-export.css">
 </head>
 <body>
 <div class="wrap">
+<div class="page-export-controls" data-page-export-controls data-copy-exclude>
+  <button type="button" data-export-copy>Copy page</button>
+  <button type="button" data-export-download>Download Markdown</button>
+  <span role="status" aria-live="polite"></span>
+</div>
   <h1>X3 FRONTEND GALLERY</h1>
   <p class="lede">The frontends we built across the X3 repos, rebuilt from source on 2026-11-11 and running here. <span id="modeNote">Click a card to see the app.</span> There is no chain or backend behind these builds, so anything that needs one shows its offline or sample state, and every card says which.</p>
 
@@ -117,5 +123,6 @@
         : "Here you get screenshots. To use the apps live, run the local bundle (one command, see below).";
     });
 </script>
+<script type="module" src="/page-export-controls.mjs"></script>
 </body>
 </html>
