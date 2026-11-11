@@ -1,0 +1,24 @@
+docs/NEAR_INTEGRATION_SCOPE.md
+  h_e41068bed968d7 21
+docs/NEAR_INTENTS_EXPLORER.md
+  h_e41068bed968d7 1-55
+scripts/near-intents-explorer.mjs
+  h_e41068bed968d7 1-121
+scripts/near-intents-explorer.test.mjs
+  h_e41068bed968d7 1-87
+src/routes/labs.tsx
+  h_e41068bed968d7 169-176
+wiki/index.md
+  h_e41068bed968d7 13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ae5d901eca4a03fc81ee0d6204e093c0b1d8df90",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
