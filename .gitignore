@@ -4,5 +4,7 @@ node_modules/
 .env
 .env.*
 
+# Live gallery builds come from private repos; rebuild with scripts/build-gallery.sh
+public/gallery/apps/
 /integrations/x3dex/node_modules/
 /public/dex-terminal/
