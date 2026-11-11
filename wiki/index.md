@@ -10,3 +10,4 @@
 Architecture: file routes in `src/routes`, shared presentation in `src/components`, local policy implementation under `src/lib/x3`, embedded read-only DEX in `integrations/x3dex`. Static lab provenance lives at `public/labs/attack/provenance.json`. NEAR track content is shared in `src/lib/near-tracks.ts`. Keep evidence links and limitation statements together when updating track claims.
 
 - [NEAR integration boundaries and submission scope](../docs/NEAR_INTEGRATION_SCOPE.md)
+- [Read-only NEAR Intents Explorer](../docs/NEAR_INTENTS_EXPLORER.md)

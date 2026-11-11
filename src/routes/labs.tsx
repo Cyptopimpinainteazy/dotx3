@@ -167,6 +167,14 @@ function Labs() {
       >
         <div className="grid gap-5 md:grid-cols-3">
           <article className="rounded-xl border border-border p-6">
+            <h3 className="font-display text-xl text-primary">NEAR Intents Explorer</h3>
+            <p className="my-4 text-muted">
+              Inspect historical 1Click swaps and provider-reported statuses. Explorer records are
+              separate from independent verification of chain finality and settlement.
+            </p>
+            <OutLink href="https://explorer.near-intents.org/">Open the official Explorer</OutLink>
+          </article>
+          <article className="rounded-xl border border-border p-6">
             <h3 className="font-display text-xl text-primary">NEAR Business</h3>
             <p className="my-4 text-muted">
               Official team treasury application. Its members propose and review financial requests
