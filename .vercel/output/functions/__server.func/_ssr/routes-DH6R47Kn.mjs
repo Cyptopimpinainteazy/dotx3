@@ -1,9 +1,9 @@
 import { i as __toESM } from "../_runtime.mjs";
 import { J as require_react, S as require_jsx_runtime } from "../_libs/@tanstack/react-router+[...].mjs";
-import { a as RouteTicker, i as ProofFlow, n as Card, o as Section, r as CardGrid, s as SiteShell, t as ActionLink } from "./site-shell-0774LnZF.mjs";
-import { i as SITE } from "./front-door-CDmHt-Gp.mjs";
+import { a as RouteTicker, i as ProofFlow, n as Card, o as Section, r as CardGrid, s as SiteShell, t as ActionLink } from "./site-shell-DW70_4Ol.mjs";
+import { o as SITE } from "./front-door-Q62Z724k.mjs";
 import { a as Group, c as LineSegments, d as OctahedronGeometry, f as PerspectiveCamera, h as TorusGeometry, i as Float32BufferAttribute, l as Mesh, m as SphereGeometry, n as BufferGeometry, o as IcosahedronGeometry, p as Scene, r as Clock, s as LineBasicMaterial, t as WebGLRenderer, u as MeshBasicMaterial } from "../_libs/three.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-DwnIuz4B.js
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-DH6R47Kn.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function fit(renderer, camera, el) {
@@ -297,7 +297,7 @@ function Meter() {
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 				className: "mt-3 text-center text-muted",
 				children: [
-					"Raised $",
+					"Marked in this browser $",
 					raised.toLocaleString(),
 					" / Goal $",
 					GOAL.toLocaleString(),
@@ -393,6 +393,17 @@ function Meter() {
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 				className: "mt-3 text-center text-xs text-muted",
 				children: "Stored only in this browser. The published Base trade is 1 test USDC on Base Sepolia. Solana uses the repo’s canonical example. NEAR uses the mandate that already allows Near.USDC, with no bridge. None of these marks is a finalized investment."
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "mt-6 flex flex-wrap justify-center gap-3",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ActionLink, {
+					to: "/back",
+					children: "Back .x3 for real"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ActionLink, {
+					to: "/playground",
+					outline: true,
+					children: "Try to break a mandate"
+				})]
 			})
 		]
 	});
@@ -421,6 +432,11 @@ function Home() {
 				to: "/proof",
 				outline: true,
 				children: "Inspect the Proof"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ActionLink, {
+				to: "/playground",
+				outline: true,
+				children: "Break a Mandate"
 			})
 		] }),
 		media: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(HeroField, {}),
@@ -486,7 +502,7 @@ function Home() {
 						autoPlay: true
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("figcaption", {
 						className: "px-4 py-3 text-center text-sm text-muted",
-						children: "Protocol mark in motion. Drop the Claude clip in when it is hosted — the Claude file link was behind a login wall."
+						children: "Protocol mark in motion. The trade it stands for is on Inspect the Proof: testnet, not mainnet."
 					})]
 				})
 			}),

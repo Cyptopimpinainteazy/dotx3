@@ -1,15 +1,16 @@
 import { i as __toESM } from "../_runtime.mjs";
-import { J as require_react, S as require_jsx_runtime } from "../_libs/@tanstack/react-router+[...].mjs";
-import { o as Section, s as SiteShell } from "./site-shell-0774LnZF.mjs";
+import { J as require_react, S as require_jsx_runtime, b as Link } from "../_libs/@tanstack/react-router+[...].mjs";
+import { o as Section, s as SiteShell } from "./site-shell-DW70_4Ol.mjs";
 import { n as OutLink, r as Tag, t as CodeBlock } from "./code-block-AVKNKds0.mjs";
-import { n as MANDATE, t as LINKS } from "./front-door-CDmHt-Gp.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/demo-CovWNfum.js
+import { n as MANDATE, t as LINKS } from "./front-door-Q62Z724k.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/demo-BhAKrXkj.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var RULES = [
 	"Owner x3-owner.near. Agent x3-agent.near.",
 	"Spend Solana.USDC. At most 50 USDC a payment, 200 USDC in 24 hours.",
 	"Only recipient x3-demo.near. Only destination asset Near.USDC.",
+	"A failed swap refunds only to the owner's pinned Solana address.",
 	"Slippage at most 1%. Fees at most 100 bps.",
 	"Anything above 30 USDC needs the owner. Mandate expires in 30 days."
 ];
@@ -121,9 +122,18 @@ function DemoPage() {
 						]
 					})
 				]
-			}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+			}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 				className: "mx-auto mt-8 max-w-3xl text-center text-muted",
-				children: "Neither button calls Guard. They replay the published local decision and point at the testnet receipts."
+				children: [
+					"Neither button calls Guard. They replay the published local decision and point at the testnet receipts. To run the checker yourself on edited programs, open the",
+					" ",
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+						to: "/playground",
+						className: "text-primary underline underline-offset-4",
+						children: "playground"
+					}),
+					"."
+				]
 			})]
 		})]
 	});

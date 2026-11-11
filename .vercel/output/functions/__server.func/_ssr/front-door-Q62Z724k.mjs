@@ -1,4 +1,4 @@
-//#region node_modules/.nitro/vite/services/ssr/assets/front-door-CDmHt-Gp.js
+//#region node_modules/.nitro/vite/services/ssr/assets/front-door-Q62Z724k.js
 var SITE = "dotx3.net";
 var REPO = "https://github.com/Cyptopimpinainteazy/x3lang";
 var RAW = "https://github.com/Cyptopimpinainteazy/x3lang/blob/master";
@@ -33,6 +33,21 @@ var LINKS = {
 	telegram: "https://t.me/x3starchain",
 	browserDemo: "https://x3-guard.pages.dev"
 };
+/**
+* The .X3 token and its liquidity pool. Both are null until they exist on NEAR mainnet.
+* /back shows "not live" for each null field and never invents a value. When the token is
+* deployed and the Rhea pool is created, set these from the finalized transactions.
+*/
+var TOKEN = {
+	symbol: ".X3",
+	standard: "NEP-141",
+	contract: null,
+	deployTx: null,
+	rheaPoolId: null,
+	poolTx: null
+};
+var RHEA_APP = "https://app.rhea.finance";
+var NEAR_WALLETS = "https://wallet.near.org";
 var PROGRAM_SHA = "1398f64e7e208d3796883aa59cb169187c1042ac1af3781bd6efc014755df860";
 var MANDATE = `mandate x3_shopping_agent {
     owner x3-owner.near
@@ -42,6 +57,7 @@ var MANDATE = `mandate x3_shopping_agent {
     per_24h 200000000
     allow recipients x3-demo.near
     allow assets Near.USDC
+    refund_to 4Nd1mzi8Y1QYxJt9wZWBYZpG7S4pYkZs6YzD3Vt9aBcD
     require slippage <= 1%
     require fees <= 100 bps
     approve above 30000000 by 1 of x3-owner.near
@@ -59,4 +75,4 @@ var TRADE = `intent x3_testnet_base_usdc_to_near {
     on_fail rollback
 }`;
 //#endregion
-export { TRADE as a, SITE as i, MANDATE as n, PROGRAM_SHA as r, LINKS as t };
+export { RHEA_APP as a, TRADE as c, PROGRAM_SHA as i, MANDATE as n, SITE as o, NEAR_WALLETS as r, TOKEN as s, LINKS as t };

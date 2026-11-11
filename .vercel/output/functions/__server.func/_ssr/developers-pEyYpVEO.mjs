@@ -1,8 +1,8 @@
 import { S as require_jsx_runtime } from "../_libs/@tanstack/react-router+[...].mjs";
-import { o as Section, s as SiteShell } from "./site-shell-0774LnZF.mjs";
+import { o as Section, s as SiteShell } from "./site-shell-DW70_4Ol.mjs";
 import { n as OutLink, r as Tag, t as CodeBlock } from "./code-block-AVKNKds0.mjs";
-import { i as SITE, t as LINKS } from "./front-door-CDmHt-Gp.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/developers-DgBKvgCU.js
+import { o as SITE, t as LINKS } from "./front-door-Q62Z724k.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/developers-pEyYpVEO.js
 var import_jsx_runtime = require_jsx_runtime();
 function DevelopersPage() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SiteShell, {
@@ -151,12 +151,12 @@ cargo run -p x3-tools --bin x3c -- parse x3-lang/examples/trading_core_v1.x3`
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 						className: "text-muted",
-						children: [SITE, " ships four working pages first: demo, docs, code, proof. These proposed routes are named so they are not pretended:"]
+						children: [SITE, " ships the four working doors (demo, docs, code, proof) plus /playground, /language and /back. These proposed routes are named so they are not pretended:"]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ul", {
 						className: "mt-4 grid gap-2 text-sm text-muted md:grid-cols-2",
 						children: [
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: "/about — language overview is the docs page for now" }),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: "/about — the language overview is /language" }),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: "/shield — mandate and Guard limits are on the demo and proof pages" }),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: "/hackathon — one demo covers security, agents, and DeFi" }),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: "/security — reporting steps are in the repo SECURITY.md" }),
