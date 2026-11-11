@@ -7,3 +7,6 @@ node_modules/
 # Python compiler runtime caches
 **/__pycache__/
 **/*.pyc
+
+# Build artifacts are generated from source on Vercel
+.vercel/output/
