@@ -28,6 +28,7 @@ export function SiteShell({
   title,
   lede,
   media,
+  mediaFloat = true,
   actions,
 }: {
   children: React.ReactNode;
@@ -35,6 +36,8 @@ export function SiteShell({
   title: string;
   lede: string;
   media?: React.ReactNode;
+  /** Float the hero media. Turn off for media people watch, such as video. */
+  mediaFloat?: boolean;
   actions?: React.ReactNode;
 }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
@@ -89,7 +92,9 @@ export function SiteShell({
               {eyebrow}
             </p>
           ) : null}
-          {media ? <div className="mark-float rise rise-2 w-full max-w-3xl">{media}</div> : null}
+          {media ? (
+            <div className={`${mediaFloat ? "mark-float " : ""}rise rise-2 w-full max-w-3xl`}>{media}</div>
+          ) : null}
           <h1 className="rise rise-3 font-display text-4xl leading-tight text-fg md:text-6xl">
             {title}
           </h1>

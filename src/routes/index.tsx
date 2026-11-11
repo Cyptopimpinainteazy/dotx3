@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ActionLink, Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { ProofFlow, RouteTicker } from "@/components/circuit";
-import { HeroField, MeterScene } from "@/components/meter-scene";
+import { MeterScene } from "@/components/meter-scene";
 import { MILESTONES, SITE } from "@/lib/front-door";
 
 export const Route = createFileRoute("/")({ component: Home });
@@ -92,7 +92,25 @@ function Home() {
           </ActionLink>
         </>
       }
-      media={<HeroField />}
+      mediaFloat={false}
+      media={
+        <figure className="overflow-hidden rounded-xl border border-border bg-bg shadow-2xl">
+          <video
+            className="aspect-video w-full bg-bg"
+            src="/media/x3-shield-who-gets-paid.mp4"
+            poster="/media/x3-shield-who-gets-paid-poster.jpg"
+            controls
+            playsInline
+            preload="metadata"
+            aria-describedby="who-gets-paid-note"
+          />
+          <figcaption id="who-gets-paid-note" className="px-4 py-3 text-left text-sm text-muted">
+            <span className="font-display text-fg">Who gets paid?</span> · 2:56 music video. Scenes marked
+            DRAMATIZATION are AI-generated. Explorer cards are testnet transactions; terminal shots are local runs
+            of the X3Lang source. Nothing in it is a mainnet settlement.
+          </figcaption>
+        </figure>
+      }
     >
       <RouteTicker />
 
