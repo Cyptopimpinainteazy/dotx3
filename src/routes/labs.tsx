@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ActionLink, Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { OutLink } from "@/components/code-block";
 import { CompilerWorkbench } from "@/components/compiler-workbench";
+import { PartnerLink } from "@/components/partner-link";
 
 export const Route = createFileRoute("/labs")({ component: Labs });
 const views = [
@@ -137,6 +138,28 @@ function Labs() {
         </div>
       </Section>
 
+      <Section
+        title="Wallets and DeFi tools"
+        intro="External tools with their own accounts and terms."
+      >
+        <CardGrid>
+          <Card title="Meteor Wallet">
+            <p>A NEAR wallet for accessing applications across the ecosystem.</p>
+            <p className="mt-4">
+              <PartnerLink provider="meteor" />
+            </p>
+          </Card>
+          <Card title="RHEA Finance">
+            <p>
+              Explore RHEA&apos;s NEAR DeFi application. Review its pool and token details before
+              use.
+            </p>
+            <p className="mt-4">
+              <PartnerLink provider="rhea" />
+            </p>
+          </Card>
+        </CardGrid>
+      </Section>
       <Section
         title="Operations integrations"
         alt
