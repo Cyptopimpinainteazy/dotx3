@@ -18,6 +18,7 @@ import { Route as DemoRouteImport } from './routes/demo'
 import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DexRouteImport } from './routes/dex'
 import { Route as DocsRouteImport } from './routes/docs'
+import { Route as LabsRouteImport } from './routes/labs'
 import { Route as LanguageRouteImport } from './routes/language'
 import { Route as NearRouteImport } from './routes/near'
 import { Route as PlaygroundRouteImport } from './routes/playground'
@@ -71,6 +72,11 @@ const DocsRoute = DocsRouteImport.update({
   path: '/docs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LabsRoute = LabsRouteImport.update({
+  id: '/labs',
+  path: '/labs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LanguageRoute = LanguageRouteImport.update({
   id: '/language',
   path: '/language',
@@ -117,6 +123,7 @@ export interface FileRoutesByFullPath {
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
   '/near': typeof NearRoute
   '/playground': typeof PlaygroundRoute
@@ -135,6 +142,7 @@ export interface FileRoutesByTo {
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
   '/near': typeof NearRoute
   '/playground': typeof PlaygroundRoute
@@ -154,6 +162,7 @@ export interface FileRoutesById {
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
   '/near': typeof NearRoute
   '/playground': typeof PlaygroundRoute
@@ -174,6 +183,7 @@ export interface FileRouteTypes {
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/labs'
     | '/language'
     | '/near'
     | '/playground'
@@ -192,6 +202,7 @@ export interface FileRouteTypes {
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/labs'
     | '/language'
     | '/near'
     | '/playground'
@@ -210,6 +221,7 @@ export interface FileRouteTypes {
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/labs'
     | '/language'
     | '/near'
     | '/playground'
@@ -229,6 +241,7 @@ export interface RootRouteChildren {
   DevelopersRoute: typeof DevelopersRoute
   DexRoute: typeof DexRoute
   DocsRoute: typeof DocsRoute
+  LabsRoute: typeof LabsRoute
   LanguageRoute: typeof LanguageRoute
   NearRoute: typeof NearRoute
   PlaygroundRoute: typeof PlaygroundRoute
@@ -303,6 +316,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/labs': {
+      id: '/labs'
+      path: '/labs'
+      fullPath: '/labs'
+      preLoaderRoute: typeof LabsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/language': {
       id: '/language'
       path: '/language'
@@ -365,6 +385,7 @@ const rootRouteChildren: RootRouteChildren = {
   DevelopersRoute: DevelopersRoute,
   DexRoute: DexRoute,
   DocsRoute: DocsRoute,
+  LabsRoute: LabsRoute,
   LanguageRoute: LanguageRoute,
   NearRoute: NearRoute,
   PlaygroundRoute: PlaygroundRoute,

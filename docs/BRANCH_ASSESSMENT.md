@@ -17,3 +17,7 @@ Assessed fetched dotx3 refs against main `2391a453d656c83696ad79ad02bf3d0ed4d1b7
 Security uses the merged policy checker and existing historical Guard refusals. Agent Economy uses the same owner's mandate and agent-payment examples. DeFi uses the historical source-hash-bound Base Sepolia → NEAR testnet transfer and its two-chain records. These are three explanations of shared components, not three independent settlement engines.
 
 The integrated-labs branch deserves its own implementation review; this assessment does not claim its compiler API has been deployed or tested here. The current work updates documentation and track navigation without changing signing, custody or settlement code.
+
+## Integration update
+
+PR #1 landed on main at `c0591db0074d941aa0a74e1e6bce8f5fd24540f9` after compiler API/provenance, Node, build, typecheck and DEX CI passed. This track-pages branch now includes that main commit, preserving `/labs`, `/dex` and `/bootcamp`. The earlier table is a historical assessment, not the current merge queue. Production compiler execution remains separately unverified.

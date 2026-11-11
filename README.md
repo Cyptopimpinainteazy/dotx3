@@ -4,6 +4,7 @@ dotx3 is the public website for the .x3 language and X3 Shield: documentation, d
 
 ## Start here
 
+- `/labs`: vendored Python compiler API, signed-quote demo, judge policy cases and attack lab.
 - `/docs`: what .x3 does, installation and language examples.
 - `/bootcamp`: the detailed source-backed developer course.
 - `/playground`: edit a policy and inspect local deterministic verdicts.
@@ -33,7 +34,7 @@ node scripts/near-smoke.mjs http://127.0.0.1:8080
 node scripts/bootcamp-smoke.mjs http://127.0.0.1:8080/bootcamp
 ```
 
-`build` installs the DEX's locked dependencies, builds both applications, and invokes the migration helper. See the helper for deployment-specific database behavior. Generated `.vercel/output` is present in the inherited tree; do not hand-edit build output.
+`build` installs the DEX's locked dependencies, builds both applications, and invokes the migration helper. See the helper for deployment-specific database behavior. Generated `.vercel/output` is rebuilt and ignored by Git. The build also packages the bounded Python compiler function; its production execution requires separate deployment verification.
 
 ## Documentation
 
