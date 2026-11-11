@@ -223,18 +223,28 @@
   const turret = { x: W / 2, y: H - 34, angle: -Math.PI / 2 };
   let aim = { x: W / 2, y: H / 2 }, firing = false, lastShot = 0;
 
+  // Live-token and made-up-coin games are saved separately, so a failed token list never
+  // touches a live game's holdings.
+  const storeKey = () => `${KEY}:${liveMode ? "live" : "demo"}`;
+
   function save() {
-    try { localStorage.setItem(KEY, JSON.stringify({ state, market })); } catch { /* storage unavailable: play continues */ }
+    try { localStorage.setItem(storeKey(), JSON.stringify({ state, market })); } catch { /* storage unavailable: play continues */ }
   }
   function load() {
     try {
-      const raw = localStorage.getItem(KEY);
+      const raw = localStorage.getItem(storeKey());
       if (!raw) return false;
       const d = JSON.parse(raw);
       if (!d || typeof d.state?.credits !== "number") return false;
       state = { ...state, ...d.state };
       for (const s of SPECIES) if (d.market?.[s.sym] && typeof d.market[s.sym].factor === "number") market[s.sym] = d.market[s.sym];
-      for (const sym of Object.keys(state.bags)) if (!BY_SYM[sym]) delete state.bags[sym];
+      // A held coin that left the table (the 1Click list changed) goes back to credits at cost.
+      for (const [sym, bag] of Object.entries(state.bags)) {
+        if (BY_SYM[sym]) continue;
+        state.credits += bag.cost;
+        delete state.bags[sym];
+        log(`$${sym} left the table; returned ${fmt(bag.cost)} cr at cost`);
+      }
       return true;
     } catch { return false; }
   }

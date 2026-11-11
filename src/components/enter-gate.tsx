@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { previewPathPrefix } from "@/lib/preview-path-prefix";
 import { BLAST_URL, SONG } from "@/lib/song";
 
 /**
@@ -26,13 +28,23 @@ function rememberEntered() {
   }
 }
 
+/** The game's URL, keeping a path-based preview host's `/hds-…/` prefix. */
+function blastHref(): string {
+  if (typeof window === "undefined") return BLAST_URL;
+  const prefix = previewPathPrefix(window.location.hostname, window.location.pathname);
+  return prefix ? `${prefix}${BLAST_URL}` : BLAST_URL;
+}
+
 export function EnterGate() {
   const [open, setOpen] = useState(false);
+  const [href, setHref] = useState(BLAST_URL);
+  const rootRef = useRef<HTMLDivElement>(null);
   const [muted, setMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const enterRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    setHref(blastHref());
     if (!alreadyEntered()) setOpen(true);
   }, []);
 
@@ -47,12 +59,19 @@ export function EnterGate() {
     enterRef.current?.focus();
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    // Everything behind the gate is inert, so Tab and Shift+Tab stay inside the dialog and
+    // screen readers see only the gate.
+    const behind = Array.from(document.body.children).filter(
+      (el): el is HTMLElement => el instanceof HTMLElement && el !== rootRef.current && !el.hasAttribute("inert"),
+    );
+    behind.forEach((el) => el.setAttribute("inert", ""));
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") enter();
     };
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = prev;
+      behind.forEach((el) => el.removeAttribute("inert"));
       window.removeEventListener("keydown", onKey);
     };
   }, [open, enter]);
@@ -74,8 +93,9 @@ export function EnterGate() {
   if (!open) return null;
   const hasSong = SONG.video !== null;
 
-  return (
+  return createPortal(
     <div
+      ref={rootRef}
       role="dialog"
       aria-modal="true"
       aria-label="Enter dotx3"
@@ -112,7 +132,7 @@ export function EnterGate() {
             Enter dotx3
           </button>
           <a
-            href={BLAST_URL}
+            href={href}
             onClick={rememberEntered}
             className="tap inline-flex min-h-12 w-full items-center justify-center rounded-full border border-accent px-8 text-base font-semibold text-accent sm:w-auto"
           >
@@ -132,6 +152,7 @@ export function EnterGate() {
         ) : null}
         <p className="mt-6 text-xs text-muted">MEME COIN BLAST uses real NEAR Intents token names and live prices with play credits only. No wallet, no real money.</p>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
