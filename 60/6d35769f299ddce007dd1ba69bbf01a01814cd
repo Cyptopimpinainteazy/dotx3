@@ -1,0 +1,24 @@
+docs/REFERRALS.md
+  h_e41068bed968d7 1-22
+src/components/partner-link.tsx
+  h_e41068bed968d7 1-24
+src/lib/partner-links.ts
+  h_e41068bed968d7 1-17
+src/routes/back.tsx
+  h_e41068bed968d7 5,146-148
+src/routes/labs.tsx
+  h_e41068bed968d7 6,141-162
+wiki/index.md
+  h_e41068bed968d7 8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "606d35769f299ddce007dd1ba69bbf01a01814cd",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
