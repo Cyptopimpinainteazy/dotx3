@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { observationProblem } from "@/lib/intents/observation";
 import type { ShieldReport } from "@/lib/intents/shield.mjs";
 export function ProviderIncidents() {
   const [now, setNow] = useState(Date.now());
@@ -21,7 +22,10 @@ export function ProviderIncidents() {
       setBusy(false);
     }
   }
-  const stale = Boolean(data?.observedAt && now - Date.parse(data.observedAt) > 30000);
+  const observedAt = typeof data?.observedAt === "string" ? data.observedAt : null;
+  const timeProblem = data && data.status !== "unknown"
+    ? observationProblem(data.observedAt, now)
+    : null;
   return (
     <section className="my-8 rounded-xl border border-border bg-surface p-5">
       <h2 className="font-display text-2xl text-primary">Provider incident feed</h2>
@@ -40,18 +44,18 @@ export function ProviderIncidents() {
       <div role="status">
         <p>
           {data
-            ? `Incident response: ${stale ? "unknown (observation expired)" : data.status}. Surface security mode: ${data.securityMode}.`
+            ? `Incident response: ${timeProblem ? `unknown (${timeProblem})` : data.status}. Surface security mode: unknown.`
             : "Not checked. Provider condition is unknown."}
         </p>
-        {data?.observedAt && (
+        {observedAt && (
           <p className="text-sm text-muted">
-            Observed {data.observedAt}. Refresh before relying on this observation.
+            Observed {observedAt}. Refresh before relying on this observation.
           </p>
         )}
         {data?.reason === "not-configured" && (
           <p className="text-muted">SHIELD read access is not configured.</p>
         )}
-        {!stale &&
+        {!timeProblem &&
           data?.incidents.map((r, i) => (
             <p className="mt-2 break-words" key={i}>
               {r.scopeType}: {r.scopeValue} · {r.direction || "direction unspecified"} ·{" "}
