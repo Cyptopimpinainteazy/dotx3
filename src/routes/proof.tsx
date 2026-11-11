@@ -1,3 +1,4 @@
+import { ProviderIncidents } from '@/components/provider-incidents';
 import { ExplorerEvidence } from '@/components/explorer-evidence';
 import { createFileRoute } from "@tanstack/react-router";
 import { OutLink, Tag } from "@/components/code-block";
@@ -35,6 +36,7 @@ function ProofPage() {
       title="Evidence by source and network."
       lede="Local tests, testnet receipts and live provider history are labeled separately. A signed 1Click quote is not a settlement. A Guard acceptance is not a transfer."
     >
+      <div className="mx-auto max-w-6xl px-5"><ProviderIncidents /></div>
       <Section title="1Click Explorer history"><ExplorerEvidence /></Section>
 
       <Section title="CI and local gates">

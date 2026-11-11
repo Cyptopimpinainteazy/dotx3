@@ -1,3 +1,4 @@
+import { CopyPage } from '@/components/copy-page';
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -41,7 +42,7 @@ export function SiteShell({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-bg text-fg">
+    <div data-page-content className="min-h-screen bg-bg text-fg">
       <header className="sticky top-0 z-40 border-b border-border bg-bg/90 backdrop-blur">
         <div className="relative mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
           <Link to="/" className="font-display text-2xl tracking-wide text-primary">
@@ -90,6 +91,7 @@ export function SiteShell({
             </p>
           ) : null}
           {media ? <div className="mark-float rise rise-2 w-full max-w-3xl">{media}</div> : null}
+          <CopyPage />
           <h1 className="rise rise-3 font-display text-4xl leading-tight text-fg md:text-6xl">
             {title}
           </h1>
