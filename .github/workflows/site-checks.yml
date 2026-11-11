@@ -28,3 +28,23 @@ jobs:
         run: |
           npm --prefix integrations/x3dex test
           npm --prefix integrations/x3dex run test:server
+  dex-production-install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: integrations/x3dex/package-lock.json
+      - name: Install embedded DEX with the production dependency contract
+        run: npm --prefix integrations/x3dex ci --omit=dev --ignore-scripts --no-audit --no-fund
+      - name: Build without parent app dependencies
+        run: npm --prefix integrations/x3dex run build
+      - name: Check embedded output
+        run: test -s public/dex-terminal/index.html
+      - name: Build the explicit standalone package
+        run: npm --prefix integrations/x3dex run build:standalone
+      - name: Check both output layouts and asset URLs
+        run: node integrations/x3dex/scripts/check-build-outputs.mjs

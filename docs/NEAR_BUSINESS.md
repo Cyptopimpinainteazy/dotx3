@@ -4,7 +4,7 @@ Reviewed against the official documentation on 2026-11-11. This guide links the 
 
 ## Two separate services
 
-[NEAR Builders](NEAR_BUILDERS_MCP.md) maintains the builder directory. The approved `dotx3.near` directory profile is not proof of a treasury, its membership or signing authority. Its MCP API key is scoped to that service and must not be sent to NEAR Business.
+[NEAR Builders](NEAR_BUILDERS_MCP.md) maintains the builder directory. A `dotx3.near` directory profile, including any directory approval, is not proof of a treasury, its membership or signing authority. Its MCP API key is scoped to that service and must not be sent to NEAR Business.
 
 [NEAR Business](https://business.near.com/) is a team treasury application. Its [overview](https://docs.business.near.com/what-is) describes multisig-based, multi-chain asset management with financial details restricted to treasury members. The [confidentiality guide](https://docs.business.near.com/confidential-treasuries) describes the private-shard and external-chain funding model. Those are NEAR Business product claims, separate from dotx3's public Guard/testnet evidence.
 
@@ -38,6 +38,6 @@ Before implementing a connector, identify the intended treasury and inspect memb
 
 ## Current integration state
 
-- Builder directory: `dotx3.near` profile approved and applied, verified through NEAR Builders MCP.
+- Builder directory: the originating integration work reports that the `dotx3.near` profile was approved and applied through NEAR Builders MCP. No timestamped response or independently reproducible verification receipt is included here; treat that status as reported, not independently verified repository evidence. Recheck the authenticated account and current profile through a read-only lookup before relying on it.
 - NEAR Business treasury: no treasury identifier configured or account session inspected by this work.
 - Treasury API, policy enforcement and payment execution: no integration claimed.
