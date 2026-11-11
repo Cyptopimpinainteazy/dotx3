@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Circuit } from "@/components/circuit";
 
 const LINKS = [
+  { to: "/near", label: "NEAR Competition" },
+  { to: "/docs", label: "Docs" },
   { to: "/labs", label: "Labs & integrations" },
   { to: "/dex", label: "DEX" },
   { to: "/demo", label: "Try the Demo" },
@@ -65,7 +67,9 @@ export function SiteShell({
                     to={link.to}
                     onClick={() => setOpen(false)}
                     className={`tap block rounded-lg px-3 py-2 text-sm font-medium ${
-                      active ? "bg-surface-2 text-primary md:bg-transparent" : "text-muted hover:text-fg"
+                      active
+                        ? "bg-surface-2 text-primary md:bg-transparent"
+                        : "text-muted hover:text-fg"
                     }`}
                   >
                     {link.label}
@@ -81,12 +85,18 @@ export function SiteShell({
         <Circuit className="pointer-events-none absolute inset-0 h-full w-full text-primary opacity-50" />
         <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-6 px-5 py-16 text-center md:py-24">
           {eyebrow ? (
-            <p className="rise rise-1 font-display text-xs tracking-widest text-accent uppercase">{eyebrow}</p>
+            <p className="rise rise-1 font-display text-xs tracking-widest text-accent uppercase">
+              {eyebrow}
+            </p>
           ) : null}
           {media ? <div className="mark-float rise rise-2 w-full max-w-3xl">{media}</div> : null}
-          <h1 className="rise rise-3 font-display text-4xl leading-tight text-fg md:text-6xl">{title}</h1>
+          <h1 className="rise rise-3 font-display text-4xl leading-tight text-fg md:text-6xl">
+            {title}
+          </h1>
           <p className="rise rise-4 max-w-2xl text-lg text-muted">{lede}</p>
-          {actions ? <div className="rise rise-4 flex flex-wrap justify-center gap-3">{actions}</div> : null}
+          {actions ? (
+            <div className="rise rise-4 flex flex-wrap justify-center gap-3">{actions}</div>
+          ) : null}
         </div>
       </section>
 
@@ -95,7 +105,9 @@ export function SiteShell({
       <footer className="border-t border-border bg-surface">
         <div className="mx-auto max-w-6xl px-5 py-10 text-center text-sm text-muted">
           <p>dotx3.net — public front door for .x3</p>
-          <p className="mt-2">Testnet and local evidence. Not an offer of securities. Not a mainnet settlement.</p>
+          <p className="mt-2">
+            Testnet and local evidence. Not an offer of securities. Not a mainnet settlement.
+          </p>
         </div>
       </footer>
     </div>
@@ -106,13 +118,7 @@ export function CardGrid({ children }: { children: React.ReactNode }) {
   return <div className="grid gap-5 md:grid-cols-3">{children}</div>;
 }
 
-export function Card({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+export function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <article className="card-lift rounded-xl border border-border bg-surface p-6 hover:border-primary/40">
       <h3 className="font-display text-xl text-accent">{title}</h3>

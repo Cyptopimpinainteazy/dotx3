@@ -89,8 +89,8 @@ const IDEAS: { title: string; body: string; status: string }[] = [
   },
   {
     title: "Scoped agent vault",
-    status: "Planned",
-    body: "A separate vault contract the agent can only reach through a function-call key with zero attached deposit. The vault asks Guard first and then releases funds, which closes the gap where an origin key could skip Guard entirely.",
+    status: "Local prototypes",
+    body: "NEAR FunctionCall-only and Base EIP-712 vault work has local Sandbox and Foundry coverage in the source repository. Public vault deployment and independent audits remain unproven; these prototypes did not custody the historical Tidepool transfer.",
   },
   {
     title: "Mandate diff before you sign",
@@ -121,7 +121,14 @@ function LanguagePage() {
       title="X3 is more than one payment."
       lede="X3 Shield on NEAR uses a narrow, tested slice of X3. Here's the whole pipeline, what the compiler refuses, the chain engine behind it, and what we're building next."
     >
-      <div className="mx-auto max-w-6xl px-5 pt-8"><a href="/bootcamp" className="tap inline-flex min-h-11 items-center rounded-lg border border-border px-5 text-primary">Enter Bootcamp — the in-depth .x3 developer course →</a></div>
+      <div className="mx-auto max-w-6xl px-5 pt-8">
+        <a
+          href="/bootcamp"
+          className="tap inline-flex min-h-11 items-center rounded-lg border border-border px-5 text-primary"
+        >
+          Enter Bootcamp — the in-depth .x3 developer course →
+        </a>
+      </div>
       <Section
         title="Two pipelines, one language"
         intro="The hackathon path is the top line. The bottom line is the X3 chain, which is not part of the NEAR judge path."
