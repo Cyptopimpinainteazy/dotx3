@@ -46,6 +46,11 @@ export function TrackPage({ slug }: { slug: (typeof nearTracks)[number]["slug"] 
           </Card>
         </CardGrid>
       </Section>
+      <div className="mx-auto max-w-6xl px-5 text-center">
+        <ActionLink to="/labs" outline>
+          Practice in the learning labs
+        </ActionLink>
+      </div>
       <Section title="Judge walkthrough">
         <ol className="mx-auto max-w-3xl list-decimal space-y-4 pl-6 text-muted">
           <li>

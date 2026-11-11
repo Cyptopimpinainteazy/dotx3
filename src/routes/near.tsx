@@ -38,6 +38,9 @@ function NearPage() {
           ))}
         </CardGrid>
       </Section>
+      <div className="mx-auto max-w-6xl px-5 text-center">
+        <ActionLink to="/labs">Open the learning labs</ActionLink>
+      </div>
       <Section title="Follow the evidence" alt>
         <CardGrid>
           <Card title="Local checks">

@@ -7,6 +7,7 @@ dotx3 is the public website for the .x3 language and X3 Shield: documentation, d
 - `/docs`: what .x3 does, installation and language examples.
 - `/bootcamp`: the detailed source-backed developer course.
 - `/playground`: edit a policy and inspect local deterministic verdicts.
+- `/labs`: browser learning tools and the offline native-NEAR Attack Lab.
 - `/near`: NEAR competition hub with `/security`, `/agents` and `/defi` track pages.
 - `/proof`: historical Guard and finalized testnet transfer records.
 - `/dex`: read-only market interface; market observations do not authorize a trade.

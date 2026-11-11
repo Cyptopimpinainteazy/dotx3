@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CodeBlock, OutLink, Tag } from "@/components/code-block";
 import { Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { LINKS, MANDATE, TRADE } from "@/lib/front-door";
+import { PRESETS } from "@/lib/x3/playground";
 
 export const Route = createFileRoute("/docs")({ component: DocsPage });
 
@@ -67,6 +68,10 @@ PYTHONPATH=x3-lang python3 -m pytest x3-lang/tests -q`}
 
       <Section title="Syntax" alt>
         <CodeBlock title="Owner mandate" code={MANDATE} />
+        <CodeBlock
+          title="Agent payment under the owner mandate"
+          code={PRESETS.find((preset) => preset.id === "authorized")!.intent}
+        />
         <CodeBlock title="The program behind the testnet trade" code={TRADE} />
         <p className="mt-4 text-sm text-muted">
           <OutLink href={LINKS.mandate}>Mandate file</OutLink>
@@ -112,8 +117,8 @@ PYTHONPATH=x3-lang python3 -m pytest x3-lang/tests -q`}
         <p className="mt-8 text-sm text-muted">
           <Tag>Limit</Tag>
           <span className="mt-3 block">
-            There is no downloadable GitHub release. Installation is from source. Programming notes
-            live in the repo under docs/x3-lang. Judge steps:{" "}
+            This installation guide uses source. Check the current release artifacts separately.
+            Programming notes live in the repo under docs/x3-lang. Judge steps:{" "}
             <OutLink href={LINKS.hackathonDocs}>docs/hackathon</OutLink>.
           </span>
         </p>

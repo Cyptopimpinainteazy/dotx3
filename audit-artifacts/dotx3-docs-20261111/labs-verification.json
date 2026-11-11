@@ -1,0 +1,135 @@
+{
+  "base_commit": "68a595bc8fd082220dd3acdd7a17ecbbc037fbff",
+  "state": "follow-up source changes verified before commit",
+  "source_sha256": {
+    "src/routes/labs.tsx": "a3136c8f07614dfadecf16ba30c6565af0818ebd1d50edd3327e235298959d34",
+    "src/routes/near.tsx": "eb71e20755628e4954482aed2c7ba6e19bdc98d7f59a09a17c1816acc69666e1",
+    "src/routes/docs.tsx": "c00a54d7ca9dac0eb922fbee3ef58bf44966b775ea21636820c1d976d51aaf40",
+    "src/routes/developers.tsx": "7c5bb0e4dfb98f1cc9be14b906a635de58bc712718ec4f9c8c8e88eaafaa1db3",
+    "src/components/track-page.tsx": "74eb3f923413530cc418d78a5e62020572bbd39e197958890c778eb9c720cdd2",
+    "scripts/near-smoke.mjs": "c7b948572e44a27bd9bb37a3acfddc1deae28f207a3189f830b3b7ed8cfd9388",
+    "scripts/attack-lab.test.mjs": "9fecc275824390ac0acf4144365384621b5d70b7b834b1fa8e3763811d892f4c",
+    "public/labs/attack/attack-lab.html": "75f321e8f6c1159184968e943c1eef3c1a5eb9ee0ddac5049b9795953d2553a5",
+    "public/labs/attack/attack-lab-policy.mjs": "f271a8028d457b6e2191b54b7d97fd5a32af2d0ab04f1000c73ceb9296c87197",
+    "public/labs/attack/provenance.json": "548bbb1ca42628aed21726c90f214fdac9899ff4ee87dca51aed400531cbbff4"
+  },
+  "verification": [
+    {
+      "command": "npm test",
+      "result": "pass",
+      "script_tests": 210,
+      "typescript_tests": 77
+    },
+    {
+      "command": "npm run typecheck",
+      "result": "pass"
+    },
+    {
+      "command": "npm run build",
+      "result": "pass"
+    },
+    {
+      "command": "ESLint and Prettier on changed source/docs",
+      "result": "pass"
+    },
+    {
+      "command": "node scripts/near-smoke.mjs",
+      "result": {
+        "ok": true,
+        "results": [
+          {
+            "path": "/near",
+            "width": 1280,
+            "status": "pass"
+          },
+          {
+            "path": "/labs",
+            "width": 1280,
+            "status": "pass"
+          },
+          {
+            "path": "/security",
+            "width": 1280,
+            "status": "pass"
+          },
+          {
+            "path": "/agents",
+            "width": 1280,
+            "status": "pass"
+          },
+          {
+            "path": "/defi",
+            "width": 1280,
+            "status": "pass"
+          },
+          {
+            "path": "/docs",
+            "width": 1280,
+            "status": "pass"
+          },
+          {
+            "path": "/developers",
+            "width": 1280,
+            "status": "pass"
+          },
+          {
+            "path": "/labs/attack/attack-lab.html",
+            "width": 1280,
+            "status": "pass",
+            "scenarios": 10,
+            "replay": "refused"
+          },
+          {
+            "path": "/near",
+            "width": 390,
+            "status": "pass"
+          },
+          {
+            "path": "/labs",
+            "width": 390,
+            "status": "pass"
+          },
+          {
+            "path": "/security",
+            "width": 390,
+            "status": "pass"
+          },
+          {
+            "path": "/agents",
+            "width": 390,
+            "status": "pass"
+          },
+          {
+            "path": "/defi",
+            "width": 390,
+            "status": "pass"
+          },
+          {
+            "path": "/docs",
+            "width": 390,
+            "status": "pass"
+          },
+          {
+            "path": "/developers",
+            "width": 390,
+            "status": "pass"
+          },
+          {
+            "path": "/labs/attack/attack-lab.html",
+            "width": 390,
+            "status": "pass",
+            "scenarios": 10,
+            "replay": "refused"
+          }
+        ]
+      },
+      "note": "Final developer-lede copy correction subsequently rebuilt; no behavior changed."
+    }
+  ],
+  "review": "Independent review; fixed copied local-path instructions and stale developer hero statement",
+  "boundaries": [
+    "Attack Lab is an offline native-NEAR vault-policy preview, distinct from the .x3 payment checker",
+    "No compiler API or new signer integrated",
+    "Production not promoted; Cloudflare domain verification pending"
+  ]
+}
