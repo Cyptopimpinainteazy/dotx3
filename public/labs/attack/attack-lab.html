@@ -120,8 +120,11 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
 @media(max-width:860px){.lab,.duo,.proofgrid{grid-template-columns:1fr}.verdict-col{position:static}.stats{grid-template-columns:1fr 1fr}.stats .box:last-child{grid-column:1/-1}}
 @media(max-width:560px){main,header,footer{padding-left:14px;padding-right:14px}.box{padding:16px}.scenarios{grid-template-columns:1fr 1fr}.fields{grid-template-columns:1fr}.mandate{grid-template-columns:1fr 1fr}.mandate div{border-right:0!important;border-bottom:1px solid var(--line)}.mandate div:nth-child(odd){border-right:1px solid var(--line)!important}.mandate div:nth-last-child(-n+2){border-bottom:0}nav.jump{display:none}h1{margin-top:30px}.scenario{min-height:76px}.scenario .s-code{display:none}}
 </style>
+<link rel="stylesheet" href="/page-export.css">
 </head>
 <body>
+<div data-copy-exclude data-page-export-controls class="page-export-controls"><button type="button" data-export-copy>Copy page</button><button type="button" data-export-download>Download Markdown</button><span role="status" aria-live="polite"></span></div>
+
 <a class="skip" href="#play">Skip to the attack lab</a>
 <header>
   <div class="brand">✳ X3 SHIELD / CONTROL ROOM</div>
@@ -521,5 +524,6 @@ renderLedger();
 followHash();
 window.addEventListener('hashchange', followHash);
 </script>
+<script type="module" src="/page-export-controls.mjs"></script>
 </body>
 </html>

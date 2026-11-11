@@ -43,7 +43,7 @@ export function SiteShell({
 
   return (
     <div data-page-content className="min-h-screen bg-bg text-fg">
-      <header className="sticky top-0 z-40 border-b border-border bg-bg/90 backdrop-blur">
+      <header data-copy-exclude className="sticky top-0 z-40 border-b border-border bg-bg/90 backdrop-blur">
         <div className="relative mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
           <Link to="/" className="font-display text-2xl tracking-wide text-primary">
             .X<span className="text-accent">3</span>

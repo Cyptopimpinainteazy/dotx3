@@ -1,0 +1,26 @@
+{
+  "recordedAt": "2026-11-11T11:02:08.960175+00:00",
+  "service": "Upstash HTTPS Redis command API",
+  "resourceId": "store_wxgGFrtsAscqMIuX",
+  "plan": "free",
+  "autoUpgrade": false,
+  "environment": [
+    "preview",
+    "production"
+  ],
+  "command": "node scripts/explorer-redis-integration.mjs",
+  "exitCode": 0,
+  "checks": [
+    "atomic concurrent lock across client instances",
+    "partner-wide scope sharing",
+    "cached read",
+    "redacted evidence flags",
+    "actual 30-second TTL expiry",
+    "refresh after expiry",
+    "test-key cleanup"
+  ],
+  "providerResponse": "synthetic",
+  "realExplorerAuthentication": false,
+  "realShieldAuthentication": false,
+  "secretsPersistedToRepository": false
+}

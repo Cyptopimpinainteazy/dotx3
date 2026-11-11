@@ -13,8 +13,7 @@ Inject these server-only environment variables using your deployment secret mana
   This is separate from the swap adapter's `NEAR_INTENTS_JWT`.
 - `X3_EXPLORER_REDIS_URL`: HTTPS Redis REST endpoint supporting JSON commands.
 - `X3_EXPLORER_REDIS_TOKEN`: authentication for that Redis service.
-- `X3_EXPLORER_SEARCH`: owner-approved public search scope (a deposit address,
-  recipient, sender, or transaction hash). No unscoped public history is served.
+- `X3_EXPLORER_SEARCH`: owner-approved public scopes. Use JSON `{"account":"dotx3.near","referral":"x3star"}` for the approved account and referral. Plain strings retain the account-search behavior. No arbitrary client search/referral is accepted.
 
 Do not paste credentials into source, browser configuration, logs, or examples.
 A credential previously shared in chat should be replaced before deployment;
@@ -44,7 +43,7 @@ node ../x3lang/x3-lang/near/explorer/cli.mjs 'statuses=SUCCESS'
 node --test scripts/explorer-client.test.mjs
 ```
 
-Supported filters: statuses (one official status), fromChainId, toChainId,
+Supported filters: scope (account or referral), statuses (one official status), fromChainId, toChainId,
 lastDepositAddress, lastDepositMemo. Page size is 25. Pass both cursor fields
 when the returned nextCursor contains a memo. A full final page can offer one
 extra next request that returns an empty page.
@@ -58,7 +57,7 @@ provider errors or authentication data. Do not use confidential records here.
 
 The matching client is vendored in dotx3 `src/lib/explorer/client.mjs`.
 Its `/api/explorer/transactions` endpoint feeds the `/proof` history panel.
-Keep both copies identical, including tests. Use the same Redis deployment and
+The retained upstream snapshot is byte-identical to the pinned source. The local client adds owner-approved selectable account/referral scopes; its own digest is recorded below. Use the same Redis deployment and
 approved scope. No environment setup, credential use, or deployment is implied
 by committing this implementation.
 
@@ -78,3 +77,11 @@ Vendored from x3lang `x3-lang/near/explorer/client.mjs`.
 Source commit: `d485571148158a52c7df0276a0597480893d2a4a`.
 [Exact upstream source](https://github.com/Cyptopimpinainteazy/x3lang/blob/d485571148158a52c7df0276a0597480893d2a4a/x3-lang/near/explorer/client.mjs).
 SHA-256: `419da121042c0127088d9dfee2320b90ac71423d37f28c3dab5736428cc539d1`.
+
+
+## Local release extension
+
+The upstream snapshot is retained at `upstream/client.mjs.txt` and is not the runtime import.
+The runtime client adds validated JSON scope configuration, selecting provider `search` for the account and `referral` for the partner. Both use the same partner limiter. Other changes are formatting only. No upstream byte-parity claim is made for this local extension.
+
+Local SHA-256: `84a5f413a093930eb7e1f64741eee60a91ba019003f54471155944408b4c977f`.

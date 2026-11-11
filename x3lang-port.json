@@ -109,7 +109,10 @@
       "source": "x3-lang/near/demo/bnb.html",
       "destination": "public/labs/guard/bnb.html",
       "source_sha256": "8b1cfd4b267a3fdf1c391209497fed3faf80f017484a7ae72af11d370972200e",
-      "sha256": "8b1cfd4b267a3fdf1c391209497fed3faf80f017484a7ae72af11d370972200e"
+      "sha256": "46fc1957308fff63099eedc3e4facaf118e1d4804be117e07b7c081c7984aa4c",
+      "local_transformations": [
+        "Add shared public-page Copy and Markdown controls; form values are excluded and upstream source_sha256 is retained."
+      ]
     },
     {
       "source": "x3-lang/near/demo/cli.mjs",
@@ -121,9 +124,10 @@
       "source": "x3-lang/near/demo/index.html",
       "destination": "public/labs/guard/index.html",
       "source_sha256": "5b21f62e7275cdcb065f050b650fae766f5192f74f83f1b39a09dd9bee46b64b",
-      "sha256": "a79744d5c161d7b85163e5a374b0cef616099b27e63a2d166aec038a74143c01",
+      "sha256": "4a812cc40444b25dc820c8c1da6d96bf6b430b2cee5c1078512c0378cd8d31a0",
       "local_transformations": [
-        "Clarify dry quote and local mandate verdicts never establish live eligibility, on-chain authorization or settlement; upstream source_sha256 is retained."
+        "Clarify dry quote and local mandate verdicts never establish live eligibility, on-chain authorization or settlement; upstream source_sha256 is retained.",
+        "Add shared public-page Copy and Markdown controls; form values are excluded and upstream source_sha256 is retained."
       ]
     },
     {
@@ -154,7 +158,10 @@
       "source": "x3-lang/near/demo/judge.html",
       "destination": "public/labs/guard/judge.html",
       "source_sha256": "1950cd0daad919214fd0b299bf199000bb0551ebc66612a2adf6f03016be1d1f",
-      "sha256": "1950cd0daad919214fd0b299bf199000bb0551ebc66612a2adf6f03016be1d1f"
+      "sha256": "d42cdb57721cebcac1ad976d9f843c88cd53b95b65a52ec4bbfb3fded49b5866",
+      "local_transformations": [
+        "Add shared public-page Copy and Markdown controls; form values are excluded and upstream source_sha256 is retained."
+      ]
     },
     {
       "source": "x3-lang/near/demo/x3guard.mjs",
@@ -166,9 +173,10 @@
       "source": "docs/hackathon/attack-lab.html",
       "destination": "public/labs/attack/attack-lab.html",
       "source_sha256": "39a4c4d6cfcb6f0796d03519ca91ee8fe9a62a59e70149dfc8843aacab757449",
-      "sha256": "75f321e8f6c1159184968e943c1eef3c1a5eb9ee0ddac5049b9795953d2553a5",
+      "sha256": "0787ffdc5469cbc95a32cf7a106bad5c72665649ea52a33ddbcd93b01c43c2af",
       "local_transformations": [
-        "Clarify local-server instructions refer to the X3Lang source repository."
+        "Clarify local-server instructions refer to the X3Lang source repository.",
+        "Add shared public-page Copy and Markdown controls; form values are excluded and upstream source_sha256 is retained."
       ]
     },
     {
