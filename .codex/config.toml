@@ -1,0 +1,12 @@
+# Project-local NEAR Builders MCP. The API key is supplied only at runtime.
+[mcp_servers.near_builders]
+url = "https://nearbuilders.org/api/mcp"
+enabled = true
+startup_timeout_sec = 30
+tool_timeout_sec = 60
+
+[mcp_servers.near_builders.env_http_headers]
+x-api-key = "NEAR_BUILDERS_API_KEY"
+
+[mcp_servers.near_builders.http_headers]
+User-Agent = "Codex/1.0"
