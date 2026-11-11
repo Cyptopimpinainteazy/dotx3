@@ -31,3 +31,44 @@ Sources:
 - https://github.com/better-auth/better-auth/security/advisories/GHSA-965c-763c-88jm
 - https://better-auth.com/docs/guides/1-7-upgrade-guide
 - https://github.com/better-auth/better-auth/releases/tag/v1.7.20
+
+## Read-only compatibility investigation — 2026-11-11
+
+The public broker discovery document was retrieved without credentials from
+https://auth.grok.me/api/auth/.well-known/openid-configuration. It reports:
+
+| Property | Observed value |
+| --- | --- |
+| Issuer | `https://auth.grok.me` |
+| Authorization endpoint | `https://auth.grok.me/api/auth/oauth2/authorize` |
+| Token endpoint | `https://auth.grok.me/api/auth/oauth2/token` |
+| User-info endpoint | `https://auth.grok.me/api/auth/oauth2/userinfo` |
+| Subject types | `public` |
+| Subject claim advertised | `sub`; `id` is not listed in supported claims |
+| PKCE methods | `S256` |
+
+Discovery confirms the configured endpoints and advertised protocol. It does
+not establish the authenticated user-info response's exact shape, existing
+account-key mapping, or either client's registered callback allowlist.
+
+Installed 1.7.20 source exposes `OAuthProvider.callbackPath` in
+`@better-auth/core/dist/oauth2/oauth-provider.d.mts`, but the Generic OAuth
+configuration does not expose that option and the core handler is mounted at
+`/callback/:id`. The Generic OAuth `redirectURI` override is an absolute string;
+it does not provide a matching legacy handler or per-request preview-host
+mapping. Keeping the old callback therefore needs a reviewed adapter and
+handler with state/PKCE regression evidence, or verified broker registrations
+for the new callback. No such adapter or registration change was made.
+
+The exact remaining evidence is: an authorized registration export containing
+the callback allowlists for the preview and deployed clients; a sanitized
+successful broker user-info response; and confirmation that its immutable
+identifier matches existing account records for both configured provider IDs.
+No token, secret, or personal profile needs to be added to this repository.
+
+The latest published 1.6 release inspected was 1.6.34 (2026-11-01). Its official
+release notes describe stateless access-token and SAML fixes, not a backport of
+GHSA-965c-763c-88jm. That advisory continues to list versions below 1.7.7 as
+affected. No supported 1.6 security-backport alternative was established.
+
+Additional source: https://github.com/better-auth/better-auth/releases/tag/v1.6.34
