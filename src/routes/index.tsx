@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ActionLink, Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { ProofFlow, RouteTicker } from "@/components/circuit";
+import { EnterGate } from "@/components/enter-gate";
 import { HeroField, MeterScene } from "@/components/meter-scene";
 import { MILESTONES, SITE } from "@/lib/front-door";
 
@@ -94,6 +95,7 @@ function Home() {
       }
       media={<HeroField />}
     >
+      <EnterGate />
       <RouteTicker />
 
       <Section

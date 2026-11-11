@@ -50,6 +50,11 @@
   .note { font-size: 11px; color: var(--muted); margin-top: 10px; line-height: 1.5; }
   .empty { color: var(--muted); font-size: 12px; }
   .spark { width: 60px; height: 18px; vertical-align: middle; }
+  .chain { color: var(--muted); font-size: 10px; }
+  .source { font-size: 11px; color: var(--muted); margin: 0 0 8px; line-height: 1.5; }
+  .source.live b { color: var(--lime); } .source.off b { color: var(--gold); }
+  .swap { display: inline-flex; align-items: center; min-height: 36px; margin-top: 10px; padding: 0 12px; border-radius: 999px;
+          border: 1px solid var(--cyan); color: var(--cyan); text-decoration: none; font-size: 12px; }
   .small-btn { min-height: 30px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel2); color: var(--fg); padding: 0 10px; font-size: 11px; }
 </style>
 </head>
@@ -92,12 +97,13 @@
           </div>
         </div>
       </div>
-      <p class="note">Play credits only: no wallet, no real tokens, no real money, nothing to cash out. Coin names are made up and prices are simulated. Shots bounce until they hit a coin, and catch odds are set so shots pay back 96% of their cost on average, in coins, at the moment of the catch. After that the market decides.</p>
+      <p class="note">Play credits only: no wallet, no real tokens, no real money, nothing to cash out. The coins are real NEAR Intents assets when the 1Click token list loads, and each starts at its live 1Click USD price; the game then moves it within 10% of that price, so a game price is not a quote. Shots bounce until they hit a coin, and catch odds are set so shots pay back 96% of their cost on average at the moment of the catch. After that the market decides.</p>
     </div>
 
     <aside>
       <section class="card">
         <h3>Market <span class="empty" id="tick">tick 0</span></h3>
+        <p class="source" id="source">Loading NEAR Intents tokens…</p>
         <table aria-label="Market prices">
           <thead><tr><th>Coin</th><th>×</th><th>Price</th><th>Chg</th><th></th></tr></thead>
           <tbody id="market"></tbody>
@@ -110,6 +116,8 @@
           <tbody id="bags"></tbody>
         </table>
         <p class="empty" id="bagsEmpty">Catch a coin to open a position.</p>
+        <a class="swap" id="swapLink" href="https://near-intents.org" target="_blank" rel="noopener">Swap these for real on NEAR Intents ↗</a>
+        <p class="note" style="margin-top:6px">Opens near-intents.org in a new tab. This game never connects a wallet.</p>
       </section>
       <section class="card">
         <h3>Tape <button class="small-btn" id="reset">Reset game</button></h3>
@@ -123,13 +131,17 @@
 <script>
 (() => {
   "use strict";
-  const W = 1280, H = 760, RTP = 0.96, START = 1000, KEY = "mcb-v1";
+  const W = 1280, H = 760, RTP = 0.96, START = 1000, KEY = "mcb-v2";
+  const ONE_CLICK_TOKENS = "https://1click.chaindefuser.com/v0/tokens";
+  const INTENTS_APP = "https://near-intents.org";
   const cv = document.getElementById("cv");
   const ctx = cv.getContext("2d");
   const $ = (id) => document.getElementById(id);
 
-  // ---- Coins: species on the table, each with its own simulated market ----
-  const SPECIES = [
+  // ---- Coins: table slots, filled with NEAR Intents tokens when the 1Click list loads ----
+  // Each slot keeps its size, speed and multiplier; a live token takes its symbol, chain and
+  // price. Without the list the made-up coins below play instead, and the page says so.
+  const SLOTS = [
     { sym: "PLNKN",   mult: 2,  r: 16, speed: 2.4, vol: 0.010, hue: 190, weight: 30 },
     { sym: "GLORP",   mult: 3,  r: 19, speed: 2.1, vol: 0.014, hue: 140, weight: 24 },
     { sym: "FROGGO",  mult: 5,  r: 23, speed: 1.9, vol: 0.018, hue: 95,  weight: 18 },
@@ -139,12 +151,80 @@
     { sym: "BAGZ",    mult: 30, r: 42, speed: 1.05, vol: 0.036, hue: 20,  weight: 3 },
     { sym: "WHALE",   mult: 80, r: 70, speed: 0.6, vol: 0.045, hue: 210, weight: 0.6, boss: true },
   ];
-  const BY_SYM = Object.fromEntries(SPECIES.map((s) => [s.sym, s]));
+  let SPECIES = SLOTS.map((s) => ({ ...s, live: false }));
+  let BY_SYM = Object.fromEntries(SPECIES.map((s) => [s.sym, s]));
+  let liveMode = false, liveAt = null;
 
+  // Prefer well-known assets on distinct chains, then fill by price. Stablecoins stay but count once.
+  const PREFERRED = ["wNEAR", "BTC", "ETH", "SOL", "USDC", "ZEC", "XRP", "DOGE", "TRX", "SUI", "TON", "AURORA"];
+  function pickTokens(list) {
+    const ok = list.filter((t) => t && typeof t.symbol === "string" && /^[A-Za-z0-9.$-]{1,12}$/.test(t.symbol)
+      && typeof t.blockchain === "string" && /^[A-Za-z0-9_-]{1,24}$/.test(t.blockchain)
+      && typeof t.assetId === "string" && /^[A-Za-z0-9:._-]{1,200}$/.test(t.assetId)
+      && typeof t.price === "number" && Number.isFinite(t.price) && t.price > 0);
+    // One coin per symbol. When a symbol exists on several chains, the NEAR asset wins, then the
+    // lowest asset ID, so the pick never depends on the order 1Click returns.
+    const bySymbol = new Map();
+    const better = (a, b) => (a.blockchain === "near") !== (b.blockchain === "near")
+      ? a.blockchain === "near" : a.assetId < b.assetId;
+    for (const t of ok) {
+      const held = bySymbol.get(t.symbol);
+      if (!held || better(t, held)) bySymbol.set(t.symbol, t);
+    }
+    const ranked = [...bySymbol.values()].sort((a, b) => {
+      const pa = PREFERRED.indexOf(a.symbol), pb = PREFERRED.indexOf(b.symbol);
+      return (pa < 0 ? 99 : pa) - (pb < 0 ? 99 : pb) || b.price - a.price;
+    });
+    return ranked.slice(0, SLOTS.length).sort((a, b) => a.price - b.price);
+  }
+
+  async function loadIntentsTokens() {
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 6000);
+    try {
+      const res = await fetch(ONE_CLICK_TOKENS, { headers: { Accept: "application/json" }, signal: ctl.signal });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const list = await res.json();
+      if (!Array.isArray(list)) throw new Error("not a token list");
+      const picked = pickTokens(list);
+      if (picked.length < SLOTS.length) throw new Error(`only ${picked.length} priced tokens`);
+      return picked;
+    } finally { clearTimeout(timer); }
+  }
+
+  function useTokens(tokens) {
+    SPECIES = SLOTS.map((slot, i) => ({ ...slot, sym: tokens[i].symbol, chain: tokens[i].blockchain,
+      assetId: tokens[i].assetId, livePrice: tokens[i].price, live: true }));
+    BY_SYM = Object.fromEntries(SPECIES.map((s) => [s.sym, s]));
+    liveMode = true; liveAt = new Date();
+  }
+
+  let refreshing = false;
+  async function refreshLivePrices() {
+    if (!liveMode || refreshing) return;
+    refreshing = true;
+    try {
+      const res = await fetch(ONE_CLICK_TOKENS, { headers: { Accept: "application/json" } });
+      if (!res.ok) return;
+      const list = await res.json();
+      if (!Array.isArray(list)) return;
+      for (const s of SPECIES) {
+        const t = list.find((x) => x && x.assetId === s.assetId);
+        if (t && typeof t.price === "number" && Number.isFinite(t.price) && t.price > 0) s.livePrice = t.price;
+      }
+      liveAt = new Date();
+      renderSource();
+    } catch { /* keep the last live prices; the source line shows their age */ }
+    finally { refreshing = false; }
+  }
+
+  // Price = live 1Click price x a game factor. The factor random-walks and drifts back to 1,
+  // so the game moves fast but never wanders far from the real price.
   const market = {};
   function resetMarket() {
-    for (const s of SPECIES) market[s.sym] = { price: 1, open: 1, hist: Array(60).fill(1), rugged: 0 };
+    for (const s of SPECIES) market[s.sym] = { factor: 1, open: 1, hist: Array(60).fill(1), rugged: 0 };
   }
+  const priceOf = (sym) => (BY_SYM[sym].live ? BY_SYM[sym].livePrice : 1) * market[sym].factor;
 
   // ---- State ----
   let state = { credits: START, bags: {}, spent: 0, won: 0, realized: 0, shots: 0, catches: 0, refills: 0 };
@@ -154,17 +234,28 @@
   const turret = { x: W / 2, y: H - 34, angle: -Math.PI / 2 };
   let aim = { x: W / 2, y: H / 2 }, firing = false, lastShot = 0;
 
+  // Live-token and made-up-coin games are saved separately, so a failed token list never
+  // touches a live game's holdings.
+  const storeKey = () => `${KEY}:${liveMode ? "live" : "demo"}`;
+
   function save() {
-    try { localStorage.setItem(KEY, JSON.stringify({ state, market })); } catch { /* storage unavailable: play continues */ }
+    try { localStorage.setItem(storeKey(), JSON.stringify({ state, market })); } catch { /* storage unavailable: play continues */ }
   }
   function load() {
     try {
-      const raw = localStorage.getItem(KEY);
+      const raw = localStorage.getItem(storeKey());
       if (!raw) return false;
       const d = JSON.parse(raw);
       if (!d || typeof d.state?.credits !== "number") return false;
       state = { ...state, ...d.state };
-      for (const s of SPECIES) if (d.market?.[s.sym]) market[s.sym] = d.market[s.sym];
+      for (const s of SPECIES) if (d.market?.[s.sym] && typeof d.market[s.sym].factor === "number") market[s.sym] = d.market[s.sym];
+      // A held coin that left the table (the 1Click list changed) goes back to credits at cost.
+      for (const [sym, bag] of Object.entries(state.bags)) {
+        if (BY_SYM[sym]) continue;
+        state.credits += bag.cost;
+        delete state.bags[sym];
+        log(`$${sym} left the table; returned ${fmt(bag.cost)} cr at cost`);
+      }
       return true;
     } catch { return false; }
   }
@@ -184,6 +275,9 @@
   }
 
   // ---- Formatting ----
+  // Every string from the 1Click list is validated in pickTokens and escaped again here
+  // before it reaches innerHTML.
+  const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const fmt = (n) => (Math.abs(n) >= 1000 ? Math.round(n).toLocaleString() : n.toFixed(Math.abs(n) < 10 ? 2 : 1));
   const fmtP = (p) => (p >= 1 ? p.toFixed(3) : p >= 0.01 ? p.toFixed(4) : p.toExponential(2));
   function log(msg, cls = "") {
@@ -227,9 +321,9 @@
   function hasBags() { return Object.values(state.bags).some((b) => b.qty > 1e-12); }
 
   function catchFish(f, b) {
-    const m = market[f.s.sym];
+    const price = priceOf(f.s.sym);
     const value = b.bet * f.s.mult;
-    const qty = value / m.price;
+    const qty = value / price;
     const bag = state.bags[f.s.sym] || (state.bags[f.s.sym] = { qty: 0, cost: 0 });
     bag.qty += qty; bag.cost += value;
     state.won += value; state.catches++;
@@ -238,7 +332,7 @@
       parts.push({ x: f.x, y: f.y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 1, hue: f.s.hue, coin: Math.random() < 0.4 });
     }
     floaters.push({ x: f.x, y: f.y, text: `+${fmt(value)} cr of $${f.s.sym}`, life: 1, big: f.s.mult >= 20 });
-    log(`Caught $${f.s.sym} ×${f.s.mult}: ${fmt(qty)} @ ${fmtP(m.price)} (${fmt(value)} cr)`, "up");
+    log(`Caught $${f.s.sym} ×${f.s.mult}: ${fmt(qty)} @ ${fmtP(price)} (${fmt(value)} cr)`, "up");
     if (f.s.boss) { beep(220, 0.5, "sawtooth", 0.05, 600); beep(440, 0.6, "triangle", 0.04, 800); }
     else beep(660 + f.s.mult * 20, 0.18, "triangle", 0.05, 400);
   }
@@ -246,7 +340,7 @@
   function sell(sym) {
     const bag = state.bags[sym];
     if (!bag || bag.qty <= 1e-12) return;
-    const proceeds = bag.qty * market[sym].price;
+    const proceeds = bag.qty * priceOf(sym);
     const pnl = proceeds - bag.cost;
     state.credits += proceeds; state.realized += pnl;
     log(`Sold $${sym}: ${fmt(proceeds)} cr (${pnl >= 0 ? "+" : ""}${fmt(pnl)})`, pnl >= 0 ? "up" : "dn");
@@ -261,19 +355,27 @@
     for (const s of SPECIES) {
       const m = market[s.sym];
       const z = Math.sqrt(-2 * Math.log(Math.random() || 1e-9)) * Math.cos(2 * Math.PI * Math.random());
-      m.price *= Math.exp(s.vol * z - (s.vol * s.vol) / 2);
-      const ev = Math.random();
-      if (ev < 0.0012) {
-        m.price *= 0.08; m.rugged = 40;
-        log(`RUG: $${s.sym} dumped 92%`, "dn"); beep(90, 0.5, "sawtooth", 0.06, -40);
-      } else if (ev < 0.0024) {
-        m.price *= 2.5;
-        log(`PUMP: $${s.sym} ran 2.5×`, "up"); beep(1200, 0.25, "triangle", 0.04, 600);
+      // Real assets move a third as much as the made-up coins and are pulled back toward their
+      // live price every tick, and never leave 10% of it.
+      const vol = s.live ? s.vol / 3 : s.vol;
+      m.factor *= Math.exp(vol * z - (vol * vol) / 2);
+      if (s.live) {
+        m.factor = Math.min(1.1, Math.max(0.9, 1 + (m.factor - 1) * 0.96));
+      } else {
+        // Rugs and pumps only happen to the made-up coins, never to a real asset's name.
+        const ev = Math.random();
+        if (ev < 0.0012) {
+          m.factor *= 0.08; m.rugged = 40;
+          log(`RUG: $${s.sym} dumped 92%`, "dn"); beep(90, 0.5, "sawtooth", 0.06, -40);
+        } else if (ev < 0.0024) {
+          m.factor *= 2.5;
+          log(`PUMP: $${s.sym} ran 2.5×`, "up"); beep(1200, 0.25, "triangle", 0.04, 600);
+        }
       }
-      m.price = Math.min(Math.max(m.price, 1e-6), 1e6);
+      m.factor = Math.min(Math.max(m.factor, 1e-6), 1e6);
       if (m.rugged > 0) m.rugged--;
-      m.hist.push(m.price); if (m.hist.length > 60) m.hist.shift();
-      if (tick % 120 === 0) m.open = m.price;
+      m.hist.push(m.factor); if (m.hist.length > 60) m.hist.shift();
+      if (tick % 120 === 0) m.open = m.factor;
     }
     renderPanels();
     if (tick % 10 === 0) save();
@@ -289,13 +391,13 @@
   function renderPanels() {
     $("tick").textContent = `tick ${tick}`;
     $("market").innerHTML = SPECIES.map((s) => {
-      const m = market[s.sym], ch = (m.price / m.open - 1) * 100;
-      return `<tr><td style="color:hsl(${s.hue} 90% 65%)">$${s.sym}${m.rugged ? " ☠" : ""}</td><td>${s.mult}</td><td>${fmtP(m.price)}</td><td class="${ch >= 0 ? "up" : "dn"}">${ch >= 0 ? "+" : ""}${ch.toFixed(1)}%</td><td>${spark(m.hist)}</td></tr>`;
+      const m = market[s.sym], ch = (m.factor / m.open - 1) * 100;
+      return `<tr><td style="color:hsl(${s.hue} 90% 65%)" title="${s.live ? `${esc(s.chain)} · ${esc(s.assetId)}` : "made-up coin"}">$${esc(s.sym)}${s.live ? `<span class="chain"> ${esc(s.chain)}</span>` : ""}${m.rugged ? " ☠" : ""}</td><td>${s.mult}</td><td>${fmtP(priceOf(s.sym))}</td><td class="${ch >= 0 ? "up" : "dn"}">${ch >= 0 ? "+" : ""}${ch.toFixed(1)}%</td><td>${spark(m.hist)}</td></tr>`;
     }).join("");
     let bagValue = 0;
     const rows = Object.entries(state.bags).filter(([, b]) => b.qty > 1e-12).map(([sym, b]) => {
-      const v = b.qty * market[sym].price, pnl = v - b.cost; bagValue += v;
-      return `<tr><td style="color:hsl(${BY_SYM[sym].hue} 90% 65%)">$${sym}</td><td>${fmt(b.qty)}</td><td>${fmt(v)}</td><td class="${pnl >= 0 ? "up" : "dn"}">${pnl >= 0 ? "+" : ""}${fmt(pnl)}</td><td><button class="sell" data-sell="${sym}">Sell</button></td></tr>`;
+      const v = b.qty * priceOf(sym), pnl = v - b.cost; bagValue += v;
+      return `<tr><td style="color:hsl(${BY_SYM[sym].hue} 90% 65%)">$${esc(sym)}</td><td>${fmt(b.qty)}</td><td>${fmt(v)}</td><td class="${pnl >= 0 ? "up" : "dn"}">${pnl >= 0 ? "+" : ""}${fmt(pnl)}</td><td><button class="sell" data-sell="${esc(sym)}">Sell</button></td></tr>`;
     });
     $("bags").innerHTML = rows.join("");
     $("bagsEmpty").hidden = rows.length > 0;
@@ -360,7 +462,7 @@
   function drawTape(t) {
     ctx.fillStyle = "rgba(11,16,32,.85)"; ctx.fillRect(0, 0, W, 30);
     ctx.font = '600 13px "JetBrains Mono", monospace'; ctx.textBaseline = "middle"; ctx.textAlign = "left";
-    const items = SPECIES.map((s) => { const m = market[s.sym], ch = (m.price / m.open - 1) * 100; return { s, txt: `$${s.sym} ${fmtP(m.price)} ${ch >= 0 ? "▲" : "▼"}${Math.abs(ch).toFixed(1)}%`, up: ch >= 0 }; });
+    const items = SPECIES.map((s) => { const m = market[s.sym], ch = (m.factor / m.open - 1) * 100; return { s, txt: `$${s.sym} ${fmtP(priceOf(s.sym))} ${ch >= 0 ? "▲" : "▼"}${Math.abs(ch).toFixed(1)}%`, up: ch >= 0 }; });
     const widths = items.map((i) => ctx.measureText(i.txt).width + 36);
     const total = widths.reduce((a, b) => a + b, 0);
     let x = -((t / 25) % total);
@@ -481,12 +583,32 @@
     $("log").innerHTML = ""; log("New game: 1,000 play credits"); renderPanels(); save();
   });
 
-  resetMarket();
-  if (load()) { $("go").textContent = "Resume your game"; log("Restored your last game on this browser"); }
-  setBet(5);
-  for (let i = 0; i < 8; i++) { spawn(); fishes[fishes.length - 1].x = Math.random() * W; }
-  renderPanels();
-  requestAnimationFrame(frame);
+  function renderSource() {
+    const el = $("source");
+    if (liveMode) {
+      el.className = "source live";
+      el.innerHTML = `<b>Live NEAR Intents tokens.</b> Prices from 1Click <code>/v0/tokens</code>, updated ${liveAt.toLocaleTimeString()}. Hover a coin for its chain and asset ID.`;
+    } else {
+      el.className = "source off";
+      el.innerHTML = "<b>NEAR Intents token list unavailable.</b> Playing with made-up coins and simulated prices.";
+    }
+  }
+
+  function boot() {
+    resetMarket();
+    if (load()) { $("go").textContent = "Resume your game"; log("Restored your last game on this browser"); }
+    setBet(5);
+    for (let i = 0; i < 8; i++) { spawn(); fishes[fishes.length - 1].x = Math.random() * W; }
+    renderSource();
+    renderPanels();
+    requestAnimationFrame(frame);
+  }
+
+  $("go").disabled = true;
+  loadIntentsTokens()
+    .then((tokens) => { useTokens(tokens); log(`Loaded ${tokens.length} NEAR Intents tokens from 1Click`); setInterval(refreshLivePrices, 60000); })
+    .catch((e) => { log(`NEAR Intents token list unavailable (${e.message || e}); using made-up coins`, "dn"); })
+    .finally(() => { $("go").disabled = false; boot(); });
 })();
 </script>
 </body>
