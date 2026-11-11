@@ -125,7 +125,7 @@ function Meter() {
   return (
     <div className="mx-auto max-w-4xl">
       <MeterScene progress={raised / GOAL} />
-      <div className="h-8 overflow-hidden rounded-full bg-surface-2" role="meter" aria-valuenow={raised} aria-valuemin={0} aria-valuemax={GOAL} aria-label="Raised from Base, Solana, and NEAR toward $100,000,000,000">
+      <div className="h-8 overflow-hidden rounded-full bg-surface-2" role="meter" aria-valuenow={raised} aria-valuemin={0} aria-valuemax={GOAL} aria-label="Marked in this browser toward the displayed goal; not verified funds raised">
         <div
           className={`flex h-full items-center justify-end bg-primary pr-3 text-xs font-semibold text-bg transition-[width] duration-500 ${raised > 0 ? "meter-sheen" : ""}`}
           style={{ width: `${Math.max(pct, raised > 0 ? 8 : 0)}%` }}
@@ -134,7 +134,7 @@ function Meter() {
         </div>
       </div>
       <p className="mt-3 text-center text-muted">
-        Raised ${raised.toLocaleString()} / Goal ${GOAL.toLocaleString()}
+        Marked in this browser ${raised.toLocaleString()} / Goal ${GOAL.toLocaleString()}
         {raised === 0 ? " · 0%" : ""}
       </p>
       <p className="mt-2 text-center text-sm text-muted">
@@ -206,6 +206,12 @@ function Meter() {
       <p className="mt-3 text-center text-xs text-muted">
         Stored only in this browser. The published Base trade is 1 test USDC on Base Sepolia. Solana uses the repo’s canonical example. NEAR uses the mandate that already allows Near.USDC, with no bridge. None of these marks is a finalized investment.
       </p>
+      <div className="mt-6 flex flex-wrap justify-center gap-3">
+        <ActionLink to="/back">Back .x3 for real</ActionLink>
+        <ActionLink to="/playground" outline>
+          Try to break a mandate
+        </ActionLink>
+      </div>
     </div>
   );
 }
@@ -227,6 +233,9 @@ function Home() {
           </ActionLink>
           <ActionLink to="/proof" outline>
             Inspect the Proof
+          </ActionLink>
+          <ActionLink to="/playground" outline>
+            Break a Mandate
           </ActionLink>
         </>
       }
@@ -269,7 +278,7 @@ function Home() {
         />
       </Section>
 
-      <Section title="Mainnet trade demo" alt>
+      <Section title="Testnet trade demo" alt>
         <figure className="mx-auto max-w-3xl overflow-hidden rounded-xl border border-border bg-bg">
           <video
             className="scan aspect-video w-full bg-bg"
@@ -282,7 +291,7 @@ function Home() {
             autoPlay
           />
           <figcaption className="px-4 py-3 text-center text-sm text-muted">
-            Protocol mark in motion. Drop the Claude clip in when it is hosted — the Claude file link was behind a login wall.
+            Protocol mark in motion. The trade it stands for is on Inspect the Proof: testnet, not mainnet.
           </figcaption>
         </figure>
       </Section>
