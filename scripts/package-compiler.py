@@ -10,7 +10,8 @@ root = Path(__file__).resolve().parents[1]
 output = root / '.vercel/output'
 function = output / 'functions/api/compile.func'
 function.mkdir(parents=True, exist_ok=True)
-shutil.copytree(root / 'vendor', function / 'vendor', dirs_exist_ok=True)
+shutil.copytree(root / 'vendor', function / 'vendor', dirs_exist_ok=True,
+                ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
 (function / 'api').mkdir(exist_ok=True)
 shutil.copy2(root / 'api/compile.py', function / 'api/compile.py')
 subprocess.run([sys.executable, '-m', 'pip', 'install', '--disable-pip-version-check',
