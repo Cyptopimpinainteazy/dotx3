@@ -14,7 +14,7 @@ function NearPage() {
     >
       <Section
         title="Choose a track"
-        intro="These pages explain project fit and published evidence. They do not certify submission or judging status."
+        intro="Three project perspectives are shown here. At the reviewed source snapshot, submission documents name Security and Agents; DeFi is proposed. Entry and judging status are not verified."
       >
         <CardGrid>
           {nearTracks.map((track) => (
