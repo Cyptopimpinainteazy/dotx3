@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ActionLink, Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
+import { ActionLink, Card, CardGrid, Section, SiteShell, StaticActionLink } from "@/components/site-shell";
 import { ProofFlow, RouteTicker } from "@/components/circuit";
 import { EnterGate } from "@/components/enter-gate";
 import { HeroField, MeterScene } from "@/components/meter-scene";
-import { MILESTONES, SITE } from "@/lib/front-door";
+import { ARCADE_URL, BACKING_LINKS_VISIBLE, MILESTONES, SITE } from "@/lib/front-door";
 
 export const Route = createFileRoute("/")({ component: Home });
 
@@ -58,8 +58,8 @@ function ProofMeter() {
       </ol>
 
       <div className="mt-8 flex flex-wrap justify-center gap-3">
-        <ActionLink to="/back">Back .x3</ActionLink>
-        <ActionLink to="/proof" outline>
+        {BACKING_LINKS_VISIBLE ? <ActionLink to="/back">Back .x3</ActionLink> : null}
+        <ActionLink to="/proof" outline={BACKING_LINKS_VISIBLE}>
           Proof already on testnet
         </ActionLink>
         <ActionLink to="/playground" outline>
@@ -91,6 +91,9 @@ function Home() {
           <ActionLink to="/playground" outline>
             Break a Mandate
           </ActionLink>
+          <StaticActionLink href={ARCADE_URL} outline>
+            Watch an Agent Play
+          </StaticActionLink>
         </>
       }
       media={<HeroField />}

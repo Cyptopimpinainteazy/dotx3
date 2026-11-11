@@ -2,7 +2,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { OutLink, Tag } from "@/components/code-block";
 import { ProofFlow } from "@/components/circuit";
 import { Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
-import { LINKS } from "@/lib/front-door";
+import { BACKING_LINKS_VISIBLE, LINKS } from "@/lib/front-door";
 
 export const Route = createFileRoute("/language")({ component: LanguagePage });
 
@@ -228,10 +228,16 @@ function LanguagePage() {
         </div>
         <p className="mx-auto mt-8 max-w-3xl text-center text-sm text-muted">
           Want one of these sooner, or have a better one?{" "}
-          <OutLink href={LINKS.issues}>Open an issue</OutLink> or{" "}
-          <Link to="/back" className="text-primary underline underline-offset-4">
-            back the work
-          </Link>
+          <OutLink href={LINKS.issues}>Open an issue</OutLink>
+          {BACKING_LINKS_VISIBLE ? (
+            <>
+              {" "}
+              or{" "}
+              <Link to="/back" className="text-primary underline underline-offset-4">
+                back the work
+              </Link>
+            </>
+          ) : null}
           .
         </p>
       </Section>
