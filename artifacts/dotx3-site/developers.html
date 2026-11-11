@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>.x3 | Developer Examples</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">.X<span>3</span></div>
+        <ul>
+          <li><a href="index.html">Vision</a></li>
+          <li><a href="track-defi.html">DeFi Intents</a></li>
+          <li><a href="track-agents.html">Agents</a></li>
+          <li><a href="track-proofs.html">Proofs & Gov</a></li>
+          <li><a href="developers.html" class="active">Dev Examples</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>1Click NEAR Intents Examples</h1>
+      <p>Reusable patterns for quoting, depositing, and tracking cross-chain trades. Use these for the hackathon mainnet $1000+ routes.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Quickstart Flow</h2>
+      <p>Query tokens → request quote → send deposit → track status. Full docs: <a href="https://docs.near-intents.org/integration/distribution-channels/1click-api/quickstart" target="_blank">NEAR Intents 1Click Quickstart</a></p>
+
+      <h3>1. Get Supported Tokens</h3>
+      <pre><code>curl https://1click.chaindefuser.com/v0/tokens</code></pre>
+
+      <h3>2. Request a Quote (dry run first)</h3>
+      <pre><code>curl -X POST https://1click.chaindefuser.com/v0/quote \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT" \
+  -d '{
+    "dry": true,
+    "swapType": "EXACT_INPUT",
+    "slippageTolerance": 100,
+    "originAsset": "nep141:wrap.near",
+    "depositType": "ORIGIN_CHAIN",
+    "destinationAsset": "nep141:arb-0x912ce59144191c1204e64559fe8253a0e49e6548.omft.near",
+    "amount": "1000000000000000000000000",
+    "recipient": "0xYourAddress",
+    "recipientType": "DESTINATION_CHAIN",
+    "refundTo": "your.near",
+    "refundType": "ORIGIN_CHAIN"
+  }'</code></pre>
+
+      <h3>3. Execute (dry: false) then Deposit</h3>
+      <p>Set <code>dry: false</code>. Response includes <code>depositAddress</code>. Send the exact amount to that address on the origin chain. Swap starts automatically.</p>
+
+      <h3>4. Track Status</h3>
+      <pre><code>curl "https://1click.chaindefuser.com/v0/status?depositAddress=THE_DEPOSIT_ADDRESS"</code></pre>
+
+      <div class="card" style="margin-top: 40px;">
+        <h3>For Agents</h3>
+        <p>Same endpoints. Agents call quote → submit deposit → poll status. Wrap in proof bounds so the agent can only request routes that satisfy the coded invariant.</p>
+      </div>
+
+      <p style="margin-top: 30px; text-align: center;">
+        <a href="https://docs.near-intents.org/" class="btn" target="_blank">Full NEAR Intents Docs</a>
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>.x3 Protocol — Developer Examples</p>
+    </div>
+  </footer>
+</body>
+</html>

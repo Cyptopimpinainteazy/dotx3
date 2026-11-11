@@ -1,0 +1,240 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #07080c;
+  --color-surface: #101218;
+  --color-surface-2: #181b24;
+  --color-fg: #e8eaef;
+  --color-muted: #8b919e;
+  --color-primary: #2ec8ff;
+  --color-accent: #ff6b1a;
+  --color-border: #262a36;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-display: "Syne", system-ui, sans-serif;
+  --radius: 0.875rem;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    line-height: 1.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .rise,
+  .flow-step,
+  .circuit-lines path,
+  .circuit-node,
+  .mark-float,
+  .ticker-track,
+  .meter-sheen::after,
+  .scan {
+    animation: none !important;
+  }
+
+  .rise,
+  .flow-step {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+.hero-wash {
+  background-image:
+    linear-gradient(180deg, rgb(7 8 12 / 0.62), rgb(7 8 12 / 0.9)),
+    url("/media/bg.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.circuit-lines path {
+  stroke-dasharray: 6 14;
+  animation: dash 22s linear infinite;
+}
+
+.circuit-node {
+  fill: currentColor;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: node-pulse 2.6s ease-in-out infinite;
+}
+
+.mark-float {
+  animation: float 7s ease-in-out infinite;
+}
+
+.rise {
+  animation: rise 520ms ease-out both;
+}
+
+.rise-1 { animation-delay: 40ms; }
+.rise-2 { animation-delay: 140ms; }
+.rise-3 { animation-delay: 240ms; }
+.rise-4 { animation-delay: 340ms; }
+
+.flow-step {
+  animation: rise 560ms ease-out both;
+}
+
+.flow-link {
+  display: none;
+}
+
+.card-lift {
+  position: relative;
+  overflow: hidden;
+  transition: transform 200ms ease, border-color 200ms ease;
+}
+
+.card-lift::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-accent), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 240ms ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-4px);
+}
+
+.card-lift:hover::before {
+  transform: scaleX(1);
+}
+
+.tap {
+  transition: scale 150ms ease-out, background-color 150ms ease, filter 150ms ease;
+}
+
+.tap:active {
+  scale: 0.96;
+}
+
+.ticker {
+  overflow: hidden;
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  gap: 0;
+  padding: 0.75rem 0;
+  animation: ticker 28s linear infinite;
+}
+
+.meter-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.meter-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.4), transparent);
+  animation: sheen 2.4s ease-in-out infinite;
+}
+
+.scan {
+  position: relative;
+}
+
+.scan::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgb(46 200 255 / 0.12) 50%, transparent 100%);
+  background-size: 100% 40%;
+  background-repeat: no-repeat;
+  animation: scan 4.5s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes dash {
+  to { stroke-dashoffset: -400; }
+}
+
+@keyframes node-pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes sheen {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(120%); }
+}
+
+@keyframes scan {
+  from { background-position: 0 -40%; }
+  to { background-position: 0 140%; }
+}
+
+@media (min-width: 768px) {
+  .flow-link {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: -14px;
+    z-index: 1;
+    width: 24px;
+    height: 2px;
+    background: var(--color-primary);
+  }
+
+  .flow-link::after {
+    content: "";
+    position: absolute;
+    top: -3px;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--color-accent);
+    animation: node-pulse 1.8s ease-in-out infinite;
+  }
+}

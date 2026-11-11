@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "dotx3.net",
+      "hasCanvas": false,
+      "bodyTextLen": 3529,
+      "bodyTextHash": "4bb3013be5fe4b90f75de7b80915300ea8b4a01cae7e4bc87e8fe51c7de2ec39",
+      "bodyTextPrefix": ".X3 Try the Demo Learn .x3 View the Code Inspect the Proof DOTX3",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "dotx3.net",
+      "hasCanvas": false,
+      "bodyTextLen": 3474,
+      "bodyTextHash": "a30561bdf57d839cf3df675d44231a71708e147770c267b50dc40a7513c3e919",
+      "bodyTextPrefix": ".X3 DOTX3.NET · NEAR HACKATHON .x3 Understand it, try it, inspec",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}
