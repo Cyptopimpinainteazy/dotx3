@@ -1,0 +1,28 @@
+docs/intents-integration.md
+  h_e41068bed968d7 9,19,37-43
+scripts/incident-observation.test.mjs
+  h_e41068bed968d7 1-22
+scripts/intents-planning.test.mjs
+  h_e41068bed968d7 42-69
+scripts/shield-reader.test.mjs
+  h_e41068bed968d7 52-97
+src/components/provider-incidents.tsx
+  h_e41068bed968d7 2,25-28,47,50,52,58
+src/lib/intents/observation.ts
+  h_e41068bed968d7 1-15
+src/lib/intents/planning.ts
+  h_e41068bed968d7 12,40-41,46-48
+src/lib/intents/shield.mjs
+  h_e41068bed968d7 3-8,16,21-23,26,46-75,103
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "572121a8c69350e7dab33c4fb5d91f632d000900",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
