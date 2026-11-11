@@ -1,0 +1,218 @@
+[
+  {
+    "id": "intents-route",
+    "track": "Intents integration",
+    "title": "Execution and evidence",
+    "summary": "An intent is a desired outcome; a mandate is the owner\u2019s authority. The compiler, Guard, provider infrastructure and chain verification have different jobs.",
+    "sections": [
+      {
+        "title": "Implementation boundary",
+        "text": [
+          "Read-only Explorer history is provider-reported, even when status says SUCCESS. A signed quote proves terms, not settlement. Guard acceptance is not funding. Keep Tidepool testnet evidence separate from official 1Click."
+        ]
+      }
+    ],
+    "sources": [
+      "https://docs.near-intents.org/integration/distribution-channels/1click-api/explorer/introduction"
+    ],
+    "exercise": "Identify which assertions are local checks, provider reports, and independently verified chain evidence before enabling this feature."
+  },
+  {
+    "id": "intents-swap-types",
+    "track": "Intents integration",
+    "title": "Four swap types",
+    "summary": "EXACT_INPUT fixes origin units. EXACT_OUTPUT fixes destination units and applies slippage to the required input. FLEX_INPUT accepts variable deposits; the quote is not a spending cap.",
+    "sections": [
+      {
+        "title": "Implementation boundary",
+        "text": [
+          "ANY_INPUT is an ongoing collector: the supplied documentation specifies a $1,000 sweep threshold, no refunds, and partner authorization. This is not a universal minimum for ordinary swaps. Its creation deadline does not expire the collector. Do not enable ongoing collection under a one-payment mandate."
+        ]
+      }
+    ],
+    "sources": [
+      "https://docs.near-intents.org/integration/distribution-channels/1click-api/swap-types"
+    ],
+    "exercise": "Identify which assertions are local checks, provider reports, and independently verified chain evidence before enabling this feature."
+  },
+  {
+    "id": "intents-fees",
+    "track": "Intents integration",
+    "title": "Costs and application fees",
+    "summary": "Basis points: 100 = 1%. The requested app fee may differ from the amount charged after provider minimums. The generic public policy is only an illustration; actual partner configuration and quote terms govern.",
+    "sections": [
+      {
+        "title": "Implementation boundary",
+        "text": [
+          "Distinguish protocol, provider, application, network and withdrawal costs. Do not automatically add another website\u2019s distribution fee. Price improvements may be shared; failed swaps can still incur costs. Confidential swaps have a separate fee arrangement. No application fee is activated here."
+        ]
+      }
+    ],
+    "sources": [
+      "https://docs.near-intents.org/resources/fees"
+    ],
+    "exercise": "Identify which assertions are local checks, provider reports, and independently verified chain evidence before enabling this feature."
+  },
+  {
+    "id": "intents-deadlines",
+    "track": "Intents integration",
+    "title": "Deadlines and signed terms",
+    "summary": "For local planning, dry quotes use the maximum window. Executable proposals use min(maximum, max(default, estimate)), bounded again by owner expiry. An estimate beyond the remaining window refuses execution.",
+    "sections": [
+      {
+        "title": "Implementation boundary",
+        "text": [
+          "The supplied narrative contradicted its 75-minute example. This lab explicitly adopts the capped example, not an asserted provider rule. Invalid estimates fail closed. Never mutate a signed quote: request a fresh quote, verify its signature, and rerun policy checks."
+        ]
+      }
+    ],
+    "sources": [
+      "https://docs.near-intents.org/integration/distribution-channels/1click-api/quickstart/making-a-request"
+    ],
+    "exercise": "Identify which assertions are local checks, provider reports, and independently verified chain evidence before enabling this feature."
+  },
+  {
+    "id": "intents-bridges",
+    "track": "Intents integration",
+    "title": "Bridges and refund paths",
+    "summary": "Omni, POA and HOT are distinct routing infrastructures with different trust assumptions. Bridge choice and supported assets must come from current route metadata. Treasury, refill and change addresses are reference labels, never substitute deposit destinations.",
+    "sections": [
+      {
+        "title": "Implementation boundary",
+        "text": [
+          "The BTC connector refund flow is specific to a deposit that never finalized. It requires a request, timelock, execution and MPC signing. Check actual state and current required storage deposit; never automate refunds from this lesson. BTC/ZEC withdrawals may use single-use inputs, so treasury-sender matching alone is insufficient."
+        ]
+      }
+    ],
+    "sources": [
+      "https://docs.near-intents.org/integration/bridging/overview"
+    ],
+    "exercise": "Identify which assertions are local checks, provider reports, and independently verified chain evidence before enabling this feature."
+  },
+  {
+    "id": "intents-hyperliquid",
+    "track": "Intents integration",
+    "title": "Hyperliquid transfer boundaries",
+    "summary": "The supplied guide describes USDC credited to a perps balance, not spot or HyperEVM. That transfer does not itself place a derivative trade. Hyperliquid USDC uses 8 decimals; use integer quantities.",
+    "sections": [
+      {
+        "title": "Implementation boundary",
+        "text": [
+          "For deposits from Hyperliquid, the guide specifies 0.5 USDC minimum and 0.2 USDC fee. sendAsset/spotSend use quoted amountIn; usdSend additionally needs 1 USDC. Verify current quotes and supported methods. Direct bridge transfers to a quote address are not guaranteed. Derivatives access is not enabled here."
+        ]
+      }
+    ],
+    "sources": [
+      "https://docs.near-intents.org/integration/distribution-channels/1click-api/hyperliquid"
+    ],
+    "exercise": "Identify which assertions are local checks, provider reports, and independently verified chain evidence before enabling this feature."
+  },
+  {
+    "id": "intents-earn",
+    "track": "Intents integration",
+    "title": "Earn and receipt tokens",
+    "summary": "Earn routes payment assets into third-party receipt tokens using the quote/deposit/status flow. A receipt represents a position, not a guarantee of redemption, principal or yield.",
+    "sections": [
+      {
+        "title": "Implementation boundary",
+        "text": [
+          "Display the actual provider, receipt asset, withdrawal conditions, lockups and costs before owner approval. Availability through the API is not an audit or endorsement. This site has no enabled Earn execution path."
+        ]
+      }
+    ],
+    "sources": [
+      "https://docs.near-intents.org/integration/distribution-channels/1click-api/earn"
+    ],
+    "exercise": "Identify which assertions are local checks, provider reports, and independently verified chain evidence before enabling this feature."
+  },
+  {
+    "id": "intents-shield",
+    "track": "Intents integration",
+    "title": "Official SHIELD and X3 Shield",
+    "summary": "Official SHIELD communicates provider incidents; X3 Shield enforces owner policy. They are separate systems. Read incidents with a separate SHIELD credential. Incident submission needs additional provider permissions.",
+    "sections": [
+      {
+        "title": "Implementation boundary",
+        "text": [
+          "The incident API does not expose every surface security mode. Do not translate operational into Usual, or an incident into Under attack. Stale, malformed or unavailable data is unknown. Public views exclude internal descriptions, metadata and actor details. No incident submission is implemented."
+        ]
+      }
+    ],
+    "sources": [
+      "https://docs.near-intents.org/security-compliance/shield-incident-api"
+    ],
+    "exercise": "Identify which assertions are local checks, provider reports, and independently verified chain evidence before enabling this feature."
+  },
+  {
+    "id": "intents-solver",
+    "track": "Intents integration",
+    "title": "Solver lifecycle and NO_LIQUIDITY",
+    "summary": "Solver activity is separate from ordinary 1Click integration. It requires onboarding, KYC/KYB, controlled liquidity, signing infrastructure and operational controls. NO_LIQUIDITY does not provide financing.",
+    "sections": [
+      {
+        "title": "Implementation boundary",
+        "text": [
+          "Use swap_hash for deduplication after selection; update delivery estimates until liquidity is delivered. Confirm deadline units and how the escrow flow interacts with firm-quote obligations before live work. Do not fill coordinated self-originated hackathon intents. No solver bus connection or signing is enabled."
+        ]
+      }
+    ],
+    "sources": [
+      "https://docs.near-intents.org/integration/market-makers/solver-terms-of-use"
+    ],
+    "exercise": "Identify which assertions are local checks, provider reports, and independently verified chain evidence before enabling this feature."
+  },
+  {
+    "id": "intents-legal",
+    "track": "Intents integration",
+    "title": "Terms, records and disclosure",
+    "summary": "The API terms and solver terms govern different roles. Review API resale restrictions, user disclosures, credentials, compliance duties and incident reporting with appropriate advisers. A public app route must not become a standalone API resale gateway.",
+    "sections": [
+      {
+        "title": "Implementation boundary",
+        "text": [
+          "The API has a general 24-hour data-retention limit with a narrow history exception; solver obligations require seven-year records. Keep these stores and purposes distinct. Provider order flow must not feed unrelated model training. Do not infer endorsement or audit coverage for X3."
+        ]
+      }
+    ],
+    "sources": [
+      "https://docs.near-intents.org/security-compliance/terms-of-service"
+    ],
+    "exercise": "Identify which assertions are local checks, provider reports, and independently verified chain evidence before enabling this feature."
+  },
+  {
+    "id": "intents-credentials",
+    "track": "Intents integration",
+    "title": "Credentials and SDKs",
+    "summary": "Explorer, Swap and SHIELD access are separate capabilities. Keep credentials server-side. Use the official TypeScript, Go or Rust SDK matching the task; token metadata is available without authentication.",
+    "sections": [
+      {
+        "title": "Implementation boundary",
+        "text": [
+          "Preserve depositAddress and depositMemo together, use fresh deadlines, and distinguish dry quote simulation from mainnet execution. FAILED does not establish REFUNDED. Never paste credentials into lessons or commit them."
+        ]
+      }
+    ],
+    "sources": [
+      "https://docs.near-intents.org/integration/distribution-channels/1click-api/sdk"
+    ],
+    "exercise": "Identify which assertions are local checks, provider reports, and independently verified chain evidence before enabling this feature."
+  },
+  {
+    "id": "intents-sources",
+    "track": "Intents integration",
+    "title": "Security and source references",
+    "summary": "Use published audit reports and the provider bounty program for their stated scopes. They do not prove that X3Lang or dotx3 has been audited. Provider screening coverage varies by flow.",
+    "sections": [
+      {
+        "title": "Implementation boundary",
+        "text": [
+          "Treasury references identify entities and address roles, not approved recipients or a proof of swap causality. Follow current official documentation and review source dates."
+        ]
+      }
+    ],
+    "sources": [
+      "https://docs.near-intents.org/security-compliance/security"
+    ],
+    "exercise": "Identify which assertions are local checks, provider reports, and independently verified chain evidence before enabling this feature."
+  }
+]
