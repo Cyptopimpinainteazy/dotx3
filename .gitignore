@@ -3,3 +3,6 @@ node_modules/
 .github_repo
 .env
 .env.*
+
+# Live gallery builds come from private repos; rebuild with scripts/build-gallery.sh
+public/gallery/apps/
