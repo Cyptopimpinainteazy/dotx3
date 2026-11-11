@@ -1,0 +1,50 @@
+.gitignore
+  h_e41068bed968d7 11-12
+README.md
+  h_e41068bed968d7 1-46
+WIKI.md
+  h_e41068bed968d7 1-3
+audit-artifacts/dotx3-docs-20261111/verification.json
+  h_e41068bed968d7 1-109
+docs/BRANCH_ASSESSMENT.md
+  h_e41068bed968d7 1-19
+docs/DEPLOYMENT.md
+  h_e41068bed968d7 1-50
+docs/X3_GUIDE.md
+  h_e41068bed968d7 1-42
+scripts/near-smoke.mjs
+  h_e41068bed968d7 1-63
+src/components/site-shell.tsx
+  h_e41068bed968d7 7-8,69-71,87-89,92-94,96-98,107-109,120
+src/components/track-page.tsx
+  h_e41068bed968d7 1-74
+src/lib/near-tracks.ts
+  h_e41068bed968d7 1-41
+src/routeTree.gen.ts
+  h_e41068bed968d7 22,26,79-83,99-103,121,125,139,143,158,162,178,182,196,200,214,218,233,237,313-319,341-347,369,373
+src/routes/agents.tsx
+  h_e41068bed968d7 2-5
+src/routes/defi.tsx
+  h_e41068bed968d7 2-5
+src/routes/docs.tsx
+  h_e41068bed968d7 15-41,44-46,50-52,62-64,80-95,99-101,104-105,108-109,115-117
+src/routes/language.tsx
+  h_e41068bed968d7 92-93,124-131
+src/routes/near.tsx
+  h_e41068bed968d7 1-62
+src/routes/security.tsx
+  h_e41068bed968d7 1-6
+wiki/index.md
+  h_e41068bed968d7 1-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f8651717fd3099d0be2e12a26c6d127fcd29530c",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
