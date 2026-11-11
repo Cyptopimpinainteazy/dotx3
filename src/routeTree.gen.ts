@@ -19,9 +19,11 @@ import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DexRouteImport } from './routes/dex'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as LanguageRouteImport } from './routes/language'
+import { Route as NearRouteImport } from './routes/near'
 import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as ProofRouteImport } from './routes/proof'
 import { Route as ProofsRouteImport } from './routes/proofs'
+import { Route as SecurityRouteImport } from './routes/security'
 import { Route as ApiX3dexSplatRouteImport } from './routes/api/x3dex/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -74,6 +76,11 @@ const LanguageRoute = LanguageRouteImport.update({
   path: '/language',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NearRoute = NearRouteImport.update({
+  id: '/near',
+  path: '/near',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlaygroundRoute = PlaygroundRouteImport.update({
   id: '/playground',
   path: '/playground',
@@ -87,6 +94,11 @@ const ProofRoute = ProofRouteImport.update({
 const ProofsRoute = ProofsRouteImport.update({
   id: '/proofs',
   path: '/proofs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityRoute = SecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiX3dexSplatRoute = ApiX3dexSplatRouteImport.update({
@@ -106,9 +118,11 @@ export interface FileRoutesByFullPath {
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
   '/language': typeof LanguageRoute
+  '/near': typeof NearRoute
   '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
+  '/security': typeof SecurityRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
 export interface FileRoutesByTo {
@@ -122,9 +136,11 @@ export interface FileRoutesByTo {
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
   '/language': typeof LanguageRoute
+  '/near': typeof NearRoute
   '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
+  '/security': typeof SecurityRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
 export interface FileRoutesById {
@@ -139,9 +155,11 @@ export interface FileRoutesById {
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
   '/language': typeof LanguageRoute
+  '/near': typeof NearRoute
   '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
+  '/security': typeof SecurityRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
 export interface FileRouteTypes {
@@ -157,9 +175,11 @@ export interface FileRouteTypes {
     | '/dex'
     | '/docs'
     | '/language'
+    | '/near'
     | '/playground'
     | '/proof'
     | '/proofs'
+    | '/security'
     | '/api/x3dex/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -173,9 +193,11 @@ export interface FileRouteTypes {
     | '/dex'
     | '/docs'
     | '/language'
+    | '/near'
     | '/playground'
     | '/proof'
     | '/proofs'
+    | '/security'
     | '/api/x3dex/$'
   id:
     | '__root__'
@@ -189,9 +211,11 @@ export interface FileRouteTypes {
     | '/dex'
     | '/docs'
     | '/language'
+    | '/near'
     | '/playground'
     | '/proof'
     | '/proofs'
+    | '/security'
     | '/api/x3dex/$'
   fileRoutesById: FileRoutesById
 }
@@ -206,9 +230,11 @@ export interface RootRouteChildren {
   DexRoute: typeof DexRoute
   DocsRoute: typeof DocsRoute
   LanguageRoute: typeof LanguageRoute
+  NearRoute: typeof NearRoute
   PlaygroundRoute: typeof PlaygroundRoute
   ProofRoute: typeof ProofRoute
   ProofsRoute: typeof ProofsRoute
+  SecurityRoute: typeof SecurityRoute
   ApiX3dexSplatRoute: typeof ApiX3dexSplatRoute
 }
 
@@ -284,6 +310,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LanguageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/near': {
+      id: '/near'
+      path: '/near'
+      fullPath: '/near'
+      preLoaderRoute: typeof NearRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/playground': {
       id: '/playground'
       path: '/playground'
@@ -303,6 +336,13 @@ declare module '@tanstack/react-router' {
       path: '/proofs'
       fullPath: '/proofs'
       preLoaderRoute: typeof ProofsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security': {
+      id: '/security'
+      path: '/security'
+      fullPath: '/security'
+      preLoaderRoute: typeof SecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/x3dex/$': {
@@ -326,9 +366,11 @@ const rootRouteChildren: RootRouteChildren = {
   DexRoute: DexRoute,
   DocsRoute: DocsRoute,
   LanguageRoute: LanguageRoute,
+  NearRoute: NearRoute,
   PlaygroundRoute: PlaygroundRoute,
   ProofRoute: ProofRoute,
   ProofsRoute: ProofsRoute,
+  SecurityRoute: SecurityRoute,
   ApiX3dexSplatRoute: ApiX3dexSplatRoute,
 }
 export const routeTree = rootRouteImport

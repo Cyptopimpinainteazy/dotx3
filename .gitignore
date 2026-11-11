@@ -8,3 +8,5 @@ node_modules/
 public/gallery/apps/
 /integrations/x3dex/node_modules/
 /public/dex-terminal/
+.vercel
+.env*

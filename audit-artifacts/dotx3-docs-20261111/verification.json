@@ -1,0 +1,109 @@
+{
+  "base_commit": "2391a453d656c83696ad79ad02bf3d0ed4d1b767",
+  "branch": "docs/dotx3-near-tracks",
+  "state": "source changes pending commit; generated Vercel output excluded",
+  "node": "v24.22.1",
+  "npm": "11.19.1",
+  "verification": [
+    {
+      "command": "npm test",
+      "result": "pass",
+      "script_tests": 197,
+      "typescript_tests": 77,
+      "note": "sandbox execution suppresses child-process output; passed outside sandbox"
+    },
+    {
+      "command": "npm run typecheck",
+      "result": "pass"
+    },
+    {
+      "command": "npm run build",
+      "result": "pass",
+      "note": "DEX and site built; optional DATABASE_URL migration skipped as configured"
+    },
+    {
+      "command": "npx eslint <changed TS/TSX files>",
+      "result": "pass"
+    },
+    {
+      "command": "node scripts/near-smoke.mjs",
+      "result": {
+        "ok": true,
+        "results": [
+          {
+            "path": "/near",
+            "width": 1280,
+            "status": "pass"
+          },
+          {
+            "path": "/security",
+            "width": 1280,
+            "status": "pass"
+          },
+          {
+            "path": "/agents",
+            "width": 1280,
+            "status": "pass"
+          },
+          {
+            "path": "/defi",
+            "width": 1280,
+            "status": "pass"
+          },
+          {
+            "path": "/docs",
+            "width": 1280,
+            "status": "pass"
+          },
+          {
+            "path": "/near",
+            "width": 390,
+            "status": "pass"
+          },
+          {
+            "path": "/security",
+            "width": 390,
+            "status": "pass"
+          },
+          {
+            "path": "/agents",
+            "width": 390,
+            "status": "pass"
+          },
+          {
+            "path": "/defi",
+            "width": 390,
+            "status": "pass"
+          },
+          {
+            "path": "/docs",
+            "width": 390,
+            "status": "pass"
+          }
+        ]
+      }
+    },
+    {
+      "command": "node scripts/bootcamp-smoke.mjs http://127.0.0.1:8080/bootcamp",
+      "result": "pass"
+    },
+    {
+      "command": "X3Lang track_control.py --at 2026-11-03T03:00:00Z (documented fixture commands)",
+      "allowed_exit": 0,
+      "denied_exit": 6,
+      "denied_guard": "mandate_recipient",
+      "x3lang_commit": "e12b4c894b2dbab36be0fb91b6c2012d7196b3cd"
+    }
+  ],
+  "review": "independent read-only review completed; no remaining actionable findings",
+  "vercel": {
+    "cli": "65.14.0",
+    "cli_user": "cyptopimpinainteazy",
+    "project": "dotx3",
+    "mcp": "https://mcp.vercel.com configured; OAuth completed",
+    "domain": "command.dotx3.net",
+    "assigned": true,
+    "verified": false,
+    "blocker": "Cloudflare TXT verification and CNAME routing pending"
+  }
+}
