@@ -144,6 +144,25 @@ function Labs() {
       >
         <div className="grid gap-5 md:grid-cols-3">
           <article className="rounded-xl border border-border p-6">
+            <h3 className="font-display text-xl text-primary">NEAR Business</h3>
+            <p className="my-4 text-muted">
+              Official team treasury application. Its members propose and review financial requests
+              using its own roles and voting rules. A .x3 policy preview does not authorize a
+              treasury payment.
+            </p>
+            <p>
+              <OutLink href="https://business.near.com/">Open NEAR Business</OutLink>
+            </p>
+            <p className="mt-3">
+              <OutLink href="https://docs.business.near.com/home">
+                Read the treasury documentation
+              </OutLink>
+            </p>
+            <p className="mt-4 text-sm text-muted">
+              External service · treasury connection not configured
+            </p>
+          </article>
+          <article className="rounded-xl border border-border p-6">
             <h3 className="font-display text-xl text-primary">Control Room</h3>
             <p className="my-4 text-muted">
               Existing readiness and planning workspace. Owner access may be required. Jobs are

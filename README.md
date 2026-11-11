@@ -45,6 +45,7 @@ node scripts/compiler-smoke.mjs http://127.0.0.1:8080
 ## Documentation
 
 - [NEAR Builders MCP connection](docs/NEAR_BUILDERS_MCP.md)
+- [NEAR Business treasury integration boundaries](docs/NEAR_BUSINESS.md)
 
 - [Write .x3](docs/X3_GUIDE.md)
 - [Branch assessment](docs/BRANCH_ASSESSMENT.md)
