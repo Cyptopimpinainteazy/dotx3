@@ -1,0 +1,16 @@
+public/gallery/arcade/meme-coin-blast.html
+  h_e41068bed968d7 60,64-68,620
+public/gallery/index.html
+  h_e41068bed968d7 44,48-52,126
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1c050dd8645752f06ae464d7893cfc66aafa924a",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
