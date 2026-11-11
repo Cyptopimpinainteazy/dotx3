@@ -2,6 +2,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell } from "@/components/site-shell";
 import { LINKS, NEAR_WALLETS, RHEA_APP, TOKEN } from "@/lib/front-door";
+import { PartnerLink } from "@/components/partner-link";
 
 export const Route = createFileRoute("/back")({ component: BackPage });
 
@@ -142,9 +143,9 @@ function BackPage() {
         <ol className="mx-auto grid max-w-3xl gap-3">
           <Step n={1} title="Get a NEAR wallet">
             Pick one from NEAR&apos;s wallet directory:{" "}
-            <OutLink href={NEAR_WALLETS}>wallet.near.org</OutLink>. If you&apos;ll hold a large
-            balance, use one that can sign with a hardware wallet. Write down the recovery phrase
-            offline.
+            <OutLink href={NEAR_WALLETS}>wallet.near.org</OutLink>, or explore{" "}
+            <PartnerLink provider="meteor" />. If you&apos;ll hold a large balance, use one that can
+            sign with a hardware wallet. Write down the recovery phrase offline.
           </Step>
           <Step n={2} title="Fund it with NEAR">
             You need NEAR for gas and for your side of the pool. A few tenths of a NEAR covers
