@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ActionLink, Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { OutLink } from "@/components/code-block";
 import { CompilerWorkbench } from "@/components/compiler-workbench";
+import { PartnerLink } from "@/components/partner-link";
 
 export const Route = createFileRoute("/labs")({ component: Labs });
 const views = [
@@ -138,11 +139,60 @@ function Labs() {
       </Section>
 
       <Section
+        title="Wallets and DeFi tools"
+        intro="External tools with their own accounts and terms."
+      >
+        <CardGrid>
+          <Card title="Meteor Wallet">
+            <p>A NEAR wallet for accessing applications across the ecosystem.</p>
+            <p className="mt-4">
+              <PartnerLink provider="meteor" />
+            </p>
+          </Card>
+          <Card title="RHEA Finance">
+            <p>
+              Explore RHEA&apos;s NEAR DeFi application. Review its pool and token details before
+              use.
+            </p>
+            <p className="mt-4">
+              <PartnerLink provider="rhea" />
+            </p>
+          </Card>
+        </CardGrid>
+      </Section>
+      <Section
         title="Operations integrations"
         alt
         intro="These existing services retain their own access controls. A link is not a connected worker or an execution receipt."
       >
         <div className="grid gap-5 md:grid-cols-3">
+          <article className="rounded-xl border border-border p-6">
+            <h3 className="font-display text-xl text-primary">NEAR Intents Explorer</h3>
+            <p className="my-4 text-muted">
+              Inspect historical 1Click swaps and provider-reported statuses. Explorer records are
+              separate from independent verification of chain finality and settlement.
+            </p>
+            <OutLink href="https://explorer.near-intents.org/">Open the official Explorer</OutLink>
+          </article>
+          <article className="rounded-xl border border-border p-6">
+            <h3 className="font-display text-xl text-primary">NEAR Business</h3>
+            <p className="my-4 text-muted">
+              Official team treasury application. Its members propose and review financial requests
+              using its own roles and voting rules. A .x3 policy preview does not authorize a
+              treasury payment.
+            </p>
+            <p>
+              <OutLink href="https://business.near.com/">Open NEAR Business</OutLink>
+            </p>
+            <p className="mt-3">
+              <OutLink href="https://docs.business.near.com/home">
+                Read the treasury documentation
+              </OutLink>
+            </p>
+            <p className="mt-4 text-sm text-muted">
+              External service · treasury connection not configured
+            </p>
+          </article>
           <article className="rounded-xl border border-border p-6">
             <h3 className="font-display text-xl text-primary">Control Room</h3>
             <p className="my-4 text-muted">
