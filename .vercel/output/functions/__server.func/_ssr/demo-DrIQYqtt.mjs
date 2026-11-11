@@ -1,9 +1,9 @@
 import { i as __toESM } from "../_runtime.mjs";
 import { J as require_react, S as require_jsx_runtime } from "../_libs/@tanstack/react-router+[...].mjs";
-import { o as Section, s as SiteShell } from "./site-shell-0774LnZF.mjs";
+import { o as Section, s as SiteShell } from "./site-shell-CmfKQ5um.mjs";
 import { n as OutLink, r as Tag, t as CodeBlock } from "./code-block-AVKNKds0.mjs";
 import { n as MANDATE, t as LINKS } from "./front-door-CDmHt-Gp.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/demo-CovWNfum.js
+//#region node_modules/.nitro/vite/services/ssr/assets/demo-DrIQYqtt.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var RULES = [

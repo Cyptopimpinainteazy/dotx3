@@ -1,7 +1,7 @@
 import { i as __toESM } from "../_runtime.mjs";
 import { J as require_react, S as require_jsx_runtime, b as Link, p as useRouterState } from "../_libs/@tanstack/react-router+[...].mjs";
 import { r as Menu, t as X } from "../_libs/lucide-react.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/site-shell-0774LnZF.js
+//#region node_modules/.nitro/vite/services/ssr/assets/site-shell-CmfKQ5um.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var NODES = [
@@ -117,6 +117,10 @@ function RouteTicker() {
 	});
 }
 var LINKS = [
+	{
+		to: "/dex",
+		label: "DEX"
+	},
 	{
 		to: "/demo",
 		label: "Try the Demo"

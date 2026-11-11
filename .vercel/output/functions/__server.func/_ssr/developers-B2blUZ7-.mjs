@@ -1,8 +1,8 @@
 import { S as require_jsx_runtime } from "../_libs/@tanstack/react-router+[...].mjs";
-import { o as Section, s as SiteShell } from "./site-shell-0774LnZF.mjs";
+import { o as Section, s as SiteShell } from "./site-shell-CmfKQ5um.mjs";
 import { n as OutLink, r as Tag, t as CodeBlock } from "./code-block-AVKNKds0.mjs";
 import { i as SITE, t as LINKS } from "./front-door-CDmHt-Gp.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/developers-DgBKvgCU.js
+//#region node_modules/.nitro/vite/services/ssr/assets/developers-B2blUZ7-.js
 var import_jsx_runtime = require_jsx_runtime();
 function DevelopersPage() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SiteShell, {

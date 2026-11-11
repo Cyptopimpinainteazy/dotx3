@@ -37,3 +37,11 @@ test('outage after cache expiration explicitly flags stale snapshot',async()=>{
  const state=await service.get()
  assert.equal(state.stale,true);assert.equal(state.partial,true);assert.equal(state.executable,false)
 })
+
+test('Solana mint identity is case-sensitive while EVM hex casing is accepted',()=>{
+ const sol=TOKENS.find(t=>t.chain==='solana');
+ assert.ok(validatePool(raw(sol),sol));
+ assert.equal(validatePool({...raw(sol),baseToken:{address:sol.address.toLowerCase(),symbol:'USDC'}},sol),null);
+ const evm=TOKENS[0];
+ assert.ok(validatePool({...raw(evm),baseToken:{address:evm.address.toLowerCase(),symbol:'USDC'}},evm));
+});

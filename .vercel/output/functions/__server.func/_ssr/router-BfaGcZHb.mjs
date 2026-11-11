@@ -2,8 +2,8 @@ import { i as __toESM, n as __exportAll } from "../_runtime.mjs";
 import { J as require_react, S as require_jsx_runtime, _ as lazyRouteComponent, d as Scripts, f as HeadContent, g as Outlet, h as createRouter, v as createFileRoute, x as useRouter, y as createRootRoute } from "../_libs/@tanstack/react-router+[...].mjs";
 import { n as TriangleAlert } from "../_libs/lucide-react.mjs";
 import { a as union, i as string, n as number, r as object, t as literal } from "../_libs/zod.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-Cl8qkqVA.js
-var router_Cl8qkqVA_exports = /* @__PURE__ */ __exportAll({ getRouter: () => getRouter });
+//#region node_modules/.nitro/vite/services/ssr/assets/router-BfaGcZHb.js
+var router_BfaGcZHb_exports = /* @__PURE__ */ __exportAll({ getRouter: () => getRouter });
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var FALLBACK_MESSAGE = "An unexpected error occurred. Try reloading the page.";
@@ -331,9 +331,9 @@ function PreviewHostBridge() {
 	}, [router]);
 	return null;
 }
-var styles_default = "/assets/styles-ClePFWLy.css";
+var styles_default = "/assets/styles-CL1UKwG_.css";
 var APP_NAME = "dotx3.net";
-var Route$8 = createRootRoute({
+var Route$10 = createRootRoute({
 	head: () => ({
 		meta: [
 			{ charSet: "utf-8" },
@@ -385,65 +385,234 @@ var Route$8 = createRootRoute({
 		] })]
 	})
 });
-var $$splitComponentImporter$7 = () => import("./routes-DwnIuz4B.mjs");
-var Route$7 = createFileRoute("/")({ component: lazyRouteComponent($$splitComponentImporter$7, "component") });
-var $$splitComponentImporter$6 = () => import("./agents-CchXdC63.mjs");
-var Route$6 = createFileRoute("/agents")({ component: lazyRouteComponent($$splitComponentImporter$6, "component") });
-var $$splitComponentImporter$5 = () => import("./defi-BLC3eQTG.mjs");
-var Route$5 = createFileRoute("/defi")({ component: lazyRouteComponent($$splitComponentImporter$5, "component") });
-var $$splitComponentImporter$4 = () => import("./demo-CovWNfum.mjs");
-var Route$4 = createFileRoute("/demo")({ component: lazyRouteComponent($$splitComponentImporter$4, "component") });
-var $$splitComponentImporter$3 = () => import("./developers-DgBKvgCU.mjs");
-var Route$3 = createFileRoute("/developers")({ component: lazyRouteComponent($$splitComponentImporter$3, "component") });
-var $$splitComponentImporter$2 = () => import("./docs-Bt5EhFsa.mjs");
-var Route$2 = createFileRoute("/docs")({ component: lazyRouteComponent($$splitComponentImporter$2, "component") });
-var $$splitComponentImporter$1 = () => import("./proof-B9KPPkLq.mjs");
-var Route$1 = createFileRoute("/proof")({ component: lazyRouteComponent($$splitComponentImporter$1, "component") });
-var $$splitComponentImporter = () => import("./proofs-xJllC10W.mjs");
-var Route = createFileRoute("/proofs")({ component: lazyRouteComponent($$splitComponentImporter, "component") });
+var $$splitComponentImporter$8 = () => import("./routes-CruX10iI.mjs");
+var Route$9 = createFileRoute("/")({ component: lazyRouteComponent($$splitComponentImporter$8, "component") });
+var $$splitComponentImporter$7 = () => import("./agents-B8XcHKyV.mjs");
+var Route$8 = createFileRoute("/agents")({ component: lazyRouteComponent($$splitComponentImporter$7, "component") });
+var $$splitComponentImporter$6 = () => import("./defi-fuVV_zhp.mjs");
+var Route$7 = createFileRoute("/defi")({ component: lazyRouteComponent($$splitComponentImporter$6, "component") });
+var $$splitComponentImporter$5 = () => import("./demo-DrIQYqtt.mjs");
+var Route$6 = createFileRoute("/demo")({ component: lazyRouteComponent($$splitComponentImporter$5, "component") });
+var $$splitComponentImporter$4 = () => import("./developers-B2blUZ7-.mjs");
+var Route$5 = createFileRoute("/developers")({ component: lazyRouteComponent($$splitComponentImporter$4, "component") });
+var $$splitComponentImporter$3 = () => import("./dex-By_KvLuB.mjs");
+var Route$4 = createFileRoute("/dex")({ component: lazyRouteComponent($$splitComponentImporter$3, "component") });
+var $$splitComponentImporter$2 = () => import("./docs-w7Nt0ZCb.mjs");
+var Route$3 = createFileRoute("/docs")({ component: lazyRouteComponent($$splitComponentImporter$2, "component") });
+var $$splitComponentImporter$1 = () => import("./proof-C3EsJC1_.mjs");
+var Route$2 = createFileRoute("/proof")({ component: lazyRouteComponent($$splitComponentImporter$1, "component") });
+var $$splitComponentImporter = () => import("./proofs-v0wPSbzz.mjs");
+var Route$1 = createFileRoute("/proofs")({ component: lazyRouteComponent($$splitComponentImporter, "component") });
+var TOKENS = Object.freeze([
+	{
+		chain: "ethereum",
+		address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+	},
+	{
+		chain: "base",
+		address: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+	},
+	{
+		chain: "solana",
+		address: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+	}
+]);
+var TIMEOUT_MS = 6500;
+var symbol = (v) => typeof v === "string" && v.length <= 30 ? v : "";
+var validNumber = (v) => typeof v === "number" && Number.isFinite(v) && v >= 0 ? v : null;
+var sameAddress = (a, b) => a.startsWith("0x") && b.startsWith("0x") ? a.toLowerCase() === b.toLowerCase() : a === b;
+var expectedUrl = /^https:\/\/dexscreener\.com\//;
+function validatePool(row, token) {
+	if (!row || typeof row !== "object" || row.chainId !== token.chain || typeof row.baseToken?.address !== "string" || !sameAddress(row.baseToken.address, token.address) || typeof row.pairAddress !== "string" || row.pairAddress.length > 120 || !row.pairAddress || typeof row.dexId !== "string" || !row.dexId || row.dexId.length > 60 || typeof row.quoteToken?.address !== "string" || typeof row.url !== "string" || !expectedUrl.test(row.url)) return null;
+	const price = Number(row.priceUsd);
+	const liquidityUsd = validNumber(row.liquidity?.usd);
+	const volumeUsd = validNumber(row.volume?.h24);
+	if (!Number.isFinite(price) || price <= 0 || liquidityUsd === null || liquidityUsd < 5e4) return null;
+	return {
+		chain: token.chain,
+		chainId: token.chain,
+		pairAddress: row.pairAddress,
+		dexId: row.dexId,
+		url: row.url,
+		priceUsd: String(price),
+		baseToken: {
+			address: token.address,
+			symbol: symbol(row.baseToken.symbol)
+		},
+		quoteToken: {
+			address: row.quoteToken.address,
+			symbol: symbol(row.quoteToken.symbol)
+		},
+		liquidity: { usd: liquidityUsd },
+		volume: { h24: volumeUsd ?? 0 }
+	};
+}
+async function readJson(url, fetcher = fetch, timeoutMs = TIMEOUT_MS) {
+	const response = await fetcher(url, {
+		signal: AbortSignal.timeout(timeoutMs),
+		headers: { accept: "application/json" }
+	});
+	if (!response.ok) throw new Error("Upstream status " + response.status);
+	const contentLength = response.headers?.get?.("content-length");
+	if (contentLength && Number(contentLength) > 15e5) throw new Error("Response too large");
+	const text = await response.text();
+	if (text.length > 15e5) throw new Error("Response too large");
+	return JSON.parse(text);
+}
+function createMarketService({ fetcher = fetch, clock = Date.now } = {}) {
+	let snapshot = null;
+	let pending = null;
+	async function refresh() {
+		const results = await Promise.allSettled(TOKENS.map(async (token) => {
+			const data = await readJson("https://api.dexscreener.com/tokens/v1/" + token.chain + "/" + token.address, fetcher);
+			if (!Array.isArray(data)) throw new Error("Invalid response");
+			return data.map((pool) => validatePool(pool, token)).filter(Boolean);
+		}));
+		const errors = results.flatMap((r, i) => r.status === "rejected" ? [TOKENS[i].chain + ": " + (r.reason instanceof Error ? r.reason.message : "upstream unavailable")] : []);
+		const pools = results.flatMap((r) => r.status === "fulfilled" ? r.value : []);
+		if (errors.length === TOKENS.length) throw new Error("All market sources unavailable");
+		return {
+			asOf: clock(),
+			source: "DEX Screener public pool data (indicative)",
+			pools,
+			partial: errors.length > 0,
+			errors,
+			executable: false
+		};
+	}
+	return { async get() {
+		const now = clock();
+		if (snapshot && now - snapshot.asOf < 45e3) return {
+			...snapshot,
+			stale: false
+		};
+		if (!pending) pending = refresh().then((result) => {
+			snapshot = result;
+			return result;
+		}).finally(() => {
+			pending = null;
+		});
+		try {
+			return {
+				...await pending,
+				stale: false
+			};
+		} catch (error) {
+			if (snapshot) return {
+				...snapshot,
+				stale: true,
+				partial: true,
+				errors: [...snapshot.errors, String(error)]
+			};
+			return {
+				asOf: null,
+				source: "DEX Screener public pool data (indicative)",
+				pools: [],
+				partial: true,
+				stale: true,
+				errors: [String(error)],
+				executable: false
+			};
+		}
+	} };
+}
+var markets = createMarketService();
+var Route = createFileRoute("/api/x3dex/$")({ server: { handlers: { GET: async ({ request }) => {
+	const url = new URL(request.url);
+	const path = url.pathname.split("/").pop();
+	const reply = (body, status = 200) => Response.json(body, {
+		status,
+		headers: {
+			"Cache-Control": "no-store",
+			"X-Content-Type-Options": "nosniff"
+		}
+	});
+	try {
+		if (path === "markets") return reply(await markets.get());
+		if (path === "ohlc") {
+			const pair = url.searchParams.get("pair") || "";
+			const interval = url.searchParams.get("interval") || "";
+			if (![
+				"XBTUSD",
+				"ETHUSD",
+				"SOLUSD",
+				"AVAXUSD"
+			].includes(pair) || ![
+				"1",
+				"5",
+				"15",
+				"60",
+				"240",
+				"1440"
+			].includes(interval)) return reply({ error: "Unsupported market" }, 400);
+			return reply(await readJson("https://api.kraken.com/0/public/OHLC?pair=" + pair + "&interval=" + interval));
+		}
+		return reply({
+			error: "This optional service is not enabled on dotx3",
+			executable: false,
+			executionAllowed: false,
+			finalityVerified: false
+		}, 503);
+	} catch {
+		return reply({
+			error: "Market service unavailable",
+			executable: false
+		}, 503);
+	}
+} } } });
 var rootRouteChildren = {
-	IndexRoute: Route$7.update({
+	IndexRoute: Route$9.update({
 		id: "/",
 		path: "/",
-		getParentRoute: () => Route$8
+		getParentRoute: () => Route$10
 	}),
-	AgentsRoute: Route$6.update({
+	AgentsRoute: Route$8.update({
 		id: "/agents",
 		path: "/agents",
-		getParentRoute: () => Route$8
+		getParentRoute: () => Route$10
 	}),
-	DefiRoute: Route$5.update({
+	DefiRoute: Route$7.update({
 		id: "/defi",
 		path: "/defi",
-		getParentRoute: () => Route$8
+		getParentRoute: () => Route$10
 	}),
-	DemoRoute: Route$4.update({
+	DemoRoute: Route$6.update({
 		id: "/demo",
 		path: "/demo",
-		getParentRoute: () => Route$8
+		getParentRoute: () => Route$10
 	}),
-	DevelopersRoute: Route$3.update({
+	DevelopersRoute: Route$5.update({
 		id: "/developers",
 		path: "/developers",
-		getParentRoute: () => Route$8
+		getParentRoute: () => Route$10
 	}),
-	DocsRoute: Route$2.update({
+	DexRoute: Route$4.update({
+		id: "/dex",
+		path: "/dex",
+		getParentRoute: () => Route$10
+	}),
+	DocsRoute: Route$3.update({
 		id: "/docs",
 		path: "/docs",
-		getParentRoute: () => Route$8
+		getParentRoute: () => Route$10
 	}),
-	ProofRoute: Route$1.update({
+	ProofRoute: Route$2.update({
 		id: "/proof",
 		path: "/proof",
-		getParentRoute: () => Route$8
+		getParentRoute: () => Route$10
 	}),
-	ProofsRoute: Route.update({
+	ProofsRoute: Route$1.update({
 		id: "/proofs",
 		path: "/proofs",
-		getParentRoute: () => Route$8
+		getParentRoute: () => Route$10
+	}),
+	ApiX3dexSplatRoute: Route.update({
+		id: "/api/x3dex/$",
+		path: "/api/x3dex/$",
+		getParentRoute: () => Route$10
 	})
 };
-var routeTree = Route$8._addFileChildren(rootRouteChildren)._addFileTypes();
+var routeTree = Route$10._addFileChildren(rootRouteChildren)._addFileTypes();
 function getRouter() {
 	return createRouter({
 		routeTree,
@@ -452,4 +621,4 @@ function getRouter() {
 	});
 }
 //#endregion
-export { getRouter, router_Cl8qkqVA_exports as t };
+export { getRouter, router_BfaGcZHb_exports as t };

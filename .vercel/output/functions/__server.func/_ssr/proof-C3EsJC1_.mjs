@@ -1,8 +1,8 @@
 import { S as require_jsx_runtime } from "../_libs/@tanstack/react-router+[...].mjs";
-import { o as Section, s as SiteShell } from "./site-shell-0774LnZF.mjs";
+import { o as Section, s as SiteShell } from "./site-shell-CmfKQ5um.mjs";
 import { n as OutLink, r as Tag } from "./code-block-AVKNKds0.mjs";
 import { r as PROGRAM_SHA, t as LINKS } from "./front-door-CDmHt-Gp.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/proof-B9KPPkLq.js
+//#region node_modules/.nitro/vite/services/ssr/assets/proof-C3EsJC1_.js
 var import_jsx_runtime = require_jsx_runtime();
 function Row({ label, detail, href, hrefLabel }) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("article", {

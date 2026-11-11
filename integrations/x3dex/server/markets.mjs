@@ -9,7 +9,7 @@ export const TIMEOUT_MS = 6500
 export const MAX_BODY_BYTES = 1500000
 const symbol = v => typeof v === 'string' && v.length <= 30 ? v : ''
 const validNumber = v => typeof v === 'number' && Number.isFinite(v) && v >= 0 ? v : null
-const sameAddress = (a, b) => a.toLowerCase() === b.toLowerCase()
+const sameAddress = (a, b) => a.startsWith('0x') && b.startsWith('0x') ? a.toLowerCase() === b.toLowerCase() : a === b
 const expectedUrl = /^https:\/\/dexscreener\.com\//
 export function validatePool(row, token) {
   if (!row || typeof row !== 'object' || row.chainId !== token.chain ||

@@ -28,6 +28,7 @@ export default function TestnetLab(){
  const [copyResult,setCopyResult]=useState('')
  const provider=typeof window==='undefined'?undefined:window.ethereum as Provider|undefined
  async function preflight(){
+  if(busy||checking||crosschecking)return
   setError('');setPrepared(null);setArmed(false);setHash(null);setReceipt(null);setCorroboration(null);setCopyResult('')
   if(!provider){setError('An EIP-1193 wallet extension is required.');return}
   setBusy(true)
@@ -36,7 +37,7 @@ export default function TestnetLab(){
   finally{setBusy(false)}
  }
  async function send(){
-  if(!provider||!prepared||!armed||busy)return
+  if(!provider||!prepared||!armed||busy||prepared.chain!==chain)return
   setBusy(true);setArmed(false);setError('')
   try{
    const result=await submit(provider,prepared)
@@ -96,13 +97,14 @@ export default function TestnetLab(){
    document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url)
  }
  function changeChain(next:TestChain){
+  if(busy||checking||crosschecking)return
   setChain(next);setPrepared(null);setHash(null);setReceipt(null);setArmed(false);setError('');setCorroboration(null);setCopyResult('')
  }
  return <div className="lab">
   <div className="lab-heading"><div><span className="eyebrow">X3 DEX / EXECUTION ENGINEERING</span><h1>Testnet transaction lab</h1><p>Real user-approved wallet signing and transaction observation, without custody or token swapping.</p></div><span className="lab-tag"><ShieldCheck size={14}/> TESTNET ONLY</span></div>
   <div className="lab-banner"><CircleAlert size={18}/><span>Zero-value self-transfer only. This consumes testnet gas, requires your wallet's confirmation, and does not establish X3 Shield enforcement, cross-chain settlement, or independently verified finality.</span></div>
   <div className="lab-layout"><section className="card lab-card"><div className="card-head"><h2>1. Prepare a transaction</h2><span className="neutral-pill">PRE-FLIGHT</span></div><div className="lab-content">
-   <label className="lab-label">Test network<select value={chain} onChange={e=>changeChain(e.target.value as TestChain)}><option value="0x14a34">Base Sepolia</option><option value="0xaa36a7">Ethereum Sepolia</option></select></label>
+   <label className="lab-label">Test network<select disabled={busy||checking||crosschecking} value={chain} onChange={e=>changeChain(e.target.value as TestChain)}><option value="0x14a34">Base Sepolia</option><option value="0xaa36a7">Ethereum Sepolia</option></select></label>
    <div className="lab-details">
     <div><span>Sender</span><strong>{prepared?.account??'Connect EVM wallet above'}</strong></div>
     <div><span>Recipient</span><strong>{prepared?'Same wallet (self-transfer)':'—'}</strong></div>
@@ -110,10 +112,10 @@ export default function TestnetLab(){
     <div><span>Gas limit</span><strong>21,000</strong></div>
     <div><span>Estimated gas cost</span><strong>{prepared?eth(prepared.estimateWei)+' test ETH':'Pending preflight'}</strong></div>
    </div>
-   <button className="lab-button" onClick={preflight} disabled={busy}><RefreshCw size={15}/>{busy?'Checking wallet…':'Check network, balance & gas'}</button>
-   {prepared&&<div className="lab-approval">
+   <button className="lab-button" onClick={preflight} disabled={busy||checking||crosschecking}><RefreshCw size={15}/>{busy?'Checking wallet…':'Check network, balance & gas'}</button>
+   {prepared&&prepared.chain===chain&&<div className="lab-approval">
     <label><input type="checkbox" checked={armed} onChange={e=>setArmed(e.target.checked)}/> I authorize requesting a zero-value self-transfer on {TESTNETS[chain].name}. My wallet will ask me to confirm gas expenditure.</label>
-    <button className="lab-button lab-sign" disabled={!armed||busy} onClick={send}><ShieldCheck size={16}/> Request testnet wallet signature</button>
+    <button className="lab-button lab-sign" disabled={!armed||busy||prepared.chain!==chain} onClick={send}><ShieldCheck size={16}/> Request testnet wallet signature</button>
    </div>}
    {error&&<p role="alert" className="lab-error"><CircleAlert size={15}/>{error}</p>}
   </div></section>

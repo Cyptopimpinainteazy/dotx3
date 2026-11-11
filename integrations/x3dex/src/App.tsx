@@ -36,13 +36,16 @@ function Chart({ candles }: { candles: Candle[] }) {
 const nav = [{ name: 'Terminal', icon: BarChart3 }, { name: 'Cross-chain', icon: GitBranch }, { name: 'Arbitrage Radar', icon: Zap }, { name: 'Testnet Lab', icon: ShieldCheck }, { name: 'Portfolio', icon: Layers }, { name: 'Strategies', icon: Activity }, { name: 'Explorer', icon: Compass }]
 const chains = ['Ethereum', 'Base', 'Solana', 'NEAR', 'X3']
 function App() {
-  const [market, setMarket] = useState(markets[0]); const [candles, setCandles] = useState<Candle[]>([])
+  const [market, setMarket] = useState(markets[0]); const [rawCandles, setCandles] = useState<Candle[]>([])
   const [status, setStatus] = useState('Loading real market data…'); const [loading, setLoading] = useState(true)
+  const [snapshotKey, setSnapshotKey] = useState('');
   const [interval, setIntervalValue] = useState('60'); const [active, setActive] = useState('Terminal')
+  const candles = snapshotKey === market.pair + ':' + interval ? rawCandles : [];
   const [source, setSource] = useState('Base'); const [destination, setDestination] = useState('NEAR')
   const [amount, setAmount] = useState('100'); const [search, setSearch] = useState(''); const [lastUpdated, setLastUpdated] = useState('')
   useEffect(() => {
     let cancelled = false
+    setCandles([]); setLastUpdated(''); setLoading(true); setStatus('Loading real market data…')
     const load = async () => {
       try {
         const resp = await fetch('/api/x3dex/ohlc?pair=' + encodeURIComponent(market.pair) + '&interval=' + interval)
@@ -56,7 +59,7 @@ function App() {
           const row = r as (string | number)[]
           return { time: Number(row[0]) as UTCTimestamp, open: Number(row[1]), high: Number(row[2]), low: Number(row[3]), close: Number(row[4]), volume: Number(row[6]) }
         }).filter(c => [c.time,c.open,c.high,c.low,c.close,c.volume].every(Number.isFinite)).sort((a,b) => a.time-b.time)
-        if (!cancelled) { setCandles(parsed); setStatus('Kraken public spot OHLC · reference data'); setLastUpdated(new Date().toLocaleTimeString()); setLoading(false) }
+        if (!cancelled) { setCandles(parsed); setSnapshotKey(market.pair + ':' + interval); setStatus('Kraken public spot OHLC · reference data'); setLastUpdated(new Date().toLocaleTimeString()); setLoading(false) }
       } catch (error) { if (!cancelled) { setStatus('Feed unavailable: ' + (error instanceof Error ? error.message : String(error))); setCandles([]); setLoading(false) } }
     }
     load(); const timer = setInterval(load, 30000)

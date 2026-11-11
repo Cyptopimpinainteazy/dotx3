@@ -20,7 +20,7 @@ type Observed = Pool & { chain: string; price: number; liquidityUsd: number; vol
 type Opportunity = { buy: Observed; sell: Observed; spreadPct: number }
 const usd = (value: number, max = 2) => Number.isFinite(value) ? value.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: max }) : '—'
 const pct = (value: number) => Number.isFinite(value) ? value.toFixed(3) + '%' : '—'
-const sameAddress = (a: string, b: string) => a.toLowerCase() === b.toLowerCase()
+const sameAddress = (a: string, b: string) => a.startsWith('0x') && b.startsWith('0x') ? a.toLowerCase() === b.toLowerCase() : a === b
 const MIN_LIQUIDITY = 50_000
 const REFRESH_MS = 45_000
 export default function ArbitrageRadar() {
@@ -59,7 +59,7 @@ export default function ArbitrageRadar() {
         setLastFetch(payload.asOf)
         setLoading(false)
       } catch (e) {
-        if (running) { setError(e instanceof Error ? e.message : String(e)); setLoading(false) }
+        if (running) { setPools([]); setLastFetch(null); setError(e instanceof Error ? e.message : String(e)); setLoading(false) }
       }
     }
     void load()
