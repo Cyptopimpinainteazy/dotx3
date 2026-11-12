@@ -7,7 +7,10 @@
       "source": "x3-lang/near_intents.py",
       "destination": "vendor/x3lang/x3-lang/near_intents.py",
       "source_sha256": "ed7add33417f79ce432de647880d67d79ecbe68401e72a252ef745d03e76099d",
-      "sha256": "ed7add33417f79ce432de647880d67d79ecbe68401e72a252ef745d03e76099d"
+      "sha256": "1f36d955d1ff3f677e9ce078fd60763dd52a6f01f68e017d51f575f2091d860d",
+      "local_transformations": [
+        "Bind dry mode as an exact boolean in the signed request echo; upstream source_sha256 is retained. Local proposal pending upstream approval."
+      ]
     },
     {
       "source": "x3-lang/near_mandate.py",
@@ -167,7 +170,10 @@
       "source": "x3-lang/near/demo/x3guard.mjs",
       "destination": "public/labs/guard/x3guard.mjs",
       "source_sha256": "790e5e5b6a13602f590a9bfebdb0338116fc999da1e773ac3f2368ad8cf5b9c3",
-      "sha256": "790e5e5b6a13602f590a9bfebdb0338116fc999da1e773ac3f2368ad8cf5b9c3"
+      "sha256": "fb577a982124a045b6cfe216144014d8496006bf6ef73cd5148b88e37b5772a9",
+      "local_transformations": [
+        "Bind dry mode as an exact boolean in the signed request echo; upstream source_sha256 is retained. Local proposal pending upstream approval."
+      ]
     },
     {
       "source": "docs/hackathon/attack-lab.html",

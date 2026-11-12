@@ -94,7 +94,7 @@ class GuardPortTransformation(unittest.TestCase):
 
     def test_unrelated_source_is_preserved(self):
         raw = b'No local modifications are authorized for this module.\n'
-        self.assertEqual(sync.transform_ported_file('x3-lang/near_intents.py', raw, 'abc'), (raw, []))
+        self.assertEqual(sync.transform_ported_file('x3-lang/cli.py', raw, 'abc'), (raw, []))
 
 
 class AttackPortTransformation(unittest.TestCase):
@@ -123,6 +123,25 @@ class AttackPortTransformation(unittest.TestCase):
         changed = self.upstream.replace(b'from a clone of this repository', b'other instructions')
         with self.assertRaisesRegex(ValueError, 'review before syncing'):
             sync.transform_ported_file(self.row['source'], changed, self.commit)
+
+
+class QuoteModePortTransformation(unittest.TestCase):
+    def test_proposal_is_reproducible_and_upstream_drift_requires_review(self):
+        manifest = json.loads((ROOT / 'x3lang-port.json').read_text())
+        for row in manifest['files']:
+            replacements = sync.QUOTE_MODE_BINDING_REPLACEMENTS.get(row['source'])
+            if not replacements:
+                continue
+            output = (ROOT / row['destination']).read_bytes()
+            source = output
+            for old, new in replacements.items():
+                source = source.replace(new.encode(), old.encode())
+            self.assertEqual(hashlib.sha256(source).hexdigest(), row['source_sha256'])
+            rebuilt, transformations = sync.transform_ported_file(row['source'], source, manifest['commit'])
+            self.assertEqual(rebuilt, output)
+            self.assertEqual(transformations, row['local_transformations'])
+            with self.assertRaisesRegex(ValueError, 'review before syncing'):
+                sync.transform_ported_file(row['source'], output, manifest['commit'])
 
 
 if __name__ == '__main__':

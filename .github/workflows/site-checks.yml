@@ -19,8 +19,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Compiler API and source provenance
-        run: python3 -m unittest discover -s tests -p 'test_compiler_api.py' -v
+      - name: Compiler API, quote guards and source provenance
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm test
       - run: npm run typecheck
