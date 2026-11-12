@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { createPortal, flushSync } from "react-dom";
 import { previewPathPrefix } from "@/lib/preview-path-prefix";
 import { BLAST_URL, INTRO_EVENT, SONG } from "@/lib/song";
 
@@ -58,7 +58,9 @@ export function EnterGate() {
   const [ended, setEnded] = useState(false);
   const [progress, setProgress] = useState({ at: 0, length: 0 });
   const [leaving, setLeaving] = useState(false);
-  const wantSound = useRef(false);
+  /** Sound has been on during this opening, so muting offers "sound back on", not a restart. */
+  const [heard, setHeard] = useState(false);
+  const leavingRef = useRef(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const soundRef = useRef<HTMLButtonElement>(null);
@@ -67,49 +69,54 @@ export function EnterGate() {
 
   const hasSong = SONG.video !== null && !failed;
 
+  /** Start the song from the top with sound. Falls back to muted if the browser refuses. */
+  const playWithSound = useCallback(() => {
+    const v = videoRef.current;
+    if (!v || v.currentSrc.endsWith(FALLBACK_LOOP)) return;
+    v.currentTime = 0;
+    v.volume = 1;
+    v.muted = false;
+    setMuted(false);
+    setEnded(false);
+    setHeard(true);
+    v.play().catch(() => {
+      v.muted = true;
+      setMuted(true);
+      setHeard(false);
+      v.play().catch(() => undefined);
+    });
+    // The sound button is replaced by Mute, so hand focus to the primary action.
+    window.requestAnimationFrame(() => enterRef.current?.focus());
+  }, []);
+
   useEffect(() => {
     setHref(blastHref());
     setStill(prefersStill());
     if (!alreadyEntered()) setOpen(true);
     const reopen = (e: Event) => {
-      wantSound.current = Boolean((e as CustomEvent<{ withSound?: boolean }>).detail?.withSound);
-      setFailed(false);
-      setEnded(false);
-      setLeaving(false);
-      setProgress({ at: 0, length: 0 });
-      setOpen(true);
+      const withSound = Boolean((e as CustomEvent<{ withSound?: boolean }>).detail?.withSound);
+      // Render the gate synchronously so play() still runs inside the visitor's click, which
+      // is what browsers require before they allow sound.
+      flushSync(() => {
+        setFailed(false);
+        setEnded(false);
+        setHeard(false);
+        setLeaving(false);
+        setProgress({ at: 0, length: 0 });
+        setOpen(true);
+      });
+      if (withSound) playWithSound();
     };
     window.addEventListener(INTRO_EVENT, reopen);
     return () => {
       window.removeEventListener(INTRO_EVENT, reopen);
       if (fadeTimer.current !== null) window.clearInterval(fadeTimer.current);
     };
-  }, []);
-
-  /** Start the song from the top with sound. Falls back to muted if the browser refuses. */
-  const playWithSound = useCallback(() => {
-    const v = videoRef.current;
-    if (!v || !hasSong) return;
-    v.currentTime = 0;
-    v.volume = 1;
-    v.muted = false;
-    setMuted(false);
-    setEnded(false);
-    v.play().catch(() => {
-      v.muted = true;
-      setMuted(true);
-      v.play().catch(() => undefined);
-    });
-  }, [hasSong]);
-
-  // Opened from the "Watch the intro" button: that click lets the song start with sound.
-  useEffect(() => {
-    if (!open || !wantSound.current) return;
-    wantSound.current = false;
-    playWithSound();
-  }, [open, playWithSound]);
+  }, [playWithSound]);
 
   const enter = useCallback(() => {
+    // A second Enter or Escape during the fade must not start another timer.
+    if (leavingRef.current) return;
     rememberEntered();
     const v = videoRef.current;
     if (!v || v.muted || v.paused) {
@@ -118,6 +125,7 @@ export function EnterGate() {
       return;
     }
     // Fade the song out rather than cutting it mid-line.
+    leavingRef.current = true;
     setLeaving(true);
     const start = v.volume;
     const began = performance.now();
@@ -128,6 +136,7 @@ export function EnterGate() {
         if (fadeTimer.current !== null) window.clearInterval(fadeTimer.current);
         fadeTimer.current = null;
         v.pause();
+        leavingRef.current = false;
         setOpen(false);
         setLeaving(false);
       }
@@ -160,11 +169,26 @@ export function EnterGate() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, enter, hasSong]);
 
-  function toggleMute() {
+  function mute() {
     const v = videoRef.current;
     if (!v) return;
-    v.muted = !v.muted;
-    setMuted(v.muted);
+    v.muted = true;
+    setMuted(true);
+    // Mute is replaced by the sound button; keep keyboard focus on it.
+    window.requestAnimationFrame(() => soundRef.current?.focus());
+  }
+
+  /** Sound back on where the song is, rather than restarting it. */
+  function unmute() {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = false;
+    setMuted(false);
+    v.play().catch(() => {
+      v.muted = true;
+      setMuted(true);
+    });
+    window.requestAnimationFrame(() => enterRef.current?.focus());
   }
 
   if (!open) return null;
@@ -178,11 +202,11 @@ export function EnterGate() {
       role="dialog"
       aria-modal="true"
       aria-label="Enter dotx3"
-      className={`fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-bg py-10 transition-opacity duration-500 sm:items-center ${leaving ? "opacity-0" : "opacity-100"}`}
+      className={`fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-bg py-10 transition-opacity duration-500 motion-reduce:transition-none sm:items-center ${leaving ? "opacity-0" : "opacity-100"}`}
     >
       <video
         ref={videoRef}
-        className={`fixed inset-0 h-full w-full object-cover transition-opacity duration-700 ${soundOn ? "opacity-80" : "opacity-50"}`}
+        className={`fixed inset-0 h-full w-full object-cover transition-opacity duration-700 motion-reduce:transition-none ${soundOn ? "opacity-80" : "opacity-50"}`}
         src={hasSong ? (SONG.video ?? FALLBACK_LOOP) : FALLBACK_LOOP}
         poster={hasSong ? SONG.poster : "/media/logo.jpg"}
         autoPlay={!still}
@@ -201,14 +225,14 @@ export function EnterGate() {
         onEnded={() => setEnded(true)}
       />
       <div
-        className={`fixed inset-0 bg-gradient-to-b transition-opacity duration-700 ${soundOn ? "from-bg/10 via-transparent to-bg/95" : "from-bg/40 via-bg/20 to-bg/90"}`}
+        className={`fixed inset-0 bg-gradient-to-b transition-opacity duration-700 motion-reduce:transition-none ${soundOn ? "from-bg/10 via-transparent to-bg/95" : "from-bg/40 via-bg/20 to-bg/90"}`}
       />
 
       <div className="relative z-10 mx-4 flex min-h-full max-w-2xl flex-col justify-center text-center">
-        <div className={`transition-all duration-700 ${soundOn ? "sm:translate-y-[28vh]" : ""}`}>
+        <div className={`transition-all duration-700 motion-reduce:transition-none ${soundOn ? "sm:translate-y-[28vh]" : ""}`}>
           <p className="font-display text-xs tracking-[0.3em] text-accent uppercase">dotx3 · NEAR Intents</p>
           <h1
-            className={`mt-4 font-display text-fg drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)] transition-all duration-700 ${soundOn ? "text-5xl sm:text-6xl" : "text-6xl sm:text-8xl"}`}
+            className={`mt-4 font-display text-fg drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)] transition-all duration-700 motion-reduce:transition-none ${soundOn ? "text-5xl sm:text-6xl" : "text-6xl sm:text-8xl"}`}
           >
             <span className="text-primary">.</span>x3
           </h1>
@@ -220,7 +244,7 @@ export function EnterGate() {
             <button
               ref={soundRef}
               type="button"
-              onClick={playWithSound}
+              onClick={heard && !ended ? unmute : playWithSound}
               className="tap group mx-auto mt-8 flex min-h-14 items-center gap-3 rounded-full bg-fg px-7 text-base font-semibold text-bg shadow-[0_0_40px_rgba(46,200,255,0.45)] hover:brightness-110"
             >
               <span
@@ -229,7 +253,7 @@ export function EnterGate() {
               >
                 ▶
               </span>
-              {ended ? "Play it again" : `Play “${SONG.title}” with sound`}
+              {ended ? "Play it again" : heard ? "Sound back on" : `Play “${SONG.title}” with sound`}
             </button>
           ) : null}
 
@@ -262,8 +286,7 @@ export function EnterGate() {
                   {soundOn ? (
                     <button
                       type="button"
-                      onClick={toggleMute}
-                      aria-pressed={muted}
+                      onClick={mute}
                       className="tap min-h-9 rounded-full border border-border px-3 text-fg hover:border-fg"
                     >
                       Mute
@@ -280,7 +303,7 @@ export function EnterGate() {
                 aria-valuenow={Math.round(progress.at)}
               >
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-primary to-accent transition-[width] duration-300 ease-linear"
+                  className="h-full rounded-full bg-gradient-to-r from-primary to-accent transition-[width] duration-300 ease-linear motion-reduce:transition-none"
                   style={{ width: `${pct}%` }}
                 />
               </div>
