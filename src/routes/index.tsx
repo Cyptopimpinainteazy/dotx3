@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ActionLink, Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { ProofFlow, RouteTicker } from "@/components/circuit";
 import { EnterGate } from "@/components/enter-gate";
+import { openIntro, SONG } from "@/lib/song";
 import { HeroField, MeterScene } from "@/components/meter-scene";
 import { MILESTONES, SITE } from "@/lib/front-door";
 
@@ -91,6 +92,13 @@ function Home() {
           <ActionLink to="/playground" outline>
             Break a Mandate
           </ActionLink>
+          <button
+            type="button"
+            onClick={openIntro}
+            className="tap inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-accent px-6 text-sm font-semibold text-accent hover:bg-accent/10"
+          >
+            <span aria-hidden="true">▶</span> Watch “{SONG.title}”
+          </button>
         </>
       }
       media={<HeroField />}
