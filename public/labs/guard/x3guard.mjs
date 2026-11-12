@@ -624,10 +624,11 @@ export async function checkQuoteSignature(response, managerPublicKey = ONE_CLICK
 // Quote guards (near_intents.verify_quote)
 // ---------------------------------------------------------------------------------------
 
-const ECHO_FIELDS = ["swapType", "slippageTolerance", "originAsset", "depositType", "destinationAsset", "amount",
+const ECHO_FIELDS = ["dry", "swapType", "slippageTolerance", "originAsset", "depositType", "destinationAsset", "amount",
   "refundTo", "refundType", "recipient", "recipientType", "deadline"];
 
 function same(field, sent, echoed) {
+  if (field === "dry") return typeof sent === "boolean" && typeof echoed === "boolean" && sent === echoed;
   if (field === "deadline") {
     try { return parseTimestampMs(sent) === parseTimestampMs(echoed); } catch { return false; }
   }
