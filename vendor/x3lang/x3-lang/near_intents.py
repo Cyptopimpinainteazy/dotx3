@@ -734,12 +734,14 @@ def verify_oneclick_quote_signature(response: Dict[str, Any], manager_public_key
 
 
 _ECHO_FIELDS = (
-    "swapType", "slippageTolerance", "originAsset", "depositType", "destinationAsset",
+    "dry", "swapType", "slippageTolerance", "originAsset", "depositType", "destinationAsset",
     "amount", "refundTo", "refundType", "recipient", "recipientType", "deadline",
 )
 
 
 def _same(field: str, sent: Any, echoed: Any) -> bool:
+    if field == "dry":
+        return type(sent) is bool and type(echoed) is bool and sent is echoed
     if field == "deadline":
         try:
             return parse_timestamp(sent) == parse_timestamp(echoed)
