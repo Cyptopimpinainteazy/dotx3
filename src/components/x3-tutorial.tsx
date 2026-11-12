@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { useEffect, useMemo, useState } from "react";
 import {
   EDITS,
   INTENT_DEFAULTS,
@@ -15,6 +16,7 @@ import {
   compileMandate,
   diffLines,
   intentSource,
+  sha256Hex,
   toBaseUnits,
   type IntentFields,
   type LineNote,
@@ -217,7 +219,8 @@ function BaseUnits() {
   const [amt, setAmt] = useState("25");
   const [tok, setTok] = useState<TokenName>("USDC");
   const dec = TOKEN_DECIMALS[tok];
-  const r = toBaseUnits(amt, dec);
+  const converted = toBaseUnits(amt, dec);
+  const r = converted.ok && converted.value === 0n ? ({ ok: false, error: "An amount of 0 is refused by the compiler: a payment must move something." } as const) : converted;
   const presets: [string, TokenName][] = [["25", "USDC"], ["0.5", "USDC"], ["1.0000001", "USDC"], ["1", "wNEAR"]];
   return (
     <div className="flex flex-wrap gap-4">
@@ -258,15 +261,16 @@ function Guards() {
   const [tunit, setTunit] = useState("m");
   const [nonce, setNonce] = useState("agent_payment_001");
   const pct = slip / 100;
-  const feeN = Number.parseInt(fees, 10);
-  const code = `require slippage <= ${pct}%     // or: <= ${slip}
+  const feeN = Number(fees);
+  const code = `require slippage <= ${pct}%     // or: <= ${slip}bps
 require fees <= ${fees} bps
 require nonce unused ${nonce}
 timeout ${tnum}${tunit} refund Solana.USDC
 on_fail rollback`;
   const notes = [
-    { k: "require slippage", v: `${pct}% and ${slip} are the same bound. 1Click gets slippageTolerance = ${slip} bps, rounded down so it is never looser than you wrote. ${slip > 100 ? "Above the example mandate's 100 bps, so mandate_slippage would fail." : "Within the example mandate's 100 bps."}` },
-    { k: "require fees", v: `Checked on the quote's effective cost and, separately, on the refund fee a failed swap would be charged. ${feeN > 100 ? "Above the example mandate's 100 bps, so mandate_fees would fail." : "Within the example mandate's 100 bps."}` },
+    { k: "require slippage", v: `${pct}% and ${slip}bps are the same bound. 1Click gets slippageTolerance = ${slip} bps, rounded down so it is never looser than you wrote. ${slip > 100 ? "Above the example mandate's 100 bps, so mandate_slippage would fail." : "Within the example mandate's 100 bps."}` },
+    { k: "Careful with units", v: "A bare 50 is refused (X3_NEAR_BOUND_UNIT), and so is 50 bps with a space: write 0.5% or 50bps. A bare number below 1 is read as a fraction, so 0.5 means 50%, not 0.5%." },
+    { k: "require fees", v: `Checked on the quote's effective cost and, separately, on the refund fee a failed swap would be charged. Decimals round down. ${Number.isNaN(feeN) ? "Enter a number." : Math.floor(feeN) > 100 ? "Above the example mandate's 100 bps, so mandate_fees would fail." : "Within the example mandate's 100 bps."}` },
     { k: "require nonce unused", v: "Exactly one per intent. A reused nonce is a refusal, never something to patch in a receipt." },
     { k: "timeout … refund", v: `Sets the deadline to now + ${tnum}${tunit}. The refund must be in the deposited asset. A live quote whose deadline runs past this timeout is refused.` },
   ];
@@ -317,7 +321,14 @@ on_fail rollback`;
 
 function MandateBuilder() {
   const [source, setSource] = useState(MANDATE_LINES.join("\n") + "\n");
-  const result = useMemo(() => compileMandate(source), [source]);
+  const [sha, setSha] = useState<string | null>(null);
+  useEffect(() => {
+    let live = true;
+    setSha(null);
+    sha256Hex(source).then((h) => { if (live) setSha(h); }, () => { if (live) setSha(null); });
+    return () => { live = false; };
+  }, [source]);
+  const result = useMemo(() => compileMandate(source, sha ?? ""), [source, sha]);
   const tries: [string, string, string][] = [
     ["Agent = owner", "agent x3-agent.near", "agent x3-owner.near"],
     ["Cap above daily", "per_payment 50000000", "per_payment 500000000"],
@@ -356,9 +367,9 @@ function MandateBuilder() {
           {result.ok ? (
             <>
               <span className="font-display text-3xl text-primary">Compiles</span>
-              <p className="text-muted">This is the create_mandate call the owner would send:</p>
+              <p className="text-muted">The create_mandate arguments it compiles to, with this source's SHA-256 as program_sha256:</p>
               <pre className="overflow-x-auto rounded-xl border border-border bg-bg p-3 font-mono text-xs leading-6 text-fg">
-                <code>{JSON.stringify({ owner: result.value.owner, agent: result.value.agent, terms: { ...result.value.terms, program_sha256: "<sha256 of this file>" } }, null, 2)}</code>
+                <code>{JSON.stringify({ owner: result.value.owner, agent: result.value.agent, terms: { ...result.value.terms, program_sha256: sha ?? "computing…" } }, null, 2)}</code>
               </pre>
             </>
           ) : (
@@ -438,16 +449,17 @@ function GuardCheck() {
   const set = (k: keyof IntentFields) => (e: React.ChangeEvent<HTMLInputElement>) => setF({ ...f, [k]: e.target.value });
   const source = intentSource(f);
   const spent = toBaseUnits(s.spent, 6);
-  const spentToday = spent.ok ? spent.value : 0n;
+  const spentToday = spent.ok ? spent.value : null;
+  const days = /^\d+(\.\d+)?$/.test(s.days.trim()) ? Number(s.days) : null;
+  const count = /^\d+$/.test(s.count.trim()) ? Number(s.count) : null;
+  const stateProblem =
+    spentToday === null ? "Spent in the last 24h must be a USDC amount." : count === null ? "Payments in the last 24h must be a whole number." : days === null ? "Days since the mandate was made must be a number." : null;
   const verdict = useMemo(
     () =>
-      checkIntent(source, {
-        revoked: s.revoked,
-        days: Number.parseFloat(s.days) || 0,
-        spentToday,
-        paymentsToday: Number.parseInt(s.count, 10) || 0,
-      }),
-    [source, s.revoked, s.days, s.count, spentToday],
+      spentToday === null || count === null || days === null
+        ? null
+        : checkIntent(source, { revoked: s.revoked, days, spentToday, paymentsToday: count }),
+    [source, s.revoked, days, count, spentToday],
   );
   const scenario = (patch: Partial<IntentFields>, state: Partial<typeof DEFAULT_STATE> = {}) => () => {
     setF({ ...INTENT_DEFAULTS, ...patch });
@@ -461,6 +473,7 @@ function GuardCheck() {
     ["Daily budget nearly gone", scenario({}, { spent: "180", count: "7" })],
     ["Refund to someone else", scenario({ refundTo: "So11111111111111111111111111111111111111112" })],
     ["Loose slippage 2%", scenario({ slippage: "2%" })],
+    ["Forgot the %: 0.5", scenario({ slippage: "0.5" })],
     ["Arrive as wNEAR", scenario({ arrive: "Near.wNEAR" })],
     ["Owner revoked it", scenario({}, { revoked: true })],
   ];
@@ -469,7 +482,7 @@ function GuardCheck() {
     ["amount", "Amount (USDC)"],
     ["spend", "Spend asset"],
     ["arrive", "Arrive as"],
-    ["slippage", "Slippage (e.g. 0.5%)"],
+    ["slippage", "Slippage (0.5% or 50bps)"],
     ["fees", "Fee cap (bps)"],
     ["timeoutMinutes", "Timeout (minutes)"],
     ["refundTo", "Refund to (blank = sender)"],
@@ -478,7 +491,10 @@ function GuardCheck() {
   let tone = "accent";
   let stamp = "REFUSED";
   let line = "";
-  if (verdict.stage === "compile") {
+  if (verdict === null) {
+    stamp = "CHECK INPUT";
+    line = stateProblem ?? "";
+  } else if (verdict.stage === "compile") {
     stamp = "WON'T COMPILE";
     line = `${verdict.message}${verdict.line ? ` (line ${verdict.line})` : ""}`;
   } else {
@@ -546,10 +562,10 @@ function GuardCheck() {
           <div className={`flex flex-col gap-3 rounded-2xl border-2 bg-surface p-6 ${border}`} aria-live="polite">
             <span className={`${kicker} text-muted`}>Against near_mandate_agent.x3</span>
             <span className={`-rotate-2 self-start rounded-xl border-4 px-3 pt-1.5 font-display text-4xl ${border} ${text}`}>{stamp}</span>
-            {verdict.stage === "compile" ? <span className="font-mono break-words text-accent">{verdict.code}</span> : null}
+            {verdict?.stage === "compile" ? <span className="font-mono break-words text-accent">{verdict.code}</span> : null}
             <span className="text-fg">{line}</span>
           </div>
-          {verdict.stage === "mandate" ? (
+          {verdict?.stage === "mandate" ? (
             <ul className={`${codePanel} overflow-hidden`}>
               {verdict.checks.map((c) => (
                 <li key={c.guard} className={`flex items-start gap-3 border-b border-border/60 px-4 py-2.5 last:border-0 ${c.ok ? "" : "bg-accent/10"}`}>
@@ -595,8 +611,8 @@ function RunIt() {
         </div>
         <div className={`${panel} flex flex-col gap-2 p-5`}>
           <span className={`${kicker} text-primary`}>Keep going</span>
-          <a href="/playground" className="tap min-h-9 text-primary underline-offset-4 hover:underline">Break a mandate in the Playground →</a>
-          <a href="/bootcamp" className="tap min-h-9 text-primary underline-offset-4 hover:underline">Bootcamp: the in-depth course →</a>
+          <Link to="/playground" className="tap min-h-9 text-primary underline-offset-4 hover:underline">Break a mandate in the Playground →</Link>
+          <Link to="/bootcamp" className="tap min-h-9 text-primary underline-offset-4 hover:underline">Bootcamp: the in-depth course →</Link>
           <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/master/docs/x3-lang/PROGRAMMING_GUIDE.md" target="_blank" rel="noreferrer" className="tap min-h-9 text-primary underline-offset-4 hover:underline">X3Lang programming guide →</a>
           <a href="https://github.com/Cyptopimpinainteazy/x3lang/tree/master/x3-lang/examples" target="_blank" rel="noreferrer" className="tap min-h-9 text-primary underline-offset-4 hover:underline">All example programs →</a>
         </div>

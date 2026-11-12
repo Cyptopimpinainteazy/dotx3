@@ -45,39 +45,40 @@ export const INTENT_SOURCE = INTENT_LINES.join("\n") + "\n";
 export const MANDATE_SOURCE = DATA.mandate.source;
 export const MANDATE_LINES = MANDATE_SOURCE.split("\n").filter((l) => l.trim() !== "" && !l.trim().startsWith("//"));
 
-export interface LineNote { what: string; becomes: string; rule: string }
+/** `line` is the start of the source line the note explains; tutorial.test.ts pins each pair. */
+export interface LineNote { line: string; what: string; becomes: string; rule: string }
 
 export const INTENT_NOTES: LineNote[] = [
-  { what: "Names the program. One intent per payment; receipts and logs refer to it by this name.", becomes: "The intent's identity in the compiled plan.", rule: "The NEAR adapter accepts one intent shape. Anything it cannot honour exactly is refused, never approximated." },
-  { what: "Where the money starts: a chain.ASSET, an amount in integer base units, and the source account. That account is also where a refund goes unless the timeout names another.", becomes: "1Click originAsset (resolved from the token list), amount = 25000000 base units, swapType EXACT_INPUT.", rule: "amount 0 is refused. A receiver that is not an address on the from chain is refused (X3_INVALID_RECEIVER)." },
-  { what: "Where the money must arrive and who receives it.", becomes: "1Click destinationAsset and recipient, recipientType DESTINATION_CHAIN.", rule: "A look-alike such as x3-demo.neаr, with a Cyrillic а, is refused by the type checker (X3_INVALID_RECEIVER)." },
-  { what: "Opens the route block: how the value travels.", becomes: "The plan's legs.", rule: "On the NEAR path the block holds exactly one leg." },
-  { what: "The single leg: settle through NEAR Intents from Solana USDC to NEAR USDC, and never accept less than 24.8 USDC out.", becomes: "The 1Click quote request; the quote's minAmountOut must clear min_receive.", rule: "A second leg is refused (X3_NEAR_ROUTE_SHAPE): 1Click settles one swap, and composing legs could leave a partial execution with no rollback." },
-  { what: "Closes the route block.", becomes: "—", rule: "—" },
-  { what: "An agent makes this payment for x3-owner.near, so it is checked against that owner's mandate.", becomes: "The owner carried into the plan. x3-guard's agent methods check the mandate terms on chain before the intent is registered.", rule: "The clause alone enforces nothing in a generic VM build; the mandate check and the Guard do." },
-  { what: "The loosest price movement this payment accepts: 0.5%, the same as 50 basis points.", becomes: "1Click slippageTolerance in basis points, rounded down so it is never looser than written.", rule: "Leave it out and the compile fails: X3_NEAR_SLIPPAGE_REQUIRED." },
-  { what: "The most the route may cost, as a share of the amount.", becomes: "Checked on every path of the quote: its effective cost and, separately, the refund fee a failed swap would be charged.", rule: "The mandate also caps fees. An intent looser than the mandate fails mandate_fees." },
-  { what: "A one-use identifier. Replaying the same payment is refused.", becomes: "The key x3-guard records the intent under.", rule: "Exactly one is required. Drop it and the compile fails: X3_NEAR_NONCE." },
-  { what: "If the swap has not completed in 10 minutes, refund in Solana USDC, the asset that was deposited.", becomes: "1Click deadline = now + 10m, refundTo = the from receiver (no `to` given), refundType ORIGIN_CHAIN.", rule: "Drop it: X3_NEAR_TIMEOUT_REQUIRED. Refund in another asset, such as Near.USDC: X3_NEAR_REFUND_ASSET." },
-  { what: "If the swap fails, roll back: the deposit is refunded to refundTo.", becomes: "1Click refunds a failed swap to refundTo.", rule: "on_fail halt or quarantine is refused on this path; 1Click cannot express them." },
-  { what: "Closes the intent.", becomes: "—", rule: "—" },
+  { line: "intent ", what: "Names the program. One intent per payment; receipts and logs refer to it by this name.", becomes: "The intent's identity in the compiled plan.", rule: "The NEAR adapter accepts one intent shape. Anything it cannot honour exactly is refused, never approximated." },
+  { line: "from ", what: "Where the money starts: a chain.ASSET, an amount in integer base units, and the source account. That account is also where a refund goes unless the timeout names another.", becomes: "1Click originAsset (resolved from the token list), amount = 25000000 base units, swapType EXACT_INPUT.", rule: "amount 0 is refused. A receiver that is not an address on the from chain is refused (X3_INVALID_RECEIVER)." },
+  { line: "to ", what: "Where the money must arrive and who receives it.", becomes: "1Click destinationAsset and recipient, recipientType DESTINATION_CHAIN.", rule: "A look-alike such as x3-demo.neаr, with a Cyrillic а, is refused by the type checker (X3_INVALID_RECEIVER)." },
+  { line: "route {", what: "Opens the route block: how the value travels.", becomes: "The plan's legs.", rule: "On the NEAR path the block holds exactly one leg." },
+  { line: "bridge NearIntents", what: "The single leg: settle through NEAR Intents from Solana USDC to NEAR USDC, and never accept less than 24.8 USDC out.", becomes: "The 1Click quote request; the quote's minAmountOut must clear min_receive.", rule: "A second leg is refused (X3_NEAR_ROUTE_SHAPE): 1Click settles one swap, and composing legs could leave a partial execution with no rollback." },
+  { line: "}", what: "Closes the route block.", becomes: "—", rule: "—" },
+  { line: "under mandate", what: "An agent makes this payment for x3-owner.near, so it is checked against that owner's mandate.", becomes: "The owner carried into the plan. x3-guard's agent methods check the mandate terms on chain before the intent is registered.", rule: "The clause alone enforces nothing in a generic VM build; the mandate check and the Guard do." },
+  { line: "require slippage", what: "The loosest price movement this payment accepts: 0.5%, which is 50 basis points. Write it 0.5% or 50bps.", becomes: "1Click slippageTolerance in basis points, rounded down so it is never looser than written.", rule: "Leave it out: X3_NEAR_SLIPPAGE_REQUIRED. A bare 50, or 50 bps with a space, is refused (X3_NEAR_BOUND_UNIT). A bare number below 1 is a fraction: 0.5 means 50%." },
+  { line: "require fees", what: "The most the route may cost, as a share of the amount.", becomes: "Checked on every path of the quote: its effective cost and, separately, the refund fee a failed swap would be charged.", rule: "The mandate also caps fees. An intent looser than the mandate fails mandate_fees." },
+  { line: "require nonce unused", what: "A one-use identifier. Replaying the same payment is refused.", becomes: "The key x3-guard records the intent under.", rule: "Exactly one is required. Drop it and the compile fails: X3_NEAR_NONCE." },
+  { line: "timeout ", what: "If the swap has not completed in 10 minutes, refund in Solana USDC, the asset that was deposited.", becomes: "1Click deadline = now + 10m, refundTo = the from receiver (no `to` given), refundType ORIGIN_CHAIN.", rule: "Drop it: X3_NEAR_TIMEOUT_REQUIRED. Refund in another asset, such as Near.USDC: X3_NEAR_REFUND_ASSET." },
+  { line: "on_fail", what: "If the swap fails, roll back: the deposit is refunded to refundTo.", becomes: "1Click refunds a failed swap to refundTo.", rule: "on_fail halt or quarantine is refused on this path; 1Click cannot express them." },
+  { line: "}", what: "Closes the intent.", becomes: "—", rule: "—" },
 ];
 
 export const MANDATE_NOTES: LineNote[] = [
-  { what: "Names the rulebook. The first line must be exactly `mandate <name> {`, and any line the parser does not recognise is refused.", becomes: "The compiled terms carry program_sha256, this file's own SHA-256, so the on-chain rules name the source they came from.", rule: "owner, agent, spend, per_payment, per_24h, allow recipients, allow assets, refund_to and expires are all required (X3_MANDATE_PARSE)." },
-  { what: "The account that signs create_mandate, and can revoke the mandate at any time.", becomes: "The owner of the mandate record in x3-guard.", rule: "Must be a valid NEAR account (X3_MANDATE_ACCOUNT)." },
-  { what: "The AI agent's account: the only one allowed to register payments under this mandate.", becomes: "The agent key of the mandate record.", rule: "Must be a different account from the owner (X3_MANDATE_ACCOUNT)." },
-  { what: "The one asset the agent may spend.", becomes: "terms.asset, checked by mandate_asset.", rule: "A chain.asset reference on a chain NEAR Intents supports (X3_MANDATE_ASSET)." },
-  { what: "The most any single payment may move: 50 USDC, in base units.", becomes: "terms.per_payment_cap, checked by mandate_per_payment.", rule: "Must not exceed per_24h (X3_MANDATE_LIMIT)." },
-  { what: "The most the agent may move in any rolling 24 hours: 200 USDC.", becomes: "terms.daily_cap, checked by mandate_daily, with a limit of 64 payments per window.", rule: "A u128 base-unit amount (X3_MANDATE_LIMIT)." },
-  { what: "Who may be paid. Comma-separated.", becomes: "terms.recipients, checked by mandate_recipient.", rule: "1 to 16 distinct addresses, each valid on a destination chain (X3_MANDATE_LIST, X3_MANDATE_RECIPIENT)." },
-  { what: "What the money may arrive as.", becomes: "terms.destination_assets, checked by mandate_destination_asset.", rule: "1 to 16 distinct assets from the token list (X3_MANDATE_LIST)." },
-  { what: "Where a failed payment refunds. The agent cannot point refunds at itself.", becomes: "terms.refund_to, checked by mandate_refund_to.", rule: "An address on the spend chain, and never the word sender (X3_MANDATE_REFUND_TO)." },
-  { what: "The loosest slippage any agent intent may declare.", becomes: "terms.max_slippage_bps = 100, checked by mandate_slippage.", rule: "Required, or the agent would choose it (X3_MANDATE_BOUND). At most 10000 bps." },
-  { what: "The loosest fee ceiling any agent intent may declare.", becomes: "terms.max_fee_bps = 100, checked by mandate_fees.", rule: "Required for the same reason (X3_MANDATE_BOUND)." },
-  { what: "A payment over 30 USDC waits until 1 of the listed approvers signs off.", becomes: "terms.approval_above, approvers and approval_threshold.", rule: "Must be below per_payment; 1 to 8 distinct approvers; the agent can never approve its own payments; n is 1 to the number of approvers (X3_MANDATE_APPROVAL)." },
-  { what: "The mandate ends 30 days after it is compiled.", becomes: "terms.expires_at_ms, checked by mandate_active and mandate_deadline.", rule: "A positive <n>ms|s|m|h|d duration (X3_MANDATE_EXPIRES). Days are allowed here, unlike a swap timeout." },
-  { what: "Closes the mandate. Nothing may follow it.", becomes: "—", rule: "—" },
+  { line: "mandate ", what: "Names the rulebook. The first line must be exactly `mandate <name> {`, and any line the parser does not recognise is refused.", becomes: "The compiled terms carry program_sha256, this file's own SHA-256, so the on-chain rules name the source they came from.", rule: "owner, agent, spend, per_payment, per_24h, allow recipients, allow assets, refund_to and expires are all required (X3_MANDATE_PARSE)." },
+  { line: "owner ", what: "The account that signs create_mandate, and can revoke the mandate at any time.", becomes: "The owner of the mandate record in x3-guard.", rule: "Must be a valid NEAR account (X3_MANDATE_ACCOUNT)." },
+  { line: "agent ", what: "The AI agent's account: the only one allowed to register payments under this mandate.", becomes: "The agent key of the mandate record.", rule: "Must be a different account from the owner (X3_MANDATE_ACCOUNT)." },
+  { line: "spend ", what: "The one asset the agent may spend.", becomes: "terms.asset, checked by mandate_asset.", rule: "A chain.asset reference on a chain NEAR Intents supports (X3_MANDATE_ASSET)." },
+  { line: "per_payment ", what: "The most any single payment may move: 50 USDC, in base units.", becomes: "terms.per_payment_cap, checked by mandate_per_payment.", rule: "Must not exceed per_24h (X3_MANDATE_LIMIT)." },
+  { line: "per_24h ", what: "The most the agent may move in any rolling 24 hours: 200 USDC.", becomes: "terms.daily_cap, checked by mandate_daily, with a limit of 64 payments per window.", rule: "A u128 base-unit amount (X3_MANDATE_LIMIT)." },
+  { line: "allow recipients", what: "Who may be paid. Comma-separated.", becomes: "terms.recipients, checked by mandate_recipient.", rule: "1 to 16 distinct addresses, each valid on a destination chain (X3_MANDATE_LIST, X3_MANDATE_RECIPIENT)." },
+  { line: "allow assets", what: "What the money may arrive as.", becomes: "terms.destination_assets, checked by mandate_destination_asset.", rule: "1 to 16 distinct assets from the token list (X3_MANDATE_LIST)." },
+  { line: "refund_to ", what: "Where a failed payment refunds. The agent cannot point refunds at itself.", becomes: "terms.refund_to, checked by mandate_refund_to.", rule: "An address on the spend chain, and never the word sender (X3_MANDATE_REFUND_TO)." },
+  { line: "require slippage", what: "The loosest slippage any agent intent may declare: 1%, or 100bps.", becomes: "terms.max_slippage_bps = 100, checked by mandate_slippage.", rule: "Required, or the agent would choose it (X3_MANDATE_BOUND). At most 10000 bps. Write 1% or 100bps: a bare 100, or 100 bps with a space, is refused (X3_NEAR_BOUND_UNIT)." },
+  { line: "require fees", what: "The loosest fee ceiling any agent intent may declare.", becomes: "terms.max_fee_bps = 100, checked by mandate_fees.", rule: "Required for the same reason (X3_MANDATE_BOUND)." },
+  { line: "approve above", what: "A payment over 30 USDC waits until 1 of the listed approvers signs off.", becomes: "terms.approval_above, approvers and approval_threshold.", rule: "Must be below per_payment; 1 to 8 distinct approvers; the agent can never approve its own payments; n is 1 to the number of approvers (X3_MANDATE_APPROVAL)." },
+  { line: "expires ", what: "The mandate ends 30 days after it is compiled.", becomes: "terms.expires_at_ms, checked by mandate_active and mandate_deadline.", rule: "A positive <n>ms|s|m|h|d duration (X3_MANDATE_EXPIRES). Days are allowed here, unlike a swap timeout." },
+  { line: "}", what: "Closes the mandate. Nothing may follow it.", becomes: "—", rule: "—" },
 ];
 
 export interface BreakEdit { id: string; label: string; tried: string; old: string; next: string; code: string; why: string }
@@ -144,13 +145,16 @@ function failure(e: unknown): { ok: false; code: string; message: string; line: 
 type LoweredMandate = ReturnType<typeof x3.lowerMandate>;
 
 /** Compile mandate source with the real parser and lowering, as `near_intents.py mandate args` does. */
-export function compileMandate(source: string, nowMs = MANDATE_CREATED_MS): Compiled<LoweredMandate> {
+/** `sourceSha256` becomes terms.program_sha256; pass the real hash (x3.sha256Hex) when it is shown. */
+export function compileMandate(source: string, sourceSha256 = "", nowMs = MANDATE_CREATED_MS): Compiled<LoweredMandate> {
   try {
-    return { ok: true, value: x3.lowerMandate(x3.parseMandate(source), TOKENS, nowMs, "(hash of your source)") };
+    return { ok: true, value: x3.lowerMandate(x3.parseMandate(source), TOKENS, nowMs, sourceSha256) };
   } catch (e) {
     return failure(e);
   }
 }
+
+export const sha256Hex = (text: string): Promise<string> => x3.sha256Hex(text);
 
 export interface IntentFields {
   recipient: string;
@@ -232,11 +236,14 @@ export function checkIntent(source: string, state: GuardState): Verdict {
     const f = failure(e);
     return { stage: "compile", code: f.code, message: f.message, line: f.line };
   }
-  const policy = x3.policyFor(leg, request, "(hash of the intent source)");
-  const n = Math.max(0, Math.floor(state.paymentsToday));
+  // check_mandate does not read program_sha256; the hash is only carried into the policy.
+  const policy = x3.policyFor(leg, request, "");
+  // The Guard refuses at 64 payments in the window, so more than that changes nothing.
+  const n = Math.min(x3.MAX_PAYMENTS_PER_WINDOW, Math.max(0, Math.floor(state.paymentsToday)));
   const count = state.spentToday > 0n ? Math.max(1, n) : n;
+  // One minute apart, ending a minute ago: every spend is inside the rolling 24 hours.
   const spends = Array.from({ length: count }, (_, i) => ({
-    at_ms: nowMs - 3_600_000 * (i + 1),
+    at_ms: nowMs - 60_000 * (i + 1),
     amount: (state.spentToday / BigInt(count) + (i === 0 ? state.spentToday % BigInt(count) : 0n)).toString(),
   }));
   const view = { ...mandate.value, version: null, revoked: state.revoked, spends };

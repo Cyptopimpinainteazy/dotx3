@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { CodeBlock, OutLink, Tag } from "@/components/code-block";
 import { Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { LINKS, MANDATE, TRADE } from "@/lib/front-door";
@@ -14,12 +14,12 @@ function DocsPage() {
       lede="X3 is the owner's typed policy and the agent's payment program. A deterministic compiler and x3-guard on NEAR compare them. Model output never authorizes a deposit."
     >
       <div className="mx-auto flex max-w-6xl flex-wrap gap-3 px-5 pt-8">
-        <a
-          href="/learn"
+        <Link
+          to="/learn"
           className="tap inline-flex min-h-11 items-center rounded-lg bg-primary px-5 font-semibold text-bg hover:brightness-110"
         >
           New to .x3? Take the interactive tutorial →
-        </a>
+        </Link>
         <a
           href="/bootcamp"
           className="tap inline-flex min-h-11 items-center rounded-lg border border-border px-5 text-primary"

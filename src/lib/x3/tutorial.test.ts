@@ -28,9 +28,11 @@ const fields = (patch: Partial<IntentFields> = {}) => intentSource({ ...INTENT_D
 const failed = (v: ReturnType<typeof checkIntent>) =>
   v.stage === "mandate" ? v.checks.filter((c) => !c.ok).map((c) => c.guard) : [v.code];
 
-test("every source line has an explanation", () => {
+test("every source line has its own explanation, in order", () => {
   assert.equal(INTENT_NOTES.length, INTENT_LINES.length);
   assert.equal(MANDATE_NOTES.length, MANDATE_LINES.length);
+  INTENT_LINES.forEach((l, i) => assert.ok(l.trim().startsWith(INTENT_NOTES[i].line), `intent line ${i + 1}: ${l}`));
+  MANDATE_LINES.forEach((l, i) => assert.ok(l.trim().startsWith(MANDATE_NOTES[i].line), `mandate line ${i + 1}: ${l}`));
   assert.equal(MANDATE_LINES[0], "mandate x3_shopping_agent {");
   assert.equal(MANDATE_LINES.at(-1), "}");
 });
@@ -78,8 +80,33 @@ test("each lesson 8 scenario stops at the guard it is named for", () => {
   assert.deepEqual(failed(checkIntent(fields({ refundTo: "So11111111111111111111111111111111111111112" }), CLEAN)), ["mandate_refund_to"]);
   assert.deepEqual(failed(checkIntent(fields({ arrive: "Near.wNEAR" }), CLEAN)), ["mandate_destination_asset"]);
   assert.deepEqual(failed(checkIntent(fields(), { ...CLEAN, revoked: true })), ["mandate_active"]);
+  assert.deepEqual(failed(checkIntent(fields(), { ...CLEAN, days: 30 })), ["mandate_active", "mandate_deadline"]);
+  // Forgetting the % turns 0.5 into a fraction: 5000 bps, which the mandate's 100 bps refuses.
+  const typo = checkIntent(fields({ slippage: "0.5" }), CLEAN);
+  assert.deepEqual(failed(typo), ["mandate_slippage"]);
+  assert.ok(typo.stage === "mandate" && typo.checks.some((c) => c.detail.startsWith("5000 bps")));
   const v = checkIntent(fields({ amount: "40" }), CLEAN);
   assert.ok(v.stage === "mandate" && v.decision === "approval_required" && v.approvals === 1);
+});
+
+test("the daily cap counts every simulated payment, however many are entered", () => {
+  // 64 small payments are all inside the window, so the 64-payment limit trips.
+  assert.deepEqual(failed(checkIntent(fields({ amount: "1" }), { ...CLEAN, spentToday: 64_000_000n, paymentsToday: 64 })), ["mandate_daily"]);
+  assert.deepEqual(failed(checkIntent(fields({ amount: "1" }), { ...CLEAN, spentToday: 63_000_000n, paymentsToday: 63 })), []);
+  // A huge count is capped, not allocated.
+  assert.deepEqual(failed(checkIntent(fields(), { ...CLEAN, spentToday: 1n, paymentsToday: 50_000_000 })), ["mandate_daily"]);
+});
+
+test("lesson 4 teaches the bound spellings the compiler accepts", () => {
+  const withSlip = (b: string) => checkIntent(INTENT_SOURCE.replace("require slippage <= 0.5%", `require slippage <= ${b}`), CLEAN);
+  for (const ok of ["0.5%", "50bps"]) {
+    const v = withSlip(ok);
+    assert.ok(v.stage === "mandate" && v.checks.find((c) => c.guard === "mandate_slippage")?.detail.startsWith("50 bps"), ok);
+  }
+  for (const bad of ["50", "50 bps"]) {
+    const v = withSlip(bad);
+    assert.ok(v.stage === "compile" && v.code === "X3_NEAR_BOUND_UNIT", bad);
+  }
 });
 
 test("lesson 7: the vendored checker refuses every one of the nine edits", () => {
@@ -98,10 +125,19 @@ test("lesson 7: the vendored checker refuses every one of the nine edits", () =>
 });
 
 test("diffs show exactly the edited lines", () => {
-  const d = diffLines(INTENT_SOURCE, applyEdit(EDITS[3]));
-  assert.deepEqual(d.filter((l) => l.kind !== "same").map((l) => l.kind), ["add"]);
-  const r = diffLines(INTENT_SOURCE, applyEdit(EDITS[6]));
-  assert.deepEqual(r.filter((l) => l.kind !== "same").map((l) => l.kind), ["del", "add"]);
+  const changed = (id: string) =>
+    diffLines(INTENT_SOURCE, applyEdit(EDITS.find((e) => e.id === id)!)).filter((l) => l.kind !== "same");
+  assert.deepEqual(changed("second_leg"), [{ kind: "add", text: "        bridge NearIntents Near.USDC -> Near.wNEAR;" }]);
+  assert.deepEqual(changed("lookalike_recipient"), [
+    { kind: "del", text: "    to Near.USDC receiver x3-demo.near" },
+    { kind: "add", text: "    to Near.USDC receiver x3-demo.ne\u0430r" },
+  ]);
+  assert.deepEqual(changed("no_nonce"), [{ kind: "del", text: "    require nonce unused agent_payment_001" }]);
+});
+
+test("the mandate builder's output carries the source hash it is given", () => {
+  const m = compileMandate(MANDATE_SOURCE, "ab".repeat(32));
+  assert.ok(m.ok && m.value.terms.program_sha256 === "ab".repeat(32));
 });
 
 test("base units are exact and refuse anything below one unit", () => {
