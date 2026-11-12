@@ -4,7 +4,8 @@ import { ProofFlow, RouteTicker } from "@/components/circuit";
 import { EnterGate } from "@/components/enter-gate";
 import { WatchVideo } from "@/components/watch-video";
 import { openIntro, SONG } from "@/lib/song";
-import { HeroField, MeterScene } from "@/components/meter-scene";
+import { MeterScene } from "@/components/meter-scene";
+import { GuardScene } from "@/components/guard-scene";
 import { MILESTONES, SITE, TOKEN } from "@/lib/front-door";
 
 export const Route = createFileRoute("/")({ component: Home });
@@ -105,7 +106,7 @@ function Home() {
           </button>
         </>
       }
-      media={<HeroField />}
+      media={<GuardScene />}
     >
       <EnterGate />
       <WatchVideo />
