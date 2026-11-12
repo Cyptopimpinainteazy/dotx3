@@ -37,13 +37,14 @@ export function WatchVideo() {
           <video
             ref={videoRef}
             className="block aspect-video w-full bg-bg"
-            src={SONG.video}
             poster={SONG.poster}
             controls
             playsInline
             preload="metadata"
             aria-label={`${SONG.title} music video, ${SONG.length}`}
           >
+            {SONG.webm !== null && <source src={SONG.webm} type='video/webm; codecs="vp9,opus"' />}
+            <source src={SONG.video} type="video/mp4" />
             <a href={SONG.video}>Download the {SONG.title} video (MP4)</a>
           </video>
         </div>

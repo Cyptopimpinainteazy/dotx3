@@ -2,9 +2,17 @@
  * The enter-page track: the "Who Gets Paid" music video, served from /public. The judge page in
  * x3lang plays the same file from dotx3.net, so keep the path stable.
  */
-export const SONG: { title: string; video: string | null; poster: string; length: string } = {
+export const SONG: {
+  title: string;
+  video: string | null;
+  /** VP9/Opus copy, offered first: plays in Firefox and Chromium without system H.264 codecs. */
+  webm: string | null;
+  poster: string;
+  length: string;
+} = {
   title: "Who Gets Paid",
   video: "/media/x3-shield-who-gets-paid.mp4",
+  webm: "/media/x3-shield-who-gets-paid.webm",
   poster: "/media/x3-shield-who-gets-paid-poster.jpg",
   length: "2:56",
 };
