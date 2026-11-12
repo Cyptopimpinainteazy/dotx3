@@ -35,3 +35,29 @@ export function lowerMandate(
   nowMs: number,
   sourceSha256: string,
 ): { name: string; owner: string; agent: string; terms: Record<string, unknown>; expires: string };
+
+export const MAX_PAYMENTS_PER_WINDOW: number;
+
+/** A parsed `intent`. The tutorial only passes it between the calls below. */
+export type ParsedIntent = Record<string, unknown>;
+export interface TypeError { code: string; message: string; line?: number | null }
+/** One lowered NEAR Intents leg. */
+export interface Leg {
+  amount: string | bigint;
+  recipient: string;
+  refund_to: string;
+  slippage_bps: number;
+  fee_cap_bps: number | null;
+  deadline: string;
+  mandate_owner?: string | null;
+  [key: string]: unknown;
+}
+export interface MandateCheck { guard: string; ok: boolean; detail: string }
+
+export function parse(source: string): ParsedIntent;
+export function typecheck(intent: ParsedIntent): TypeError[];
+export function lower(intent: ParsedIntent, nowMs?: number): Leg;
+export function buildQuoteRequest(leg: Leg, tokens: unknown[], options?: { dry?: boolean }): Record<string, unknown>;
+export function policyFor(leg: Leg, request: Record<string, unknown>, programSha256: string): Record<string, unknown> & { amount: string };
+export function checkMandate(mandate: Record<string, unknown>, policy: Record<string, unknown>, nowMs: number): MandateCheck[];
+export function approvalsNeeded(mandate: Record<string, unknown>, amount: string | bigint): number;
