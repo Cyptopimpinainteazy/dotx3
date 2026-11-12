@@ -205,9 +205,9 @@ export function EnterGate() {
       className={`fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-bg py-10 transition-opacity duration-500 motion-reduce:transition-none sm:items-center ${leaving ? "opacity-0" : "opacity-100"}`}
     >
       <video
+        key={hasSong ? "song" : "loop"}
         ref={videoRef}
         className={`fixed inset-0 h-full w-full object-cover transition-opacity duration-700 motion-reduce:transition-none ${soundOn ? "opacity-80" : "opacity-50"}`}
-        src={hasSong ? (SONG.video ?? FALLBACK_LOOP) : FALLBACK_LOOP}
         poster={hasSong ? SONG.poster : "/media/logo.jpg"}
         autoPlay={!still}
         muted
@@ -215,15 +215,22 @@ export function EnterGate() {
         playsInline
         preload={still ? "metadata" : "auto"}
         aria-hidden="true"
-        onError={() => {
-          if (hasSong) setFailed(true);
-        }}
         onLoadedMetadata={(e) => setProgress({ at: 0, length: e.currentTarget.duration || 0 })}
         onTimeUpdate={(e) =>
           setProgress({ at: e.currentTarget.currentTime, length: e.currentTarget.duration || 0 })
         }
         onEnded={() => setEnded(true)}
-      />
+      >
+        {hasSong ? (
+          <>
+            {SONG.webm !== null && <source src={SONG.webm} type='video/webm; codecs="vp9,opus"' />}
+            {/* With <source> children the error lands on the last source, not on <video>. */}
+            <source src={SONG.video ?? FALLBACK_LOOP} type="video/mp4" onError={() => setFailed(true)} />
+          </>
+        ) : (
+          <source src={FALLBACK_LOOP} type="video/mp4" />
+        )}
+      </video>
       <div
         className={`fixed inset-0 bg-gradient-to-b transition-opacity duration-700 motion-reduce:transition-none ${soundOn ? "from-bg/10 via-transparent to-bg/95" : "from-bg/40 via-bg/20 to-bg/90"}`}
       />
