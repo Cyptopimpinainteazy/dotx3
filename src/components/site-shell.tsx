@@ -7,6 +7,7 @@ import { Circuit } from "@/components/circuit";
 const LINKS = [
   { to: "/near", label: "NEAR Competition" },
   { to: "/docs", label: "Docs" },
+  { to: "/learn", label: "Tutorial" },
   { to: "/labs", label: "Labs & integrations" },
   { to: "/dex", label: "DEX" },
   { to: "/demo", label: "Try the Demo" },
