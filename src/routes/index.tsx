@@ -5,7 +5,7 @@ import { EnterGate } from "@/components/enter-gate";
 import { WatchVideo } from "@/components/watch-video";
 import { openIntro, SONG } from "@/lib/song";
 import { HeroField, MeterScene } from "@/components/meter-scene";
-import { MILESTONES, SITE } from "@/lib/front-door";
+import { MILESTONES, SITE, TOKEN } from "@/lib/front-door";
 
 export const Route = createFileRoute("/")({ component: Home });
 
@@ -194,10 +194,26 @@ function Home() {
       <Section title=".x3 on NEAR">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-muted">
-            A NEP-141 community token. Fastest launch is a factory or Smithii Token Creator — one signature, full supply to treasury, then distribute against verified mainnet trades.
+            {TOKEN.contract
+              ? `The ${TOKEN.symbol} community token is live on NEAR mainnet. Check the contract below before you trade: look-alike tokens with the same symbol exist.`
+              : `The ${TOKEN.symbol} community token is planned as a ${TOKEN.standard} on NEAR mainnet. It is not deployed yet, and nothing here sells it. Its contract and deploy transaction appear here once they are final.`}
           </p>
-          <p className="mt-6 inline-flex rounded-full bg-accent px-4 py-1 font-display text-sm font-bold text-bg">.X3</p>
-          <p className="mt-4 text-sm text-muted">Symbol .X3 · Standard NEP-141 · Chain NEAR</p>
+          <p className="mt-6 inline-flex rounded-full bg-accent px-4 py-1 font-display text-sm font-bold text-bg">
+            {TOKEN.symbol}
+          </p>
+          <p className="mt-4 text-sm text-muted">
+            Symbol {TOKEN.symbol} · Standard {TOKEN.standard} · Chain NEAR ·{" "}
+            {TOKEN.contract ? (
+              <span className="font-mono break-all text-fg">{TOKEN.contract}</span>
+            ) : (
+              <span className="text-accent">Not deployed</span>
+            )}
+          </p>
+          <div className="mt-6 flex justify-center">
+            <ActionLink to="/back" outline>
+              Token and pool status
+            </ActionLink>
+          </div>
         </div>
       </Section>
     </SiteShell>
