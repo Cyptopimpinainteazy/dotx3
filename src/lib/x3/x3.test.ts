@@ -1,6 +1,6 @@
 // Runs under `node --experimental-strip-types --test` (see package.json `test`).
 //
-// 1. The vendored checker is byte-for-byte the copy recorded in vendor/PROVENANCE.md.
+// 1. The vendored checker matches the pinned sources and explicit local correction in vendor/PROVENANCE.md.
 // 2. In this site's copy, every judge scenario still reaches Python's recorded decision
 //    through the same guards, so the playground shows x3lang's answers and not a fork's.
 // 3. The programs the site prints really compile under that checker.

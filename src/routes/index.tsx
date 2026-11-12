@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ActionLink, Card, CardGrid, Section, SiteShell, StaticActionLink } from "@/components/site-shell";
 import { ProofFlow, RouteTicker } from "@/components/circuit";
 import { EnterGate } from "@/components/enter-gate";
+import { WatchVideo } from "@/components/watch-video";
+import { openIntro, SONG } from "@/lib/song";
 import { HeroField, MeterScene } from "@/components/meter-scene";
 import { ARCADE_URL, BACKING_LINKS_VISIBLE, MILESTONES, SITE } from "@/lib/front-door";
 
@@ -46,13 +48,16 @@ function ProofMeter() {
               </p>
               <span className={`text-xs font-semibold ${m.evidence ? "text-primary" : "text-accent"}`}>{m.evidence ? "Posted" : "Pending"}</span>
             </div>
+            <p className="mt-2 text-sm text-muted">{m.proof}</p>
             {m.evidence ? (
-              <a href={m.evidence.href} target="_blank" rel="noreferrer" className="mt-2 inline-block text-sm text-primary underline underline-offset-4">
-                {m.evidence.label}
-              </a>
-            ) : (
-              <p className="mt-2 text-sm text-muted">{m.proof}</p>
-            )}
+              <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                {m.evidence.map((e) => (
+                  <a key={e.href} href={e.href} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">
+                    {e.label}
+                  </a>
+                ))}
+              </p>
+            ) : null}
           </li>
         ))}
       </ol>
@@ -94,11 +99,19 @@ function Home() {
           <StaticActionLink href={ARCADE_URL} outline>
             Watch an Agent Play
           </StaticActionLink>
+          <button
+            type="button"
+            onClick={openIntro}
+            className="tap inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-accent px-6 text-sm font-semibold text-accent hover:bg-accent/10"
+          >
+            <span aria-hidden="true">▶</span> Watch “{SONG.title}”
+          </button>
         </>
       }
       media={<HeroField />}
     >
       <EnterGate />
+      <WatchVideo />
       <RouteTicker />
 
       <Section
@@ -156,7 +169,7 @@ function Home() {
 
       <Section
         title="Proof meter"
-        intro="Six milestones between today's testnet proof and a system people can trust with money. Each fills only when its proof is posted."
+        intro="From the testnet proof already posted to a system people can trust with money. Each milestone fills only when its proof is public."
       >
         <ProofMeter />
       </Section>

@@ -8,6 +8,7 @@ import { BACKING_LINKS_VISIBLE } from "@/lib/front-door";
 const ALL_LINKS = [
   { to: "/near", label: "NEAR Competition" },
   { to: "/docs", label: "Docs" },
+  { to: "/learn", label: "Tutorial" },
   { to: "/labs", label: "Labs & integrations" },
   { to: "/dex", label: "DEX" },
   { to: "/demo", label: "Try the Demo" },

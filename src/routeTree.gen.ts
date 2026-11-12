@@ -20,6 +20,7 @@ import { Route as DexRouteImport } from './routes/dex'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as LabsRouteImport } from './routes/labs'
 import { Route as LanguageRouteImport } from './routes/language'
+import { Route as LearnRouteImport } from './routes/learn'
 import { Route as NearRouteImport } from './routes/near'
 import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as ProofRouteImport } from './routes/proof'
@@ -84,6 +85,11 @@ const LanguageRoute = LanguageRouteImport.update({
   path: '/language',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NearRoute = NearRouteImport.update({
   id: '/near',
   path: '/near',
@@ -137,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/docs': typeof DocsRoute
   '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
+  '/learn': typeof LearnRoute
   '/near': typeof NearRoute
   '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
@@ -158,6 +165,7 @@ export interface FileRoutesByTo {
   '/docs': typeof DocsRoute
   '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
+  '/learn': typeof LearnRoute
   '/near': typeof NearRoute
   '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
@@ -180,6 +188,7 @@ export interface FileRoutesById {
   '/docs': typeof DocsRoute
   '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
+  '/learn': typeof LearnRoute
   '/near': typeof NearRoute
   '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
@@ -203,6 +212,7 @@ export interface FileRouteTypes {
     | '/docs'
     | '/labs'
     | '/language'
+    | '/learn'
     | '/near'
     | '/playground'
     | '/proof'
@@ -224,6 +234,7 @@ export interface FileRouteTypes {
     | '/docs'
     | '/labs'
     | '/language'
+    | '/learn'
     | '/near'
     | '/playground'
     | '/proof'
@@ -245,6 +256,7 @@ export interface FileRouteTypes {
     | '/docs'
     | '/labs'
     | '/language'
+    | '/learn'
     | '/near'
     | '/playground'
     | '/proof'
@@ -267,6 +279,7 @@ export interface RootRouteChildren {
   DocsRoute: typeof DocsRoute
   LabsRoute: typeof LabsRoute
   LanguageRoute: typeof LanguageRoute
+  LearnRoute: typeof LearnRoute
   NearRoute: typeof NearRoute
   PlaygroundRoute: typeof PlaygroundRoute
   ProofRoute: typeof ProofRoute
@@ -356,6 +369,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LanguageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/near': {
       id: '/near'
       path: '/near'
@@ -427,6 +447,7 @@ const rootRouteChildren: RootRouteChildren = {
   DocsRoute: DocsRoute,
   LabsRoute: LabsRoute,
   LanguageRoute: LanguageRoute,
+  LearnRoute: LearnRoute,
   NearRoute: NearRoute,
   PlaygroundRoute: PlaygroundRoute,
   ProofRoute: ProofRoute,

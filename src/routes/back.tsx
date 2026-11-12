@@ -230,8 +230,12 @@ function BackPage() {
               </div>
               <p className="mt-2 text-sm text-muted">{m.proof}</p>
               {m.evidence ? (
-                <p className="mt-2 text-sm">
-                  <OutLink href={m.evidence.href}>{m.evidence.label}</OutLink>
+                <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                  {m.evidence.map((e) => (
+                    <OutLink key={e.href} href={e.href}>
+                      {e.label}
+                    </OutLink>
+                  ))}
                 </p>
               ) : null}
             </li>

@@ -19,6 +19,7 @@ export const LINKS = {
   denied: `${RAW}/x3-lang/examples/near_intents_agent_denied.x3`,
   payment: `${RAW}/x3-lang/examples/near_intents_agent_payment.x3`,
   guardEvidence: `${RAW}/evidence/near-guard-testnet-live-2026-11-06.md`,
+  tradeEvidence: `${RAW}/docs/hackathon/FIRST_FINALIZED_SWAP_EVIDENCE.md`,
   baseTx: "https://sepolia.basescan.org/tx/0x46c21dc305a9271c4e74c6d0734fb50f847a1e53d3cad87976133d66fd6728d9",
   nearPayout: "https://testnet.nearblocks.io/txns/EBEBxJNgV9U5tBFBLj18ZzukgArqwXH5rBsBStFyCm1d",
   refuseTx: "https://testnet.nearblocks.io/txns/AhVBD7oXfwsixBipupjCzuhNdqunjdXJnLz3LXnmfnN8",
@@ -71,8 +72,11 @@ export interface Milestone {
   title: string;
   /** What has to be published for this milestone to count. */
   proof: string;
-  /** Set only when that proof is public: a finalized transaction, a merged PR, a report. */
-  evidence: { label: string; href: string } | null;
+  /**
+   * Set only when that proof is public: finalized transactions, a merged PR, a report.
+   * The first link is the primary one; the meter shows it, /back shows them all.
+   */
+  evidence: { label: string; href: string }[] | null;
 }
 
 /**
@@ -80,6 +84,26 @@ export interface Milestone {
  * ones with evidence. A milestone without a public link stays pending.
  */
 export const MILESTONES: Milestone[] = [
+  {
+    title: "Cross-chain testnet transfer authorized by Guard",
+    proof:
+      "1 test USDC sent on Base Sepolia after Guard approved the exact .x3 program on NEAR testnet; 0.9974 test USDC delivered to x3lang.testnet. Testnet, through a trusted relayer: not atomic, not mainnet.",
+    evidence: [
+      { label: "Evidence and limits", href: LINKS.tradeEvidence },
+      { label: "Base Sepolia transaction", href: LINKS.baseTx },
+      { label: "NEAR testnet delivery", href: LINKS.nearPayout },
+    ],
+  },
+  {
+    title: "Guard refuses a wrong recipient on testnet",
+    proof:
+      "x3-guard on NEAR testnet refused an agent payment to attacker.near (mandate_recipient) and registered the same intent paid to the owner's account. Both transactions are final.",
+    evidence: [
+      { label: "Evidence", href: LINKS.guardEvidence },
+      { label: "Refusal transaction", href: LINKS.refuseTx },
+      { label: "Allowed transaction", href: LINKS.acceptTx },
+    ],
+  },
   {
     title: "Scoped agent vault on testnet",
     proof:
