@@ -48,13 +48,16 @@ function ProofMeter() {
               </p>
               <span className={`text-xs font-semibold ${m.evidence ? "text-primary" : "text-accent"}`}>{m.evidence ? "Posted" : "Pending"}</span>
             </div>
+            <p className="mt-2 text-sm text-muted">{m.proof}</p>
             {m.evidence ? (
-              <a href={m.evidence.href} target="_blank" rel="noreferrer" className="mt-2 inline-block text-sm text-primary underline underline-offset-4">
-                {m.evidence.label}
-              </a>
-            ) : (
-              <p className="mt-2 text-sm text-muted">{m.proof}</p>
-            )}
+              <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                {m.evidence.map((e) => (
+                  <a key={e.href} href={e.href} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">
+                    {e.label}
+                  </a>
+                ))}
+              </p>
+            ) : null}
           </li>
         ))}
       </ol>
@@ -163,7 +166,7 @@ function Home() {
 
       <Section
         title="Proof meter"
-        intro="Six milestones between today's testnet proof and a system people can trust with money. Each fills only when its proof is posted."
+        intro="From the testnet proof already posted to a system people can trust with money. Each milestone fills only when its proof is public."
       >
         <ProofMeter />
       </Section>
