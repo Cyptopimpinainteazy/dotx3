@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X3 Force Field — Archived Mainnet Evidence Verifier</title>
+<meta name="description" content="Read-only SHA-256-verified archived NEAR and Solana mainnet evidence, with individually scoped checks.">
+<style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#08111c;color:#eaf5f7}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% 0%,#123245,#08111c 60%)}main{max-width:1040px;margin:auto;padding:28px 18px 65px}
+h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.12;margin:16px 0}h2{margin:0 0 12px}
+p,small{line-height:1.65;color:#bdd0d7}a{color:#79e7fa}header,section{margin:0 0 24px}
+.card{padding:20px;margin:12px 0;background:#0e2130;border:1px solid #285063;border-radius:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:14px}
+.label{font-size:.76rem;letter-spacing:.11em;color:#76ddc5;font-weight:800}
+button{padding:13px 18px;border-radius:8px;border:1px solid #63d2e4;background:#145069;color:#fff;font-weight:750;font-size:1rem;cursor:pointer;min-height:44px}
+button:disabled{opacity:.5}button:focus-visible,a:focus-visible{outline:3px solid #f8ce86}
+code{overflow-wrap:anywhere}pre{overflow-x:auto;padding:13px;background:#08111c;border-radius:8px}
+.status{font-weight:800;padding:4px 9px;border-radius:6px;display:inline-block}
+.pass{background:#104a39;color:#92ffd6}.fail{background:#5d1e2a;color:#ffd4db}.unverified{background:#4f4021;color:#ffe19d}
+.result{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.result>div{min-width:0;flex:1 1 12rem}.result p,.result small{overflow-wrap:anywhere;word-break:break-word}.result{min-width:0}
+.result h3{font-size:1.03rem;margin:0}.result p{margin:.35rem 0 0}
+summary{cursor:pointer;font-weight:700}footer{border-top:1px solid #285063;padding-top:12px}
+</style></head>
+<body><main>
+<header><div class="label">X3 FORCE FIELD / SECURE JUDGE EVIDENCE</div>
+<h1>Can you verify the proof?</h1>
+<p>One real owner-assisted payment, two chains, independently inspectable historical RPC responses, and explicit boundaries. Every result below is scoped to <strong>archived evidence</strong>, not fresh chain consensus.</p>
+<p><a href="/labs/force-field/index.html">← Return to Break the Mandate</a> ·
+<a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/4f60ddb652188784ed44f64d8172cd2cd84da422/PROOF_CARD.md">Source proof card ↗</a></p>
+</header>
+<section class="card">
+<h2>Allowed vs. denied</h2><p>Historical local policy-harness results, not live transactions or an assertion that two committed programs differ by only one line.</p>
+<div class="grid">
+<div><div class="status pass">LOCAL CONTROL — ALLOWED</div><p>Authorized recipient and spending terms meet the example mandate. The deterministic preflight allows the documented control.</p></div>
+<div><div class="status fail">LOCAL ATTACK — DENIED</div><p>A request to pay <code>attacker.near</code> fails <code>mandate_recipient</code> in the documented local policy tests.</p></div>
+</div><p>Reproduce in the X3Lang repository: <code>python3 scripts/hackathon/compromised_agent_redteam.py</code> and <code>python3 scripts/hackathon/replay_grok_wallet_drain.py</code>. Compiler rejections are separately covered by <code>python3 scripts/hackathon/x3_wont_compile.py</code>.</p>
+</section>
+<section class="card"><h2>Mainnet evidence — inspect each claim</h2>
+<p>Click to fetch local copies of committed public-RPC results, SHA-256 verify every source file against published checksums, and compare raw fields to the expected evidence. No wallet, signing, private key, or blockchain mutation is involved.</p>
+<button id="verify" type="button">Verify archived NEAR + Solana evidence</button>
+<p id="summary" role="status" aria-live="polite">Not run. All checks are UNVERIFIED.</p>
+<div id="checks"></div></section>
+<section class="card"><h2>Evidence scope and limitations</h2>
+<p><strong>PASS</strong> means a checked archived record meets that exact assertion. <strong>FAIL</strong> means available bytes or fields contradict it. <strong>UNVERIFIED</strong> means the browser could not verify the claim.</p>
+<p>The original snapshot predates the agent's later outcome-recording transaction. The independent finalized readback is therefore a separate, later record. An outcome reported by Guard is not independently authenticated settlement hashes. The owner signed the source-wallet deposit, and the two chains do not cryptographically establish atomic settlement.</p>
+<p>Corroborating archive: <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/4f60ddb652188784ed44f64d8172cd2cd84da422/evidence/near-guard-mainnet-invoice06-2026-11-12/README.md">invoice_06 evidence</a> · <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/4f60ddb652188784ed44f64d8172cd2cd84da422/evidence/near-guard-mainnet-invoice06-2026-11-12/outcome-recording/README.md">later finalized outcome</a>.</p></section>
+<footer><p>ARCHIVED RPC CHECKS ≠ LIVE RPC CHECKS ≠ CONSENSUS PROOF. The seven documented limits still apply. The file copies are pinned to X3Lang commit <code>4f60ddb</code>.</p></footer>
+</main>
+<script type="module">
+import { verifyArchived } from "./verify-core.mjs";
+const target=document.querySelector("#checks"), summary=document.querySelector("#summary"), btn=document.querySelector("#verify");
+const expected={
+  "evidence/public-rpc-observation.json":"3e04b9fd801473a52c1f51460c406752ef898877c80bda920c32c8ddb3348be7",
+  "evidence/independent-finalized-readback.json":"829003bb2e94516aff4bf6ab45f9848147ba6a0604f05a149b80e5947ac61165",
+  "evidence/mandate-proposed.x3":"eea021d5cc1118801f4e1d3b9c0efe89fc59a7f654031f9ff1951aa1f2f3d515",
+  "evidence/payment-proposed.x3":"9ee29a5603cfa1e7d9fdbd866cf330ce35e6b5f0907c6844dd2ef1a213768ba0"
+};
+async function load(name){
+ const r=await fetch("./"+name,{cache:"no-store"});
+ if(!r.ok)throw Error(name+" HTTP "+r.status);
+ const bytes=await r.arrayBuffer();
+ const hash=[...new Uint8Array(await crypto.subtle.digest("SHA-256",bytes))].map(x=>x.toString(16).padStart(2,"0")).join("");
+ if(hash!==expected[name])throw Error(name+" SHA-256 mismatch "+hash);
+ return new TextDecoder("utf-8",{fatal:true}).decode(bytes);
+}
+function makeRow(entry){
+ const el=document.createElement("article");el.className="card result";
+ const text=document.createElement("div"),heading=document.createElement("h3"),detail=document.createElement("p"),scope=document.createElement("small"),status=document.createElement("span");
+ heading.textContent=entry.name;detail.textContent=entry.detail;scope.textContent=entry.evidence;
+ text.append(heading,detail,scope);status.className="status "+entry.status.toLowerCase();status.textContent=entry.status;el.append(text,status);return el;
+}
+btn.addEventListener("click",async()=>{
+ btn.disabled=true;summary.textContent="Verifying four pinned files…";target.replaceChildren();
+ try{
+  const names=Object.keys(expected);
+  const contents=await Promise.all(names.map(load));
+  const [observation,finalized]=contents.slice(0,2).map(JSON.parse);
+  const rows=verifyArchived(observation,finalized,{mandate:expected[names[2]],payment:expected[names[3]]});
+  for(const row of rows)target.append(makeRow(row));
+  const count=s=>rows.filter(r=>r.status===s).length;
+  summary.textContent=count("PASS")+" archived PASS · "+count("FAIL")+" FAIL · "+count("UNVERIFIED")+" UNVERIFIED. Live RPC has not been queried.";
+ }catch(e){
+  target.append(makeRow({name:"Pinned evidence integrity / availability",status:e.message.includes("mismatch")?"FAIL":"UNVERIFIED",detail:e.message,evidence:"local browser byte verification"}));
+  summary.textContent="ARCHIVED VERIFICATION INCOMPLETE — no evidence PASS awarded.";
+ }finally{btn.disabled=false}
+});
+</script>
+</body></html>
