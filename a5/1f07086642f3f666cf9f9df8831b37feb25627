@@ -1,0 +1,25 @@
+scripts/force-field-challenge.test.mjs
+  s_31fd028fa06438::t_0348e2cf7f8489 16-23
+  s_31fd028fa06438::t_30cc3bd7e3d59f 106-107,110
+  s_31fd028fa06438::t_47a9a89386445b 134-158,166,168
+  s_31fd028fa06438::t_933c4be7dfcff4 159-165,167,169,171
+public/labs/force-field/index.html
+  s_31fd028fa06438::t_41a08e877c287f 392,394-425
+  s_31fd028fa06438::t_8c6d14d8987058 41,85,104,106,117,138,444,479
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a51f07086642f3f666cf9f9df8831b37feb25627",
+  "prompts": {},
+  "sessions": {
+    "s_31fd028fa06438": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "69bd2b58-7f31-4914-aa3b-33a64ae821c7",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
