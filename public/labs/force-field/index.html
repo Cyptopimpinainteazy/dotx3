@@ -121,6 +121,8 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
 <p class="lede">Assume the attacker owns the model, so the agent writes whatever payment the attacker asks for. Pick an attack to see the check that stopped it, how strong the evidence is, and the payment that still goes through.</p>
 <div class="alert"><strong>Evidence boundary:</strong> this page shows recorded results. It does not call a chain, compile code, verify signatures, connect a wallet or move funds. Local results come from scripts you can run yourself; testnet and mainnet results link to finalized transactions. Every repository link is pinned to X3Lang commit <a href="https://github.com/Cyptopimpinainteazy/x3lang/tree/f2a01a2ae144c69e115fd807a642bddfd8668f9f"><code>f2a01a2</code></a>.</div>
 
+<p class="alert"><strong>Verify the receipts:</strong> <a href="/labs/force-field/verify.html">Open the archived mainnet evidence verifier ↗</a>. It hashes the original .x3 source and compares historical NEAR/Solana RPC records field by field; it is not a live consensus proof.</p>
+
 <div class="stats">
   <div class="box"><div class="stat">9 / 9</div><div class="caption">Unsafe edits refused by the compiler · local</div></div>
   <div class="box"><div class="stat">8 / 8</div><div class="caption">Attacks refused although the model complied · local</div></div>
