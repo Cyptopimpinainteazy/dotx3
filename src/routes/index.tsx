@@ -13,6 +13,7 @@ import { WatchVideo } from "@/components/watch-video";
 import { openIntro, SONG } from "@/lib/song";
 import { MeterScene } from "@/components/meter-scene";
 import { GuardScene } from "@/components/guard-scene";
+import { CaseFileCard, ChainOfCommand, FourDoors, SituationReport } from "@/components/dossier";
 import { ARCADE_URL, BACKING_LINKS_VISIBLE, MILESTONES, SITE, TOKEN } from "@/lib/front-door";
 
 export const Route = createFileRoute("/")({ component: Home });
@@ -98,22 +99,13 @@ function Home() {
   return (
     <SiteShell
       eyebrow={`${SITE} · NEAR Hackathon`}
-      title=".x3"
-      lede="Understand it, try it, inspect the proof, and get the code. An agent can propose a payment. The owner's .x3 policy decides whether Guard authorizes the deposit address."
+      title="Your AI agent can be talked into anything. Your money can't."
+      lede="The owner writes the rules in .x3. The agent writes every payment in .x3. A deterministic compiler and a NEAR contract compare the two. The model's output never authorizes anything."
       actions={
         <>
-          <ActionLink to="/demo">Try the Demo</ActionLink>
-          <ActionLink to="/docs" outline>
-            Learn .x3
-          </ActionLink>
-          <ActionLink to="/developers" outline>
-            View the Code
-          </ActionLink>
-          <ActionLink to="/proof" outline>
-            Inspect the Proof
-          </ActionLink>
+          <ActionLink to="/judge">Open the Judge Console</ActionLink>
           <ActionLink to="/playground" outline>
-            Break a Mandate
+            Try to break it
           </ActionLink>
           <StaticActionLink href={ARCADE_URL} outline>
             Watch an Agent Play
@@ -132,6 +124,24 @@ function Home() {
       <EnterGate />
       <WatchVideo />
       <RouteTicker />
+
+      <Section
+        title="Four doors. Pick one."
+        intro="Every door ends at something you can run or check."
+      >
+        <FourDoors />
+      </Section>
+
+      <Section
+        title="Situation Report"
+        intro="Case file 01, then the ledger. Every line ends at a finalized transaction or a published log."
+        alt
+      >
+        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+          <CaseFileCard />
+          <SituationReport />
+        </div>
+      </Section>
 
       <Section
         title="What .x3 does"
@@ -158,6 +168,14 @@ function Home() {
             </Card>
           </CardGrid>
         </div>
+      </Section>
+
+      <Section
+        title="Chain of command"
+        intro="Authority runs one way. The agent is third in line and cannot approve itself."
+        alt
+      >
+        <ChainOfCommand />
       </Section>
 
       <Section

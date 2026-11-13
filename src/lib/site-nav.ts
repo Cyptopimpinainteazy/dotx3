@@ -57,6 +57,19 @@ export const ALL_NAV: NavGroup[] = [
     items: [
       {
         kind: "route",
+        label: "Judge Console",
+        description: "Refused, allowed, settled: three cases, all on chain",
+        to: "/judge",
+      },
+      {
+        kind: "route",
+        label: "Situation Report",
+        description: "Finalized on chain or publicly logged",
+        to: "/",
+        hash: "situation-report",
+      },
+      {
+        kind: "route",
         label: "Competition overview",
         description: "One policy seen from all three tracks",
         to: "/near",
@@ -204,6 +217,12 @@ export const ALL_NAV: NavGroup[] = [
         label: "Inspect the Proof",
         description: "Evidence by source and network",
         to: "/proof",
+      },
+      {
+        kind: "route",
+        label: "Judge Console",
+        description: "Three cases with code, checks and verdict",
+        to: "/judge",
       },
       {
         kind: "route",

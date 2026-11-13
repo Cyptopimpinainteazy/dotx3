@@ -18,6 +18,7 @@ import { Route as DemoRouteImport } from './routes/demo'
 import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DexRouteImport } from './routes/dex'
 import { Route as DocsRouteImport } from './routes/docs'
+import { Route as JudgeRouteImport } from './routes/judge'
 import { Route as LabsRouteImport } from './routes/labs'
 import { Route as LanguageRouteImport } from './routes/language'
 import { Route as LearnRouteImport } from './routes/learn'
@@ -26,6 +27,7 @@ import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as ProofRouteImport } from './routes/proof'
 import { Route as ProofsRouteImport } from './routes/proofs'
 import { Route as SecurityRouteImport } from './routes/security'
+import { Route as ApiExplorerStatusRouteImport } from './routes/api/explorer/status'
 import { Route as ApiExplorerTransactionsRouteImport } from './routes/api/explorer/transactions'
 import { Route as ApiShieldIncidentsRouteImport } from './routes/api/shield/incidents'
 import { Route as ApiX3dexSplatRouteImport } from './routes/api/x3dex/$'
@@ -75,6 +77,11 @@ const DocsRoute = DocsRouteImport.update({
   path: '/docs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JudgeRoute = JudgeRouteImport.update({
+  id: '/judge',
+  path: '/judge',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LabsRoute = LabsRouteImport.update({
   id: '/labs',
   path: '/labs',
@@ -115,6 +122,11 @@ const SecurityRoute = SecurityRouteImport.update({
   path: '/security',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiExplorerStatusRoute = ApiExplorerStatusRouteImport.update({
+  id: '/api/explorer/status',
+  path: '/api/explorer/status',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiExplorerTransactionsRoute = ApiExplorerTransactionsRouteImport.update({
   id: '/api/explorer/transactions',
   path: '/api/explorer/transactions',
@@ -141,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/judge': typeof JudgeRoute
   '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
   '/learn': typeof LearnRoute
@@ -149,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/explorer/status': typeof ApiExplorerStatusRoute
   '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
   '/api/shield/incidents': typeof ApiShieldIncidentsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
@@ -163,6 +177,7 @@ export interface FileRoutesByTo {
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/judge': typeof JudgeRoute
   '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
   '/learn': typeof LearnRoute
@@ -171,6 +186,7 @@ export interface FileRoutesByTo {
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/explorer/status': typeof ApiExplorerStatusRoute
   '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
   '/api/shield/incidents': typeof ApiShieldIncidentsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
@@ -186,6 +202,7 @@ export interface FileRoutesById {
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/judge': typeof JudgeRoute
   '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
   '/learn': typeof LearnRoute
@@ -194,6 +211,7 @@ export interface FileRoutesById {
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/explorer/status': typeof ApiExplorerStatusRoute
   '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
   '/api/shield/incidents': typeof ApiShieldIncidentsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
@@ -210,6 +228,7 @@ export interface FileRouteTypes {
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/judge'
     | '/labs'
     | '/language'
     | '/learn'
@@ -218,6 +237,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/explorer/status'
     | '/api/explorer/transactions'
     | '/api/shield/incidents'
     | '/api/x3dex/$'
@@ -232,6 +252,7 @@ export interface FileRouteTypes {
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/judge'
     | '/labs'
     | '/language'
     | '/learn'
@@ -240,6 +261,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/explorer/status'
     | '/api/explorer/transactions'
     | '/api/shield/incidents'
     | '/api/x3dex/$'
@@ -254,6 +276,7 @@ export interface FileRouteTypes {
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/judge'
     | '/labs'
     | '/language'
     | '/learn'
@@ -262,6 +285,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/explorer/status'
     | '/api/explorer/transactions'
     | '/api/shield/incidents'
     | '/api/x3dex/$'
@@ -277,6 +301,7 @@ export interface RootRouteChildren {
   DevelopersRoute: typeof DevelopersRoute
   DexRoute: typeof DexRoute
   DocsRoute: typeof DocsRoute
+  JudgeRoute: typeof JudgeRoute
   LabsRoute: typeof LabsRoute
   LanguageRoute: typeof LanguageRoute
   LearnRoute: typeof LearnRoute
@@ -285,6 +310,7 @@ export interface RootRouteChildren {
   ProofRoute: typeof ProofRoute
   ProofsRoute: typeof ProofsRoute
   SecurityRoute: typeof SecurityRoute
+  ApiExplorerStatusRoute: typeof ApiExplorerStatusRoute
   ApiExplorerTransactionsRoute: typeof ApiExplorerTransactionsRoute
   ApiShieldIncidentsRoute: typeof ApiShieldIncidentsRoute
   ApiX3dexSplatRoute: typeof ApiX3dexSplatRoute
@@ -355,6 +381,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/judge': {
+      id: '/judge'
+      path: '/judge'
+      fullPath: '/judge'
+      preLoaderRoute: typeof JudgeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/labs': {
       id: '/labs'
       path: '/labs'
@@ -411,6 +444,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/explorer/status': {
+      id: '/api/explorer/status'
+      path: '/api/explorer/status'
+      fullPath: '/api/explorer/status'
+      preLoaderRoute: typeof ApiExplorerStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/explorer/transactions': {
       id: '/api/explorer/transactions'
       path: '/api/explorer/transactions'
@@ -445,6 +485,7 @@ const rootRouteChildren: RootRouteChildren = {
   DevelopersRoute: DevelopersRoute,
   DexRoute: DexRoute,
   DocsRoute: DocsRoute,
+  JudgeRoute: JudgeRoute,
   LabsRoute: LabsRoute,
   LanguageRoute: LanguageRoute,
   LearnRoute: LearnRoute,
@@ -453,6 +494,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProofRoute: ProofRoute,
   ProofsRoute: ProofsRoute,
   SecurityRoute: SecurityRoute,
+  ApiExplorerStatusRoute: ApiExplorerStatusRoute,
   ApiExplorerTransactionsRoute: ApiExplorerTransactionsRoute,
   ApiShieldIncidentsRoute: ApiShieldIncidentsRoute,
   ApiX3dexSplatRoute: ApiX3dexSplatRoute,

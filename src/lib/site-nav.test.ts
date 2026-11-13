@@ -104,6 +104,7 @@ test("group ids are unique and every top-level page is reachable", () => {
     "/bootcamp",
     "/proof",
     "/developers",
+    "/judge",
     ...(BACKING_LINKS_VISIBLE ? ["/back"] : []),
   ]) {
     assert.ok(linked.has(page as never), `${page} is not in the menu`);

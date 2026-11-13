@@ -37,7 +37,6 @@ function ProofPage() {
       lede="Local tests, testnet receipts and live provider history are labeled separately. A signed 1Click quote is not a settlement. A Guard acceptance is not a transfer."
     >
       <div className="mx-auto max-w-6xl px-5"><ProviderIncidents /></div>
-      <Section title="1Click Explorer history"><ExplorerEvidence /></Section>
 
       <Section title="CI and local gates">
         <div className="grid gap-4 md:grid-cols-2">
@@ -139,6 +138,10 @@ function ProofPage() {
             Inspect the mainnet setup evidence
           </OutLink>.
         </p>
+      </Section>
+
+      <Section title="1Click Explorer history" alt>
+        <ExplorerEvidence />
       </Section>
 
       <Section title="Not claimed">
