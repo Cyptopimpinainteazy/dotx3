@@ -51,8 +51,9 @@ export default tseslint.config(
     },
   },
   {
-    // The explorer client rejects control characters in filter values on purpose; the file
-    // mirrors upstream byte-for-byte (scripts/explorer-provenance.test.mjs), so it is not edited.
+    // The explorer client rejects control characters in filter values on purpose. Its content
+    // hash is pinned (scripts/explorer-provenance.test.mjs, src/lib/explorer/README.md), so the
+    // exemption lives here rather than as inline comments that would change that hash.
     files: ["src/lib/explorer/client.mjs"],
     rules: { "no-control-regex": "off" },
   },

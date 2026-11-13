@@ -43,7 +43,7 @@ export function SiteShell({
         </div>
       </section>
 
-      <main id="main" tabIndex={-1} className="outline-none">
+      <main id="main" tabIndex={-1} className="scroll-mt-20 outline-none">
         {children}
       </main>
 

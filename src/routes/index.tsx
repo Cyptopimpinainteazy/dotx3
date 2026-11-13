@@ -37,7 +37,8 @@ function ProofMeter() {
         Proofs posted: {posted.length} / {total}
       </p>
       <p className="mt-2 text-center text-sm text-muted">
-        A milestone counts only when its proof is public: a finalized transaction, a merged change with tests, or a published report. Nothing here is estimated.
+        A milestone counts only when its proof is public: a finalized transaction, a merged change
+        with tests, or a published report. Nothing here is estimated.
       </p>
 
       <ol className="mt-8 grid gap-3 md:grid-cols-2">
@@ -47,13 +48,23 @@ function ProofMeter() {
               <p className="font-semibold text-fg">
                 {i + 1}. {m.title}
               </p>
-              <span className={`text-xs font-semibold ${m.evidence ? "text-primary" : "text-accent"}`}>{m.evidence ? "Posted" : "Pending"}</span>
+              <span
+                className={`text-xs font-semibold ${m.evidence ? "text-primary" : "text-accent"}`}
+              >
+                {m.evidence ? "Posted" : "Pending"}
+              </span>
             </div>
             <p className="mt-2 text-sm text-muted">{m.proof}</p>
             {m.evidence ? (
               <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
                 {m.evidence.map((e) => (
-                  <a key={e.href} href={e.href} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">
+                  <a
+                    key={e.href}
+                    href={e.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-primary underline underline-offset-4"
+                  >
                     {e.label}
                   </a>
                 ))}
@@ -124,19 +135,25 @@ function Home() {
         <div>
           <CardGrid>
             <Card title="The owner writes the rule">
-              A mandate names the agent, the asset, the caps, the recipient, slippage, fees, and when the owner must approve.
+              A mandate names the agent, the asset, the caps, the recipient, slippage, fees, and
+              when the owner must approve.
             </Card>
             <Card title="The agent writes a program">
-              The payment is another .x3 file. If it pays the wrong account, drops the nonce, or breaks a cap, it does not compile or Guard refuses it.
+              The payment is another .x3 file. If it pays the wrong account, drops the nonce, or
+              breaks a cap, it does not compile or Guard refuses it.
             </Card>
             <Card title="Settlement is labeled">
-              The published trade is testnet: 1 test USDC from Base Sepolia to NEAR. Official 1Click quotes were checked and stopped before a deposit.
+              The published trade is testnet: 1 test USDC from Base Sepolia to NEAR. Official 1Click
+              quotes were checked and stopped before a deposit.
             </Card>
           </CardGrid>
         </div>
       </Section>
 
-      <Section title="How a decision moves" intro="The program names Base, Solana, or NEAR. Guard allows the deposit or it refuses. Base and Solana bridge. NEAR does not.">
+      <Section
+        title="How a decision moves"
+        intro="The program names Base, Solana, or NEAR. Guard allows the deposit or it refuses. Base and Solana bridge. NEAR does not."
+      >
         <ProofFlow
           steps={[
             { label: "Base", detail: "Bridge to NEAR" },
@@ -160,7 +177,8 @@ function Home() {
             autoPlay
           />
           <figcaption className="px-4 py-3 text-center text-sm text-muted">
-            Protocol mark in motion. The trade it stands for is on Inspect the Proof: testnet, not mainnet.
+            Protocol mark in motion. The trade it stands for is on Inspect the Proof: testnet, not
+            mainnet.
           </figcaption>
         </figure>
       </Section>
@@ -175,13 +193,16 @@ function Home() {
       <Section title="One demonstration, three tracks" alt>
         <CardGrid>
           <Card title="AI Security & Defense">
-            Recipient and asset allowlists, caps, slippage, fees, expiry, one-use nonces. Compiler off-chain. x3-guard on NEAR testnet.
+            Recipient and asset allowlists, caps, slippage, fees, expiry, one-use nonces. Compiler
+            off-chain. x3-guard on NEAR testnet.
           </Card>
           <Card title="Agent Economy">
-            Permitted, approval-required, and denied payments. Testnet shows one allowed intent and one refused intent.
+            Permitted, approval-required, and denied payments. Testnet shows one allowed intent and
+            one refused intent.
           </Card>
           <Card title="Unstoppable DeFi">
-            One .x3 program, hash bound before the source transfer, then finalized on Base Sepolia and NEAR testnet through a trusted relay.
+            One .x3 program, hash bound before the source transfer, then finalized on Base Sepolia
+            and NEAR testnet through a trusted relay.
           </Card>
         </CardGrid>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -205,7 +226,22 @@ function Home() {
           <p className="mt-4 text-sm text-muted">
             Symbol {TOKEN.symbol} · Standard {TOKEN.standard} · Chain NEAR ·{" "}
             {TOKEN.contract ? (
-              <span className="font-mono break-all text-fg">{TOKEN.contract}</span>
+              <>
+                <span className="font-mono break-all text-fg">{TOKEN.contract}</span>
+                {TOKEN.deployTx ? (
+                  <>
+                    {" · "}
+                    <a
+                      href={TOKEN.deployTx}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary underline underline-offset-4"
+                    >
+                      Deploy transaction
+                    </a>
+                  </>
+                ) : null}
+              </>
             ) : (
               <span className="text-accent">Not deployed</span>
             )}

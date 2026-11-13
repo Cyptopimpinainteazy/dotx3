@@ -9,6 +9,7 @@ import {
   type NavGroup,
   type NavItem,
 } from "@/lib/site-nav";
+import { previewPathPrefix } from "@/lib/preview-path-prefix";
 
 const HOVER_CLOSE_MS = 160;
 
@@ -65,7 +66,15 @@ function NavEntry({
   }
   if (item.kind === "file") {
     return (
-      <a href={item.href} onClick={onNavigate} className={cls} data-nav-entry>
+      <a
+        href={item.href}
+        onClick={(e) => {
+          onNavigate();
+          followFileLink(e, item.href);
+        }}
+        className={cls}
+        data-nav-entry
+      >
         {body}
       </a>
     );
@@ -83,6 +92,19 @@ function NavEntry({
       <span className="sr-only">(opens in a new tab)</span>
     </a>
   );
+}
+
+/**
+ * Static files live outside the router, so a path-based preview host's `/hds-…/` prefix is
+ * not added for them. The href stays root-relative for SSR; the click adds the prefix.
+ */
+function followFileLink(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+  if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)
+    return;
+  const prefix = previewPathPrefix(window.location.hostname, window.location.pathname);
+  if (!prefix) return;
+  e.preventDefault();
+  window.location.assign(`${prefix}${href}`);
 }
 
 function focusEntry(panel: HTMLElement | null, which: "first" | "last" | 1 | -1) {
@@ -116,6 +138,7 @@ function DesktopGroup({
   const panelRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pendingFocus = useRef<"first" | "last" | null>(null);
+  const lastPointer = useRef<string>("");
   const active = groupContainsPath(group, path);
   const wide = group.items.length > 6;
   const alignEnd = index >= NAV.length - 2;
@@ -185,7 +208,16 @@ function DesktopGroup({
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
-        onClick={() => (open ? onClose() : onOpen())}
+        onPointerDown={(e) => {
+          lastPointer.current = e.pointerType;
+        }}
+        onClick={(e) => {
+          // A mouse click arrives after hover has already opened the menu: keep it open.
+          // Keyboard (detail 0), touch and pen clicks toggle.
+          if (e.detail > 0 && lastPointer.current === "mouse") onOpen();
+          else if (open) onClose();
+          else onOpen();
+        }}
         onKeyDown={(e) => {
           if (e.key === "ArrowDown") {
             e.preventDefault();
@@ -302,7 +334,13 @@ const HASH_SETTLE_MS = 2500;
 function useHashSettle(path: string, hash: string) {
   useEffect(() => {
     if (!hash || typeof ResizeObserver === "undefined") return;
-    const target = () => document.getElementById(decodeURIComponent(hash));
+    let id = hash;
+    try {
+      id = decodeURIComponent(hash);
+    } catch {
+      return; // malformed fragment: no target to keep in view
+    }
+    const target = () => document.getElementById(id);
     let done = false;
     const stop = () => {
       done = true;
@@ -336,6 +374,7 @@ export function SiteHeader() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
   const closeAll = useCallback(() => {
     setOpenId(null);
     setMobileOpen(false);
@@ -353,7 +392,10 @@ export function SiteHeader() {
       if (navRef.current && !navRef.current.contains(e.target as Node)) closeAll();
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && mobileOpen) setMobileOpen(false);
+      if (e.key === "Escape" && mobileOpen) {
+        setMobileOpen(false);
+        toggleRef.current?.focus();
+      }
     };
     document.addEventListener("pointerdown", onPointer);
     document.addEventListener("keydown", onKey);
@@ -409,6 +451,7 @@ export function SiteHeader() {
             {NAV_CTA.label}
           </Link>
           <button
+            ref={toggleRef}
             type="button"
             className="grid size-11 place-items-center rounded-lg border border-border text-fg lg:hidden"
             aria-expanded={mobileOpen}
