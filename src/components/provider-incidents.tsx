@@ -30,7 +30,7 @@ export function ProviderIncidents() {
     <section className="my-8 rounded-xl border border-border bg-surface p-5">
       <h2 className="font-display text-2xl text-primary">Provider incident feed</h2>
       <p className="mt-3 text-muted">
-        Official NEAR Intents SHIELD, separate from X3 Shield. An operational response means no
+        Official NEAR Intents SHIELD, separate from X3 Force Field. An operational response means no
         active incidents were reported at observation time; it does not certify chain health or
         authorize a payment.
       </p>
