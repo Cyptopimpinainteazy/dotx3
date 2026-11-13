@@ -26,6 +26,12 @@ const views = [
     state: "Ported · browser policy tests",
     path: "/labs/attack/attack-lab.html",
   },
+  {
+    id: "force-field",
+    label: "Break the mandate",
+    state: "Recorded evidence · no live calls",
+    path: "/labs/force-field/index.html",
+  },
 ] as const;
 function Labs() {
   const [selected, setSelected] = useState<string>("compiler");

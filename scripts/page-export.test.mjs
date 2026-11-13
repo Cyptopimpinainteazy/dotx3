@@ -33,6 +33,7 @@ test("standalone labs have accessible export controls without inline runtime inj
     "guard/judge.html",
     "guard/bnb.html",
     "attack/attack-lab.html",
+    "force-field/index.html",
   ]) {
     const html = readFileSync(new URL("../public/labs/" + name, import.meta.url), "utf8");
     assert.match(html, /data-copy-exclude data-page-export-controls/);
