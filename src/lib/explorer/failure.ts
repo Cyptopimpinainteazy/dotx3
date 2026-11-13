@@ -23,11 +23,23 @@ const HINTS: Record<string, string> = {
   EXPLORER_UNAVAILABLE: "The Explorer request timed out or could not connect.",
 };
 
-const CODE = /^[A-Z][A-Z0-9_]{2,63}$/;
+/** Every error code `src/lib/explorer/client.mjs` and the API route can return. */
+export const EXPLORER_ERROR_CODES: ReadonlySet<string> = new Set([
+  ...Object.keys(HINTS),
+  "EXPLORER_NOT_CONFIGURED",
+  "EXPLORER_SCOPE_NOT_CONFIGURED",
+  "EXPLORER_RATE_LIMITED",
+  "INVALID_EXPLORER_FILTER",
+  "INVALID_EXPLORER_STATUS",
+  "INVALID_EXPLORER_CHAIN",
+  "INVALID_EXPLORER_CURSOR",
+]);
 
-/** Normalizes whatever the API returned into a displayable error code. */
+/** Shows only a code this site defines; anything else collapses to EXPLORER_UNAVAILABLE. */
 export function explorerFailureCode(error: unknown): string {
-  return typeof error === "string" && CODE.test(error) ? error : "EXPLORER_UNAVAILABLE";
+  return typeof error === "string" && EXPLORER_ERROR_CODES.has(error)
+    ? error
+    : "EXPLORER_UNAVAILABLE";
 }
 
 export function explorerFailureMessage(error: unknown): string {

@@ -27,11 +27,23 @@ test("every client error code a failed lookup can return has a hint", () => {
   }
 });
 
-test("unknown but well-formed codes are shown with a generic hint", () => {
+test("other codes this site defines are shown with a generic hint", () => {
   assert.match(
     explorerFailureMessage("INVALID_EXPLORER_CURSOR"),
     /\(INVALID_EXPLORER_CURSOR\)\. The lookup request was not accepted\./,
   );
+});
+
+test("a well-formed code this site does not define is not shown", () => {
+  assert.equal(explorerFailureCode("SOME_UPSTREAM_CODE"), "EXPLORER_UNAVAILABLE");
+});
+
+test("the allowlist covers every code the Explorer client throws", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const client = await readFile(new URL("./client.mjs", import.meta.url), "utf8");
+  const thrown = [...client.matchAll(/new ExplorerError\("([A-Z_]+)"/g)].map((m) => m[1]);
+  assert.ok(thrown.length > 5);
+  for (const code of thrown) assert.equal(explorerFailureCode(code), code, code);
 });
 
 test("anything that is not a plain code collapses to EXPLORER_UNAVAILABLE", () => {

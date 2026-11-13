@@ -104,17 +104,18 @@ export function ExplorerEvidence() {
       const response = await fetch(`/api/explorer/transactions?${params}`, { cache: "no-store" });
       const data = await response.json();
       if (!response.ok) {
-        if (response.status === 429)
-          throw new Error(
-            `Partner request limit reached. Retry in ${response.headers.get("Retry-After") || "5"} seconds.`,
-          );
         if (data.error === "EXPLORER_NOT_CONFIGURED") {
           setConfigured(false);
           return;
         }
+        // Every other failure keeps the recorded evidence on screen beneath the message.
+        setFailed(true);
+        if (response.status === 429)
+          throw new Error(
+            `Partner request limit reached. Retry in ${response.headers.get("Retry-After") || "5"} seconds.`,
+          );
         if (data.error === "EXPLORER_SCOPE_NOT_CONFIGURED")
           throw new Error("This scope is not enabled on this site. Choose the other scope.");
-        setFailed(true);
         throw new Error(explorerFailureMessage(data.error));
       }
       setPage(data);
@@ -202,7 +203,7 @@ export function ExplorerEvidence() {
       <p role="status" aria-live="polite" className="text-sm text-muted">
         {message}
       </p>
-      {failed && !page && <RecordedEvidence intro={false} />}
+      {failed && <RecordedEvidence intro={false} />}
       {page && (
         <p className="text-sm text-muted">
           Observed: {page.observedAt} · {page.cached ? "Cached response" : "Fresh response"}.
