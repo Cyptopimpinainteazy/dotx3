@@ -7,7 +7,7 @@ export const partnerLinks: Record<
   meteor: {
     name: "Meteor Wallet",
     officialUrl: "https://meteorwallet.app/",
-    referralUrl: null,
+    referralUrl: "https://wallet.meteorwallet.app/referral?referralCode=dotx3.near",
   },
   rhea: {
     name: "RHEA Finance",
