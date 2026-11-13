@@ -64,7 +64,7 @@ export const ALL_NAV: NavGroup[] = [
       {
         kind: "route",
         label: "Situation Report",
-        description: "Only what's final on chain",
+        description: "Finalized on chain or publicly logged",
         to: "/",
         hash: "situation-report",
       },

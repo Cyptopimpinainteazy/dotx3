@@ -7,10 +7,9 @@
 //   x3-lang/examples/base_sepolia_to_near_testnet_1usdc.x3 (Case 03 program, verbatim)
 //   README.md steps 3 and 5                              (9/9 won't-compile, 8/8 red team)
 // judge-cases.test.ts pins the shared values to LINKS / PROGRAM_SHA in front-door.ts.
-import { LINKS, PROGRAM_SHA } from "./front-door.ts";
+import { LINKS, PROGRAM_SHA, RAW } from "./front-door.ts";
 
 const NB = "https://testnet.nearblocks.io";
-const RAW = "https://github.com/Cyptopimpinainteazy/x3lang/blob/master";
 
 export type JudgeCheck = { name: string; detail: string; ok: boolean };
 export type JudgeAnchor = { label: string; value: string; href: string };

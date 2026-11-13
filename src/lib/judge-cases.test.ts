@@ -33,7 +33,9 @@ test("each case is internally consistent", () => {
     JUDGE_CASES.map((c) => c.id),
     ["refused", "allowed", "settled"],
   );
+  const verdictFor = { refused: "REFUSED", allowed: "ALLOWED", settled: "SETTLED" } as const;
   for (const c of JUDGE_CASES) {
+    assert.equal(c.verdict, verdictFor[c.id], `${c.id} shows the wrong verdict`);
     const failed = c.checks.filter((k) => !k.ok);
     if (c.verdict === "REFUSED") {
       assert.equal(c.tone, "bad");
@@ -45,7 +47,7 @@ test("each case is internally consistent", () => {
       assert.equal(c.tone, "good");
       assert.equal(failed.length, 0, `${c.id} shows a failing check under a passing verdict`);
     }
-    assert.ok(c.highlight < c.code.length);
+    assert.ok(c.highlight >= -1 && c.highlight < c.code.length, `${c.id} highlight out of range`);
     for (const a of c.anchors) assert.match(a.href, /^https:\/\//);
   }
   const refused = JUDGE_CASES.find((c) => c.id === "refused")!;

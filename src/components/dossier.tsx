@@ -40,7 +40,7 @@ export function CaseFileCard() {
       </div>
       <div className="relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-border bg-surface p-6 text-left">
         <p className="font-mono text-xs tracking-[0.12em] text-muted uppercase">
-          Agent intent · NEAR testnet
+          Agent intent · repo example
         </p>
         <pre className="overflow-x-auto rounded-xl border border-border bg-bg px-4 py-3 font-mono text-sm leading-7 text-[#c9ccd4]">
           {"from Solana.USDC amount 25000000\n"}
@@ -63,7 +63,8 @@ export function CaseFileCard() {
           rel="noopener noreferrer"
           className="font-mono text-xs break-all text-muted hover:text-primary"
         >
-          tx {REFUSE_TX} · block 276557981
+          Live testnet refusal of the same recipient (testnet owner and agent accounts): tx{" "}
+          {REFUSE_TX} · block 276557981
         </a>
         <p
           aria-hidden="true"
@@ -82,7 +83,7 @@ export function SituationReport() {
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-6 py-4">
         <p className="font-mono text-xs tracking-[0.12em] text-accent uppercase">Ledger</p>
         <p className="font-mono text-xs text-muted">
-          Only what&apos;s final on chain. Testnet unless marked.
+          Finalized on chain or publicly logged. Testnet unless marked.
         </p>
       </div>
       <ul>
@@ -134,8 +135,8 @@ const DOORS: {
     name: "PROVING GROUND",
     title: "Try the Demo",
     body: "Hand an agent a poisoned prompt. Watch X3 General refuse the payment it writes.",
-    to: "/playground",
-    cta: "Playground",
+    to: "/demo",
+    cta: "Accepted and refused, side by side",
     color: "primary",
   },
   {

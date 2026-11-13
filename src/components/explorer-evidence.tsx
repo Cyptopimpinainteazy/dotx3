@@ -57,7 +57,9 @@ function RecordedEvidence() {
 }
 
 export function ExplorerEvidence() {
-  // null while checking; the status endpoint reports presence of the server settings only.
+  // null while checking. Recorded evidence renders until the status endpoint (presence of the
+  // server settings only) says live history is available, so the server-rendered and
+  // no-JavaScript page always shows evidence rather than an inert live panel.
   const [configured, setConfigured] = useState<boolean | null>(null);
   useEffect(() => {
     let live = true;
@@ -94,10 +96,12 @@ export function ExplorerEvidence() {
           throw new Error(
             `Partner request limit reached. Retry in ${response.headers.get("Retry-After") || "5"} seconds.`,
           );
-        if (["EXPLORER_NOT_CONFIGURED", "EXPLORER_SCOPE_NOT_CONFIGURED"].includes(data.error)) {
+        if (data.error === "EXPLORER_NOT_CONFIGURED") {
           setConfigured(false);
           return;
         }
+        if (data.error === "EXPLORER_SCOPE_NOT_CONFIGURED")
+          throw new Error("This scope is not enabled on this site. Choose the other scope.");
         throw new Error("Explorer is unavailable. No settlement conclusion can be drawn.");
       }
       setPage(data);
@@ -112,7 +116,7 @@ export function ExplorerEvidence() {
       setBusy(false);
     }
   }
-  if (configured === false) return <RecordedEvidence />;
+  if (configured !== true) return <RecordedEvidence />;
   return (
     <div className="space-y-4">
       <p className="text-muted">
@@ -163,7 +167,7 @@ export function ExplorerEvidence() {
         </label>
         <button
           className="min-h-11 rounded border border-border px-4 text-fg disabled:opacity-50"
-          disabled={busy || configured !== true}
+          disabled={busy}
           onClick={() => load()}
         >
           Load history

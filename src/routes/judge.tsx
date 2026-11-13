@@ -66,7 +66,7 @@ function CaseTabs({
             type="button"
             role="tab"
             aria-selected={on}
-            aria-controls={`case-panel-${c.id}`}
+            aria-controls={on ? `case-panel-${c.id}` : undefined}
             tabIndex={on ? 0 : -1}
             onClick={() => onPick(c.id)}
             onKeyDown={(e) => {

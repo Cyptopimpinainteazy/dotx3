@@ -18,5 +18,5 @@ test("the keys match what the Explorer client reads", async () => {
   const { readFileSync } = await import("node:fs");
   const client = readFileSync(new URL("./client.mjs", import.meta.url), "utf8");
   for (const key of EXPLORER_ENV_KEYS)
-    assert.ok(client.includes(key), `client does not read ${key}`);
+    assert.ok(client.includes(`env.${key}`), `client does not read env.${key}`);
 });
