@@ -292,6 +292,12 @@ export const ALL_NAV: NavGroup[] = [
       },
       {
         kind: "route",
+        label: "Super IDE",
+        description: "Editor, compiler and a NEAR devnet; try it in the browser",
+        to: "/ide",
+      },
+      {
+        kind: "route",
         label: "Install from source",
         description: "Build the compiler and run the checks",
         to: "/developers",
