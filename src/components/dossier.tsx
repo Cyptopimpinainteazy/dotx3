@@ -68,7 +68,7 @@ export function CaseFileCard() {
         </a>
         <p
           aria-hidden="true"
-          className="-mt-1 mr-1 -rotate-6 self-end rounded-lg border-[5px] border-accent px-4 pt-1.5 pb-0.5 font-display text-4xl font-extrabold tracking-wide text-accent sm:text-5xl"
+          className="-mt-1 mr-1 -rotate-6 self-end rounded-lg border-[5px] border-accent px-4 pt-1.5 pb-0.5 font-display text-3xl font-extrabold tracking-wide text-accent sm:text-4xl md:text-5xl"
         >
           REFUSED
         </p>

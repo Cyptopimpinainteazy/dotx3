@@ -200,7 +200,7 @@ function CasePanel({ c }: { c: JudgeCase }) {
             3 · Verdict on chain
           </p>
           <p
-            className={`-rotate-3 self-start rounded-lg border-4 px-4 pt-2 pb-1 font-display text-5xl leading-none font-extrabold tracking-wide ${t.text} ${t.border}`}
+            className={`-rotate-3 self-start rounded-lg border-4 px-4 pt-2 pb-1 font-display text-3xl leading-none sm:text-4xl font-extrabold tracking-wide ${t.text} ${t.border}`}
           >
             {c.verdict}
           </p>
