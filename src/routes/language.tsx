@@ -74,7 +74,7 @@ const ENGINE: { title: string; body: string; href: string }[] = [
   },
   {
     title: "A source trail you can check",
-    body: "The historical Tidepool testnet transfer has a committed .x3 program whose hash was bound before funding. The mainnet swap has finalized receipts, but its two stored source hashes still need matching committed .x3 files.",
+    body: "The historical Tidepool testnet transfer has a committed .x3 program whose hash was bound before funding. The mainnet `invoice_06` payment and mandate sources now match the SHA-256 identities stored in NEAR Guard, and a later restricted-agent transaction recorded `Settled`. This still does not prove native X3VM execution on-chain.",
     href: LINKS.mainnetObservation,
   },
 ];
@@ -119,7 +119,7 @@ function LanguagePage() {
     <SiteShell
       eyebrow="The language"
       title="X3 is more than one payment."
-      lede="X3 Shield uses typed owner mandates, deterministic checks and Guard authorization on NEAR. Follow the public language tools, the recorded mainnet swap and the remaining work that connects source to execution."
+      lede="X3 Force Field begins with written typed `.x3` mandates and payment programs: compiler/type checks refuse unsafe edits, and NEAR Guard checks authenticated 1Click quote terms against policy. The deployed Guard does not run the native X3VM. Follow the public language tools, the recorded mainnet swap and the remaining work that connects source to execution."
     >
       <div className="mx-auto max-w-6xl px-5 pt-8">
         <a

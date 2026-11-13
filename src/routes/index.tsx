@@ -109,9 +109,9 @@ function ProofMeter() {
 function Home() {
   return (
     <SiteShell
-      eyebrow={`${SITE} · NEAR Hackathon`}
+      eyebrow={`X3 Force Field · ${SITE} · NEAR Hackathon`}
       title="Your AI agent can be talked into anything. Your money can't."
-      lede="The owner writes the rules in .x3. The agent writes every payment in .x3. A deterministic compiler and a NEAR contract compare the two. The model's output never authorizes anything."
+      lede="X3 Force Field is programmable security for AI agents: owners write typed .x3 mandates, agents propose .x3 payment programs, the compiler rejects unsafe edits and NEAR Guard checks signed 1Click terms. The model cannot authorize a payment."
       actions={
         <>
           <ActionLink to="/judge">Open the Judge Console</ActionLink>
@@ -238,8 +238,9 @@ function Home() {
             mainnet refusal evidence remains pending.
           </Card>
           <Card title="Agent Economy">
-            A restricted agent key accepted the mainnet quote after owner approval. Testnet shows
-            allowed and refused intents. Source-wallet control and guarded custody remain separate gaps.
+            A restricted agent key accepted the mainnet quote after owner approval, and later
+            recorded a Settled outcome. First-party records identify manual Solflare funding;
+            Guard-controlled source custody is still unproven.
           </Card>
           <Card title="Unstoppable DeFi">
             Official 1Click settlement from Solana to NEAR mainnet, plus the earlier Base Sepolia

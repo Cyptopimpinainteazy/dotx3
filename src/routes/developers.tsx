@@ -28,7 +28,7 @@ function DevelopersPage() {
             </OutLink>
           </p>
           <p>
-            <OutLink href={LINKS.repo}>X3Lang compiler / X3 Shield source</OutLink>
+            <OutLink href={LINKS.repo}>X3Lang compiler / X3 Force Field source</OutLink>
           </p>
           <p>
             <OutLink href={LINKS.readme}>README and getting started</OutLink>
@@ -124,7 +124,7 @@ cargo run --manifest-path x3-lang/Cargo.toml -p x3-tools --bin x3c -- parse x3-l
           </OutLink>{" "}
           exposes lower-level intent execution and withdrawals. Official NEAR Intents has no testnet
           version; our historical Tidepool testnet delivery is a separate trusted-relay experiment.
-          X3 Shield is also separate from{" "}
+          X3 Force Field is also separate from{" "}
           <OutLink href="https://docs.near-intents.org/security-compliance/proactive-intents-security">
             official NEAR SHIELD
           </OutLink>
