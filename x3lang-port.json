@@ -103,7 +103,10 @@
       "source": "x3-lang/near/demo/README.md",
       "destination": "public/labs/guard/README.md",
       "source_sha256": "f70dae70a96f0b1e394fbc7c6efd8789e84a5393224d4464ef19588c900c7401",
-      "sha256": "f70dae70a96f0b1e394fbc7c6efd8789e84a5393224d4464ef19588c900c7401"
+      "sha256": "7e16ec69421b363d1b2ae3af72f20c285102bcb3c270fa9193de3abf788debcd",
+      "local_transformations": [
+        "Include the read-only setup module in the manual deployment file list and distinguish local scenarios from recorded mainnet evidence; upstream source_sha256 is retained."
+      ]
     },
     {
       "source": "x3-lang/near/demo/bnb.html",
@@ -167,9 +170,10 @@
       "source": "x3-lang/near/demo/judge.html",
       "destination": "public/labs/guard/judge.html",
       "source_sha256": "d5e0c97424315dfd2cefe496d0e29523d6bc394430ceeff72b1310d9f10e26e7",
-      "sha256": "fbea9202073110f09858f7f8d8be5659861e1da71d59f6ebfd09b5a8b40d10a5",
+      "sha256": "893d272a6fc5a4ba7e5dfd4c98e53952912312bd4c34815779118eed0b3e6cd0",
       "local_transformations": [
         "Add the separately published invoice_06 mainnet settlement and remaining evidence limits to the historical setup section; upstream source_sha256 is retained.",
+        "Use the existing padded panel body and heading style for chain evidence, and label the video with its visible heading; content and media URLs are unchanged.",
         "Add shared public-page Copy and Markdown controls; form values are excluded and upstream source_sha256 is retained."
       ]
     },

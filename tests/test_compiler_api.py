@@ -164,6 +164,8 @@ class JudgeMainnetPortTransformation(unittest.TestCase):
             sync.JUDGE_SCENARIO_NOTE.encode(), sync.JUDGE_SCENARIO_BOUNDARY.encode())
         for old, new in sync.JUDGE_SETUP_COPY_REPLACEMENTS.items():
             source = source.replace(new.encode(), old.encode())
+        for old, new in sync.JUDGE_LAYOUT_REPLACEMENTS.items():
+            source = source.replace(new.encode(), old.encode())
         self.assertEqual(hashlib.sha256(source).hexdigest(), row['source_sha256'])
         rebuilt, transformations = sync.transform_ported_file(row['source'], source, manifest['commit'])
         self.assertEqual(rebuilt, output)

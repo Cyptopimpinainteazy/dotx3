@@ -36,7 +36,7 @@ host serves it; there is no build step.
 Stage the following files in the Cloudflare Pages publish root, preserving paths:
 
 - `index.html`, `index.md`, `judge.html`, `bnb.html`, `x3guard.mjs`
-- `judge/judge.mjs`, `judge/scenarios.json`, `judge/bnb-readiness.json`
+- `judge/judge.mjs`, `judge/scenarios.json`, `judge/bnb-readiness.json`, `judge/mainnet-setup.mjs`
 - `404.html`, `_headers`, `robots.txt`, `sitemap.xml`
 
 After deployment, check that the public home page and `/judge` serve distinct
@@ -66,8 +66,9 @@ decision with each check marked on its line, the cross-chain leg, and the eviden
   with a stated line changed. Two use an assumed Guard state (revoked, already spent), shown as an
   assumption. Nonce reuse is shown as decided by the contract, citing x3-guard's tests, because
   the local checker cannot see used nonces.
-- **Each claim is labelled with the evidence behind it.** Only "locally valid policy" holds. The
-  page states that no approval, deployment, quote, transaction or settlement is behind it.
+- **Each claim is labelled with the evidence behind it.** The scenarios establish local policy
+  results only. Separately, the setup button reads historical setup transactions and current
+  Guard code from NEAR RPC; the mainnet evidence panel links the recorded invoice_06 settlement.
 
 ```bash
 python3 scripts/hackathon/demo.py                         # same scenarios, one terminal command

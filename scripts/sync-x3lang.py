@@ -57,6 +57,24 @@ JUDGE_SETUP_COPY_REPLACEMENTS = {
     '>Check mainnet setup</button>': '>Check setup and current Guard code</button>',
     '>Live RPC check ready.</p>': '>Ready to read historical setup transactions and the current Guard code.</p>',
 }
+JUDGE_LAYOUT_REPLACEMENTS = {
+    '  .panel.film { margin: 0 0 clamp(14px, 2vw, 22px); }\n'
+    '  .panel.film h2 { margin: 0; font-size: 1rem; font-weight: 700; }':
+        '  .panel.film, .panel.evidence { margin: 0 0 clamp(14px, 2vw, 22px); }\n'
+        '  .panel > header h2 { margin: 0; font-size: 1rem; font-weight: 700; }\n'
+        '  .panel.evidence .body > p { margin: 0; }\n'
+        '  .panel.evidence .body > .btn { justify-self: start; }',
+    '<section class="panel" aria-labelledby="chain-evidence-heading">':
+        '<section class="panel evidence" aria-labelledby="chain-evidence-heading">',
+    '<header><h2 id="chain-evidence-heading">Cross-chain trade and mainnet setup</h2></header>':
+        '<header><h2 id="chain-evidence-heading">Cross-chain trade and mainnet setup</h2></header>\n'
+        '    <div class="body">',
+    '  </section>\n  <script type="module" src="./judge/mainnet-setup.mjs"></script>':
+        '    </div>\n  </section>\n  <script type="module" src="./judge/mainnet-setup.mjs"></script>',
+    'aria-describedby="film-note"></video>':
+        'aria-labelledby="film-heading" aria-describedby="film-note"></video>',
+}
+JUDGE_LAYOUT_TRANSFORMATION = 'Use the existing padded panel body and heading style for chain evidence, and label the video with its visible heading; content and media URLs are unchanged.'
 
 # The historical setup transactions predate the reviewed upgrade. The checker
 # reads current finalized account state, so compare against the deployed code
@@ -71,6 +89,16 @@ MAINNET_SETUP_REPLACEMENTS = {
         'RPC confirmed both historical setup transactions and the Guard code reviewed in the November 12 evidence at block ${block}.',
 }
 MAINNET_SETUP_TRANSFORMATION = 'Compare current finalized Guard code with BPdpJAw8R4SDh6Wi7dPcXTs5T7ncJDVKCLgzuqZFb15T from the November 12 invoice_06 observation, while retaining historical setup transaction checks; upstream source_sha256 is retained.'
+GUARD_README_REPLACEMENTS = {
+    '- `judge/judge.mjs`, `judge/scenarios.json`, `judge/bnb-readiness.json`':
+        '- `judge/judge.mjs`, `judge/scenarios.json`, `judge/bnb-readiness.json`, `judge/mainnet-setup.mjs`',
+    '- **Each claim is labelled with the evidence behind it.** Only "locally valid policy" holds. The\n'
+    '  page states that no approval, deployment, quote, transaction or settlement is behind it.':
+        '- **Each claim is labelled with the evidence behind it.** The scenarios establish local policy\n'
+        '  results only. Separately, the setup button reads historical setup transactions and current\n'
+        '  Guard code from NEAR RPC; the mainnet evidence panel links the recorded invoice_06 settlement.',
+}
+GUARD_README_TRANSFORMATION = 'Include the read-only setup module in the manual deployment file list and distinguish local scenarios from recorded mainnet evidence; upstream source_sha256 is retained.'
 
 
 def judge_mainnet_update(sha):
@@ -129,12 +157,23 @@ def transform_ported_file(src, data, sha):
                 raise ValueError('Judge setup label changed; review before syncing')
             data = data.replace(old.encode(), new.encode(), 1)
         transformations.append(JUDGE_MAINNET_TRANSFORMATION)
+        for old, new in JUDGE_LAYOUT_REPLACEMENTS.items():
+            if data.count(old.encode()) != 1:
+                raise ValueError('Judge panel structure changed; review before syncing')
+            data = data.replace(old.encode(), new.encode(), 1)
+        transformations.append(JUDGE_LAYOUT_TRANSFORMATION)
     if src == 'x3-lang/near/demo/judge/mainnet-setup.mjs':
         for old, new in MAINNET_SETUP_REPLACEMENTS.items():
             if data.count(old.encode()) != 1 or new.encode() in data:
                 raise ValueError('Mainnet setup checker changed; review before syncing')
             data = data.replace(old.encode(), new.encode(), 1)
         transformations.append(MAINNET_SETUP_TRANSFORMATION)
+    if src == 'x3-lang/near/demo/README.md':
+        for old, new in GUARD_README_REPLACEMENTS.items():
+            if data.count(old.encode()) != 1:
+                raise ValueError('Guard deployment documentation changed; review before syncing')
+            data = data.replace(old.encode(), new.encode(), 1)
+        transformations.append(GUARD_README_TRANSFORMATION)
     if src == 'docs/hackathon/attack-lab.html':
         old = b'from a clone of this repository, serve its root'
         new = b'from a clone of the X3Lang source repository, serve its root'
