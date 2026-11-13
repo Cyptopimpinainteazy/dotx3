@@ -1,7 +1,74 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ExplorerPage } from "@/lib/explorer/client.mjs";
+import { BASE_TX, SITUATION_REPORT } from "@/lib/judge-cases";
+import { LINKS } from "@/lib/front-door";
+
+/**
+ * Shown while live Explorer history is not connected on this deployment: the finalized
+ * testnet transactions behind this page's claims, instead of an empty panel.
+ */
+function RecordedEvidence() {
+  const rows = [
+    ...SITUATION_REPORT.filter((r) => r.status !== "HELD 8/8"),
+    {
+      status: "SOURCE",
+      tone: "good",
+      text: "Base Sepolia leg of the same trade: 1.000000 test USDC sent",
+      href: LINKS.baseTx,
+      link: `${BASE_TX.slice(0, 10)}…${BASE_TX.slice(-6)}`,
+    },
+  ] as const;
+  return (
+    <div className="space-y-4">
+      <p className="text-muted">
+        Live 1Click Explorer history is not connected on this site yet. Until it is, these are the
+        finalized testnet transactions behind the claims on this page. Open any of them on the
+        public block explorer.
+      </p>
+      <ul className="overflow-hidden rounded-xl border border-border bg-surface">
+        {rows.map((row) => (
+          <li
+            key={row.status}
+            className="flex flex-wrap items-baseline gap-x-5 gap-y-1 border-b border-border px-5 py-3.5 last:border-b-0"
+          >
+            <span
+              className={`w-24 shrink-0 font-mono text-xs font-semibold ${row.tone === "bad" ? "text-accent" : "text-primary"}`}
+            >
+              {row.status}
+            </span>
+            <span className="min-w-0 flex-[1_1_16rem] text-sm text-fg">{row.text}</span>
+            <a
+              href={row.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-xs break-all text-primary underline-offset-4 hover:underline"
+            >
+              {row.link}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p className="text-sm text-muted">
+        Testnet only. Explorer records, once connected, are provider-reported and are labeled as
+        such; they do not replace these on-chain receipts.
+      </p>
+    </div>
+  );
+}
 
 export function ExplorerEvidence() {
+  // null while checking; the status endpoint reports presence of the server settings only.
+  const [configured, setConfigured] = useState<boolean | null>(null);
+  useEffect(() => {
+    let live = true;
+    fetch("/api/explorer/status", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : { configured: false }))
+      .then((d: { configured?: unknown }) => live && setConfigured(d.configured === true))
+      .catch(() => live && setConfigured(false));
+    return () => {
+      live = false;
+    };
+  }, []);
   const [page, setPage] = useState<ExplorerPage | null>(null);
   const [status, setStatus] = useState("");
   const [scope, setScope] = useState("account");
@@ -27,10 +94,10 @@ export function ExplorerEvidence() {
           throw new Error(
             `Partner request limit reached. Retry in ${response.headers.get("Retry-After") || "5"} seconds.`,
           );
-        if (["EXPLORER_NOT_CONFIGURED", "EXPLORER_SCOPE_NOT_CONFIGURED"].includes(data.error))
-          throw new Error(
-            "Explorer is not configured yet. No live transaction history has been loaded.",
-          );
+        if (["EXPLORER_NOT_CONFIGURED", "EXPLORER_SCOPE_NOT_CONFIGURED"].includes(data.error)) {
+          setConfigured(false);
+          return;
+        }
         throw new Error("Explorer is unavailable. No settlement conclusion can be drawn.");
       }
       setPage(data);
@@ -45,6 +112,7 @@ export function ExplorerEvidence() {
       setBusy(false);
     }
   }
+  if (configured === false) return <RecordedEvidence />;
   return (
     <div className="space-y-4">
       <p className="text-muted">
@@ -95,7 +163,7 @@ export function ExplorerEvidence() {
         </label>
         <button
           className="min-h-11 rounded border border-border px-4 text-fg disabled:opacity-50"
-          disabled={busy}
+          disabled={busy || configured !== true}
           onClick={() => load()}
         >
           Load history

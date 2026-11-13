@@ -37,7 +37,6 @@ function ProofPage() {
       lede="Local tests, testnet receipts and live provider history are labeled separately. A signed 1Click quote is not a settlement. A Guard acceptance is not a transfer."
     >
       <div className="mx-auto max-w-6xl px-5"><ProviderIncidents /></div>
-      <Section title="1Click Explorer history"><ExplorerEvidence /></Section>
 
       <Section title="CI and local gates">
         <div className="grid gap-4 md:grid-cols-2">
@@ -130,7 +129,11 @@ function ProofPage() {
         </div>
       </Section>
 
-      <Section title="Not claimed">
+      <Section title="1Click Explorer history">
+        <ExplorerEvidence />
+      </Section>
+
+      <Section title="Not claimed" alt>
         <ul className="mx-auto max-w-3xl list-disc space-y-2 pl-5 text-muted">
           <li>No mainnet deployment and no funded official 1Click settlement.</li>
           <li>No public audited vault. Guard does not custody tokens. An unrestricted origin key can bypass it.</li>
