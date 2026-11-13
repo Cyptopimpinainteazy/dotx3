@@ -1,0 +1,1910 @@
+{
+  "paragraphs": [
+    "An AI agent can propose a payment. But who decides whether it should happen? X3 Force Field puts the owner's rules outside the model. Here is one payment you can inspect, from written policy to recorded outcome.",
+    "The owner wrote a typed dot X three mandate: twenty-five USDC per payment and per day, one permitted recipient, a pinned refund wallet, and bounded slippage and fees. This twenty-five dollar payment also required owner approval. The original mandate and payment files match the source hashes stored by NEAR Guard.",
+    "First, test the same payment locally. Redirect the recipient, increase the amount, change the refund, or loosen slippage: the mandate check refuses them. Remove required safety terms: compilation fails. Eight edited copies are refused. These are local checks, not mainnet attack transactions.",
+    "Now inspect the mainnet authorization. After owner approval, the agent's restricted key accepted a signed One Click quote. The Guard receipt reports twenty-one passing checks. The authenticated minimum exceeds the policy floor of twenty-four point seven five USDC. Quote acceptance authorizes a deposit address; it does not move money.",
+    "The owner manually funded twenty-five USDC on Solana. The archived finalized payout shows twenty-four point nine nine five two USDC delivered to X three lang dot near, about eighty-four seconds later. Follow both transaction links. One Click associates these transfers; that is not cryptographic cross-chain atomicity.",
+    "The restricted agent then recorded Settled on NEAR, with the output amount, both transaction hashes, and floor met. Guard stores that report and checks its amount against the floor. It does not authenticate the supplied transaction hashes. The transfer receipts are separate evidence.",
+    "Six core payment capabilities connect typed policy, checks outside the model, signed terms, traceability, restricted authority, and reproducibility. Three additional local prototypes demonstrate signed child admission, durable retirement and incident review, and a scoped vault on a real local NEAR Sandbox. They are not public-chain custody.",
+    "This is one owner-assisted payment, not production reliability. Guard is noncustodial, an owner recovery key remains, and no native X three virtual machine runs on chain. Start at the judge page, check out the pinned snapshot, and run the verifier. Inspect the policy, the limits, and the receipts. Every claim has a boundary."
+  ],
+  "starts": [
+    0,
+    11.764,
+    30.728,
+    49.855,
+    70.18,
+    90.227,
+    105.589,
+    126.17
+  ],
+  "duration": 146.66263038548752,
+  "audio_url": "https://resource2.heygen.ai/text_to_speech/e5f5ba8667384724974e9471f9ea5ff5/330290724a1b470fb63153f34d4c0183/id=9437291894044f71a5d437826c474cc4.wav",
+  "words": [
+    {
+      "text": "An",
+      "start_time": 0.256,
+      "end_time": 0.4267
+    },
+    {
+      "text": "AI",
+      "start_time": 0.469,
+      "end_time": 0.768
+    },
+    {
+      "text": "agent",
+      "start_time": 0.811,
+      "end_time": 1.109
+    },
+    {
+      "text": "can",
+      "start_time": 1.152,
+      "end_time": 1.237
+    },
+    {
+      "text": "propose",
+      "start_time": 1.28,
+      "end_time": 1.579
+    },
+    {
+      "text": "a",
+      "start_time": 1.621,
+      "end_time": 1.664
+    },
+    {
+      "text": "payment",
+      "start_time": 1.707,
+      "end_time": 2.005
+    },
+    {
+      "text": "But",
+      "start_time": 2.56,
+      "end_time": 2.688
+    },
+    {
+      "text": "who",
+      "start_time": 2.731,
+      "end_time": 2.816
+    },
+    {
+      "text": "decides",
+      "start_time": 2.859,
+      "end_time": 3.1147
+    },
+    {
+      "text": "whether",
+      "start_time": 3.243,
+      "end_time": 3.328
+    },
+    {
+      "text": "it",
+      "start_time": 3.456,
+      "end_time": 3.541
+    },
+    {
+      "text": "should",
+      "start_time": 3.584,
+      "end_time": 3.6267
+    },
+    {
+      "text": "happen",
+      "start_time": 3.669,
+      "end_time": 3.84
+    },
+    {
+      "text": "X3",
+      "start_time": 4.437,
+      "end_time": 4.821
+    },
+    {
+      "text": "Force",
+      "start_time": 4.864,
+      "end_time": 5.077
+    },
+    {
+      "text": "Field",
+      "start_time": 5.205,
+      "end_time": 5.376
+    },
+    {
+      "text": "puts",
+      "start_time": 5.504,
+      "end_time": 5.6747
+    },
+    {
+      "text": "the",
+      "start_time": 5.717,
+      "end_time": 5.803
+    },
+    {
+      "text": "owner's",
+      "start_time": 5.845,
+      "end_time": 6.101
+    },
+    {
+      "text": "rules",
+      "start_time": 6.144,
+      "end_time": 6.3147
+    },
+    {
+      "text": "outside",
+      "start_time": 6.443,
+      "end_time": 6.613
+    },
+    {
+      "text": "the",
+      "start_time": 6.869,
+      "end_time": 6.9547
+    },
+    {
+      "text": "model",
+      "start_time": 6.997,
+      "end_time": 7.125
+    },
+    {
+      "text": "Here",
+      "start_time": 7.723,
+      "end_time": 7.893
+    },
+    {
+      "text": "is",
+      "start_time": 7.936,
+      "end_time": 8.021
+    },
+    {
+      "text": "one",
+      "start_time": 8.064,
+      "end_time": 8.2347
+    },
+    {
+      "text": "payment",
+      "start_time": 8.277,
+      "end_time": 8.576
+    },
+    {
+      "text": "you",
+      "start_time": 8.619,
+      "end_time": 8.704
+    },
+    {
+      "text": "can",
+      "start_time": 8.747,
+      "end_time": 8.789
+    },
+    {
+      "text": "inspect",
+      "start_time": 8.832,
+      "end_time": 9.131
+    },
+    {
+      "text": "from",
+      "start_time": 9.557,
+      "end_time": 9.685
+    },
+    {
+      "text": "written",
+      "start_time": 9.728,
+      "end_time": 9.856
+    },
+    {
+      "text": "policy",
+      "start_time": 9.984,
+      "end_time": 10.197
+    },
+    {
+      "text": "to",
+      "start_time": 10.539,
+      "end_time": 10.709
+    },
+    {
+      "text": "recorded",
+      "start_time": 10.752,
+      "end_time": 10.965
+    },
+    {
+      "text": "outcome",
+      "start_time": 11.093,
+      "end_time": 11.392
+    },
+    {
+      "text": "The",
+      "start_time": 11.764,
+      "end_time": 11.935
+    },
+    {
+      "text": "owner",
+      "start_time": 11.978,
+      "end_time": 12.191
+    },
+    {
+      "text": "wrote",
+      "start_time": 12.234,
+      "end_time": 12.447
+    },
+    {
+      "text": "a",
+      "start_time": 12.532,
+      "end_time": 12.575
+    },
+    {
+      "text": "typed",
+      "start_time": 12.618,
+      "end_time": 12.916
+    },
+    {
+      "text": "dot",
+      "start_time": 13.087,
+      "end_time": 13.2577
+    },
+    {
+      "text": "X",
+      "start_time": 13.343,
+      "end_time": 13.5137
+    },
+    {
+      "text": "three",
+      "start_time": 13.599,
+      "end_time": 13.7697
+    },
+    {
+      "text": "mandate",
+      "start_time": 13.898,
+      "end_time": 14.282
+    },
+    {
+      "text": "twenty",
+      "start_time": 14.708,
+      "end_time": 14.922
+    },
+    {
+      "text": "five",
+      "start_time": 15.05,
+      "end_time": 15.22
+    },
+    {
+      "text": "USDC",
+      "start_time": 15.348,
+      "end_time": 15.988
+    },
+    {
+      "text": "per",
+      "start_time": 16.074,
+      "end_time": 16.244
+    },
+    {
+      "text": "payment",
+      "start_time": 16.287,
+      "end_time": 16.628
+    },
+    {
+      "text": "and",
+      "start_time": 16.756,
+      "end_time": 16.8417
+    },
+    {
+      "text": "per",
+      "start_time": 16.884,
+      "end_time": 17.012
+    },
+    {
+      "text": "day",
+      "start_time": 17.055,
+      "end_time": 17.226
+    },
+    {
+      "text": "one",
+      "start_time": 17.567,
+      "end_time": 17.8657
+    },
+    {
+      "text": "permitted",
+      "start_time": 17.951,
+      "end_time": 18.207
+    },
+    {
+      "text": "recipient",
+      "start_time": 18.335,
+      "end_time": 18.762
+    },
+    {
+      "text": "a",
+      "start_time": 19.103,
+      "end_time": 19.316
+    },
+    {
+      "text": "pinned",
+      "start_time": 19.359,
+      "end_time": 19.615
+    },
+    {
+      "text": "refund",
+      "start_time": 19.743,
+      "end_time": 20.084
+    },
+    {
+      "text": "wallet",
+      "start_time": 20.127,
+      "end_time": 20.468
+    },
+    {
+      "text": "and",
+      "start_time": 20.682,
+      "end_time": 20.852
+    },
+    {
+      "text": "bounded",
+      "start_time": 20.938,
+      "end_time": 21.236
+    },
+    {
+      "text": "slippage",
+      "start_time": 21.322,
+      "end_time": 21.663
+    },
+    {
+      "text": "and",
+      "start_time": 21.748,
+      "end_time": 21.8337
+    },
+    {
+      "text": "fees",
+      "start_time": 21.876,
+      "end_time": 22.004
+    },
+    {
+      "text": "This",
+      "start_time": 22.687,
+      "end_time": 22.815
+    },
+    {
+      "text": "twenty",
+      "start_time": 22.858,
+      "end_time": 23.028
+    },
+    {
+      "text": "five",
+      "start_time": 23.114,
+      "end_time": 23.2417
+    },
+    {
+      "text": "dollar",
+      "start_time": 23.284,
+      "end_time": 23.412
+    },
+    {
+      "text": "payment",
+      "start_time": 23.54,
+      "end_time": 23.8817
+    },
+    {
+      "text": "also",
+      "start_time": 23.967,
+      "end_time": 24.1377
+    },
+    {
+      "text": "required",
+      "start_time": 24.266,
+      "end_time": 24.564
+    },
+    {
+      "text": "owner",
+      "start_time": 24.735,
+      "end_time": 24.948
+    },
+    {
+      "text": "approval",
+      "start_time": 25.034,
+      "end_time": 25.29
+    },
+    {
+      "text": "The",
+      "start_time": 25.949,
+      "end_time": 26.077
+    },
+    {
+      "text": "original",
+      "start_time": 26.12,
+      "end_time": 26.248
+    },
+    {
+      "text": "mandate",
+      "start_time": 26.504,
+      "end_time": 26.9307
+    },
+    {
+      "text": "and",
+      "start_time": 27.016,
+      "end_time": 27.101
+    },
+    {
+      "text": "payment",
+      "start_time": 27.144,
+      "end_time": 27.4427
+    },
+    {
+      "text": "files",
+      "start_time": 27.485,
+      "end_time": 27.6987
+    },
+    {
+      "text": "match",
+      "start_time": 27.955,
+      "end_time": 28.168
+    },
+    {
+      "text": "the",
+      "start_time": 28.253,
+      "end_time": 28.381
+    },
+    {
+      "text": "source",
+      "start_time": 28.424,
+      "end_time": 28.552
+    },
+    {
+      "text": "hashes",
+      "start_time": 28.68,
+      "end_time": 29.021
+    },
+    {
+      "text": "stored",
+      "start_time": 29.149,
+      "end_time": 29.3627
+    },
+    {
+      "text": "by",
+      "start_time": 29.448,
+      "end_time": 29.576
+    },
+    {
+      "text": "NEAR",
+      "start_time": 29.619,
+      "end_time": 29.789
+    },
+    {
+      "text": "Guard",
+      "start_time": 29.832,
+      "end_time": 30.003
+    },
+    {
+      "text": "First",
+      "start_time": 30.728,
+      "end_time": 30.984
+    },
+    {
+      "text": "test",
+      "start_time": 31.368,
+      "end_time": 31.5387
+    },
+    {
+      "text": "the",
+      "start_time": 31.624,
+      "end_time": 31.709
+    },
+    {
+      "text": "same",
+      "start_time": 31.752,
+      "end_time": 31.965
+    },
+    {
+      "text": "payment",
+      "start_time": 32.008,
+      "end_time": 32.3067
+    },
+    {
+      "text": "locally",
+      "start_time": 32.349,
+      "end_time": 32.605
+    },
+    {
+      "text": "Redirect",
+      "start_time": 33.365,
+      "end_time": 33.749
+    },
+    {
+      "text": "the",
+      "start_time": 33.835,
+      "end_time": 33.92
+    },
+    {
+      "text": "recipient",
+      "start_time": 33.963,
+      "end_time": 34.347
+    },
+    {
+      "text": "increase",
+      "start_time": 34.773,
+      "end_time": 35.029
+    },
+    {
+      "text": "the",
+      "start_time": 35.115,
+      "end_time": 35.2427
+    },
+    {
+      "text": "amount",
+      "start_time": 35.285,
+      "end_time": 35.499
+    },
+    {
+      "text": "change",
+      "start_time": 35.883,
+      "end_time": 36.1387
+    },
+    {
+      "text": "the",
+      "start_time": 36.267,
+      "end_time": 36.352
+    },
+    {
+      "text": "refund",
+      "start_time": 36.395,
+      "end_time": 36.779
+    },
+    {
+      "text": "or",
+      "start_time": 37.163,
+      "end_time": 37.2907
+    },
+    {
+      "text": "loosen",
+      "start_time": 37.376,
+      "end_time": 37.6747
+    },
+    {
+      "text": "slippage",
+      "start_time": 37.717,
+      "end_time": 38.101
+    },
+    {
+      "text": "the",
+      "start_time": 38.656,
+      "end_time": 38.784
+    },
+    {
+      "text": "mandate",
+      "start_time": 38.827,
+      "end_time": 39.125
+    },
+    {
+      "text": "check",
+      "start_time": 39.168,
+      "end_time": 39.381
+    },
+    {
+      "text": "refuses",
+      "start_time": 39.467,
+      "end_time": 39.765
+    },
+    {
+      "text": "them",
+      "start_time": 39.936,
+      "end_time": 40.107
+    },
+    {
+      "text": "Remove",
+      "start_time": 40.619,
+      "end_time": 41.1307
+    },
+    {
+      "text": "required",
+      "start_time": 41.216,
+      "end_time": 41.472
+    },
+    {
+      "text": "safety",
+      "start_time": 41.643,
+      "end_time": 41.813
+    },
+    {
+      "text": "terms",
+      "start_time": 41.984,
+      "end_time": 42.155
+    },
+    {
+      "text": "compilation",
+      "start_time": 42.709,
+      "end_time": 43.136
+    },
+    {
+      "text": "fails",
+      "start_time": 43.349,
+      "end_time": 43.563
+    },
+    {
+      "text": "Eight",
+      "start_time": 44.288,
+      "end_time": 44.416
+    },
+    {
+      "text": "edited",
+      "start_time": 44.544,
+      "end_time": 44.7147
+    },
+    {
+      "text": "copies",
+      "start_time": 44.885,
+      "end_time": 45.2267
+    },
+    {
+      "text": "are",
+      "start_time": 45.312,
+      "end_time": 45.397
+    },
+    {
+      "text": "refused",
+      "start_time": 45.44,
+      "end_time": 45.781
+    },
+    {
+      "text": "These",
+      "start_time": 46.442,
+      "end_time": 46.612
+    },
+    {
+      "text": "are",
+      "start_time": 46.655,
+      "end_time": 46.74
+    },
+    {
+      "text": "local",
+      "start_time": 46.783,
+      "end_time": 46.911
+    },
+    {
+      "text": "checks",
+      "start_time": 47.039,
+      "end_time": 47.338
+    },
+    {
+      "text": "not",
+      "start_time": 47.722,
+      "end_time": 47.8497
+    },
+    {
+      "text": "mainnet",
+      "start_time": 47.892,
+      "end_time": 48.276
+    },
+    {
+      "text": "attack",
+      "start_time": 48.362,
+      "end_time": 48.532
+    },
+    {
+      "text": "transactions",
+      "start_time": 48.618,
+      "end_time": 48.959
+    },
+    {
+      "text": "Now",
+      "start_time": 49.855,
+      "end_time": 50.0257
+    },
+    {
+      "text": "inspect",
+      "start_time": 50.154,
+      "end_time": 50.495
+    },
+    {
+      "text": "the",
+      "start_time": 50.58,
+      "end_time": 50.6657
+    },
+    {
+      "text": "mainnet",
+      "start_time": 50.708,
+      "end_time": 51.0497
+    },
+    {
+      "text": "authorization",
+      "start_time": 51.092,
+      "end_time": 51.519
+    },
+    {
+      "text": "After",
+      "start_time": 52.159,
+      "end_time": 52.3297
+    },
+    {
+      "text": "owner",
+      "start_time": 52.5,
+      "end_time": 52.7137
+    },
+    {
+      "text": "approval",
+      "start_time": 52.799,
+      "end_time": 53.055
+    },
+    {
+      "text": "the",
+      "start_time": 53.482,
+      "end_time": 53.567
+    },
+    {
+      "text": "agent's",
+      "start_time": 53.61,
+      "end_time": 53.9937
+    },
+    {
+      "text": "restricted",
+      "start_time": 54.036,
+      "end_time": 54.463
+    },
+    {
+      "text": "key",
+      "start_time": 54.506,
+      "end_time": 54.719
+    },
+    {
+      "text": "accepted",
+      "start_time": 54.932,
+      "end_time": 55.316
+    },
+    {
+      "text": "a",
+      "start_time": 55.359,
+      "end_time": 55.4017
+    },
+    {
+      "text": "signed",
+      "start_time": 55.444,
+      "end_time": 55.828
+    },
+    {
+      "text": "One",
+      "start_time": 55.914,
+      "end_time": 56.127
+    },
+    {
+      "text": "Click",
+      "start_time": 56.255,
+      "end_time": 56.468
+    },
+    {
+      "text": "quote",
+      "start_time": 56.596,
+      "end_time": 56.724
+    },
+    {
+      "text": "The",
+      "start_time": 57.364,
+      "end_time": 57.407
+    },
+    {
+      "text": "Guard",
+      "start_time": 57.45,
+      "end_time": 57.663
+    },
+    {
+      "text": "receipt",
+      "start_time": 57.748,
+      "end_time": 58.047
+    },
+    {
+      "text": "reports",
+      "start_time": 58.09,
+      "end_time": 58.431
+    },
+    {
+      "text": "twenty",
+      "start_time": 58.516,
+      "end_time": 58.772
+    },
+    {
+      "text": "one",
+      "start_time": 58.858,
+      "end_time": 59.028
+    },
+    {
+      "text": "passing",
+      "start_time": 59.071,
+      "end_time": 59.3697
+    },
+    {
+      "text": "checks",
+      "start_time": 59.455,
+      "end_time": 59.754
+    },
+    {
+      "text": "The",
+      "start_time": 60.325,
+      "end_time": 60.495
+    },
+    {
+      "text": "authenticated",
+      "start_time": 60.538,
+      "end_time": 61.007
+    },
+    {
+      "text": "minimum",
+      "start_time": 61.135,
+      "end_time": 61.4765
+    },
+    {
+      "text": "exceeds",
+      "start_time": 61.562,
+      "end_time": 61.9458
+    },
+    {
+      "text": "the",
+      "start_time": 62.031,
+      "end_time": 62.0738
+    },
+    {
+      "text": "policy",
+      "start_time": 62.117,
+      "end_time": 62.3725
+    },
+    {
+      "text": "floor",
+      "start_time": 62.543,
+      "end_time": 62.7565
+    },
+    {
+      "text": "of",
+      "start_time": 62.885,
+      "end_time": 62.9698
+    },
+    {
+      "text": "twenty",
+      "start_time": 63.055,
+      "end_time": 63.226
+    },
+    {
+      "text": "four",
+      "start_time": 63.354,
+      "end_time": 63.4818
+    },
+    {
+      "text": "point",
+      "start_time": 63.525,
+      "end_time": 63.7378
+    },
+    {
+      "text": "seven",
+      "start_time": 63.781,
+      "end_time": 63.951
+    },
+    {
+      "text": "five",
+      "start_time": 64.079,
+      "end_time": 64.2925
+    },
+    {
+      "text": "USDC",
+      "start_time": 64.421,
+      "end_time": 65.018
+    },
+    {
+      "text": "Quote",
+      "start_time": 65.743,
+      "end_time": 65.9565
+    },
+    {
+      "text": "acceptance",
+      "start_time": 66.17,
+      "end_time": 66.8098
+    },
+    {
+      "text": "authorizes",
+      "start_time": 66.895,
+      "end_time": 67.407
+    },
+    {
+      "text": "a",
+      "start_time": 67.45,
+      "end_time": 67.4925
+    },
+    {
+      "text": "deposit",
+      "start_time": 67.535,
+      "end_time": 67.8338
+    },
+    {
+      "text": "address",
+      "start_time": 68.004,
+      "end_time": 68.303
+    },
+    {
+      "text": "it",
+      "start_time": 68.644,
+      "end_time": 68.815
+    },
+    {
+      "text": "does",
+      "start_time": 68.858,
+      "end_time": 68.943
+    },
+    {
+      "text": "not",
+      "start_time": 68.986,
+      "end_time": 69.199
+    },
+    {
+      "text": "move",
+      "start_time": 69.242,
+      "end_time": 69.3698
+    },
+    {
+      "text": "money",
+      "start_time": 69.455,
+      "end_time": 69.583
+    },
+    {
+      "text": "The",
+      "start_time": 70.18,
+      "end_time": 70.2658
+    },
+    {
+      "text": "owner",
+      "start_time": 70.308,
+      "end_time": 70.5218
+    },
+    {
+      "text": "manually",
+      "start_time": 70.564,
+      "end_time": 70.948
+    },
+    {
+      "text": "funded",
+      "start_time": 71.076,
+      "end_time": 71.332
+    },
+    {
+      "text": "twenty",
+      "start_time": 71.46,
+      "end_time": 71.716
+    },
+    {
+      "text": "five",
+      "start_time": 71.844,
+      "end_time": 72.015
+    },
+    {
+      "text": "USDC",
+      "start_time": 72.1,
+      "end_time": 72.6978
+    },
+    {
+      "text": "on",
+      "start_time": 72.783,
+      "end_time": 72.911
+    },
+    {
+      "text": "Solana",
+      "start_time": 72.954,
+      "end_time": 73.252
+    },
+    {
+      "text": "The",
+      "start_time": 73.82,
+      "end_time": 73.991
+    },
+    {
+      "text": "archived",
+      "start_time": 74.034,
+      "end_time": 74.4177
+    },
+    {
+      "text": "finalized",
+      "start_time": 74.546,
+      "end_time": 74.972
+    },
+    {
+      "text": "payout",
+      "start_time": 75.143,
+      "end_time": 75.484
+    },
+    {
+      "text": "shows",
+      "start_time": 75.612,
+      "end_time": 75.783
+    },
+    {
+      "text": "twenty",
+      "start_time": 75.954,
+      "end_time": 76.124
+    },
+    {
+      "text": "four",
+      "start_time": 76.252,
+      "end_time": 76.423
+    },
+    {
+      "text": "point",
+      "start_time": 76.551,
+      "end_time": 76.7217
+    },
+    {
+      "text": "nine",
+      "start_time": 76.85,
+      "end_time": 77.063
+    },
+    {
+      "text": "nine",
+      "start_time": 77.148,
+      "end_time": 77.276
+    },
+    {
+      "text": "five",
+      "start_time": 77.404,
+      "end_time": 77.575
+    },
+    {
+      "text": "two",
+      "start_time": 77.703,
+      "end_time": 77.8737
+    },
+    {
+      "text": "USDC",
+      "start_time": 78.044,
+      "end_time": 78.7697
+    },
+    {
+      "text": "delivered",
+      "start_time": 78.898,
+      "end_time": 79.2817
+    },
+    {
+      "text": "to",
+      "start_time": 79.324,
+      "end_time": 79.452
+    },
+    {
+      "text": "X",
+      "start_time": 79.495,
+      "end_time": 79.623
+    },
+    {
+      "text": "three",
+      "start_time": 79.751,
+      "end_time": 79.9217
+    },
+    {
+      "text": "lang",
+      "start_time": 80.007,
+      "end_time": 80.1777
+    },
+    {
+      "text": "dot",
+      "start_time": 80.263,
+      "end_time": 80.4337
+    },
+    {
+      "text": "near",
+      "start_time": 80.519,
+      "end_time": 80.69
+    },
+    {
+      "text": "about",
+      "start_time": 81.244,
+      "end_time": 81.372
+    },
+    {
+      "text": "eighty",
+      "start_time": 81.415,
+      "end_time": 81.628
+    },
+    {
+      "text": "four",
+      "start_time": 81.671,
+      "end_time": 81.799
+    },
+    {
+      "text": "seconds",
+      "start_time": 81.842,
+      "end_time": 82.012
+    },
+    {
+      "text": "later",
+      "start_time": 82.183,
+      "end_time": 82.354
+    },
+    {
+      "text": "Follow",
+      "start_time": 82.994,
+      "end_time": 83.164
+    },
+    {
+      "text": "both",
+      "start_time": 83.292,
+      "end_time": 83.5057
+    },
+    {
+      "text": "transaction",
+      "start_time": 83.548,
+      "end_time": 83.932
+    },
+    {
+      "text": "links",
+      "start_time": 84.146,
+      "end_time": 84.359
+    },
+    {
+      "text": "One",
+      "start_time": 84.936,
+      "end_time": 85.1496
+    },
+    {
+      "text": "Click",
+      "start_time": 85.235,
+      "end_time": 85.448
+    },
+    {
+      "text": "associates",
+      "start_time": 85.534,
+      "end_time": 86.0029
+    },
+    {
+      "text": "these",
+      "start_time": 86.088,
+      "end_time": 86.2589
+    },
+    {
+      "text": "transfers",
+      "start_time": 86.302,
+      "end_time": 86.728
+    },
+    {
+      "text": "that",
+      "start_time": 87.198,
+      "end_time": 87.326
+    },
+    {
+      "text": "is",
+      "start_time": 87.368,
+      "end_time": 87.4109
+    },
+    {
+      "text": "not",
+      "start_time": 87.454,
+      "end_time": 87.7096
+    },
+    {
+      "text": "cryptographic",
+      "start_time": 87.795,
+      "end_time": 88.3496
+    },
+    {
+      "text": "cross",
+      "start_time": 88.435,
+      "end_time": 88.606
+    },
+    {
+      "text": "chain",
+      "start_time": 88.691,
+      "end_time": 88.8189
+    },
+    {
+      "text": "atomicity",
+      "start_time": 88.862,
+      "end_time": 89.246
+    },
+    {
+      "text": "The",
+      "start_time": 90.227,
+      "end_time": 90.2696
+    },
+    {
+      "text": "restricted",
+      "start_time": 90.312,
+      "end_time": 90.696
+    },
+    {
+      "text": "agent",
+      "start_time": 90.739,
+      "end_time": 90.9949
+    },
+    {
+      "text": "then",
+      "start_time": 91.123,
+      "end_time": 91.2509
+    },
+    {
+      "text": "recorded",
+      "start_time": 91.294,
+      "end_time": 91.592
+    },
+    {
+      "text": "Settled",
+      "start_time": 91.848,
+      "end_time": 92.2749
+    },
+    {
+      "text": "on",
+      "start_time": 92.318,
+      "end_time": 92.4029
+    },
+    {
+      "text": "NEAR",
+      "start_time": 92.446,
+      "end_time": 92.702
+    },
+    {
+      "text": "with",
+      "start_time": 93.043,
+      "end_time": 93.128
+    },
+    {
+      "text": "the",
+      "start_time": 93.171,
+      "end_time": 93.256
+    },
+    {
+      "text": "output",
+      "start_time": 93.299,
+      "end_time": 93.512
+    },
+    {
+      "text": "amount",
+      "start_time": 93.64,
+      "end_time": 93.768
+    },
+    {
+      "text": "both",
+      "start_time": 94.067,
+      "end_time": 94.2376
+    },
+    {
+      "text": "transaction",
+      "start_time": 94.323,
+      "end_time": 94.664
+    },
+    {
+      "text": "hashes",
+      "start_time": 94.835,
+      "end_time": 95.176
+    },
+    {
+      "text": "and",
+      "start_time": 95.475,
+      "end_time": 95.7309
+    },
+    {
+      "text": "floor",
+      "start_time": 95.859,
+      "end_time": 96.072
+    },
+    {
+      "text": "met",
+      "start_time": 96.115,
+      "end_time": 96.286
+    },
+    {
+      "text": "Guard",
+      "start_time": 96.818,
+      "end_time": 97.074
+    },
+    {
+      "text": "stores",
+      "start_time": 97.16,
+      "end_time": 97.373
+    },
+    {
+      "text": "that",
+      "start_time": 97.501,
+      "end_time": 97.586
+    },
+    {
+      "text": "report",
+      "start_time": 97.629,
+      "end_time": 97.757
+    },
+    {
+      "text": "and",
+      "start_time": 98.141,
+      "end_time": 98.226
+    },
+    {
+      "text": "checks",
+      "start_time": 98.269,
+      "end_time": 98.482
+    },
+    {
+      "text": "its",
+      "start_time": 98.568,
+      "end_time": 98.61
+    },
+    {
+      "text": "amount",
+      "start_time": 98.738,
+      "end_time": 98.909
+    },
+    {
+      "text": "against",
+      "start_time": 99.037,
+      "end_time": 99.122
+    },
+    {
+      "text": "the",
+      "start_time": 99.25,
+      "end_time": 99.3357
+    },
+    {
+      "text": "floor",
+      "start_time": 99.378,
+      "end_time": 99.549
+    },
+    {
+      "text": "It",
+      "start_time": 100.061,
+      "end_time": 100.189
+    },
+    {
+      "text": "does",
+      "start_time": 100.232,
+      "end_time": 100.317
+    },
+    {
+      "text": "not",
+      "start_time": 100.36,
+      "end_time": 100.573
+    },
+    {
+      "text": "authenticate",
+      "start_time": 100.658,
+      "end_time": 101.17
+    },
+    {
+      "text": "the",
+      "start_time": 101.213,
+      "end_time": 101.298
+    },
+    {
+      "text": "supplied",
+      "start_time": 101.341,
+      "end_time": 101.6397
+    },
+    {
+      "text": "transaction",
+      "start_time": 101.725,
+      "end_time": 102.109
+    },
+    {
+      "text": "hashes",
+      "start_time": 102.28,
+      "end_time": 102.578
+    },
+    {
+      "text": "The",
+      "start_time": 103.176,
+      "end_time": 103.261
+    },
+    {
+      "text": "transfer",
+      "start_time": 103.304,
+      "end_time": 103.645
+    },
+    {
+      "text": "receipts",
+      "start_time": 103.73,
+      "end_time": 104.029
+    },
+    {
+      "text": "are",
+      "start_time": 104.157,
+      "end_time": 104.242
+    },
+    {
+      "text": "separate",
+      "start_time": 104.285,
+      "end_time": 104.626
+    },
+    {
+      "text": "evidence",
+      "start_time": 104.669,
+      "end_time": 104.84
+    },
+    {
+      "text": "Six",
+      "start_time": 105.589,
+      "end_time": 105.845
+    },
+    {
+      "text": "core",
+      "start_time": 105.973,
+      "end_time": 106.1437
+    },
+    {
+      "text": "payment",
+      "start_time": 106.229,
+      "end_time": 106.5277
+    },
+    {
+      "text": "capabilities",
+      "start_time": 106.57,
+      "end_time": 106.954
+    },
+    {
+      "text": "connect",
+      "start_time": 107.296,
+      "end_time": 107.509
+    },
+    {
+      "text": "typed",
+      "start_time": 107.68,
+      "end_time": 107.893
+    },
+    {
+      "text": "policy",
+      "start_time": 107.978,
+      "end_time": 108.192
+    },
+    {
+      "text": "checks",
+      "start_time": 108.746,
+      "end_time": 108.9597
+    },
+    {
+      "text": "outside",
+      "start_time": 109.002,
+      "end_time": 109.13
+    },
+    {
+      "text": "the",
+      "start_time": 109.344,
+      "end_time": 109.429
+    },
+    {
+      "text": "model",
+      "start_time": 109.472,
+      "end_time": 109.6
+    },
+    {
+      "text": "signed",
+      "start_time": 110.112,
+      "end_time": 110.41
+    },
+    {
+      "text": "terms",
+      "start_time": 110.538,
+      "end_time": 110.709
+    },
+    {
+      "text": "traceability",
+      "start_time": 111.264,
+      "end_time": 111.733
+    },
+    {
+      "text": "restricted",
+      "start_time": 112.288,
+      "end_time": 112.757
+    },
+    {
+      "text": "authority",
+      "start_time": 112.842,
+      "end_time": 113.141
+    },
+    {
+      "text": "and",
+      "start_time": 113.568,
+      "end_time": 113.738
+    },
+    {
+      "text": "reproducibility",
+      "start_time": 113.781,
+      "end_time": 114.464
+    },
+    {
+      "text": "Three",
+      "start_time": 115.215,
+      "end_time": 115.428
+    },
+    {
+      "text": "additional",
+      "start_time": 115.514,
+      "end_time": 115.684
+    },
+    {
+      "text": "local",
+      "start_time": 115.94,
+      "end_time": 116.068
+    },
+    {
+      "text": "prototypes",
+      "start_time": 116.196,
+      "end_time": 116.6657
+    },
+    {
+      "text": "demonstrate",
+      "start_time": 116.836,
+      "end_time": 117.3057
+    },
+    {
+      "text": "signed",
+      "start_time": 117.391,
+      "end_time": 117.6897
+    },
+    {
+      "text": "child",
+      "start_time": 117.775,
+      "end_time": 117.988
+    },
+    {
+      "text": "admission",
+      "start_time": 118.074,
+      "end_time": 118.287
+    },
+    {
+      "text": "durable",
+      "start_time": 118.799,
+      "end_time": 119.012
+    },
+    {
+      "text": "retirement",
+      "start_time": 119.14,
+      "end_time": 119.652
+    },
+    {
+      "text": "and",
+      "start_time": 119.738,
+      "end_time": 119.8657
+    },
+    {
+      "text": "incident",
+      "start_time": 119.908,
+      "end_time": 120.164
+    },
+    {
+      "text": "review",
+      "start_time": 120.292,
+      "end_time": 120.42
+    },
+    {
+      "text": "and",
+      "start_time": 120.932,
+      "end_time": 121.146
+    },
+    {
+      "text": "a",
+      "start_time": 121.188,
+      "end_time": 121.231
+    },
+    {
+      "text": "scoped",
+      "start_time": 121.274,
+      "end_time": 121.487
+    },
+    {
+      "text": "vault",
+      "start_time": 121.615,
+      "end_time": 121.828
+    },
+    {
+      "text": "on",
+      "start_time": 121.914,
+      "end_time": 121.999
+    },
+    {
+      "text": "a",
+      "start_time": 122.042,
+      "end_time": 122.084
+    },
+    {
+      "text": "real",
+      "start_time": 122.127,
+      "end_time": 122.383
+    },
+    {
+      "text": "local",
+      "start_time": 122.554,
+      "end_time": 122.724
+    },
+    {
+      "text": "NEAR",
+      "start_time": 122.895,
+      "end_time": 123.0657
+    },
+    {
+      "text": "Sandbox",
+      "start_time": 123.108,
+      "end_time": 123.535
+    },
+    {
+      "text": "They",
+      "start_time": 124.132,
+      "end_time": 124.26
+    },
+    {
+      "text": "are",
+      "start_time": 124.303,
+      "end_time": 124.3457
+    },
+    {
+      "text": "not",
+      "start_time": 124.388,
+      "end_time": 124.6017
+    },
+    {
+      "text": "public",
+      "start_time": 124.687,
+      "end_time": 124.858
+    },
+    {
+      "text": "chain",
+      "start_time": 124.986,
+      "end_time": 125.156
+    },
+    {
+      "text": "custody",
+      "start_time": 125.242,
+      "end_time": 125.583
+    },
+    {
+      "text": "This",
+      "start_time": 126.17,
+      "end_time": 126.384
+    },
+    {
+      "text": "is",
+      "start_time": 126.426,
+      "end_time": 126.5118
+    },
+    {
+      "text": "one",
+      "start_time": 126.554,
+      "end_time": 126.81
+    },
+    {
+      "text": "owner",
+      "start_time": 126.896,
+      "end_time": 127.152
+    },
+    {
+      "text": "assisted",
+      "start_time": 127.237,
+      "end_time": 127.493
+    },
+    {
+      "text": "payment",
+      "start_time": 127.578,
+      "end_time": 127.877
+    },
+    {
+      "text": "not",
+      "start_time": 128.133,
+      "end_time": 128.3038
+    },
+    {
+      "text": "production",
+      "start_time": 128.389,
+      "end_time": 128.645
+    },
+    {
+      "text": "reliability",
+      "start_time": 128.816,
+      "end_time": 129.242
+    },
+    {
+      "text": "Guard",
+      "start_time": 129.925,
+      "end_time": 130.138
+    },
+    {
+      "text": "is",
+      "start_time": 130.266,
+      "end_time": 130.309
+    },
+    {
+      "text": "noncustodial",
+      "start_time": 130.394,
+      "end_time": 131.077
+    },
+    {
+      "text": "an",
+      "start_time": 131.418,
+      "end_time": 131.546
+    },
+    {
+      "text": "owner",
+      "start_time": 131.589,
+      "end_time": 131.802
+    },
+    {
+      "text": "recovery",
+      "start_time": 131.845,
+      "end_time": 132.101
+    },
+    {
+      "text": "key",
+      "start_time": 132.272,
+      "end_time": 132.442
+    },
+    {
+      "text": "remains",
+      "start_time": 132.485,
+      "end_time": 132.784
+    },
+    {
+      "text": "and",
+      "start_time": 133.21,
+      "end_time": 133.466
+    },
+    {
+      "text": "no",
+      "start_time": 133.509,
+      "end_time": 133.722
+    },
+    {
+      "text": "native",
+      "start_time": 133.808,
+      "end_time": 134.021
+    },
+    {
+      "text": "X",
+      "start_time": 134.149,
+      "end_time": 134.277
+    },
+    {
+      "text": "three",
+      "start_time": 134.405,
+      "end_time": 134.5758
+    },
+    {
+      "text": "virtual",
+      "start_time": 134.661,
+      "end_time": 134.917
+    },
+    {
+      "text": "machine",
+      "start_time": 135.002,
+      "end_time": 135.0878
+    },
+    {
+      "text": "runs",
+      "start_time": 135.386,
+      "end_time": 135.557
+    },
+    {
+      "text": "on",
+      "start_time": 135.6,
+      "end_time": 135.7278
+    },
+    {
+      "text": "chain",
+      "start_time": 135.77,
+      "end_time": 135.984
+    },
+    {
+      "text": "Start",
+      "start_time": 136.601,
+      "end_time": 136.857
+    },
+    {
+      "text": "at",
+      "start_time": 136.9,
+      "end_time": 136.9426
+    },
+    {
+      "text": "the",
+      "start_time": 136.985,
+      "end_time": 137.0706
+    },
+    {
+      "text": "judge",
+      "start_time": 137.113,
+      "end_time": 137.241
+    },
+    {
+      "text": "page",
+      "start_time": 137.327,
+      "end_time": 137.497
+    },
+    {
+      "text": "check",
+      "start_time": 138.052,
+      "end_time": 138.2226
+    },
+    {
+      "text": "out",
+      "start_time": 138.265,
+      "end_time": 138.3506
+    },
+    {
+      "text": "the",
+      "start_time": 138.393,
+      "end_time": 138.4786
+    },
+    {
+      "text": "pinned",
+      "start_time": 138.521,
+      "end_time": 138.7346
+    },
+    {
+      "text": "snapshot",
+      "start_time": 138.82,
+      "end_time": 139.332
+    },
+    {
+      "text": "and",
+      "start_time": 139.588,
+      "end_time": 139.7586
+    },
+    {
+      "text": "run",
+      "start_time": 139.801,
+      "end_time": 139.929
+    },
+    {
+      "text": "the",
+      "start_time": 139.972,
+      "end_time": 140.057
+    },
+    {
+      "text": "verifier",
+      "start_time": 140.1,
+      "end_time": 140.484
+    },
+    {
+      "text": "Inspect",
+      "start_time": 141.167,
+      "end_time": 141.5506
+    },
+    {
+      "text": "the",
+      "start_time": 141.636,
+      "end_time": 141.6786
+    },
+    {
+      "text": "policy",
+      "start_time": 141.721,
+      "end_time": 141.935
+    },
+    {
+      "text": "the",
+      "start_time": 142.532,
+      "end_time": 142.66
+    },
+    {
+      "text": "limits",
+      "start_time": 142.703,
+      "end_time": 142.959
+    },
+    {
+      "text": "and",
+      "start_time": 143.343,
+      "end_time": 143.513
+    },
+    {
+      "text": "the",
+      "start_time": 143.556,
+      "end_time": 143.641
+    },
+    {
+      "text": "receipts",
+      "start_time": 143.684,
+      "end_time": 143.983
+    },
+    {
+      "text": "Every",
+      "start_time": 144.793,
+      "end_time": 145.0066
+    },
+    {
+      "text": "claim",
+      "start_time": 145.135,
+      "end_time": 145.348
+    },
+    {
+      "text": "has",
+      "start_time": 145.476,
+      "end_time": 145.561
+    },
+    {
+      "text": "a",
+      "start_time": 145.604,
+      "end_time": 145.689
+    },
+    {
+      "text": "boundary",
+      "start_time": 145.732,
+      "end_time": 145.988
+    }
+  ],
+  "voice_id": "330290724a1b470fb63153f34d4c0183",
+  "voice_name": "Annie - Lifelike",
+  "provider": "HeyGen",
+  "source_commit": "f6543af8efaa430d19772a6da11d11b362d744d5"
+}

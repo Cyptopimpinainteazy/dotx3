@@ -1,0 +1,187 @@
+1
+00:00:00,256 --> 00:00:02,768
+An AI agent can propose a payment But
+
+2
+00:00:02,731 --> 00:00:05,157
+who decides whether it should happen X3 Force
+
+3
+00:00:05,205 --> 00:00:07,205
+Field puts the owner's rules outside the model
+
+4
+00:00:07,723 --> 00:00:09,765
+Here is one payment you can inspect from
+
+5
+00:00:09,728 --> 00:00:12,527
+written policy to recorded outcome The owner wrote
+
+6
+00:00:12,532 --> 00:00:15,300
+a typed dot X three mandate twenty five
+
+7
+00:00:15,348 --> 00:00:18,287
+USDC per payment and per day one permitted
+
+8
+00:00:18,335 --> 00:00:21,743
+recipient a pinned refund wallet and bounded slippage
+
+9
+00:00:21,748 --> 00:00:24,218
+and fees This twenty five dollar payment also
+
+10
+00:00:24,266 --> 00:00:27,523
+required owner approval The original mandate and payment
+
+11
+00:00:27,485 --> 00:00:29,869
+files match the source hashes stored by NEAR
+
+12
+00:00:29,832 --> 00:00:33,829
+Guard First test the same payment locally Redirect
+
+13
+00:00:33,835 --> 00:00:36,859
+the recipient increase the amount change the refund
+
+14
+00:00:37,163 --> 00:00:40,187
+or loosen slippage the mandate check refuses them
+
+15
+00:00:40,619 --> 00:00:44,795
+Remove required safety terms compilation fails Eight edited
+
+16
+00:00:44,885 --> 00:00:47,930
+copies are refused These are local checks not
+
+17
+00:00:47,892 --> 00:00:51,599
+mainnet attack transactions Now inspect the mainnet authorization
+
+18
+00:00:52,159 --> 00:00:55,396
+After owner approval the agent's restricted key accepted
+
+19
+00:00:55,359 --> 00:00:58,127
+a signed One Click quote The Guard receipt
+
+20
+00:00:58,090 --> 00:01:01,556
+reports twenty one passing checks The authenticated minimum
+
+21
+00:01:01,562 --> 00:01:03,818
+exceeds the policy floor of twenty four point
+
+22
+00:01:03,781 --> 00:01:07,914
+seven five USDC Quote acceptance authorizes a deposit
+
+23
+00:01:08,004 --> 00:01:10,602
+address it does not move money The owner
+
+24
+00:01:10,564 --> 00:01:14,071
+manually funded twenty five USDC on Solana The
+
+25
+00:01:14,034 --> 00:01:17,143
+archived finalized payout shows twenty four point nine
+
+26
+00:01:17,148 --> 00:01:20,002
+nine five two USDC delivered to X three
+
+27
+00:01:20,007 --> 00:01:22,434
+lang dot near about eighty four seconds later
+
+28
+00:01:22,994 --> 00:01:26,339
+Follow both transaction links One Click associates these
+
+29
+00:01:26,302 --> 00:01:29,326
+transfers that is not cryptographic cross chain atomicity
+
+30
+00:01:30,227 --> 00:01:32,782
+The restricted agent then recorded Settled on NEAR
+
+31
+00:01:33,043 --> 00:01:35,811
+with the output amount both transaction hashes and
+
+32
+00:01:35,859 --> 00:01:38,562
+floor met Guard stores that report and checks
+
+33
+00:01:38,568 --> 00:01:40,653
+its amount against the floor It does not
+
+34
+00:01:40,658 --> 00:01:44,109
+authenticate the supplied transaction hashes The transfer receipts
+
+35
+00:01:44,157 --> 00:01:47,589
+are separate evidence Six core payment capabilities connect
+
+36
+00:01:47,680 --> 00:01:50,789
+typed policy checks outside the model signed terms
+
+37
+00:01:51,264 --> 00:01:56,148
+traceability restricted authority and reproducibility Three additional local
+
+38
+00:01:56,196 --> 00:01:59,946
+prototypes demonstrate signed child admission durable retirement and
+
+39
+00:01:59,908 --> 00:02:02,164
+incident review and a scoped vault on a
+
+40
+00:02:02,127 --> 00:02:04,938
+real local NEAR Sandbox They are not public
+
+41
+00:02:04,986 --> 00:02:07,957
+chain custody This is one owner assisted payment
+
+42
+00:02:08,133 --> 00:02:11,882
+not production reliability Guard is noncustodial an owner
+
+43
+00:02:11,845 --> 00:02:14,656
+recovery key remains and no native X three
+
+44
+00:02:14,661 --> 00:02:17,151
+virtual machine runs on chain Start at the
+
+45
+00:02:17,113 --> 00:02:19,839
+judge page check out the pinned snapshot and
+
+46
+00:02:19,801 --> 00:02:23,039
+run the verifier Inspect the policy the limits
+
+47
+00:02:23,343 --> 00:02:26,068
+and the receipts Every claim has a boundary

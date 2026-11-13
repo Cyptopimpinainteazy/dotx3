@@ -1,0 +1,30 @@
+[
+  {
+    "width": 1440,
+    "status": 200,
+    "video": {
+      "src": "http://127.0.0.1:18181/media/x3-force-field-mainnet-20261113.webm",
+      "duration": 146.67,
+      "time": 2.108219,
+      "playing": true,
+      "error": null
+    },
+    "horizontal_overflow": false,
+    "errors": [],
+    "watch_text": "WATCH \u00b7 2:27\n\nPayment. Limits. Proof.\n\nFollow invoice_06 from the original .x3 mandate through local refusals, mainnet authorization, the owner-funded payment and recorded outcome. Narrated with captions.\n\nMainnet cards summarize archived receipts; terminal output is a local replay, not a new payment. The owner manually funded the deposit. Guard is noncustodial and does not authenticate outcome hashes; provider linkage is not cryptographic cross-chain atomicity.\n\nDownload MP4\n\nDownload captions \u00b7 Previous cut: dramatization, testnet and local scenes"
+  },
+  {
+    "width": 390,
+    "status": 200,
+    "video": {
+      "src": "http://127.0.0.1:18181/media/x3-force-field-mainnet-20261113.webm",
+      "duration": 146.67,
+      "time": 1.433291,
+      "playing": true,
+      "error": null
+    },
+    "horizontal_overflow": false,
+    "errors": [],
+    "watch_text": "WATCH \u00b7 2:27\n\nPayment. Limits. Proof.\n\nFollow invoice_06 from the original .x3 mandate through local refusals, mainnet authorization, the owner-funded payment and recorded outcome. Narrated with captions.\n\nMainnet cards summarize archived receipts; terminal output is a local replay, not a new payment. The owner manually funded the deposit. Guard is noncustodial and does not authenticate outcome hashes; provider linkage is not cryptographic cross-chain atomicity.\n\nDownload MP4\n\nDownload captions \u00b7 Previous cut: dramatization, testnet and local scenes"
+  }
+]

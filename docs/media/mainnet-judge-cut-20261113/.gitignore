@@ -1,0 +1,6 @@
+output/
+assets/scene-*.png
+assets/caption-state-*.png
+assets/captions.ass
+assets/timeline.ffconcat
+render.log
