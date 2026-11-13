@@ -1,10 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Analytics } from '@vercel/analytics/react'
 import './index.css'
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
+    {import.meta.env.VITE_ENABLE_WEB_ANALYTICS === 'true' && <Analytics />}
   </StrictMode>,
 )

@@ -1,3 +1,5 @@
+import { ProviderIncidents } from '@/components/provider-incidents';
+import { ExplorerEvidence } from '@/components/explorer-evidence';
 import { createFileRoute } from "@tanstack/react-router";
 import { OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell } from "@/components/site-shell";
@@ -17,10 +19,10 @@ function Row({
   hrefLabel: string;
 }) {
   return (
-    <article className="rounded-xl border border-border bg-surface p-5">
+    <article className="min-w-0 rounded-xl border border-border bg-surface p-5">
       <h3 className="font-display text-lg text-fg">{label}</h3>
       <p className="mt-2 text-muted">{detail}</p>
-      <p className="mt-3">
+      <p className="mt-3 [overflow-wrap:anywhere]">
         <OutLink href={href}>{hrefLabel}</OutLink>
       </p>
     </article>
@@ -31,9 +33,12 @@ function ProofPage() {
   return (
     <SiteShell
       eyebrow="Inspect the Proof"
-      title="Testnet and local. Not mainnet."
-      lede="Each row says which network it is. A signed 1Click quote is not a settlement. A Guard acceptance is not a transfer."
+      title="Evidence by source and network."
+      lede="Local tests, testnet receipts and live provider history are labeled separately. A signed 1Click quote is not a settlement. A Guard acceptance is not a transfer."
     >
+      <div className="mx-auto max-w-6xl px-5"><ProviderIncidents /></div>
+      <Section title="1Click Explorer history"><ExplorerEvidence /></Section>
+
       <Section title="CI and local gates">
         <div className="grid gap-4 md:grid-cols-2">
           <Row
@@ -107,7 +112,7 @@ function ProofPage() {
           <Tag>Tidepool relay · not official 1Click settlement</Tag>
         </div>
         <p className="max-w-3xl text-muted">
-          1.000000 test USDC left Base Sepolia. 0.997400 arrived on NEAR testnet for x3lang.testnet, above min_receive 980000. Program SHA-256 {PROGRAM_SHA} was bound on x3guardlaunch2026.testnet in block 276,595,201 before the source transfer. The README says this used a trusted testnet relay. It does not prove atomic settlement, and it is not mainnet.
+          1.000000 test USDC left Base Sepolia. 0.997400 arrived on NEAR testnet for x3lang.testnet, above min_receive 980000. Program SHA-256 <span className="break-all">{PROGRAM_SHA}</span> was bound on x3guardlaunch2026.testnet in block 276,595,201 before the source transfer. The README says this used a trusted testnet relay. It does not prove atomic settlement, and it is not mainnet.
         </p>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           <Row

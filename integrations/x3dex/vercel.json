@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build:standalone",
+  "outputDirectory": "dist",
+  "git": {
+    "deploymentEnabled": {
+      "fix/oneclick-dry-mode-binding-20261112": false
+    }
+  }
+}

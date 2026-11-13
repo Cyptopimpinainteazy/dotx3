@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell } from "@/components/site-shell";
-import { LINKS, NEAR_WALLETS, RHEA_APP, TOKEN } from "@/lib/front-door";
+import { LINKS, MILESTONES, NEAR_WALLETS, RHEA_APP, TOKEN } from "@/lib/front-door";
 import { PartnerLink } from "@/components/partner-link";
 
 export const Route = createFileRoute("/back")({ component: BackPage });
@@ -44,37 +44,7 @@ function Step({ n, title, children }: { n: number; title: string; children: Reac
   );
 }
 
-const MILESTONES: { title: string; proof: string }[] = [
-  {
-    title: "Scoped agent vault on testnet",
-    proof:
-      "One allowed payment, plus recorded refusals for over-cap, wrong recipient, 24-hour window and redirected refund.",
-  },
-  {
-    title: "One mainnet 1Click swap through Guard",
-    proof:
-      "The signed quote, the Guard authorization, the deposit, and the delivery, each with a finalized transaction hash.",
-  },
-  {
-    title: "Hostile model refused on mainnet",
-    proof:
-      "A red-team model's payments go through the same restricted key, and each refusal is on chain with an attack label.",
-  },
-  {
-    title: "Guard checks the program hash",
-    proof:
-      "An approved mandate carries only the exact .x3 program the owner saw. Contract tests cover a mismatched hash.",
-  },
-  {
-    title: "Independent security review",
-    proof: "A published report on Guard and the vault, with every finding and its fix.",
-  },
-  {
-    title: "Tagged release",
-    proof:
-      "A GitHub release with a checksum and build provenance, so nobody has to trust a branch tip.",
-  },
-];
+
 
 function BackPage() {
   const tokenLive = TOKEN.contract !== null;
@@ -246,7 +216,7 @@ function BackPage() {
 
       <Section
         title="Milestones backers can watch"
-        intro="Each one counts only when its proof is posted. Until then it's pending, and this list says so."
+        intro="Each one counts only when its proof is posted. Until then it's pending, and this list says so. The home page meter counts the same list."
         alt
       >
         <ol className="mx-auto grid max-w-4xl gap-3 md:grid-cols-2">
@@ -256,9 +226,18 @@ function BackPage() {
                 <h3 className="font-display text-lg text-fg">
                   {i + 1}. {m.title}
                 </h3>
-                <Tag>Pending</Tag>
+                <Tag>{m.evidence ? "Posted" : "Pending"}</Tag>
               </div>
               <p className="mt-2 text-sm text-muted">{m.proof}</p>
+              {m.evidence ? (
+                <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                  {m.evidence.map((e) => (
+                    <OutLink key={e.href} href={e.href}>
+                      {e.label}
+                    </OutLink>
+                  ))}
+                </p>
+              ) : null}
             </li>
           ))}
         </ol>

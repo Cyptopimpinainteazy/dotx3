@@ -20,9 +20,48 @@ GUARD_VERDICT_REPLACEMENTS = {
 
 GUARD_TRANSFORMATION = 'Clarify dry quote and local mandate verdicts never establish live eligibility, on-chain authorization or settlement; upstream source_sha256 is retained.'
 
+QUOTE_MODE_BINDING_TRANSFORMATION = 'Bind dry mode as an exact boolean in the signed request echo; upstream source_sha256 is retained. Local proposal pending upstream approval.'
+QUOTE_MODE_BINDING_REPLACEMENTS = {
+    'x3-lang/near_intents.py': {
+        '_ECHO_FIELDS = (\n    "swapType",': '_ECHO_FIELDS = (\n    "dry", "swapType",',
+        'def _same(field: str, sent: Any, echoed: Any) -> bool:\n':
+            'def _same(field: str, sent: Any, echoed: Any) -> bool:\n'
+            '    if field == "dry":\n'
+            '        return type(sent) is bool and type(echoed) is bool and sent is echoed\n',
+    },
+    'x3-lang/near/demo/x3guard.mjs': {
+        'const ECHO_FIELDS = ["swapType",': 'const ECHO_FIELDS = ["dry", "swapType",',
+        'function same(field, sent, echoed) {\n':
+            'function same(field, sent, echoed) {\n'
+            '  if (field === "dry") return typeof sent === "boolean" && typeof echoed === "boolean" && sent === echoed;\n',
+    },
+}
+
+EXPORT_CSS = b'<link rel="stylesheet" href="/page-export.css">\n'
+EXPORT_CONTROLS = b'<div data-copy-exclude data-page-export-controls class="page-export-controls"><button type="button" data-export-copy>Copy page</button><button type="button" data-export-download>Download Markdown</button><span role="status" aria-live="polite"></span></div>\n'
+EXPORT_SCRIPT = b'<script type="module" src="/page-export-controls.mjs"></script>\n'
+EXPORT_TRANSFORMATION = 'Add shared public-page Copy and Markdown controls; form values are excluded and upstream source_sha256 is retained.'
+EXPORT_SOURCES = {'x3-lang/near/demo/index.html', 'x3-lang/near/demo/judge.html', 'x3-lang/near/demo/bnb.html', 'docs/hackathon/attack-lab.html'}
+
+def add_export_controls(data):
+    if any(data.count(marker) != 1 for marker in [b'</head>', b'<body>', b'</body>']):
+        raise ValueError('Static lab document structure changed; review before syncing')
+    if b'data-page-export-controls' in data:
+        raise ValueError('Export controls already present; review before syncing')
+    return data.replace(b'</head>', EXPORT_CSS + b'</head>', 1).replace(b'<body>', b'<body>\n' + EXPORT_CONTROLS, 1).replace(b'</body>', EXPORT_SCRIPT + b'</body>', 1)
+
+def remove_export_controls(data):
+    return data.replace(EXPORT_CSS, b'').replace(b'<body>\n' + EXPORT_CONTROLS, b'<body>').replace(EXPORT_SCRIPT, b'')
+
 def transform_ported_file(src, data, sha):
-    """Apply reviewed local presentation changes; source drift requires re-review."""
+    """Apply explicit local changes; source drift requires re-review."""
     transformations = []
+    if src in QUOTE_MODE_BINDING_REPLACEMENTS:
+        for old, new in QUOTE_MODE_BINDING_REPLACEMENTS[src].items():
+            if data.count(old.encode()) != 1 or new.encode() in data:
+                raise ValueError('Quote mode source changed; review before syncing')
+            data = data.replace(old.encode(), new.encode(), 1)
+        transformations.append(QUOTE_MODE_BINDING_TRANSFORMATION)
     if src == 'x3-lang/near/demo/index.html':
         for old in GUARD_VERDICT_REPLACEMENTS:
             if data.count(old.encode()) != 1:
@@ -39,6 +78,9 @@ def transform_ported_file(src, data, sha):
         transformations.append('Clarify local-server instructions refer to the X3Lang source repository.')
         data = data.replace(b'href="../../evidence/', b'href="https://github.com/Cyptopimpinainteazy/x3lang/blob/' + sha.encode() + b'/evidence/')
         data = data.replace(b'href="FIRST_SWAP_JUDGE_WALKTHROUGH.md"', b'href="https://github.com/Cyptopimpinainteazy/x3lang/blob/' + sha.encode() + b'/docs/hackathon/FIRST_SWAP_JUDGE_WALKTHROUGH.md"')
+    if src in EXPORT_SOURCES:
+        data = add_export_controls(data)
+        transformations.append(EXPORT_TRANSFORMATION)
     return data, transformations
 
 

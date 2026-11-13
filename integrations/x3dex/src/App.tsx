@@ -1,3 +1,4 @@
+import PageExport from './PageExport'
 import TestnetLab from './features/testnet/TestnetLab'
 import WalletConnect from './features/WalletConnect'
 import ArbitrageRadar from './features/arbitrage/ArbitrageRadar'
@@ -79,7 +80,8 @@ function App() {
     <div className="workspace">
       <header className="header"><div className="mobile-brand"><span className="cyan">✳</span> X3DEX</div><div className="breadcrumb">X3 ECOSYSTEM <span>/</span> {active.toUpperCase()}</div><div className="header-right"><div className="testnet-badge"><span>●</span> BUILD IN PROGRESS</div><button className="icon-button" aria-label="Notifications" title="Notifications not configured"><Bell size={18} /></button><button className="icon-button" aria-label="Settings" title="Settings planned"><Settings2 size={18} /></button><WalletConnect /></div></header>
       <nav className="mobile-tabs" aria-label="DEX modules">{nav.map(({name}) => <button key={name} className={active === name ? "selected" : ""} onClick={() => setActive(name)}>{name}</button>)}</nav>
-      <main>
+      <main data-dex-page-content>
+        <PageExport />
         {active === 'Testnet Lab' ? <TestnetLab /> : active === 'Arbitrage Radar' ? <ArbitrageRadar /> : <>
         <div className="page-top"><div><div className="eyebrow"><Zap size={14} /> UNIFIED MULTICHAIN TRADING</div><h1>{active === 'Terminal' ? 'Trading terminal' : active}</h1><p>Real-time market intelligence. Verifiable execution infrastructure.</p></div><span className="beta">PRIVATE DEVELOPMENT BUILD · NO EXECUTION</span></div>
         {active !== 'Terminal' && <div className="notice"><CircleHelp size={18}/><span>The {active.toLowerCase()} module is planned but not yet integrated. Live trading remains disabled. Return to Terminal to explore real public market data.</span><button onClick={() => setActive('Terminal')}>Open terminal →</button></div>}

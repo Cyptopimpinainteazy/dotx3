@@ -163,8 +163,11 @@
   .theme { margin-left: auto; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 </style>
+<link rel="stylesheet" href="/page-export.css">
 </head>
 <body>
+<div data-copy-exclude data-page-export-controls class="page-export-controls"><button type="button" data-export-copy>Copy page</button><button type="button" data-export-download>Download Markdown</button><span role="status" aria-live="polite"></span></div>
+
 <div class="wrap">
   <header class="top">
     <div class="brand">
@@ -594,5 +597,6 @@ $("theme").addEventListener("click", () => { theme = themes[(themes.indexOf(them
 applyTheme();
 renderGutter();
 </script>
+<script type="module" src="/page-export-controls.mjs"></script>
 </body>
 </html>

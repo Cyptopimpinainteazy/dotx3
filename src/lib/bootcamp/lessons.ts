@@ -1,5 +1,7 @@
+import intentsLessons from './intents-lessons.json';
 export interface Lesson { id: string; track: string; title: string; summary: string; sections: {title:string; text:string[]; code?:string}[]; sources:string[]; exercise:string }
 export const LESSONS: Lesson[] = [
+...intentsLessons,
 {id:'orientation',track:'01 / Foundations',title:'Choose the right .x3 surface',summary:'What the language is, who enforces it, and where code runs.',sections:[
 {title:'The owner writes authority; the agent proposes actions',text:['An intent describes a requested outcome: the input asset and amount, recipient, route, constraints, deadline and failure behavior. A mandate separately states what an agent is allowed to request. Model output is input to the checker, never an authorization by itself.','X3 Shield combines policy compilation, quote checks and a NEAR Guard contract. These are distinct stages. Passing a browser check proves a local calculation over supplied data. It does not prove live mandate state, a wallet signature, a transfer or finalized delivery.']},
 {title:'X3 Shield and official NEAR SHIELD',text:['X3 Shield is this project’s .x3 compiler, owner-mandate checks and NEAR Guard workflow. Official NEAR Intents SHIELD is a separate incident and security-policy service used by integrated NEAR Intents surfaces. A shared name does not establish integration, endorsement or equivalent enforcement.']},

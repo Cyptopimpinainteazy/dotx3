@@ -48,3 +48,53 @@ Use DNS-only while verifying. Preserve other TXT verification values. Re-run pro
 Vercel CLI 65.14.0 is installed and authenticated as `cyptopimpinainteazy`. This checkout is linked to the existing `dotx3` project. The official shared `https://mcp.vercel.com` endpoint was added to user-wide Codex configuration and OAuth completed. The existing Vercel plugin guidance remains installed. Documentation search and authenticated team listing succeeded through the connected Vercel app. Setup followed [Vercel's onboarding guide](https://vercel.com/get-started.md).
 
 Vercel also returned a Cloudflare Domain Connect flow for this project domain. Use the project dashboard's Domains page to apply that flow; the required DNS records above remain the manual alternative.
+
+## Embedded DEX build dependency contract
+
+The embedded DEX is built from `integrations/x3dex`. Its build runs TypeScript
+before Vite, including the existing source test files. TypeScript, Vite, the React
+plugin, their type packages and Vitest therefore belong to its installed build
+dependencies even when the hosting install uses `--omit=dev`. The lockfile keeps
+the same package versions; only dependency classification changes. Oxlint stays
+an optional development dependency.
+
+The separate `dex-production-install` CI job installs only this package with
+`--omit=dev --ignore-scripts` and builds it before installing any parent app
+packages. This reproduces the missing-`tsc` failure seen in the Vercel `x3dex`
+project on 2026-11-11 without deploying anything.
+
+The default `npm run build` retains embedded output at `public/dex-terminal`,
+served under `/dex-terminal/` by dotx3. The explicit `npm run build:standalone`
+uses Vite's `standalone` mode to emit `integrations/x3dex/dist` with `/` as the
+route base. The nested `integrations/x3dex/vercel.json` selects that command and
+output for the separate Vercel project rooted in this package. Root dotx3 builds
+do not infer standalone mode from Vercel environment variables.
+
+Both artifact layouts are checked in CI. No Vercel project settings, custom domains,
+analytics collection or execution permissions are changed. A successful build is
+not evidence of public publication; record preview protection and the served
+commit separately before promoting a release.
+
+
+## Optional telemetry stays off until verified
+
+Speed Insights in the root site and Web Analytics in the embedded DEX are
+implemented integrations, disabled by default. Local production browser checks
+on 2026-11-11 observed 404 responses from their provider-only paths,
+`/_vercel/speed-insights/script.js` and `/_vercel/insights/script.js`, when mounted
+on a local server. A package import or successful build does not verify those
+endpoints, project enablement, or collection.
+
+Only the exact build-time string `true` enables the corresponding mount:
+
+| Build target | Opt-in variable |
+| --- | --- |
+| Root dotx3 site | `VITE_ENABLE_SPEED_INSIGHTS=true` |
+| Embedded or standalone x3dex | `VITE_ENABLE_WEB_ANALYTICS=true` |
+
+Leave these variables unset for local review and hosts without verified provider
+endpoints. Before enabling collection, verify the intended deployment, provider
+configuration and applicable approval. These flags contain no credentials and
+require rebuilding the relevant target; they do not enable a provider project.
+A browser test using an intercepted script response proves only that the opt-in
+mount works with a fixture. It does not establish live telemetry delivery.

@@ -20,11 +20,14 @@ import { Route as DexRouteImport } from './routes/dex'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as LabsRouteImport } from './routes/labs'
 import { Route as LanguageRouteImport } from './routes/language'
+import { Route as LearnRouteImport } from './routes/learn'
 import { Route as NearRouteImport } from './routes/near'
 import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as ProofRouteImport } from './routes/proof'
 import { Route as ProofsRouteImport } from './routes/proofs'
 import { Route as SecurityRouteImport } from './routes/security'
+import { Route as ApiExplorerTransactionsRouteImport } from './routes/api/explorer/transactions'
+import { Route as ApiShieldIncidentsRouteImport } from './routes/api/shield/incidents'
 import { Route as ApiX3dexSplatRouteImport } from './routes/api/x3dex/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -82,6 +85,11 @@ const LanguageRoute = LanguageRouteImport.update({
   path: '/language',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NearRoute = NearRouteImport.update({
   id: '/near',
   path: '/near',
@@ -107,6 +115,16 @@ const SecurityRoute = SecurityRouteImport.update({
   path: '/security',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiExplorerTransactionsRoute = ApiExplorerTransactionsRouteImport.update({
+  id: '/api/explorer/transactions',
+  path: '/api/explorer/transactions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiShieldIncidentsRoute = ApiShieldIncidentsRouteImport.update({
+  id: '/api/shield/incidents',
+  path: '/api/shield/incidents',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiX3dexSplatRoute = ApiX3dexSplatRouteImport.update({
   id: '/api/x3dex/$',
   path: '/api/x3dex/$',
@@ -125,11 +143,14 @@ export interface FileRoutesByFullPath {
   '/docs': typeof DocsRoute
   '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
+  '/learn': typeof LearnRoute
   '/near': typeof NearRoute
   '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
+  '/api/shield/incidents': typeof ApiShieldIncidentsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
 export interface FileRoutesByTo {
@@ -144,11 +165,14 @@ export interface FileRoutesByTo {
   '/docs': typeof DocsRoute
   '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
+  '/learn': typeof LearnRoute
   '/near': typeof NearRoute
   '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
+  '/api/shield/incidents': typeof ApiShieldIncidentsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
 export interface FileRoutesById {
@@ -164,11 +188,14 @@ export interface FileRoutesById {
   '/docs': typeof DocsRoute
   '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
+  '/learn': typeof LearnRoute
   '/near': typeof NearRoute
   '/playground': typeof PlaygroundRoute
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
+  '/api/shield/incidents': typeof ApiShieldIncidentsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
 export interface FileRouteTypes {
@@ -185,11 +212,14 @@ export interface FileRouteTypes {
     | '/docs'
     | '/labs'
     | '/language'
+    | '/learn'
     | '/near'
     | '/playground'
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/explorer/transactions'
+    | '/api/shield/incidents'
     | '/api/x3dex/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -204,11 +234,14 @@ export interface FileRouteTypes {
     | '/docs'
     | '/labs'
     | '/language'
+    | '/learn'
     | '/near'
     | '/playground'
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/explorer/transactions'
+    | '/api/shield/incidents'
     | '/api/x3dex/$'
   id:
     | '__root__'
@@ -223,11 +256,14 @@ export interface FileRouteTypes {
     | '/docs'
     | '/labs'
     | '/language'
+    | '/learn'
     | '/near'
     | '/playground'
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/explorer/transactions'
+    | '/api/shield/incidents'
     | '/api/x3dex/$'
   fileRoutesById: FileRoutesById
 }
@@ -243,11 +279,14 @@ export interface RootRouteChildren {
   DocsRoute: typeof DocsRoute
   LabsRoute: typeof LabsRoute
   LanguageRoute: typeof LanguageRoute
+  LearnRoute: typeof LearnRoute
   NearRoute: typeof NearRoute
   PlaygroundRoute: typeof PlaygroundRoute
   ProofRoute: typeof ProofRoute
   ProofsRoute: typeof ProofsRoute
   SecurityRoute: typeof SecurityRoute
+  ApiExplorerTransactionsRoute: typeof ApiExplorerTransactionsRoute
+  ApiShieldIncidentsRoute: typeof ApiShieldIncidentsRoute
   ApiX3dexSplatRoute: typeof ApiX3dexSplatRoute
 }
 
@@ -330,6 +369,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LanguageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/near': {
       id: '/near'
       path: '/near'
@@ -365,6 +411,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/explorer/transactions': {
+      id: '/api/explorer/transactions'
+      path: '/api/explorer/transactions'
+      fullPath: '/api/explorer/transactions'
+      preLoaderRoute: typeof ApiExplorerTransactionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/shield/incidents': {
+      id: '/api/shield/incidents'
+      path: '/api/shield/incidents'
+      fullPath: '/api/shield/incidents'
+      preLoaderRoute: typeof ApiShieldIncidentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/x3dex/$': {
       id: '/api/x3dex/$'
       path: '/api/x3dex/$'
@@ -387,11 +447,14 @@ const rootRouteChildren: RootRouteChildren = {
   DocsRoute: DocsRoute,
   LabsRoute: LabsRoute,
   LanguageRoute: LanguageRoute,
+  LearnRoute: LearnRoute,
   NearRoute: NearRoute,
   PlaygroundRoute: PlaygroundRoute,
   ProofRoute: ProofRoute,
   ProofsRoute: ProofsRoute,
   SecurityRoute: SecurityRoute,
+  ApiExplorerTransactionsRoute: ApiExplorerTransactionsRoute,
+  ApiShieldIncidentsRoute: ApiShieldIncidentsRoute,
   ApiX3dexSplatRoute: ApiX3dexSplatRoute,
 }
 export const routeTree = rootRouteImport

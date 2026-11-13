@@ -179,7 +179,7 @@ export function MeterScene({ progress }: { progress: number }) {
       ref={wrapRef}
       className="mx-auto h-72 w-full max-w-xl"
       role="img"
-      aria-label="Three.js ring showing progress toward the $100,000,000,000 goal"
+      aria-label="Three.js ring showing how many milestone proofs are posted"
     />
   );
 }

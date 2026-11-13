@@ -1,5 +1,6 @@
 name: Site checks
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches: [main]
@@ -18,8 +19,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Compiler API and source provenance
-        run: python3 -m unittest discover -s tests -p 'test_compiler_api.py' -v
+      - name: Compiler API, quote guards and source provenance
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm test
       - run: npm run typecheck
@@ -28,3 +29,23 @@ jobs:
         run: |
           npm --prefix integrations/x3dex test
           npm --prefix integrations/x3dex run test:server
+  dex-production-install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: integrations/x3dex/package-lock.json
+      - name: Install embedded DEX with the production dependency contract
+        run: npm --prefix integrations/x3dex ci --omit=dev --ignore-scripts --no-audit --no-fund
+      - name: Build without parent app dependencies
+        run: npm --prefix integrations/x3dex run build
+      - name: Check embedded output
+        run: test -s public/dex-terminal/index.html
+      - name: Build the explicit standalone package
+        run: npm --prefix integrations/x3dex run build:standalone
+      - name: Check both output layouts and asset URLs
+        run: node integrations/x3dex/scripts/check-build-outputs.mjs
