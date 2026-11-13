@@ -79,3 +79,10 @@ test("the new standalone page links from the existing challenge and does no sign
   assert.match(page,/ARCHIVED RPC CHECKS/);
   assert.doesNotMatch(page,/window\.ethereum|signAndSendTransaction|sendTransaction|wallet\.sign/i);
 });
+
+
+test("proof-card link points to the pinned commit containing the card", () => {
+  const html=readFileSync(new URL("../public/labs/force-field/verify.html",import.meta.url),"utf8");
+  assert.match(html,/\/blob\/f2a01a2ae144c69e115fd807a642bddfd8668f9f\/PROOF_CARD\.md/);
+  assert.doesNotMatch(html,/\/blob\/4f60ddb652188784ed44f64d8172cd2cd84da422\/PROOF_CARD\.md/);
+});
