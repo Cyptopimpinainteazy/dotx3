@@ -70,8 +70,8 @@ export function TrackPage({ slug }: { slug: (typeof nearTracks)[number]["slug"] 
           </li>
           <li>
             Open the mainnet invoice_06 bundle and the separately labeled testnet records. Match
-            each contract, transaction and network to its claim. The mainnet source hashes are
-            recorded but not yet matched to committed .x3 files.
+            each contract, transaction and network to its claim. Check that the two published .x3
+            files hash to the values Guard stores for invoice_06.
           </li>
           <li>
             For delivery, inspect the source and destination finalized records and the relay

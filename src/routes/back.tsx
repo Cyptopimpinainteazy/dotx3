@@ -105,8 +105,8 @@ function BackPage() {
         </ul>
         <p className="mx-auto mt-5 max-w-3xl text-sm text-muted">
           This is one recorded mainnet swap. Guard authorized the deposit address without holding
-          the USDC. The funding wallet&apos;s controller, source-file hash linkage, scoped custody
-          and an independent security review remain unverified.
+          the USDC; the owner signed the deposit. Scoped custody, authenticated outcome records
+          and an independent security review are not claimed.
         </p>
       </Section>
 

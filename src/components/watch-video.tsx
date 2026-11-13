@@ -52,7 +52,7 @@ export function WatchVideo() {
         <div className="mt-4 flex flex-col items-center justify-between gap-3 text-sm text-muted sm:flex-row">
           <p className="text-center sm:text-left">
             Scenes marked DRAMATIZATION are AI-generated. Explorer cards are testnet. Terminal shots are local runs. Nothing
-            in the video is a mainnet settlement.
+            in the video is a mainnet settlement; the mainnet record is the invoice_06 section above.
           </p>
           <a
             href={SONG.video}

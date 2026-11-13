@@ -249,8 +249,8 @@ export const JUDGE_COMMAND = "bash scripts/hackathon/judge_one_command.sh /tmp/x
 
 export const NOT_CLAIMED = [
   "Cases 01–03 are historical testnet or local evidence; the mainnet invoice_06 record is labeled separately above.",
-  "Guard does not custody swap assets; an unrestricted funding key can bypass it. Mainnet funder control is unconfirmed.",
-  "The mainnet stored hashes are not yet matched to committed .x3 source files.",
+  "Guard does not custody swap assets; a holder of the funding wallet's key can bypass it. The mainnet deposit was owner-signed, and the agent account still holds a FullAccess recovery key.",
+  "The mainnet outcome is agent-reported: Guard stores the transaction hashes it is given and does not authenticate them.",
   "The testnet trade uses Tidepool; the mainnet legs are associated by provider status. Neither proves atomic settlement.",
   "The X3 compiler and VM predate the hackathon; the NEAR integration is the hackathon work.",
 ];
@@ -260,7 +260,7 @@ export const SITUATION_REPORT = [
   {
     status: "MAINNET",
     tone: "good",
-    text: "25 USDC Solana → 24.9952 USDC NEAR after a restricted agent key accepted the signed 1Click quote; 21 Guard checks passed. Funding-wallet control and .x3 source linkage remain pending.",
+    text: "25 USDC Solana → 24.9952 USDC NEAR after a restricted agent key passed 21 Guard checks on the signed 1Click quote. The original .x3 files match the stored hashes; the owner signed the deposit; the agent recorded Settled.",
     href: LINKS.mainnetEvidence,
     link: "invoice_06 evidence",
   },

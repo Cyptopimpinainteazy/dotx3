@@ -152,7 +152,7 @@ function ProofPage() {
 
       <Section title="Not claimed" alt>
         <ul className="mx-auto max-w-3xl list-disc space-y-2 pl-5 text-muted">
-          <li>The mainnet payment and mandate hashes are not yet matched to committed .x3 source files. The controller of the Solana funding wallet remains unconfirmed.</li>
+          <li>Mainnet invoice_06 is one owner-funded settlement of about $25 that the agent authorized but did not pay. Its seven limits are listed with the receipts above.</li>
           <li>No public audited vault. Guard does not custody swap assets; native NEAR used for storage and account operation is separate. An unrestricted origin key can bypass it.</li>
           <li>No cryptographic atomic cross-chain causality for either the Tidepool testnet trade or the mainnet 1Click settlement.</li>
           <li>Exact approved-program enforcement is still in <OutLink href={LINKS.programBindingPr}>open PR #202</OutLink>. A stored hash does not prove that enforcement.</li>

@@ -14,6 +14,7 @@ import { openIntro, SONG } from "@/lib/song";
 import { MeterScene } from "@/components/meter-scene";
 import { GuardScene } from "@/components/guard-scene";
 import { CaseFileCard, ChainOfCommand, FourDoors, SituationReport } from "@/components/dossier";
+import { MainnetEvidence } from "@/components/mainnet-evidence";
 import { ARCADE_URL, BACKING_LINKS_VISIBLE, EVIDENCE_SNAPSHOT, getProofSummary, hasMilestoneEvidence, LINKS, MILESTONES, SITE, TOKEN } from "@/lib/front-door";
 
 export const Route = createFileRoute("/")({ component: Home });
@@ -133,6 +134,14 @@ function Home() {
       media={<GuardScene />}
     >
       <EnterGate />
+
+      <Section
+        title="Mainnet proof: invoice_06"
+        intro="One real payment on NEAR and Solana mainnet, from the owner's rule to the recorded outcome. What it does not prove is on the same screen."
+      >
+        <MainnetEvidence />
+      </Section>
+
       <WatchVideo />
       <RouteTicker />
 

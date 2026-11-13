@@ -50,12 +50,13 @@ function DocsPage() {
         <p className="mx-auto max-w-3xl text-muted">
           The evidence reviewed {EVIDENCE_SNAPSHOT.dateLabel} includes a live 1Click quote accepted
           on x3lang.near by a restricted agent key, followed by a 25 USDC Solana deposit and
-          24.9952 USDC delivery on NEAR. The original mandate and payment source files still need
-          to be matched to their stored hashes. The examples below teach the language; they are
-          not asserted to be the exact invoice_06 files.
+          24.9952 USDC delivery on NEAR. The original mandate and payment files are published and
+          match the hashes Guard stores. The examples below teach the language; the invoice_06
+          files are linked separately.
         </p>
         <p className="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-3">
           <OutLink href={LINKS.mainnetEvidence}>Mainnet evidence and limits</OutLink>
+          <OutLink href={LINKS.mainnetSourceRecovery}>The invoice_06 .x3 files</OutLink>
           <OutLink href={LINKS.mainnetObservation}>Public RPC observations</OutLink>
           <OutLink href={LINKS.mainnetChecksums}>Evidence checksum</OutLink>
         </p>

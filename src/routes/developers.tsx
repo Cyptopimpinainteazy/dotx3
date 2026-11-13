@@ -64,8 +64,8 @@ function DevelopersPage() {
           Reviewed {EVIDENCE_SNAPSHOT.dateLabel}: mainnet invoice_06 records a restricted NEAR
           agent authorization, 25 USDC deposited on Solana and 24.9952 USDC delivered to
           x3lang.near. The committed RPC observation, checksum and exact-revision CI are linked
-          below. Funding-wallet ownership, matching .x3 source files and guarded custody remain
-          separate unfinished work.
+          below. The original .x3 files match the stored hashes and the agent recorded a Settled
+          outcome. Guarded custody and authenticated outcome records remain unfinished work.
         </p>
         <p className="mt-5 flex flex-wrap gap-x-5 gap-y-3">
           <OutLink href={LINKS.mainnetEvidence}>Mainnet archive</OutLink>
