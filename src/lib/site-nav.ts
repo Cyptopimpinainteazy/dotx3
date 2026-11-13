@@ -145,6 +145,12 @@ export const ALL_NAV: NavGroup[] = [
       },
       {
         kind: "file",
+        label: "Break the mandate",
+        description: "Twelve attacks, where each stops, and the limits",
+        href: "/labs/force-field/index.html",
+      },
+      {
+        kind: "file",
         label: "Watch an Agent Play",
         description: "MEME COIN BLAST under an .x3 mandate",
         href: ARCADE_URL,
