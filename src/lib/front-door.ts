@@ -5,12 +5,19 @@ export const RAW = "https://github.com/Cyptopimpinainteazy/x3lang/blob/master";
 
 /** Reviewed repository snapshot. A passing run here covers this commit, not a future branch tip. */
 export const EVIDENCE_SNAPSHOT = {
-  commit: "efb514ffef2cdfdeb8ad8147747887c85356073c",
-  checkedAt: "2026-11-13T03:24:21Z",
-  dateLabel: "November 12, 2026",
-  ciRun: `${REPO}/actions/runs/43349759535`,
-  checksPassed: 7,
+  commit: "4f60ddb652188784ed44f64d8172cd2cd84da422",
+  checkedAt: "2026-11-13T06:12:37Z",
+  dateLabel: "November 13, 2026",
+  ciRun: `${REPO}/actions/runs/43376851817`,
+  checksPassed: 4,
 } as const;
+
+/**
+ * The X3Lang revision the browser compiler and labs were vendored from. Kept separate from
+ * EVIDENCE_SNAPSHOT: efb514f..4f60ddb adds evidence files only, and the vendored bytes are
+ * pinned to this commit by scripts/attack-lab.test.mjs. Re-vendor before changing it.
+ */
+export const VENDOR_SNAPSHOT = { commit: "efb514ffef2cdfdeb8ad8147747887c85356073c" } as const;
 
 const PINNED = `${REPO}/blob/${EVIDENCE_SNAPSHOT.commit}`;
 const MAINNET_BUNDLE = `${PINNED}/evidence/near-guard-mainnet-invoice06-2026-11-12`;
@@ -26,10 +33,37 @@ export const MAINNET = {
   observedAt: "2026-11-12 21:15 UTC",
   observationSha256: "3e04b9fd801473a52c1f51460c406752ef898877c80bda920c32c8ddb3348be7",
   quoteHash: "8ynPgyqDugkyL2gicfUuTtymMjTPQzcRMBjj4RKgKeSD",
+  approvalTx: "GFdQLrzT5tnPPdZwKLtmwpNvSwrxVHDvVg2C3WX5fsK6",
   guardTx: "Eg75uehwU4YJ86ZZPEPKiBqnjkr6PxwPmV23HFAgu153",
-  depositTx: "4zhGYyWNabYQ5gixTUzoVHVbgFKWAsQssSpCv3B1J1LjCRisEJW6wm3zuS2GVuDotAT93S8wm1qezHwsKX2RkXo5",
+  depositTx:
+    "4zhGYyWNabYQ5gixTUzoVHVbgFKWAsQssSpCv3B1J1LjCRisEJW6wm3zuS2GVuDotAT93S8wm1qezHwsKX2RkXo5",
   payoutTx: "8jfbACLSxrzi3fnajfAVGc4Fgo6XLCWA1mpiJWXPw43P",
+  outcomeTx: "9sTn9pJ1ZbCVazBm9Wz9oEDh6aWw4FUVMoAJEKCCzuqE",
+  /** SHA-256 of the recovered .x3 files; equal to the hashes Guard stores (get_intent / get_mandate). */
+  paymentSha256: "9ee29a5603cfa1e7d9fdbd866cf330ce35e6b5f0907c6844dd2ef1a213768ba0",
+  mandateSha256: "eea021d5cc1118801f4e1d3b9c0efe89fc59a7f654031f9ff1951aa1f2f3d515",
+  guardCodeHash: "BPdpJAw8R4SDh6Wi7dPcXTs5T7ncJDVKCLgzuqZFb15T",
+  /** The key that signed every agent call: FunctionCall, three Guard methods on x3lang.near. */
+  agentFunctionCallKey: "ed25519:J3NiU8J63HAfz2MTDu1zQVhFRYS5Pio21h1kNtJdP11x",
+  /** Owner recovery key that is still on the agent account. It signed none of these calls. */
+  agentFullAccessKey: "ed25519:8teaXGYFELKQN5QA7gQqeA4B7URrcMQqaczZ5D68c23u",
+  fundingWallet: "58tbMfadmi8HWzUndLqkX3prBbkiZMEaYMTDYSzhB3cQ",
 } as const;
+
+/**
+ * What invoice_06 does not prove. Shown wherever the mainnet record is, so the receipt never
+ * appears without its limits. Each line is stated in the x3lang evidence bundle at
+ * EVIDENCE_SNAPSHOT.commit.
+ */
+export const MAINNET_LIMITS = [
+  "The owner manually signed the Solana deposit from the funding wallet. First-party records identify it as the owner's; the chain shows the signer, not who controls it.",
+  "Guard does not hold or move the USDC. A holder of the funding wallet's key could pay without Guard.",
+  "The agent account still has the owner's FullAccess recovery key next to its restricted key. That key signed none of these calls.",
+  "The recorded outcome is the agent's report. Guard stores the supplied transaction hashes and checks the amount against the floor; it does not authenticate the hashes.",
+  "The Solana deposit and the NEAR payout are linked by 1Click status, timing and amount, not by a cryptographic cross-chain proof.",
+  "Guard checks the stored .x3 hashes; it does not compile or run .x3. X3VM is not on the deployed authorization path.",
+  "One settlement of about $25. It does not establish production reliability.",
+] as const;
 
 export const LINKS = {
   repo: REPO,
@@ -56,12 +90,20 @@ export const LINKS = {
   mainnetGuardTx: `https://nearblocks.io/txns/${MAINNET.guardTx}`,
   mainnetDepositTx: `https://solscan.io/tx/${MAINNET.depositTx}`,
   mainnetPayoutTx: `https://nearblocks.io/txns/${MAINNET.payoutTx}`,
-  mainnetApprovalTx: "https://nearblocks.io/txns/GFdQLrzT5tnPPdZwKLtmwpNvSwrxVHDvVg2C3WX5fsK6",
+  mainnetApprovalTx: `https://nearblocks.io/txns/${MAINNET.approvalTx}`,
+  mainnetOutcomeTx: `https://nearblocks.io/txns/${MAINNET.outcomeTx}`,
+  mainnetSourceRecovery: `${MAINNET_BUNDLE}/source-recovery/README.md`,
+  mainnetPaymentSource: `${MAINNET_BUNDLE}/source-recovery/payment-proposed.x3`,
+  mainnetMandateSource: `${MAINNET_BUNDLE}/source-recovery/mandate-proposed.x3`,
+  mainnetOutcomeEvidence: `${MAINNET_BUNDLE}/outcome-recording/README.md`,
+  mainnetGuardAccount: "https://nearblocks.io/address/x3lang.near",
+  mainnetAgentAccount: "https://nearblocks.io/address/x3-agent.x3lang.near",
   currentCi: `${REPO}/commit/${EVIDENCE_SNAPSHOT.commit}/checks`,
   reviewedSource: `${REPO}/tree/${EVIDENCE_SNAPSHOT.commit}`,
   programBindingPr: `${REPO}/pull/202`,
   vaultRunbook: `${PINNED}/docs/hackathon/VAULT_TESTNET_RUNBOOK.md`,
-  baseTx: "https://sepolia.basescan.org/tx/0x46c21dc305a9271c4e74c6d0734fb50f847a1e53d3cad87976133d66fd6728d9",
+  baseTx:
+    "https://sepolia.basescan.org/tx/0x46c21dc305a9271c4e74c6d0734fb50f847a1e53d3cad87976133d66fd6728d9",
   nearPayout: "https://testnet.nearblocks.io/txns/EBEBxJNgV9U5tBFBLj18ZzukgArqwXH5rBsBStFyCm1d",
   refuseTx: "https://testnet.nearblocks.io/txns/AhVBD7oXfwsixBipupjCzuhNdqunjdXJnLz3LXnmfnN8",
   acceptTx: "https://testnet.nearblocks.io/txns/DPJfcRUGk56h8sSsFsDFFgUMQAiyBCtpMuvquF9FvTct",
@@ -70,7 +112,8 @@ export const LINKS = {
   deployTx: "https://testnet.nearblocks.io/txns/FJ5voQaArx17QV4TzDLYDq93cuoAVLSRxjcxbswuyE8v",
   baseline: "https://github.com/Cyptopimpinainteazy/x3lang/compare/baseline...master",
   nearDocs: "https://docs.near.org",
-  intentsDocs: "https://docs.near-intents.org/integration/distribution-channels/1click-api/quickstart",
+  intentsDocs:
+    "https://docs.near-intents.org/integration/distribution-channels/1click-api/quickstart",
   hackathon: "https://nearhackathon.com",
   x: "https://x.com/x3starchain",
   telegram: "https://t.me/x3starchain",
@@ -164,7 +207,8 @@ export const MILESTONES: Milestone[] = [
     proof:
       "One allowed payment, plus recorded refusals for over-cap, wrong recipient, 24-hour window and redirected refund.",
     evidence: null,
-    nextAction: "Publish the allowed payment and all four refusal cases from the public testnet runbook. Local Sandbox tests do not fill this milestone.",
+    nextAction:
+      "Publish the allowed payment and all four refusal cases from the public testnet runbook. Local Sandbox tests do not fill this milestone.",
     nextHref: LINKS.vaultRunbook,
   },
   {
@@ -176,6 +220,8 @@ export const MILESTONES: Milestone[] = [
       { label: "Guard acceptance", href: LINKS.mainnetGuardTx },
       { label: "25 USDC Solana deposit", href: LINKS.mainnetDepositTx },
       { label: "24.9952 USDC NEAR delivery", href: LINKS.mainnetPayoutTx },
+      { label: "Recorded outcome", href: LINKS.mainnetOutcomeTx },
+      { label: "Source files matching the stored hashes", href: LINKS.mainnetSourceRecovery },
     ],
   },
   {
@@ -183,28 +229,32 @@ export const MILESTONES: Milestone[] = [
     proof:
       "A red-team model's payments go through the same restricted key, and each refusal is on chain with an attack label.",
     evidence: null,
-    nextAction: "Publish labeled hostile-model attempts through the restricted mainnet key and their on-chain refusals. Current red-team evidence is local.",
+    nextAction:
+      "Publish labeled hostile-model attempts through the restricted mainnet key and their on-chain refusals. Current red-team evidence is local.",
   },
   {
     title: "Guard checks the program hash",
     proof:
       "An approved mandate carries only the exact .x3 program the owner saw. Contract tests cover a mismatched hash.",
     evidence: null,
-    nextAction: "Land reviewed program-hash enforcement with mismatch tests. PR #202 is still open at this snapshot; storing a hash alone does not satisfy this gate.",
+    nextAction:
+      "Land reviewed program-hash enforcement with mismatch tests. PR #202 is still open at this snapshot; storing a hash alone does not satisfy this gate.",
     nextHref: LINKS.programBindingPr,
   },
   {
     title: "Independent security review",
     proof: "A published report on Guard and the vault, with every finding and its fix.",
     evidence: null,
-    nextAction: "Publish an independent review and the disposition of every finding. Internal checks and this evidence review do not count as an independent audit.",
+    nextAction:
+      "Publish an independent review and the disposition of every finding. Internal checks and this evidence review do not count as an independent audit.",
   },
   {
     title: "Tagged release",
     proof:
       "A GitHub release with a checksum and build provenance, so nobody has to trust a branch tip.",
     evidence: null,
-    nextAction: "Publish a versioned release with checksums and build provenance. A passing branch build is not a release.",
+    nextAction:
+      "Publish a versioned release with checksums and build provenance. A passing branch build is not a release.",
     nextHref: `${REPO}/releases`,
   },
 ];

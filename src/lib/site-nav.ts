@@ -57,6 +57,13 @@ export const ALL_NAV: NavGroup[] = [
     items: [
       {
         kind: "route",
+        label: "Mainnet proof: invoice_06",
+        description: "Five mainnet transactions and their limits",
+        to: "/",
+        hash: "mainnet-proof-invoice-06",
+      },
+      {
+        kind: "route",
         label: "Judge Console",
         description: "Mainnet settlement and historical testnet cases",
         to: "/judge",

@@ -46,7 +46,8 @@ function NearPage() {
           For invoice_06, x3-agent.x3lang.near used its restricted FunctionCall key to accept a
           signed live quote on x3lang.near. The Solana deposit was 25.000000 USDC; the NEAR payout
           was 24.995200 USDC. Guard authorization, funding and delivery have separate records.
-          The funding wallet&apos;s controller and the original .x3 source files remain unverified.
+          The original .x3 files match the hashes Guard stores, the owner signed the deposit from
+          the wallet named in the mandate, and the agent recorded a Settled outcome on Guard.
         </p>
         <p className="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-3">
           <OutLink href={LINKS.mainnetEvidence}>Evidence and limits</OutLink>
@@ -62,8 +63,8 @@ function NearPage() {
             not sign or move funds.
           </Card>
           <Card title="NEAR Guard">
-            Inspect the mainnet agent authorization and the historical testnet refusal. A
-            restricted contract call does not establish control of the separate funding wallet.
+            Inspect the mainnet agent authorization and the historical testnet refusal. Guard
+            authorizes the deposit address; it does not hold the funds.
           </Card>
           <Card title="Delivered funds">
             Open the finalized mainnet deposit and payout, then read how 1Click status associates

@@ -26,10 +26,10 @@ export const nearTracks = [
     evidence:
       "x3-agent.x3lang.near accepted invoice_06 with a FunctionCall key restricted to three Guard methods. Owner approval preceded that call; a separate Solana wallet funded 25 USDC and 24.9952 USDC arrived on NEAR.",
     limit:
-      "The restricted NEAR call is verified. Control of the Solana funding wallet is unconfirmed, the two stored .x3 hashes have no matching committed source files, and Guard has no recorded settlement outcome for this intent.",
+      "The agent authorized the payment; it did not pay. The owner signed the Solana deposit, the agent account still holds a FullAccess recovery key, and the Settled outcome the agent recorded is not authenticated by Guard.",
     evidenceHref: LINKS.mainnetEvidence,
     next:
-      "Match the original mandate and payment files to their stored hashes, establish funding-wallet control, and record the verified outcome through the authorized Guard workflow.",
+      "Give the agent a contract-held budget it can actually spend, so the same mandate limits a payment the agent sends, and remove the recovery key from the agent account.",
     source: "MAINNET_AGENT_PREFLIGHT.md",
     demo: "/demo",
   },
@@ -45,7 +45,7 @@ export const nearTracks = [
       "1Click status associates the mainnet deposit and payout; it is not cryptographic cross-chain causality. Guard did not custody funds. The historical Tidepool trade remains a separate trusted-relay testnet demonstration.",
     evidenceHref: LINKS.mainnetEvidence,
     next:
-      "Complete source-hash linkage and publish the remaining custody evidence. Confirm the owner-approved submission record before describing DeFi as a submitted track.",
+      "Publish custody evidence for a deposit Guard controls, and an independently verified link between the two settlement legs.",
     source: "FIRST_FINALIZED_SWAP_EVIDENCE.md",
     demo: "/proof",
   },
