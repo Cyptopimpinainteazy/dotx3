@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import type { ExplorerPage } from "@/lib/explorer/client.mjs";
 import { BASE_TX, SITUATION_REPORT } from "@/lib/judge-cases";
 import { LINKS } from "@/lib/front-door";
+import { explorerFailureMessage } from "@/lib/explorer/failure";
 
 /**
- * Shown while live Explorer history is not connected on this deployment: published
- * mainnet evidence and historical testnet records behind this page's claims.
+ * Published mainnet evidence and historical testnet records behind this page's claims. Shown
+ * while live Explorer history is not connected, and under the error when a live lookup fails,
+ * so a broken provider connection never leaves the panel without evidence.
  */
-function RecordedEvidence() {
+function RecordedEvidence({ intro = true }: { intro?: boolean }) {
   const rows = [
     ...SITUATION_REPORT.filter((r) => r.status !== "HELD 8/8"),
     {
@@ -20,11 +22,18 @@ function RecordedEvidence() {
   ] as const;
   return (
     <div className="space-y-4">
-      <p className="text-muted">
-        Live 1Click Explorer history is not connected on this site yet. This panel shows the
-        published mainnet and historical testnet evidence instead. Open each link to inspect its
-        archived evidence or public explorer receipt.
-      </p>
+      {intro ? (
+        <p className="text-muted">
+          Live 1Click Explorer history is not connected on this site yet. This panel shows the
+          published mainnet and historical testnet evidence instead. Open each link to inspect its
+          archived evidence or public explorer receipt.
+        </p>
+      ) : (
+        <p className="text-sm text-muted">
+          Recorded evidence, independent of the live lookup. Open each link to inspect its archived
+          evidence or public explorer receipt.
+        </p>
+      )}
       <ul className="overflow-hidden rounded-xl border border-border bg-surface">
         {rows.map((row) => (
           <li
@@ -76,11 +85,13 @@ export function ExplorerEvidence() {
   const [status, setStatus] = useState("");
   const [scope, setScope] = useState("account");
   const [busy, setBusy] = useState(false);
+  const [failed, setFailed] = useState(false);
   const [message, setMessage] = useState(
     "Load the configured project history. No wallet connection or transaction signing.",
   );
   async function load(next = false) {
     setBusy(true);
+    setFailed(false);
     setMessage("Reading Explorer history…");
     const params = new URLSearchParams({ scope });
     if (status) params.set("statuses", status);
@@ -93,17 +104,19 @@ export function ExplorerEvidence() {
       const response = await fetch(`/api/explorer/transactions?${params}`, { cache: "no-store" });
       const data = await response.json();
       if (!response.ok) {
-        if (response.status === 429)
-          throw new Error(
-            `Partner request limit reached. Retry in ${response.headers.get("Retry-After") || "5"} seconds.`,
-          );
         if (data.error === "EXPLORER_NOT_CONFIGURED") {
           setConfigured(false);
           return;
         }
+        // Every other failure keeps the recorded evidence on screen beneath the message.
+        setFailed(true);
+        if (response.status === 429)
+          throw new Error(
+            `Partner request limit reached. Retry in ${response.headers.get("Retry-After") || "5"} seconds.`,
+          );
         if (data.error === "EXPLORER_SCOPE_NOT_CONFIGURED")
           throw new Error("This scope is not enabled on this site. Choose the other scope.");
-        throw new Error("Explorer is unavailable. No settlement conclusion can be drawn.");
+        throw new Error(explorerFailureMessage(data.error));
       }
       setPage(data);
       setMessage(
@@ -112,7 +125,11 @@ export function ExplorerEvidence() {
           : "No matching records returned. This does not prove that no swap occurred.",
       );
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Explorer unavailable.");
+      // A response that is not JSON, or a network failure, lands here without a code.
+      if (!(error instanceof Error) || error instanceof TypeError || error instanceof SyntaxError) {
+        setFailed(true);
+        setMessage(explorerFailureMessage(undefined));
+      } else setMessage(error.message);
     } finally {
       setBusy(false);
     }
@@ -186,6 +203,7 @@ export function ExplorerEvidence() {
       <p role="status" aria-live="polite" className="text-sm text-muted">
         {message}
       </p>
+      {failed && <RecordedEvidence intro={false} />}
       {page && (
         <p className="text-sm text-muted">
           Observed: {page.observedAt} · {page.cached ? "Cached response" : "Fresh response"}.
