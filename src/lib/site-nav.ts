@@ -151,6 +151,12 @@ export const ALL_NAV: NavGroup[] = [
       },
       {
         kind: "file",
+        label: "Agent Court",
+        description: "Raise an agent, run its day, judge it",
+        href: "/labs/court/index.html",
+      },
+      {
+        kind: "file",
         label: "Watch an Agent Play",
         description: "MEME COIN BLAST under an .x3 mandate",
         href: ARCADE_URL,
@@ -302,6 +308,12 @@ export const ALL_NAV: NavGroup[] = [
         label: "View the Code",
         description: "Repository, tools and integration levels",
         to: "/developers",
+      },
+      {
+        kind: "route",
+        label: "Super IDE",
+        description: "Editor, compiler and NEAR tools; try a slice in the browser",
+        to: "/ide",
       },
       {
         kind: "route",

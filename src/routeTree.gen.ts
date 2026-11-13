@@ -18,6 +18,7 @@ import { Route as DemoRouteImport } from './routes/demo'
 import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DexRouteImport } from './routes/dex'
 import { Route as DocsRouteImport } from './routes/docs'
+import { Route as IdeRouteImport } from './routes/ide'
 import { Route as JudgeRouteImport } from './routes/judge'
 import { Route as LabsRouteImport } from './routes/labs'
 import { Route as LanguageRouteImport } from './routes/language'
@@ -29,6 +30,7 @@ import { Route as ProofsRouteImport } from './routes/proofs'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as ApiExplorerStatusRouteImport } from './routes/api/explorer/status'
 import { Route as ApiExplorerTransactionsRouteImport } from './routes/api/explorer/transactions'
+import { Route as ApiNearTestnetRouteImport } from './routes/api/near/testnet'
 import { Route as ApiShieldIncidentsRouteImport } from './routes/api/shield/incidents'
 import { Route as ApiX3dexSplatRouteImport } from './routes/api/x3dex/$'
 
@@ -75,6 +77,11 @@ const DexRoute = DexRouteImport.update({
 const DocsRoute = DocsRouteImport.update({
   id: '/docs',
   path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IdeRoute = IdeRouteImport.update({
+  id: '/ide',
+  path: '/ide',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JudgeRoute = JudgeRouteImport.update({
@@ -132,6 +139,11 @@ const ApiExplorerTransactionsRoute = ApiExplorerTransactionsRouteImport.update({
   path: '/api/explorer/transactions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiNearTestnetRoute = ApiNearTestnetRouteImport.update({
+  id: '/api/near/testnet',
+  path: '/api/near/testnet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiShieldIncidentsRoute = ApiShieldIncidentsRouteImport.update({
   id: '/api/shield/incidents',
   path: '/api/shield/incidents',
@@ -153,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/ide': typeof IdeRoute
   '/judge': typeof JudgeRoute
   '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
@@ -164,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/security': typeof SecurityRoute
   '/api/explorer/status': typeof ApiExplorerStatusRoute
   '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
+  '/api/near/testnet': typeof ApiNearTestnetRoute
   '/api/shield/incidents': typeof ApiShieldIncidentsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
@@ -177,6 +191,7 @@ export interface FileRoutesByTo {
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/ide': typeof IdeRoute
   '/judge': typeof JudgeRoute
   '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
@@ -188,6 +203,7 @@ export interface FileRoutesByTo {
   '/security': typeof SecurityRoute
   '/api/explorer/status': typeof ApiExplorerStatusRoute
   '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
+  '/api/near/testnet': typeof ApiNearTestnetRoute
   '/api/shield/incidents': typeof ApiShieldIncidentsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
@@ -202,6 +218,7 @@ export interface FileRoutesById {
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/ide': typeof IdeRoute
   '/judge': typeof JudgeRoute
   '/labs': typeof LabsRoute
   '/language': typeof LanguageRoute
@@ -213,6 +230,7 @@ export interface FileRoutesById {
   '/security': typeof SecurityRoute
   '/api/explorer/status': typeof ApiExplorerStatusRoute
   '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
+  '/api/near/testnet': typeof ApiNearTestnetRoute
   '/api/shield/incidents': typeof ApiShieldIncidentsRoute
   '/api/x3dex/$': typeof ApiX3dexSplatRoute
 }
@@ -228,6 +246,7 @@ export interface FileRouteTypes {
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/ide'
     | '/judge'
     | '/labs'
     | '/language'
@@ -239,6 +258,7 @@ export interface FileRouteTypes {
     | '/security'
     | '/api/explorer/status'
     | '/api/explorer/transactions'
+    | '/api/near/testnet'
     | '/api/shield/incidents'
     | '/api/x3dex/$'
   fileRoutesByTo: FileRoutesByTo
@@ -252,6 +272,7 @@ export interface FileRouteTypes {
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/ide'
     | '/judge'
     | '/labs'
     | '/language'
@@ -263,6 +284,7 @@ export interface FileRouteTypes {
     | '/security'
     | '/api/explorer/status'
     | '/api/explorer/transactions'
+    | '/api/near/testnet'
     | '/api/shield/incidents'
     | '/api/x3dex/$'
   id:
@@ -276,6 +298,7 @@ export interface FileRouteTypes {
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/ide'
     | '/judge'
     | '/labs'
     | '/language'
@@ -287,6 +310,7 @@ export interface FileRouteTypes {
     | '/security'
     | '/api/explorer/status'
     | '/api/explorer/transactions'
+    | '/api/near/testnet'
     | '/api/shield/incidents'
     | '/api/x3dex/$'
   fileRoutesById: FileRoutesById
@@ -301,6 +325,7 @@ export interface RootRouteChildren {
   DevelopersRoute: typeof DevelopersRoute
   DexRoute: typeof DexRoute
   DocsRoute: typeof DocsRoute
+  IdeRoute: typeof IdeRoute
   JudgeRoute: typeof JudgeRoute
   LabsRoute: typeof LabsRoute
   LanguageRoute: typeof LanguageRoute
@@ -312,6 +337,7 @@ export interface RootRouteChildren {
   SecurityRoute: typeof SecurityRoute
   ApiExplorerStatusRoute: typeof ApiExplorerStatusRoute
   ApiExplorerTransactionsRoute: typeof ApiExplorerTransactionsRoute
+  ApiNearTestnetRoute: typeof ApiNearTestnetRoute
   ApiShieldIncidentsRoute: typeof ApiShieldIncidentsRoute
   ApiX3dexSplatRoute: typeof ApiX3dexSplatRoute
 }
@@ -379,6 +405,13 @@ declare module '@tanstack/react-router' {
       path: '/docs'
       fullPath: '/docs'
       preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ide': {
+      id: '/ide'
+      path: '/ide'
+      fullPath: '/ide'
+      preLoaderRoute: typeof IdeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/judge': {
@@ -458,6 +491,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiExplorerTransactionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/near/testnet': {
+      id: '/api/near/testnet'
+      path: '/api/near/testnet'
+      fullPath: '/api/near/testnet'
+      preLoaderRoute: typeof ApiNearTestnetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/shield/incidents': {
       id: '/api/shield/incidents'
       path: '/api/shield/incidents'
@@ -485,6 +525,7 @@ const rootRouteChildren: RootRouteChildren = {
   DevelopersRoute: DevelopersRoute,
   DexRoute: DexRoute,
   DocsRoute: DocsRoute,
+  IdeRoute: IdeRoute,
   JudgeRoute: JudgeRoute,
   LabsRoute: LabsRoute,
   LanguageRoute: LanguageRoute,
@@ -496,6 +537,7 @@ const rootRouteChildren: RootRouteChildren = {
   SecurityRoute: SecurityRoute,
   ApiExplorerStatusRoute: ApiExplorerStatusRoute,
   ApiExplorerTransactionsRoute: ApiExplorerTransactionsRoute,
+  ApiNearTestnetRoute: ApiNearTestnetRoute,
   ApiShieldIncidentsRoute: ApiShieldIncidentsRoute,
   ApiX3dexSplatRoute: ApiX3dexSplatRoute,
 }
