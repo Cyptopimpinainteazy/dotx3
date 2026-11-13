@@ -293,7 +293,7 @@ export const ALL_NAV: NavGroup[] = [
       {
         kind: "route",
         label: "Super IDE",
-        description: "Editor, compiler and a NEAR devnet; try it in the browser",
+        description: "Editor, compiler and NEAR tools; try a slice in the browser",
         to: "/ide",
       },
       {

@@ -92,7 +92,11 @@ export function trim(l: Lookup, r: Json): Json {
         prevHash: r.header?.prev_hash,
         time: r.header ? new Date(Number(BigInt(r.header.timestamp_nanosec) / 1_000_000n)).toISOString() : null,
         author: r.author,
-        gasUsed: (r.chunks ?? []).reduce((a: bigint, c: Json) => a + BigInt(c.gas_used ?? 0), 0n).toString(),
+        // A shard with no new chunk repeats its older one; count only chunks produced in this block.
+        gasUsed: (r.chunks ?? [])
+          .filter((c: Json) => c.height_included === r.header?.height)
+          .reduce((a: bigint, c: Json) => a + BigInt(c.gas_used ?? 0), 0n)
+          .toString(),
         chunks: (r.chunks ?? [])
           .filter((c: Json) => c.height_included === r.header?.height)
           .map((c: Json) => ({ hash: c.chunk_hash, shard: c.shard_id, txs: c.tx_root !== "11111111111111111111111111111111" })),

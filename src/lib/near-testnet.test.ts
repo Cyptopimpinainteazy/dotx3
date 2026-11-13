@@ -63,7 +63,7 @@ test("block and tx results are summarized", async () => {
       { chunk_hash: HASH, shard_id: 1, height_included: 9, gas_used: 5, tx_root: "11111111111111111111111111111111" }] };
   const { f } = fakeFetch([{ body: { result: block } }]);
   const b = await lookup({ m: "block", id: "final" }, f, ["https://one"]);
-  assert.equal(b.gasUsed, "2000000000005");
+  assert.equal(b.gasUsed, "2000000000000"); // the repeated chunk from height 9 is not counted
   assert.equal(b.time, "2023-11-14T22:13:20.000Z");
   assert.deepEqual(b.chunks, [{ hash: HASH, shard: 0, txs: true }]);
   const tx = { status: { SuccessValue: "" }, transaction: { signer_id: "a.testnet", receiver_id: "b.testnet", actions: [{ Transfer: { deposit: "1" } }, "CreateAccount"] },

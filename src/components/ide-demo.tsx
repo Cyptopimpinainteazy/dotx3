@@ -169,6 +169,8 @@ function ExplorerView({ onAccount }: { onAccount: (id: string) => void }) {
   const [tx, setTx] = useState<TxView | null>(null);
   const [busy, setBusy] = useState(false);
   const live = !sel;
+  // Bumped on every open/close; a slow lookup for a block you've left is dropped.
+  const seq = useRef(0);
 
   useEffect(() => {
     if (!live) return;
@@ -189,22 +191,25 @@ function ExplorerView({ onAccount }: { onAccount: (id: string) => void }) {
   }, [live]);
 
   const open = async (b: Block) => {
-    setSel(b); setTx(null); setTxs(null); setBusy(true);
+    const mine = ++seq.current;
+    setSel(b); setTx(null); setTxs(null); setError(""); setBusy(true);
     try {
       const withTxs = b.chunks.filter((c) => c.txs);
       const chunks = await Promise.all(withTxs.map((c) => testnet<{ transactions: ChainTx[] }>({ m: "chunk", id: c.hash })));
-      setTxs(chunks.flatMap((c) => c.transactions));
+      if (mine === seq.current) setTxs(chunks.flatMap((c) => c.transactions));
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Lookup failed");
-      setTxs([]);
-    } finally { setBusy(false); }
+      // leave txs null: a failed lookup is not an empty block
+      if (mine === seq.current) setError(e instanceof Error ? e.message : "Lookup failed");
+    } finally { if (mine === seq.current) setBusy(false); }
   };
   const openTx = async (t: ChainTx) => {
-    setBusy(true);
-    try { setTx(await testnet<TxView>({ m: "tx", hash: t.hash, sender: t.signerId })); }
-    catch (e) { setError(e instanceof Error ? e.message : "Lookup failed"); }
-    finally { setBusy(false); }
+    const mine = ++seq.current;
+    setBusy(true); setError("");
+    try { const v = await testnet<TxView>({ m: "tx", hash: t.hash, sender: t.signerId }); if (mine === seq.current) setTx(v); }
+    catch (e) { if (mine === seq.current) setError(e instanceof Error ? e.message : "Lookup failed"); }
+    finally { if (mine === seq.current) setBusy(false); }
   };
+  const back = () => { seq.current++; setSel(null); setTx(null); setTxs(null); setBusy(false); setError(""); };
 
   return (
     <div className="flex min-h-0 flex-1 flex-col overflow-auto bg-bg p-4 text-sm" style={{ height: "30.5rem" }}>
@@ -220,7 +225,7 @@ function ExplorerView({ onAccount }: { onAccount: (id: string) => void }) {
             <tbody>
               {blocks.map((b) => (
                 <tr key={b.hash} onClick={() => void open(b)} className="cursor-pointer border-t border-border hover:bg-surface">
-                  <td className="py-2 font-mono text-primary">#{b.height.toLocaleString("en-US")}</td>
+                  <td className="py-2 font-mono"><button className="text-primary hover:underline" onClick={(e) => { e.stopPropagation(); void open(b); }}>#{b.height.toLocaleString("en-US")}</button></td>
                   <td className="font-mono text-muted">{b.hash.slice(0, 12)}…</td>
                   <td className="hidden max-w-[12rem] truncate font-mono text-muted sm:table-cell">{b.author}</td>
                   <td className="text-right font-mono">{(Number(b.gasUsed) / 1e12).toFixed(1)} Tgas</td>
@@ -231,7 +236,7 @@ function ExplorerView({ onAccount }: { onAccount: (id: string) => void }) {
         </>
       ) : (
         <div className="space-y-3">
-          <button onClick={() => { setSel(null); setTx(null); }} className="text-primary hover:underline">← Latest blocks</button>
+          <button onClick={back} className="text-primary hover:underline">← Latest blocks</button>
           <div className="rounded-lg border border-border bg-surface p-3 font-mono text-[12.5px]">
             <div><span className="text-muted">block </span><span className="text-primary">#{sel.height.toLocaleString("en-US")}</span> <span className="text-muted">by</span> {sel.author}</div>
             <div className="truncate text-muted">{sel.hash}</div>
@@ -328,7 +333,7 @@ export function IdeDemo() {
       <div className="flex min-h-0">
         <nav className="flex w-14 shrink-0 flex-col gap-1 border-r border-border bg-bg py-2 sm:w-36" aria-label="Demo panels">
           {rail.map((r) => (
-            <button key={r.id} onClick={() => setTab(r.id)} aria-pressed={tab === r.id}
+            <button key={r.id} onClick={() => setTab(r.id)} aria-pressed={tab === r.id} aria-label={r.label}
               className={`mx-1.5 flex items-center gap-2.5 rounded-md px-2 py-2 text-left text-sm ${tab === r.id ? "bg-primary/10 text-fg" : "text-muted hover:bg-surface hover:text-fg"}`}>
               <span className={`w-6 text-center font-mono text-xs ${tab === r.id ? "text-primary" : ""}`}>{r.icon}</span>
               <span className="hidden sm:inline">{r.label}</span>

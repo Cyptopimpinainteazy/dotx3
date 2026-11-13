@@ -91,9 +91,9 @@ function IdePage() {
             <img src={s.src} alt={`Super IDE ${s.title} panel`} width={1600} height={978} className="block h-auto w-full" loading="lazy" />
             <figcaption className="border-t border-border px-4 py-3 text-sm text-muted"><span className="font-semibold text-fg">{s.title}.</span> {s.text}</figcaption>
           </figure>
-          <div className="flex min-w-0 gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible" role="tablist" aria-label="Screenshots">
+          <div className="flex min-w-0 gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible" role="group" aria-label="Choose a screenshot">
             {SHOTS.map((x, i) => (
-              <button key={x.src} role="tab" aria-selected={i === shot} onClick={() => setShot(i)}
+              <button key={x.src} aria-pressed={i === shot} onClick={() => setShot(i)}
                 className={`shrink-0 rounded-xl border px-4 py-3 text-left text-sm transition ${i === shot ? "border-primary bg-primary/10 text-fg" : "border-border text-muted hover:border-primary/50 hover:text-fg"}`}>
                 <span className="font-display">{x.title}</span>
               </button>
@@ -131,7 +131,7 @@ function IdePage() {
               <li><span className="text-primary">▸</span> Owner and invited builders only</li>
               <li><span className="text-primary">▸</span> Terminal is off for remote sessions unless the owner turns it on</li>
             </ul>
-            <a href={IDE_REMOTE_URL} className="tap mt-auto inline-flex min-h-11 w-fit items-center justify-center self-start rounded-full border border-primary px-6 pt-0 text-sm font-semibold text-primary hover:bg-primary/10" style={{ marginTop: "1.5rem" }}>
+            <a href={IDE_REMOTE_URL} className="tap mt-6 inline-flex min-h-11 w-fit items-center justify-center self-start rounded-full border border-primary px-6 text-sm font-semibold text-primary hover:bg-primary/10">
               Owner sign-in →
             </a>
           </div>

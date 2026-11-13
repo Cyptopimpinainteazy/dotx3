@@ -10,9 +10,13 @@ export const Route = createFileRoute("/api/near/testnet")({
         try {
           const l = parseLookup(new URL(request.url).searchParams);
           const result = await lookup(l);
-          // Final blocks and finished txs never change; "latest" moves every second.
+          // A block by height/hash and a chunk never change. "Latest" moves every second, and a
+          // tx may still be executing, so those get a short shared edge cache: however many
+          // visitors poll, the public RPCs see about one request per second per lookup.
           const fixed = (l.m === "block" && l.id !== "final") || l.m === "chunk";
-          headers["Cache-Control"] = fixed ? "public, s-maxage=3600, max-age=300" : "public, s-maxage=1, max-age=0";
+          headers["Cache-Control"] = fixed
+            ? "public, s-maxage=3600, max-age=300"
+            : "public, s-maxage=2, stale-while-revalidate=5, max-age=0";
           return Response.json({ network: "testnet", result }, { headers });
         } catch (error) {
           headers["Cache-Control"] = "no-store";
