@@ -128,8 +128,8 @@
   {
     "id": "intents-shield",
     "track": "Intents integration",
-    "title": "Official SHIELD and X3 Shield",
-    "summary": "Official SHIELD communicates provider incidents; X3 Shield enforces owner policy. They are separate systems. Read incidents with a separate SHIELD credential. Incident submission needs additional provider permissions.",
+    "title": "Official SHIELD and X3 Force Field",
+    "summary": "Official SHIELD communicates provider incidents; X3 Force Field (formerly X3 Shield) enforces owner policy. They are separate systems. Read incidents with a separate SHIELD credential. Incident submission needs additional provider permissions.",
     "sections": [
       {
         "title": "Implementation boundary",
