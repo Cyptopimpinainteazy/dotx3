@@ -105,18 +105,34 @@ cargo run --manifest-path x3-lang/Cargo.toml -p x3-tools --bin x3c -- parse x3-l
       </Section>
       <Section title="1Click integration">
         <p className="text-muted">
-          Same four calls a person or an agent uses. Docs:{" "}
-          <OutLink href={LINKS.intentsDocs}>NEAR Intents 1Click quickstart</OutLink>. The adapter
+          These server-side examples cover tokens, a dry quote and a status query. Docs:{" "}
+          <OutLink href="https://docs.near-intents.org/integration/distribution-channels/1click-api/quickstart/making-a-request">
+            NEAR Intents 1Click quickstart
+          </OutLink>. The adapter
           verifies the quote signature before it reads terms. A live quote requests a deposit
           address; a separate wallet funding step can spend real funds. The adapter’s official
           1Click route is distinct from the historical Tidepool community testnet.
         </p>
-        <CodeBlock title="Tokens" code="curl https://1click.chaindefuser.com/v0/tokens" />
+        <p className="mt-4 text-sm text-muted">
+          Use a 1Click partner credential in the server-only NEAR_INTENTS_API_KEY environment
+          variable and send it through X-API-Key. Authorization: Bearer is also accepted for that
+          partner credential on ordinary 1Click calls. Aurora, Explorer, user-session and SHIELD
+          credentials have separate roles; do not assume they are interchangeable. Never put a
+          partner key in browser code or a public environment variable.{" "}
+          <OutLink href="https://docs.near-intents.org/integration/distribution-channels/1click-api/authentication">
+            Official authentication guide
+          </OutLink>.
+        </p>
         <CodeBlock
-          title="Dry quote"
+          title="Tokens (server-side)"
+          code={`curl https://1click.chaindefuser.com/v0/tokens \\
+  -H "X-API-Key: $NEAR_INTENTS_API_KEY"`}
+        />
+        <CodeBlock
+          title="Dry quote template (server-side; replace placeholders)"
           code={`curl -X POST https://1click.chaindefuser.com/v0/quote \\
   -H "Content-Type: application/json" \\
-  -H "Authorization: Bearer YOUR_JWT" \\
+  -H "X-API-Key: $NEAR_INTENTS_API_KEY" \\
   -d '{
     "dry": true,
     "swapType": "EXACT_INPUT",
@@ -128,13 +144,45 @@ cargo run --manifest-path x3-lang/Cargo.toml -p x3-tools --bin x3c -- parse x3-l
     "recipient": "0xYourAddress",
     "recipientType": "DESTINATION_CHAIN",
     "refundTo": "your.near",
-    "refundType": "ORIGIN_CHAIN"
+    "refundType": "ORIGIN_CHAIN",
+    "deadline": "REPLACE_WITH_FUTURE_ISO_8601_UTC_TIMESTAMP"
   }'`}
         />
+        <p className="mt-4 text-sm text-muted">
+          Replace the recipient, refund address and deadline before using the template. The
+          deadline must be a future ISO 8601 UTC timestamp that allows time for origin-chain
+          confirmation. Confirm asset identifiers against the current token list. Keep dry set
+          to true for a preview; it does not return a deposit address.
+        </p>
         <CodeBlock
-          title="Status"
-          code='curl "https://1click.chaindefuser.com/v0/status?depositAddress=THE_DEPOSIT_ADDRESS"'
+          title="Status (server-side JavaScript; existing quote only)"
+          code={`// quote is the quote field from an existing saved response.
+const apiKey = process.env.NEAR_INTENTS_API_KEY;
+if (!apiKey) throw new Error("Missing server-side 1Click partner key");
+if (!quote.depositAddress) throw new Error("This quote has no deposit address");
+const query = new URLSearchParams({ depositAddress: quote.depositAddress });
+if (quote.depositMemo != null) query.set("depositMemo", quote.depositMemo);
+const response = await fetch(
+  "https://1click.chaindefuser.com/v0/status?" + query.toString(),
+  { headers: { "X-API-Key": apiKey }, redirect: "error" },
+);
+if (!response.ok) throw new Error("1Click status unavailable: " + response.status);
+const status = await response.json();`}
         />
+        <p className="mt-4 text-sm text-muted">
+          URLSearchParams encodes the address and the exact quote.depositMemo when supplied.
+          A status response is provider-reported execution state; it does not independently
+          prove a destination transfer or finality.
+        </p>
+        <p className="mt-4 text-sm text-muted">
+          For supported one-time swaps, a live quote supplies quote.depositAddress. Reusable
+          addresses use a separate ANY_INPUT workflow and quote.chainDepositAddresses, with both
+          a partner API key and the owning user&apos;s session. The current X3Lang and dotx3 clients
+          do not implement reusable-address creation.{" "}
+          <OutLink href="https://docs.near-intents.org/integration/distribution-channels/1click-api/reusable-deposit-addresses">
+            Official reusable-address guide
+          </OutLink>.
+        </p>
         <p className="mt-4 text-sm text-muted">
           Repo commands, not this website:{" "}
           <span className="text-fg">python3 x3-lang/near_intents.py quote FILE.x3</span> for a dry
@@ -143,26 +191,30 @@ cargo run --manifest-path x3-lang/Cargo.toml -p x3-tools --bin x3c -- parse x3-l
         </p>
       </Section>
 
-      <Section title="Doors that are not up yet" alt>
+      <Section title="Available resources and release review" alt>
         <p className="text-muted">
-          {SITE} ships the four working doors (demo, docs, code, proof) plus /playground, /language
-          and /back. These proposed routes are named so they are not pretended:
+          {SITE} includes language guides, browser tools, track pages and published evidence.
+          These resources are available in the current site:
         </p>
         <ul className="mt-4 grid gap-2 text-sm text-muted md:grid-cols-2">
-          <li>/about — the language overview is /language</li>
-          <li>/shield — mandate and Guard limits are on the demo and proof pages</li>
-          <li>/hackathon — one demo covers security, agents, and DeFi</li>
-          <li>/security — reporting steps are in the repo SECURITY.md</li>
-          <li>/ecosystem — x3star.net names are not verified live apps</li>
+          <li><a className="text-primary underline" href="/security">Security track</a> — policy checks and Guard limits</li>
+          <li><a className="text-primary underline" href="/media/x3-shield-who-gets-paid.mp4">Who gets paid? video</a> — an explainer with local, testnet and dramatized scenes</li>
+          <li><a className="text-primary underline" href="/labs">Labs</a> — compiler, signed-quote demo, judge cases and attack lab</li>
+          <li><a className="text-primary underline" href="/near">NEAR hub</a> — Security, Agents and DeFi perspectives</li>
         </ul>
         <div className="mt-8 grid gap-3 text-sm">
           <p>
-            <Tag>Missing</Tag>
+            <Tag>Review by revision</Tag>
           </p>
           <p className="text-muted">
-            Demo video permalink. Public X demo-post permalink. Judge runbook tied to one current
-            commit, beyond the README steps. Release artifact with checksum. Privacy and terms,
-            because this site does not collect accounts or connect a wallet.
+            Read the{" "}
+            <OutLink href="https://github.com/Cyptopimpinainteazy/x3lang/blob/0a2c5f08694a206838cf01e774dc5dc843dc42b7/docs/hackathon/JUDGE_GUIDE.md">
+              judge guide at the reviewed source revision
+            </OutLink>{" "}
+            and the repo&apos;s <OutLink href={LINKS.security}>private vulnerability reporting steps</OutLink>.
+            The explainer video is not settlement evidence or a confirmed hackathon submission.
+            Check release artifacts, checksums and submission links against the revision you intend
+            to use.
           </p>
           <p className="text-muted">
             Community, unverified as to whether each post is current:{" "}
@@ -176,8 +228,8 @@ cargo run --manifest-path x3-lang/Cargo.toml -p x3-tools --bin x3c -- parse x3-l
           </p>
           <p className="text-muted">
             A static browser demo is published separately at{" "}
-            <OutLink href={LINKS.browserDemo}>x3-guard.pages.dev</OutLink>. The hackathon still
-            needs its own demo-post URL. This site does not replace that post.
+            <OutLink href={LINKS.browserDemo}>x3-guard.pages.dev</OutLink>. Public demos and videos
+            do not establish the status of a hackathon submission.
           </p>
         </div>
       </Section>

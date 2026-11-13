@@ -113,7 +113,8 @@ PYTHONPATH=x3-lang python3 -m pytest x3-lang/tests -q`}
           </Card>
           <Card title="What runs on NEAR">
             <span className="text-fg">x3-guard</span> stores the policy and rechecks quote terms. It
-            holds no funds. Acceptance is not permission to send from an origin wallet.
+            does not custody swap assets; native NEAR used for storage and account operation is
+            separate. Acceptance is not permission to send from an origin wallet.
           </Card>
           <Card title="What does not run on a block">
             The x3-lang intent VM executes in this workspace only. The README says it is not loaded

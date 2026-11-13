@@ -84,7 +84,7 @@ function ProofPage() {
 
       <Section title="Refusal and acceptance">
         <div className="mb-4">
-          <Tag>NEAR testnet · x3lang.testnet · no funds in the contract</Tag>
+          <Tag>NEAR testnet · x3lang.testnet · no swap-asset custody</Tag>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           <Row
@@ -123,19 +123,30 @@ function ProofPage() {
           />
           <Row
             label="Destination · NEAR testnet"
-            detail="Payout to x3lang.testnet. Independently verified mainnet settlement: none published."
+            detail="Payout to x3lang.testnet. This page provides no independently verified mainnet settlement evidence."
             href={LINKS.nearPayout}
             hrefLabel="EBEBxJNgV9U5tBFBLj18ZzukgArqwXH5rBsBStFyCm1d"
           />
         </div>
       </Section>
 
+      <Section title="Mainnet Guard setup">
+        <p className="max-w-3xl text-muted">
+          NEAR mainnet Guard deployment and setup are documented for x3lang.near. The archived
+          records cover deployment, storage, scoped agent access, intent registration and owner
+          approval. They do not establish a funded official 1Click settlement.{" "}
+          <OutLink href="https://github.com/Cyptopimpinainteazy/x3lang/blob/0a2c5f08694a206838cf01e774dc5dc843dc42b7/docs/hackathon/MAINNET_GUARD_DEPLOYMENT.md">
+            Inspect the mainnet setup evidence
+          </OutLink>.
+        </p>
+      </Section>
+
       <Section title="Not claimed">
         <ul className="mx-auto max-w-3xl list-disc space-y-2 pl-5 text-muted">
-          <li>No mainnet deployment and no funded official 1Click settlement.</li>
-          <li>No public audited vault. Guard does not custody tokens. An unrestricted origin key can bypass it.</li>
+          <li>This page does not establish a funded official 1Click settlement.</li>
+          <li>No public audited vault. Guard does not custody swap assets; native NEAR used for storage and account operation is separate. An unrestricted origin key can bypass it.</li>
           <li>No cryptographic atomic cross-chain causality for the Tidepool trade.</li>
-          <li>No downloadable release artifact with a checksum. The commit is the artifact until a release exists.</li>
+          <li>Inspect any release artifact&apos;s checksum and provenance against the exact source revision before using it.</li>
           <li>
             Report vulnerabilities in private. Do not file exploits, keys, or seeds in a public issue. <OutLink href={LINKS.security}>SECURITY.md</OutLink>
           </li>
