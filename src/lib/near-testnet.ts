@@ -119,7 +119,9 @@ export function trim(l: Lookup, r: Json): Json {
         blockHeight: r.block_height,
       };
     case "tx": {
-      const st = r.status ?? {};
+      // status is an object when final (SuccessValue / SuccessReceiptId / Failure) and a bare
+      // string ("NotStarted", "Started") while the transaction is still executing.
+      const st: Json = r.status && typeof r.status === "object" ? r.status : {};
       const outcomes = [r.transaction_outcome, ...(r.receipts_outcome ?? [])].filter(Boolean);
       return {
         hash: l.hash,

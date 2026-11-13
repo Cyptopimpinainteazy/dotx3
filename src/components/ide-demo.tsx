@@ -67,6 +67,8 @@ function EditorView() {
   const [report, setReport] = useState<Report | null>(null);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  // Each check and each edit bumps this; a response is only shown if nothing changed since.
+  const seq = useRef(0);
 
   useEffect(() => {
     const ac = new AbortController();
@@ -81,15 +83,16 @@ function EditorView() {
     const body = next ?? src;
     if (!body || busy) return;
     if (next) setSrc(next);
+    const mine = ++seq.current;
     setBusy(true); setError(""); setReport(null);
     try {
       const res = await fetch("/api/compile", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), signal: AbortSignal.timeout(20000) });
       if (!(res.headers.get("content-type") ?? "").includes("application/json")) throw new Error("The compiler isn't deployed on this host.");
       const r = await res.json();
       if (!res.ok) throw new Error(r.error ?? "Compiler unavailable");
-      setReport(r);
+      if (mine === seq.current) setReport(r);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Compiler unavailable");
+      if (mine === seq.current) setError(e instanceof Error ? e.message : "Compiler unavailable");
     } finally {
       setBusy(false);
     }
@@ -123,13 +126,13 @@ function EditorView() {
             className="rounded-md bg-primary px-3.5 py-1.5 text-[13px] font-semibold text-bg disabled:opacity-50">{busy ? "Checking…" : "▶ Check"}</button>
           <button onClick={attack} disabled={!src || busy}
             className="hidden rounded-md border border-border px-3 py-1.5 text-[13px] text-fg hover:border-accent sm:block">Try a recipient swap</button>
-          <button onClick={() => { if (original) { setSrc(original); setReport(null); setError(""); } }} disabled={!src || busy}
+          <button onClick={() => { if (original) { seq.current++; setSrc(original); setReport(null); setError(""); } }} disabled={!src || busy}
             className="rounded-md px-2.5 py-1.5 text-[13px] text-muted hover:text-fg">Reset</button>
         </div>
       </div>
       {src ? (
         <CodeArea label={file === "program" ? "Agent payment source" : "Owner mandate source"} value={src[file]}
-          onChange={(v) => { setSrc({ ...src, [file]: v }); setReport(null); }} highlight={file === "program" ? errLine : undefined} />
+          onChange={(v) => { seq.current++; setSrc({ ...src, [file]: v }); setReport(null); setError(""); }} highlight={file === "program" ? errLine : undefined} />
       ) : (
         <div className="flex h-[22rem] items-center justify-center bg-bg text-sm text-muted">{error || "Loading the example…"}</div>
       )}

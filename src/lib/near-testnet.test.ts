@@ -74,6 +74,15 @@ test("block and tx results are summarized", async () => {
   });
 });
 
+test("string-valued (still executing) tx statuses are pending, not a crash", async () => {
+  for (const status of ["NotStarted", "Started"]) {
+    const t = fakeFetch([{ body: { result: { status, transaction: { signer_id: "a.testnet", receiver_id: "b.testnet", actions: [] } } } }]);
+    const r = await lookup({ m: "tx", hash: HASH, sender: "a.testnet" }, t.f, ["https://one"]);
+    assert.equal(r.status, "pending");
+    assert.equal(r.failure, null);
+  }
+});
+
 test("formatNear", () => {
   assert.equal(formatNear("1234500000000000000000000000"), "1,234.5000");
   assert.equal(formatNear("1"), "0.0000");
