@@ -19,6 +19,13 @@ export const EVIDENCE_SNAPSHOT = {
  */
 export const VENDOR_SNAPSHOT = { commit: "efb514ffef2cdfdeb8ad8147747887c85356073c" } as const;
 
+/**
+ * PROOF_CARD.md was added after EVIDENCE_SNAPSHOT. It restates that snapshot's evidence (it cites
+ * the same commit and CI run) and adds no claim, so it is linked at the first tip that has it in
+ * its current form instead of moving the reviewed snapshot.
+ */
+export const PROOF_CARD_COMMIT = "f2a01a2ae144c69e115fd807a642bddfd8668f9f";
+
 const PINNED = `${REPO}/blob/${EVIDENCE_SNAPSHOT.commit}`;
 const MAINNET_BUNDLE = `${PINNED}/evidence/near-guard-mainnet-invoice06-2026-11-12`;
 
@@ -82,6 +89,7 @@ export const LINKS = {
   payment: `${RAW}/x3-lang/examples/near_intents_agent_payment.x3`,
   guardEvidence: `${RAW}/evidence/near-guard-testnet-live-2026-11-06.md`,
   tradeEvidence: `${RAW}/docs/hackathon/FIRST_FINALIZED_SWAP_EVIDENCE.md`,
+  proofCard: `${REPO}/blob/${PROOF_CARD_COMMIT}/PROOF_CARD.md`,
   mainnetEvidence: `${MAINNET_BUNDLE}/README.md`,
   mainnetObservation: `${MAINNET_BUNDLE}/public-rpc-observation.json`,
   mainnetChecksums: `${MAINNET_BUNDLE}/SHA256SUMS`,

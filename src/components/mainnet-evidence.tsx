@@ -151,6 +151,7 @@ export function MainnetEvidence({ compact = false }: { compact?: boolean }) {
       </div>
 
       <p className="text-center text-xs text-muted">
+        <OutLink href={LINKS.proofCard}>One-page proof card</OutLink> ·{" "}
         <OutLink href={LINKS.mainnetEvidence}>Evidence bundle</OutLink> ·{" "}
         <OutLink href={LINKS.mainnetOutcomeEvidence}>Outcome readback</OutLink> ·{" "}
         <OutLink href={LINKS.mainnetObservation}>Raw public RPC observation</OutLink> ·{" "}
