@@ -192,6 +192,74 @@ function Home() {
       </Section>
 
       <Section
+        id="business-use-cases"
+        title="Give agents work. Set their spending boundaries."
+        intro="Business use cases for X3 Force Field: make payment authority explicit, reviewable, and tied to evidence."
+        alt
+      >
+        <div className="grid gap-5 md:grid-cols-2">
+          <Card title="Businesses using payment agents">
+            Check a proposed supplier or service payment against approved recipients, assets,
+            budgets, fees, and deadlines. Keep exceptions subject to owner approval before funding.
+          </Card>
+          <Card title="Treasury teams and DAOs">
+            Express delegated spending rules in readable, versioned .x3 mandates. Review what an
+            agent may propose and what needs approval before expanding its responsibilities.
+          </Card>
+          <Card title="Wallet and payment platform builders">
+            Integrate deterministic policy checks at the signing or execution boundary. The
+            protection depends on routing the actual spending authority through those checks.
+          </Card>
+          <Card title="Security and compliance teams">
+            Inspect the proposal, mandate, Guard decision, and settlement receipts together.
+            That trail supports review and incident investigation; it does not establish legal compliance.
+          </Card>
+        </div>
+        <p className="mx-auto mt-8 max-w-3xl text-center text-sm text-muted">
+          These are intended uses, not claims of customer adoption. The current proof shows Guard
+          authorization with a separately funded wallet; Guard cannot stop an independent wallet
+          keyholder from transferring directly.
+        </p>
+      </Section>
+
+      <Section
+        id="why-agents-and-blockchain"
+        title="A capable agent needs boundaries and receipts."
+        intro="The goal is an agent you can trust with useful work. AI, .x3, Guard, and blockchain each handle a different part of that job."
+      >
+        <CardGrid>
+          <Card title="AI proposes the work">
+            An agent can interpret a request and propose a payment program. A persuasive prompt
+            or a confident answer does not grant it spending authority.
+          </Card>
+          <Card title=".x3 and Guard check the terms">
+            The compiler checks the typed program; Guard evaluates the mandate and signed quote
+            terms. Approval belongs to the owner where the mandate requires it.
+          </Card>
+          <Card title="Blockchain records settlement">
+            A separately authorized funding wallet executes the payment. Finalized chain receipts
+            let reviewers inspect what settled, then compare it with the approved terms.
+          </Card>
+        </CardGrid>
+        <div className="mx-auto mt-8 max-w-3xl space-y-4 text-center text-muted">
+          <p>
+            This matters because a useful decision, permission to spend, and proof of delivery
+            are three separate questions. Connecting them can make delegation more accountable
+            and mistakes easier to investigate.
+          </p>
+          <p>
+            A “perfect agent” is the ambition, not a security guarantee. Blockchain can permanently
+            record a bad payment. Policy checks only cover their rules and enforcement path, and
+            a recorded outcome still needs independent receipt verification.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 pt-2">
+            <ActionLink to="/playground">Test the spending rules</ActionLink>
+            <ActionLink to="/proof" outline>Inspect receipts and limits</ActionLink>
+          </div>
+        </div>
+      </Section>
+
+      <Section
         title="Chain of command"
         intro="Authority runs one way. The agent is third in line and cannot approve itself."
         alt
