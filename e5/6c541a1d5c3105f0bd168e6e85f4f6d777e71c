@@ -1,0 +1,31 @@
+public/labs/force-field/index.html
+  s_31fd028fa06438::t_eed26e4f56a0b2 1-511
+  s_31fd028fa06438::t_7f447993e2ba27 512-539
+src/routes/labs.tsx
+  s_31fd028fa06438::t_5ce57c13e64abd 29-34
+scripts/force-field-challenge.test.mjs
+  s_31fd028fa06438::t_405ea565f2b27e 115
+  s_31fd028fa06438::t_d02c543793c535 1-114,116-124
+  s_31fd028fa06438::t_bb291ea60491bb 125-159
+src/lib/site-nav.ts
+  s_31fd028fa06438::t_8ce7f125b77203 148-151
+  s_31fd028fa06438::t_b14d4e6e78af35 146-147
+scripts/page-export.test.mjs
+  s_31fd028fa06438::t_4005f3af6754aa 36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e56c541a1d5c3105f0bd168e6e85f4f6d777e71c",
+  "prompts": {},
+  "sessions": {
+    "s_31fd028fa06438": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "69bd2b58-7f31-4914-aa3b-33a64ae821c7",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
