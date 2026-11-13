@@ -5,16 +5,17 @@ export const RAW = "https://github.com/Cyptopimpinainteazy/x3lang/blob/master";
 
 /** Reviewed repository snapshot. A passing run here covers this commit, not a future branch tip. */
 export const EVIDENCE_SNAPSHOT = {
-  commit: "4f60ddb652188784ed44f64d8172cd2cd84da422",
-  checkedAt: "2026-11-13T06:12:37Z",
+  commit: "f2a01a2ae144c69e115fd807a642bddfd8668f9f",
+  checkedAt: "2026-11-13T19:12:35Z",
   dateLabel: "November 13, 2026",
-  ciRun: `${REPO}/actions/runs/43376851817`,
+  ciRun: `${REPO}/actions/runs/43489554266`,
   checksPassed: 4,
 } as const;
 
 /**
  * The X3Lang revision the browser compiler and labs were vendored from. Kept separate from
- * EVIDENCE_SNAPSHOT: efb514f..4f60ddb adds evidence files only, and the vendored bytes are
+ * EVIDENCE_SNAPSHOT: efb514f..f2a01a2 changes evidence, docs, scripts, tests and the
+ * submission draft only (no vendored source), and the vendored bytes are
  * pinned to this commit by scripts/attack-lab.test.mjs. Re-vendor before changing it.
  */
 export const VENDOR_SNAPSHOT = { commit: "efb514ffef2cdfdeb8ad8147747887c85356073c" } as const;
@@ -82,6 +83,8 @@ export const LINKS = {
   payment: `${RAW}/x3-lang/examples/near_intents_agent_payment.x3`,
   guardEvidence: `${RAW}/evidence/near-guard-testnet-live-2026-11-06.md`,
   tradeEvidence: `${RAW}/docs/hackathon/FIRST_FINALIZED_SWAP_EVIDENCE.md`,
+  proofCard: `${PINNED}/PROOF_CARD.md`,
+  chainScript: `${PINNED}/scripts/hackathon/invoice06_chain.py`,
   mainnetEvidence: `${MAINNET_BUNDLE}/README.md`,
   mainnetObservation: `${MAINNET_BUNDLE}/public-rpc-observation.json`,
   mainnetChecksums: `${MAINNET_BUNDLE}/SHA256SUMS`,
