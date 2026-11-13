@@ -254,14 +254,20 @@ function readRules() {
   game.rules = { recipients: f.getAll("recipients"), perPayment: num("perPayment"), per24h: num("per24h"), approveAbove: num("approveAbove"), expires: f.get("expires") };
   recompile();
 }
+let compileSeq = 0;
 async function recompile() {
+  const seq = ++compileSeq;
+  game.compiled = null; $("to-camp").disabled = true;
   if (!game.rules.recipients.length) {
     $("mandate-src").textContent = C.mandateSource({ ...game.rules, recipients: ["(nobody)"] });
     setStatus(false, "Pick at least one recipient. A mandate must allow someone (X3_MANDATE_LIST).");
+    $("idcard").hidden = true;
     return;
   }
-  const m = await C.compileMandate(game.rules, tokens, C.DAY_START_MS, game.version);
-  game.compiled = m.error ? null : m;
+  const rules = { ...game.rules, recipients: [...game.rules.recipients] };
+  const m = await C.compileMandate(rules, tokens, C.DAY_START_MS, game.version);
+  if (seq !== compileSeq) return; // a newer edit started while this one compiled
+  game.compiled = m.error ? null : { ...m, rules };
   $("mandate-src").textContent = m.source;
   if (m.error) {
     setStatus(false, `The compiler refused this mandate: ${m.error.code}${m.error.line ? ` (line ${m.error.line})` : ""}. ${m.error.message}`);
@@ -277,6 +283,8 @@ function setStatus(ok, text) { const el = $("mandate-status"); el.className = `s
 
 // ---- 02 Boot camp ---------------------------------------------------------------------
 async function runCamp() {
+  if (!game.compiled) return;
+  game.rules = { ...game.compiled.rules, recipients: [...game.compiled.rules.recipients] };
   const drills = await C.bootCamp(game.compiled.mandate, tokens);
   $("drills").innerHTML = drills.map(({ req, result, leaked, needsOwner }) => {
     const chip = leaked ? `<span class="chip c-bad">GETS THROUGH</span>` : needsOwner ? `<span class="chip c-ask">ASKS YOU</span>`
@@ -293,7 +301,7 @@ async function runCamp() {
 
 // ---- 03 The day -----------------------------------------------------------------------
 function startDay() {
-  game.day = { i: 0, log: [], state: { ...game.compiled.mandate, spends: [], revoked: false }, pending: null };
+  game.day = { i: 0, log: [], state: { ...game.compiled.mandate, spends: [], revoked: false }, pending: null, busy: false };
   $("feed").innerHTML = ""; $("to-court").hidden = true; $("next").hidden = false; $("revoke").hidden = false; $("next").disabled = false; $("revoke").disabled = false;
   renderScore([]); renderLedger();
   $("req").innerHTML = `<p class="from">09:00 · ${esc(C.AGENT)} is on duty</p><p class="text">Press “Next request” to hand it the first job.</p>`;
@@ -321,7 +329,8 @@ function verdictText(entry) {
 }
 async function nextRequest() {
   const d = game.day;
-  if (d.pending || d.i >= C.DAY.length) return;
+  if (d.busy || d.pending || d.i >= C.DAY.length) return;
+  d.busy = true; $("next").disabled = true;
   const req = C.DAY[d.i];
   const program = C.programFor(req);
   const result = await C.evaluateProgram(program, d.state, C.requestTime(req), tokens);
@@ -331,16 +340,23 @@ async function nextRequest() {
     d.pending = { req, result, head };
     $("req").innerHTML = `${head}${pipeline(result)}<div class="ask-box"><b>Approve ${req.program.amount} USDC to ${esc(req.program.recipient)}?</b> It is over your approval line. Every other term holds.<div class="actions"><button class="btn go" id="approve-yes" type="button">Approve</button><button class="btn stop" id="approve-no" type="button">Reject</button></div></div>`;
     $("approve-yes").onclick = () => decide(true); $("approve-no").onclick = () => decide(false);
-    $("next").disabled = true;
+    d.busy = false;
     return;
   }
+  d.busy = false;
   finish(req, result, head, undefined);
 }
-function decide(yes) { const p = game.day.pending; game.day.pending = null; $("next").disabled = false; finish(p.req, p.result, p.head, yes); }
+function decide(yes) {
+  const d = game.day, p = d.pending;
+  if (!p || d.busy) return;
+  d.pending = null;
+  finish(p.req, p.result, p.head, yes);
+}
 function finish(req, result, head, approve) {
   const d = game.day;
   const entry = C.settle(req, result, d.state, approve);
   d.log.push(entry); d.i++;
+  $("next").disabled = d.i >= C.DAY.length;
   const tone = { bill_paid: "c-ok", attack_stopped: "c-stop", funds_lost: "c-bad", bill_blocked: "c-ask" }[entry.verdict];
   const label = { bill_paid: "BILL PAID", attack_stopped: "STOPPED", funds_lost: "FUNDS LOST", bill_blocked: "BILL MISSED" }[entry.verdict];
   $("req").innerHTML = `${head}${pipeline(result, entry.outcome)}<p class="verdict">${verdictText(entry)}</p>`;
@@ -348,10 +364,16 @@ function finish(req, result, head, approve) {
   renderScore(d.log); renderLedger();
   if (d.i >= C.DAY.length) { $("next").hidden = true; $("revoke").hidden = true; $("to-court").hidden = false; $("req").insertAdjacentHTML("beforeend", `<p class="hint">17:00 · The day is over.</p>`); }
 }
-function revoke() {
+async function revoke() {
   const d = game.day; if (d.state.revoked) return;
   d.state.revoked = true; d.revokedAt = d.i; renderLedger(); $("revoke").disabled = true;
-  if (d.pending) { const p = d.pending; d.pending = null; $("next").disabled = false; C.evaluateProgram(C.programFor(p.req), d.state, C.requestTime(p.req), tokens).then((r) => finish(p.req, r, p.head)); }
+  if (d.pending && !d.busy) {
+    // The payment waiting for approval is checked again under the revoked mandate.
+    const p = d.pending; d.pending = null; d.busy = true; $("next").disabled = true;
+    const r = await C.evaluateProgram(C.programFor(p.req), d.state, C.requestTime(p.req), tokens);
+    d.busy = false;
+    finish(p.req, r, p.head);
+  }
   $("feed").insertAdjacentHTML("afterbegin", `<li class="row"><div>You revoked the mandate<small>Every later request meets mandate_active. A payment already made is not undone.</small></div><span class="chip c-bad">REVOKED</span></li>`);
 }
 

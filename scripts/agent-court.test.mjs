@@ -161,6 +161,35 @@ test("court findings come from evidence, and adopting remedies fixes the loss on
   assert.equal(stopped.severity, "contained");
 });
 
+test("choosing only the lower 24-hour cap still stops the inside attack", async () => {
+  const v2rules = court.amend(LOOSE, ["daily"]);
+  assert.equal(v2rules.per24h, 200);
+  assert.ok(v2rules.perPayment <= v2rules.per24h);
+  const v2 = await compiled(v2rules);
+  const { score } = await court.runDay(v2.mandate, tokens, { decide: () => true });
+  assert.equal(score.lostUsdc, 0);
+});
+
+test("every remedy combination the court can offer compiles and keeps its protection", async () => {
+  const ids = [
+    "cap",
+    "approve",
+    "daily",
+    "raise_cap",
+    "raise_daily",
+    "longer",
+    "allow:payroll.near",
+  ];
+  for (let mask = 1; mask < 1 << ids.length; mask++) {
+    const chosen = ids.filter((_, i) => mask & (1 << i));
+    const r = court.amend(LOOSE, chosen);
+    const m = await court.compileMandate(r, tokens);
+    assert.equal(m.error, undefined, `${chosen.join("+")}: ${JSON.stringify(m.error)}`);
+    if (chosen.includes("daily") && !chosen.includes("raise_daily"))
+      assert.equal(r.per24h, 200, chosen.join("+"));
+  }
+});
+
 test("the agent's statement never reaches the checks", async () => {
   for (const req of court.DAY) {
     assert.ok(!court.programFor(req).includes(req.statement));

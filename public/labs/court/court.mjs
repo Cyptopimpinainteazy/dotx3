@@ -268,7 +268,9 @@ export function amend(rules, remedyIds) {
     else if (id === "longer") r.expires = "24h";
     else if (id.startsWith("allow:")) { const v = id.slice(6); if (!r.recipients.includes(v)) r.recipients.push(v); }
   }
-  if (r.per24h < r.perPayment) r.per24h = CHOICES.per24h.find((v) => v >= r.perPayment);
+  // Keep the protection the court chose: a lower 24-hour cap pulls the per-payment cap down
+  // with it, never the other way round.
+  if (r.per24h < r.perPayment) r.perPayment = Math.max(...CHOICES.perPayment.filter((v) => v <= r.per24h));
   if (r.approveAbove != null && r.approveAbove >= r.perPayment) r.approveAbove = null;
   r.recipients.sort((a, b) => VENDORS.indexOf(a) - VENDORS.indexOf(b));
   return r;
