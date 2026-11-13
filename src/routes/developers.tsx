@@ -68,6 +68,7 @@ function DevelopersPage() {
           outcome. Guarded custody and authenticated outcome records remain unfinished work.
         </p>
         <p className="mt-5 flex flex-wrap gap-x-5 gap-y-3">
+          <OutLink href={LINKS.proofCard}>Proof card (start here)</OutLink>
           <OutLink href={LINKS.mainnetEvidence}>Mainnet archive</OutLink>
           <OutLink href={LINKS.mainnetObservation}>RPC observations</OutLink>
           <OutLink href={LINKS.mainnetChecksums}>SHA256SUMS</OutLink>
