@@ -1,6 +1,6 @@
 # dotx3
 
-dotx3 is the public website for the .x3 language and X3 Shield: documentation, developer bootcamp, local policy playground, mainnet and testnet execution evidence, and a read-only DEX surface. The website is a React / TanStack Start application. The compiler, Guard contracts and chain evidence live in [X3Lang](https://github.com/Cyptopimpinainteazy/x3lang).
+dotx3 is the public website for X3 Force Field (formerly X3 Shield), powered by the typed .x3 language and compiler: documentation, developer bootcamp, local policy playground, mainnet and testnet execution evidence, and a read-only DEX surface. The website is a React / TanStack Start application. The compiler, Guard contracts and chain evidence live in [X3Lang](https://github.com/Cyptopimpinainteazy/x3lang).
 
 ## Start here
 
@@ -13,11 +13,11 @@ dotx3 is the public website for the .x3 language and X3 Shield: documentation, d
 - `/judge`: reproducible testnet cases and the separate mainnet evidence record.
 - `/dex`: read-only market interface; market observations do not authorize a trade.
 
-A `.x3` file expresses an owner's spending mandate or a payment intent. The NEAR path parses and checks that source, lowers supported payment terms and checks signed quote values through Guard. Guard acceptance authorizes a deposit address. Wallet custody and funded settlement are separate concerns. See [the language guide](docs/X3_GUIDE.md).
+A `.x3` file expresses an owner's spending mandate or a payment intent as reviewable typed source code. Invalid programs fail compilation before policy and quote checks; verified source hashes can be compared to Guard-stored identities. X3BC/X3VM are broader pre-hackathon language infrastructure, not the native on-chain Guard execution path. The NEAR path parses and checks that source, lowers supported payment terms and checks signed quote values through Guard. Guard acceptance authorizes a deposit address, and the historical `invoice_06` agent later recorded a `Settled` outcome. Wallet custody and funded settlement are separate concerns. See [the language guide](docs/X3_GUIDE.md).
 
-## Evidence snapshot: November 12, 2026
+## Evidence snapshot: November 12, 2026 (historical site pin; X3Lang source update below)
 
-The site evidence is reviewed against X3Lang commit [`efb514ffef2cdfdeb8ad8147747887c85356073c`](https://github.com/Cyptopimpinainteazy/x3lang/commit/efb514ffef2cdfdeb8ad8147747887c85356073c).
+The earlier site evidence and vendored compiler are reviewed against X3Lang commit [`efb514ffef2cdfdeb8ad8147747887c85356073c`](https://github.com/Cyptopimpinainteazy/x3lang/commit/efb514ffef2cdfdeb8ad8147747887c85356073c).
 
 | Result | Network | Public evidence |
 | --- | --- | --- |
@@ -29,7 +29,7 @@ The mainnet observer's [archived output](https://github.com/Cyptopimpinainteazy/
 
 The shared proof meter in `src/lib/front-door.ts` counts **3 of the original 8 milestones: 37.5%, displayed as 38%**. A nonempty public evidence list is required. The mainnet record earns the settlement milestone without changing the denominator or completing unrelated gates.
 
-Still unproven: control of the Solana funding wallet, the original `.x3` files matching the two stored hashes, a recorded Guard settlement outcome, guarded USDC custody, and cryptographic cross-chain causality. Remaining meter milestones are a public scoped-vault testnet demonstration, hostile-model mainnet refusal, merged program-hash enforcement with mismatch tests, independent review, and a tagged release with checksum and build provenance. [Program-pin PR #202](https://github.com/Cyptopimpinainteazy/x3lang/pull/202) is open at this snapshot.
+Recovered and independently corroborated in X3Lang after this site's older evidence snapshot: the owner-operated Solflare funding-wallet provenance, the two original `.x3` source files matching Guard-stored SHA-256 hashes, and a finalized restricted-agent `Settled` outcome ([source and outcome evidence](https://github.com/Cyptopimpinainteazy/x3lang/tree/4f60ddb652188784ed44f64d8172cd2cd84da422/evidence/near-guard-mainnet-invoice06-2026-11-12)). Still unproven: Guard-custodied Solana settlement, cryptographic cross-chain atomicity and native X3VM execution in the Guard on-chain path. Remaining meter milestones are a public scoped-vault testnet demonstration, hostile-model mainnet refusal, merged program-hash enforcement with mismatch tests, independent review, and a tagged release with checksum and build provenance. [Program-pin PR #202](https://github.com/Cyptopimpinainteazy/x3lang/pull/202) is open at this snapshot.
 
 Website evidence freshness and compiler freshness are separate. `x3lang-port.json` and its public copy record the actual compiler/lab source revision, file hashes and local transformations. Do not change those provenance records merely because the evidence pages were updated. Mainnet trading controls remain disabled in the embedded DEX until its execution integration is separately verified.
 
