@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { CodeBlock, OutLink, Tag } from "@/components/code-block";
 import { Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
-import { LINKS, MANDATE, TRADE } from "@/lib/front-door";
+import { EVIDENCE_SNAPSHOT, LINKS, MANDATE, TRADE } from "@/lib/front-door";
 import { PRESETS } from "@/lib/x3/playground";
 
 export const Route = createFileRoute("/docs")({ component: DocsPage });
@@ -46,6 +46,20 @@ function DocsPage() {
           </Card>
         </CardGrid>
       </Section>
+      <Section title="From policy to a recorded mainnet payment" alt>
+        <p className="mx-auto max-w-3xl text-muted">
+          The evidence reviewed {EVIDENCE_SNAPSHOT.dateLabel} includes a live 1Click quote accepted
+          on x3lang.near by a restricted agent key, followed by a 25 USDC Solana deposit and
+          24.9952 USDC delivery on NEAR. The original mandate and payment source files still need
+          to be matched to their stored hashes. The examples below teach the language; they are
+          not asserted to be the exact invoice_06 files.
+        </p>
+        <p className="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-3">
+          <OutLink href={LINKS.mainnetEvidence}>Mainnet evidence and limits</OutLink>
+          <OutLink href={LINKS.mainnetObservation}>Public RPC observations</OutLink>
+          <OutLink href={LINKS.mainnetChecksums}>Evidence checksum</OutLink>
+        </p>
+      </Section>
       <Section title="Quickstart">
         <p className="text-muted">
           Run these commands from a checkout of the X3Lang repository, not the dotx3 website. The
@@ -56,6 +70,7 @@ function DocsPage() {
           title="Install"
           code={`git clone https://github.com/Cyptopimpinainteazy/x3lang.git
 cd x3lang
+git checkout ${EVIDENCE_SNAPSHOT.commit}
 python3 -m venv .venv && . .venv/bin/activate
 pip install -r x3-lang/requirements.txt pytest`}
         />
@@ -66,7 +81,8 @@ python3 x3-lang/cli.py x3-lang/examples/arb_solana_eth.x3
 PYTHONPATH=x3-lang python3 -m pytest x3-lang/tests -q`}
         />
         <p className="mt-4 text-sm text-muted">
-          Run the current tests and retain the commit hash with the result. Contract checks are
+          This checkout pins the reviewed evidence revision. Run its tests and retain the commit
+          hash with the result. Contract checks are
           separate: cd x3-lang/near/x3-guard &amp;&amp; cargo test --locked. Historical test counts
           are not proof for your checkout.
         </p>
@@ -117,8 +133,8 @@ PYTHONPATH=x3-lang python3 -m pytest x3-lang/tests -q`}
             separate. Acceptance is not permission to send from an origin wallet.
           </Card>
           <Card title="What does not run on a block">
-            The x3-lang intent VM executes in this workspace only. The README says it is not loaded
-            by a pallet. Do not describe a local simulate as chain execution.
+            The x3-lang Rust intent VM runs locally; its bytecode is separate from chain X3BC and
+            is not loaded by a pallet. The recorded mainnet swap used NEAR Guard and 1Click.
           </Card>
         </CardGrid>
         <p className="mt-8 text-sm text-muted">

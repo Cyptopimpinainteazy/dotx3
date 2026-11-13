@@ -1,6 +1,6 @@
 import { ActionLink, Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { CodeBlock, OutLink } from "@/components/code-block";
-import { LINKS, RAW, MANDATE, TRADE } from "@/lib/front-door";
+import { EVIDENCE_SNAPSHOT, LINKS, RAW, MANDATE, TRADE } from "@/lib/front-door";
 import { nearTracks } from "@/lib/near-tracks";
 
 export function TrackPage({ slug }: { slug: (typeof nearTracks)[number]["slug"] }) {
@@ -37,14 +37,21 @@ export function TrackPage({ slug }: { slug: (typeof nearTracks)[number]["slug"] 
           <Card title="Published result">{track.evidence}</Card>
           <Card title="Trust and limits">{track.limit}</Card>
           <Card title="Reproduce and inspect">
+            <OutLink href={track.evidenceHref}>Current mainnet evidence and limits</OutLink>
+            <p className="mt-4">
             <OutLink href={`${RAW}/docs/hackathon/${track.source}`}>
-              Track source and execution evidence
+              Track source and historical demonstrations
             </OutLink>
+            </p>
             <p className="mt-4">
               <OutLink href={LINKS.guardEvidence}>Archived Guard calls</OutLink>
             </p>
           </Card>
         </CardGrid>
+        <p className="mx-auto mt-6 max-w-3xl text-muted">
+          <span className="font-semibold text-fg">Next evidence: </span>{track.next}
+        </p>
+        <p className="mt-3 text-center text-xs text-muted">Reviewed {EVIDENCE_SNAPSHOT.dateLabel} against X3Lang {EVIDENCE_SNAPSHOT.commit.slice(0, 7)}.</p>
       </Section>
       <div className="mx-auto max-w-6xl px-5 text-center">
         <ActionLink to="/labs" outline>
@@ -62,8 +69,9 @@ export function TrackPage({ slug }: { slug: (typeof nearTracks)[number]["slug"] 
             refusal; local results do not prove chain execution.
           </li>
           <li>
-            Open the archived testnet records. Match the source hash, contract, transaction and
-            network to the claim being checked.
+            Open the mainnet invoice_06 bundle and the separately labeled testnet records. Match
+            each contract, transaction and network to its claim. The mainnet source hashes are
+            recorded but not yet matched to committed .x3 files.
           </li>
           <li>
             For delivery, inspect the source and destination finalized records and the relay

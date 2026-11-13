@@ -108,14 +108,6 @@ export function SituationReport() {
             </a>
           </li>
         ))}
-        <li className="flex flex-wrap items-baseline gap-x-5 gap-y-2 bg-[repeating-linear-gradient(135deg,var(--color-surface)_0_12px,#131620_12px_24px)] px-6 py-4">
-          <span className="w-28 shrink-0 font-mono text-xs font-semibold text-muted">PENDING</span>
-          <span className="min-w-0 flex-[1_1_18rem] text-[15px] text-[#c9ccd4]">
-            Mainnet: Solana USDC → NEAR USDC, authorized by X3 General (x3lang.near). Shows here
-            only once it&apos;s final.
-          </span>
-          <span className="font-mono text-xs text-muted">not yet</span>
-        </li>
       </ul>
     </div>
   );

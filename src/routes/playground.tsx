@@ -2,14 +2,14 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell } from "@/components/site-shell";
-import { LINKS } from "@/lib/front-door";
+import { EVIDENCE_SNAPSHOT, LINKS } from "@/lib/front-door";
 import { ATTACKS, DATA, PRESETS, QUOTES, applyAttack, displayDecision, type Attack } from "@/lib/x3/playground";
 import * as judge from "@/lib/x3/vendor/judge/judge.mjs";
 import * as x3 from "@/lib/x3/vendor/x3guard.mjs";
 
 export const Route = createFileRoute("/playground")({ component: PlaygroundPage });
 
-const VENDOR_COMMIT = "470d61a3b77689bb5e0c7e36fc7814d28e761dad";
+const VENDOR_COMMIT = EVIDENCE_SNAPSHOT.commit;
 const VENDOR_URL = `${LINKS.repo}/blob/${VENDOR_COMMIT}/x3-lang/near/demo/x3guard.mjs`;
 
 type Outcome =

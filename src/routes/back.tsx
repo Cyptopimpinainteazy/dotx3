@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell } from "@/components/site-shell";
-import { LINKS, MILESTONES, NEAR_WALLETS, RHEA_APP, TOKEN } from "@/lib/front-door";
+import { LINKS, MILESTONES, NEAR_WALLETS, RHEA_APP, TOKEN, hasMilestoneEvidence } from "@/lib/front-door";
 import { PartnerLink } from "@/components/partner-link";
 
 export const Route = createFileRoute("/back")({ component: BackPage });
@@ -97,8 +97,17 @@ function BackPage() {
             status={poolLive ? "live" : "pending"}
             detail={poolLive ? `pool #${TOKEN.rheaPoolId}` : "no pool created"}
           />
-          <StatusRow label="Funded mainnet settlement" status="pending" detail="none published" />
+          <StatusRow
+            label="Recorded mainnet 1Click settlement"
+            status="live"
+            detail={<OutLink href={LINKS.mainnetEvidence}>25 USDC on Solana → 24.9952 USDC on NEAR</OutLink>}
+          />
         </ul>
+        <p className="mx-auto mt-5 max-w-3xl text-sm text-muted">
+          This is one recorded mainnet swap. Guard authorized the deposit address without holding
+          the USDC. The funding wallet&apos;s controller, source-file hash linkage, scoped custody
+          and an independent security review remain unverified.
+        </p>
       </Section>
 
       <Section
@@ -178,7 +187,7 @@ function BackPage() {
                 <Link to="/proof" className="text-primary underline underline-offset-4">
                   Proof
                 </Link>
-                : every testnet claim with its transaction.
+                : mainnet and testnet records, each with its source and limits.
               </li>
               <li>
                 <OutLink href={LINKS.repo}>Source</OutLink> and{" "}
@@ -226,16 +235,21 @@ function BackPage() {
                 <h3 className="font-display text-lg text-fg">
                   {i + 1}. {m.title}
                 </h3>
-                <Tag>{m.evidence ? "Posted" : "Pending"}</Tag>
+                <Tag>{hasMilestoneEvidence(m) ? "Posted" : "Pending"}</Tag>
               </div>
               <p className="mt-2 text-sm text-muted">{m.proof}</p>
-              {m.evidence ? (
+              {hasMilestoneEvidence(m) ? (
                 <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
-                  {m.evidence.map((e) => (
+                  {m.evidence?.map((e) => (
                     <OutLink key={e.href} href={e.href}>
                       {e.label}
                     </OutLink>
                   ))}
+                </p>
+              ) : m.nextAction ? (
+                <p className="mt-3 text-sm text-muted">
+                  {m.nextAction}{" "}
+                  {m.nextHref ? <OutLink href={m.nextHref}>Next evidence</OutLink> : null}
                 </p>
               ) : null}
             </li>

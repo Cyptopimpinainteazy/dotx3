@@ -58,7 +58,7 @@ export const ALL_NAV: NavGroup[] = [
       {
         kind: "route",
         label: "Judge Console",
-        description: "Refused, allowed, settled: three cases, all on chain",
+        description: "Mainnet settlement and historical testnet cases",
         to: "/judge",
       },
       {
@@ -221,8 +221,15 @@ export const ALL_NAV: NavGroup[] = [
       {
         kind: "route",
         label: "Judge Console",
-        description: "Three cases with code, checks and verdict",
+        description: "Mainnet receipts, testnet code and verdicts",
         to: "/judge",
+      },
+      {
+        kind: "route",
+        label: "Mainnet settlement",
+        description: "25 USDC on Solana to 24.9952 USDC on NEAR",
+        to: "/proof",
+        hash: "mainnet-settlement",
       },
       {
         kind: "route",

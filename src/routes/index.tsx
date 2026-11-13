@@ -14,39 +14,44 @@ import { openIntro, SONG } from "@/lib/song";
 import { MeterScene } from "@/components/meter-scene";
 import { GuardScene } from "@/components/guard-scene";
 import { CaseFileCard, ChainOfCommand, FourDoors, SituationReport } from "@/components/dossier";
-import { ARCADE_URL, BACKING_LINKS_VISIBLE, MILESTONES, SITE, TOKEN } from "@/lib/front-door";
+import { ARCADE_URL, BACKING_LINKS_VISIBLE, EVIDENCE_SNAPSHOT, getProofSummary, hasMilestoneEvidence, LINKS, MILESTONES, SITE, TOKEN } from "@/lib/front-door";
 
 export const Route = createFileRoute("/")({ component: Home });
 
 function ProofMeter() {
-  const posted = MILESTONES.filter((m) => m.evidence !== null);
-  const total = MILESTONES.length;
-  const pct = Math.round((posted.length / total) * 100);
+  const { posted, total, progress, percent: pct } = getProofSummary();
 
   return (
     <div className="mx-auto max-w-4xl">
-      <MeterScene progress={posted.length / total} />
+      <MeterScene progress={progress} />
       <div
         className="h-8 overflow-hidden rounded-full bg-surface-2"
         role="meter"
-        aria-valuenow={posted.length}
+        aria-valuenow={posted}
         aria-valuemin={0}
         aria-valuemax={total}
-        aria-label={`Proofs posted: ${posted.length} of ${total}`}
+        aria-label={`Proofs posted: ${posted} of ${total}`}
       >
         <div
-          className={`flex h-full items-center justify-end bg-primary text-xs font-semibold text-bg transition-[width] duration-500 ${posted.length ? "meter-sheen pr-3" : ""}`}
-          style={{ width: `${posted.length ? Math.max(pct, 8) : 0}%` }}
+          className={`flex h-full items-center justify-end bg-primary text-xs font-semibold text-bg transition-[width] duration-500 ${posted ? "meter-sheen pr-3" : ""}`}
+          style={{ width: `${posted ? Math.max(progress * 100, 8) : 0}%` }}
         >
-          {posted.length ? `${pct}%` : null}
+          {posted ? `${pct}%` : null}
         </div>
       </div>
       <p className="mt-3 text-center font-display text-2xl text-fg">
-        Proofs posted: {posted.length} / {total}
+        Proofs posted: {posted} / {total}
       </p>
       <p className="mt-2 text-center text-sm text-muted">
         A milestone counts only when its proof is public: a finalized transaction, a merged change
-        with tests, or a published report. Nothing here is estimated.
+        with tests, or a published report. Each of the same eight milestones has equal weight.
+        {" "}{progress * 100}% exact coverage, rounded to {pct}% for display.
+      </p>
+      <p className="mt-2 text-center text-xs text-muted">
+        Reviewed {EVIDENCE_SNAPSHOT.dateLabel} against{" "}
+        <a href={LINKS.reviewedSource} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">
+          X3Lang {EVIDENCE_SNAPSHOT.commit.slice(0, 7)}
+        </a>. This measures published proof, not a security rating or a hackathon score.
       </p>
 
       <ol className="mt-8 grid gap-3 md:grid-cols-2">
@@ -57,15 +62,15 @@ function ProofMeter() {
                 {i + 1}. {m.title}
               </p>
               <span
-                className={`text-xs font-semibold ${m.evidence ? "text-primary" : "text-accent"}`}
+                className={`text-xs font-semibold ${hasMilestoneEvidence(m) ? "text-primary" : "text-accent"}`}
               >
-                {m.evidence ? "Posted" : "Pending"}
+                {hasMilestoneEvidence(m) ? "Posted" : "Pending"}
               </span>
             </div>
             <p className="mt-2 text-sm text-muted">{m.proof}</p>
-            {m.evidence ? (
+            {hasMilestoneEvidence(m) ? (
               <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
-                {m.evidence.map((e) => (
+                {m.evidence!.map((e) => (
                   <a
                     key={e.href}
                     href={e.href}
@@ -78,6 +83,12 @@ function ProofMeter() {
                 ))}
               </p>
             ) : null}
+            {m.nextAction ? (
+              <p className="mt-3 text-sm text-muted">
+                <span className="font-semibold text-fg">Next: </span>{m.nextAction}
+                {m.nextHref ? <> <a href={m.nextHref} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">Inspect the work</a></> : null}
+              </p>
+            ) : null}
           </li>
         ))}
       </ol>
@@ -85,7 +96,7 @@ function ProofMeter() {
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         {BACKING_LINKS_VISIBLE ? <ActionLink to="/back">Back .x3</ActionLink> : null}
         <ActionLink to="/proof" outline={BACKING_LINKS_VISIBLE}>
-          Proof already on testnet
+          Inspect mainnet and testnet proof
         </ActionLink>
         <ActionLink to="/playground" outline>
           Try to break a mandate
@@ -163,8 +174,9 @@ function Home() {
               breaks a cap, it does not compile or Guard refuses it.
             </Card>
             <Card title="Settlement is labeled">
-              The published trade is testnet: 1 test USDC from Base Sepolia to NEAR. Official 1Click
-              quotes were checked and stopped before a deposit.
+              Mainnet: 25 USDC from Solana, 24.9952 USDC delivered on NEAR after Guard accepted
+              the official signed 1Click quote. The earlier Base Sepolia trade remains testnet evidence.
+              Guard authorization and wallet custody are different claims.
             </Card>
           </CardGrid>
         </div>
@@ -180,7 +192,7 @@ function Home() {
 
       <Section
         title="How a decision moves"
-        intro="The program names Base, Solana, or NEAR. Guard allows the deposit or it refuses. Base and Solana bridge. NEAR does not."
+        intro="The program names Base, Solana, or NEAR. Guard checks the quote and mandate. A separate funding wallet makes the deposit; finalized receipts show delivery."
       >
         <ProofFlow
           steps={[
@@ -213,7 +225,7 @@ function Home() {
 
       <Section
         title="Proof meter"
-        intro="From the testnet proof already posted to a system people can trust with money. Each milestone fills only when its proof is public."
+        intro="Three published milestones, including the official mainnet settlement. The remaining five show exactly what evidence is still needed."
       >
         <ProofMeter />
       </Section>
@@ -222,15 +234,16 @@ function Home() {
         <CardGrid>
           <Card title="AI Security & Defense">
             Recipient and asset allowlists, caps, slippage, fees, expiry, one-use nonces. Compiler
-            off-chain. x3-guard on NEAR testnet.
+            off-chain, contract checks on NEAR. The mainnet quote passed 21 checks; hostile-model
+            mainnet refusal evidence remains pending.
           </Card>
           <Card title="Agent Economy">
-            Permitted, approval-required, and denied payments. Testnet shows one allowed intent and
-            one refused intent.
+            A restricted agent key accepted the mainnet quote after owner approval. Testnet shows
+            allowed and refused intents. Source-wallet control and guarded custody remain separate gaps.
           </Card>
           <Card title="Unstoppable DeFi">
-            One .x3 program, hash bound before the source transfer, then finalized on Base Sepolia
-            and NEAR testnet through a trusted relay.
+            Official 1Click settlement from Solana to NEAR mainnet, plus the earlier Base Sepolia
+            testnet trade. Each has its own receipts and limits; neither establishes atomic settlement.
           </Card>
         </CardGrid>
         <div className="mt-8 flex flex-wrap justify-center gap-3">

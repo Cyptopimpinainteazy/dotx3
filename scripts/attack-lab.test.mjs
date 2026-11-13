@@ -59,7 +59,10 @@ test("copied Attack Lab bytes match the pinned branch provenance", () => {
   const manifest = JSON.parse(
     readFileSync(new URL("../public/labs/attack/provenance.json", import.meta.url)),
   );
-  assert.equal(manifest.commit, "a120169cb41e8e30f7a5fd4002de2506388137b2");
+  assert.equal(manifest.commit, "efb514ffef2cdfdeb8ad8147747887c85356073c");
+  const fullManifest = JSON.parse(readFileSync(new URL("../x3lang-port.json", import.meta.url)));
+  assert.equal(manifest.commit, fullManifest.commit);
+  assert.deepEqual(manifest.files, fullManifest.files.filter(row => row.destination.startsWith("public/labs/attack/")));
   for (const row of manifest.files) {
     const data = readFileSync(new URL(`../${row.destination}`, import.meta.url));
     assert.equal(createHash("sha256").update(data).digest("hex"), row.sha256);

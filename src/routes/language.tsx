@@ -2,7 +2,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { OutLink, Tag } from "@/components/code-block";
 import { ProofFlow } from "@/components/circuit";
 import { Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
-import { BACKING_LINKS_VISIBLE, LINKS } from "@/lib/front-door";
+import { BACKING_LINKS_VISIBLE, EVIDENCE_SNAPSHOT, LINKS } from "@/lib/front-door";
 
 export const Route = createFileRoute("/language")({ component: LanguagePage });
 
@@ -54,43 +54,43 @@ const REFUSALS: { code: string; what: string }[] = [
   },
 ];
 
-const ENGINE: { title: string; body: string }[] = [
+const SOURCE_ROOT = `${LINKS.repo}/blob/${EVIDENCE_SNAPSHOT.commit}`;
+
+const ENGINE: { title: string; body: string; href: string }[] = [
   {
-    title: "One instruction set",
-    body: "A no_std core crate is now the only definition of X3BC opcodes, the bytecode format, the gas table, swap math, receipts and traps. Before, the compiler and the VM each kept their own tables, and those tables disagreed.",
+    title: "Python intent frontend",
+    body: "The public NEAR path parses and checks .x3 mandates and payment intents, lowers supported terms and evaluates the owner policy. Unsafe source edits are rejected before quote submission.",
+    href: `${SOURCE_ROOT}/docs/hackathon/X3_LANGUAGE.md`,
   },
   {
-    title: "Trades that roll back as one",
-    body: "Trading opcodes run inside an atomic window that journals every write. If any step fails, the whole window reverts. Each run produces an Ed25519-signed receipt, and a replay recomputes the economics independently.",
+    title: "Guard on NEAR",
+    body: "The deployed contract reads authenticated 1Click quote terms and checks the stored mandate. Mainnet invoice_06 passed 21 checks through a restricted agent key before a separately funded deposit.",
+    href: LINKS.mainnetEvidence,
   },
   {
-    title: "Compiled .x3 trades on the chain runtime",
-    body: "A kernel call executes compiled trading bytecode against the chain's own DEX, flash-loan and oracle pallets, with metered weight and refunds. Trading stays switched off until governance sets fees.",
+    title: "Rust intent compiler and VM",
+    body: "The public x3-lang workspace compiles, verifies and runs trading programs locally. Its intent bytecode and the chain's X3BC format are distinct; no pallet loads the intent bytecode described in this workspace.",
+    href: `${SOURCE_ROOT}/x3-lang/README.md`,
   },
   {
-    title: "A language you can program in",
-    body: "Arrays, tuples, structs, indexing and len() compile from source through HIR and MIR to bytecode. Block-context opcodes (sender, height, timestamp, value, chain id) fail closed when the host supplies no value.",
-  },
-  {
-    title: "Robustness",
-    body: "A property-test harness ran 8 million cases with zero panics. Parser recursion is capped at depth 64, and there is a never-panics fuzz harness.",
-  },
-  {
-    title: "Bitcoin SPV, done properly",
-    body: "An SPV verifier that accepted a forged all-zero header was replaced. The new crate implements Bitcoin's real consensus rules and is checked against real mainnet blocks and Bitcoin Core's retarget test vectors.",
+    title: "A source trail you can check",
+    body: "The historical Tidepool testnet transfer has a committed .x3 program whose hash was bound before funding. The mainnet swap has finalized receipts, but its two stored source hashes still need matching committed .x3 files.",
+    href: LINKS.mainnetObservation,
   },
 ];
 
-const IDEAS: { title: string; body: string; status: string }[] = [
+const IDEAS: { title: string; body: string; status: string; href?: string }[] = [
   {
     title: "Guard enforces the program hash",
-    status: "Next",
-    body: "Main Guard stores an agent program's SHA-256 but does not check it. The Tidepool Guard already refuses an authorization whose program hash doesn't match the one the owner registered. Doing the same in agent_accept_quote would mean an approved mandate only carries the exact program the owner saw.",
+    status: "Open PR #202",
+    body: "Program-pin enforcement is proposed in PR #202 and is not merged at this evidence snapshot. Storing a source hash does not prove the deployed Guard rejects a different program. The meter waits for the implementation and mismatch tests to land.",
+    href: LINKS.programBindingPr,
   },
   {
     title: "Scoped agent vault",
     status: "Local prototypes",
-    body: "NEAR FunctionCall-only and Base EIP-712 vault work has local Sandbox and Foundry coverage in the source repository. Public vault deployment and independent audits remain unproven; these prototypes did not custody the historical Tidepool transfer.",
+    body: "NEAR FunctionCall-only and Base EIP-712 vault prototypes have local test coverage. The public testnet runbook still needs an allowed payment and the documented refusal cases. Neither the Tidepool transfer nor invoice_06 proves a scoped vault held the funds.",
+    href: LINKS.vaultRunbook,
   },
   {
     title: "Mandate diff before you sign",
@@ -119,7 +119,7 @@ function LanguagePage() {
     <SiteShell
       eyebrow="The language"
       title="X3 is more than one payment."
-      lede="X3 Shield on NEAR uses a narrow, tested slice of X3. Here's the whole pipeline, what the compiler refuses, the chain engine behind it, and what we're building next."
+      lede="X3 Shield uses typed owner mandates, deterministic checks and Guard authorization on NEAR. Follow the public language tools, the recorded mainnet swap and the remaining work that connects source to execution."
     >
       <div className="mx-auto max-w-6xl px-5 pt-8">
         <a
@@ -131,7 +131,7 @@ function LanguagePage() {
       </div>
       <Section
         title="Two pipelines, one language"
-        intro="The hackathon path is the top line. The bottom line is the X3 chain, which is not part of the NEAR judge path."
+        intro="The NEAR integration and the Rust intent toolchain establish different facts. The mainnet payment used Guard and 1Click; it is not evidence of native X3VM execution."
       >
         <div className="mx-auto max-w-4xl space-y-8">
           <div>
@@ -142,21 +142,21 @@ function LanguagePage() {
               steps={[
                 { label: ".x3 source", detail: "Mandate and payment" },
                 { label: "Compile", detail: "Parse, type-check, lower" },
-                { label: "Guard terms", detail: "Hash-pinned on NEAR" },
+                { label: "Guard terms", detail: "Stored policy on NEAR" },
                 { label: "1Click quote", detail: "Signature, then terms" },
               ]}
             />
           </div>
           <div>
             <div className="mb-3">
-              <Tag>X3 chain path · separate repository</Tag>
+              <Tag>Rust intent toolchain · local workspace</Tag>
             </div>
             <ProofFlow
               steps={[
                 { label: ".x3 source", detail: "Strategies and programs" },
                 { label: "Rust compiler", detail: "HIR, MIR, backend" },
-                { label: "X3BC", detail: "One canonical bytecode" },
-                { label: "X3VM", detail: "Atomic, signed receipts" },
+                { label: "Intent bytecode", detail: "Separate from chain X3BC" },
+                { label: "Intent VM", detail: "Local execution and tests" },
               ]}
             />
           </div>
@@ -187,26 +187,25 @@ function LanguagePage() {
       </Section>
 
       <Section
-        title="The chain engine"
-        intro="Work in the X3 chain monorepo on unifying X3 Lang with the production X3BC bytecode and VM."
+        title="What the public source establishes"
+        intro={`Reviewed ${EVIDENCE_SNAPSHOT.dateLabel}. Each component links to the source or execution record behind its claim.`}
       >
         <div className="mx-auto mb-8 flex max-w-3xl flex-wrap justify-center gap-2">
-          <Tag>Repository not public</Tag>
-          <Tag>Draft PR, not merged to master</Tag>
-          <Tag>Runtime tests, not a live chain</Tag>
-          <Tag>Status as of 2026-10-19</Tag>
+          <Tag>Public X3Lang source</Tag>
+          <Tag>NEAR + Solana mainnet evidence</Tag>
+          <Tag>Rust intent VM: local</Tag>
         </div>
         <CardGrid>
           {ENGINE.map((e) => (
             <Card key={e.title} title={e.title}>
               {e.body}
+              <p className="mt-4"><OutLink href={e.href}>Inspect source and limits</OutLink></p>
             </Card>
           ))}
         </CardGrid>
         <p className="mx-auto mt-8 max-w-3xl text-center text-sm text-muted">
-          You can&apos;t check any of this from here: the repository is private, so nothing on this
-          page links to it. It is listed so the language&apos;s scope is clear. None of it is part
-          of the NEAR submission, and none of it is cited as evidence on{" "}
+          The broader X3 chain has its own release and deployment requirements. Claims here use
+          the public X3Lang revision and the network named in each evidence record. See{" "}
           <Link to="/proof" className="text-primary underline underline-offset-4">
             Inspect the Proof
           </Link>
@@ -223,6 +222,7 @@ function LanguagePage() {
                 <Tag>{idea.status}</Tag>
               </div>
               <p className="mt-3 text-sm text-muted">{idea.body}</p>
+              {idea.href ? <p className="mt-4 text-sm"><OutLink href={idea.href}>Review current work</OutLink></p> : null}
             </article>
           ))}
         </div>

@@ -1,9 +1,10 @@
 import { ProviderIncidents } from '@/components/provider-incidents';
 import { ExplorerEvidence } from '@/components/explorer-evidence';
+import { MainnetEvidence } from '@/components/mainnet-evidence';
 import { createFileRoute } from "@tanstack/react-router";
 import { OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell } from "@/components/site-shell";
-import { LINKS, PROGRAM_SHA } from "@/lib/front-door";
+import { EVIDENCE_SNAPSHOT, LINKS, PROGRAM_SHA } from "@/lib/front-door";
 
 export const Route = createFileRoute("/proof")({ component: ProofPage });
 
@@ -34,28 +35,32 @@ function ProofPage() {
     <SiteShell
       eyebrow="Inspect the Proof"
       title="Evidence by source and network."
-      lede="Local tests, testnet receipts and live provider history are labeled separately. A signed 1Click quote is not a settlement. A Guard acceptance is not a transfer."
+      lede="The official Solana-to-NEAR mainnet settlement is now published. Follow the signed quote, Guard acceptance, source deposit and destination payout, then inspect the separate testnet and local evidence."
     >
       <div className="mx-auto max-w-6xl px-5"><ProviderIncidents /></div>
 
-      <Section title="CI and local gates">
+      <Section title="Mainnet settlement">
+        <MainnetEvidence />
+      </Section>
+
+      <Section title="CI and local gates" alt>
         <div className="grid gap-4 md:grid-cols-2">
           <Row
-            label="GitHub Actions"
-            detail="Workflows are public, including the judge gate, the won't-compile check, and the two-chain evidence replay. Open a run and read that run. This page does not paste a green check from memory."
-            href={LINKS.actions}
-            hrefLabel="X3Lang Actions"
+            label="Seven passing checks at the reviewed commit"
+            detail={`X3Lang ${EVIDENCE_SNAPSHOT.commit.slice(0, 7)}: Rust VM, provenance, Python/browser, compile-time refusals, signed-quote baselines, NEAR Guard and compromised-model refusal checks all passed. This result covers this revision only.`}
+            href={LINKS.currentCi}
+            hrefLabel="Inspect all checks for this commit"
           />
           <Row
-            label="Recorded local result"
-            detail="README: at commit c5a4e39, pytest printed 594 passed, 1 skipped, and the Guard crate printed 62 passed. Re-run before you cite either number against a newer commit."
-            href={LINKS.readme}
-            hrefLabel="README walkthrough"
+            label="Reviewed source and reproducible walkthrough"
+            detail={`Evidence reviewed ${EVIDENCE_SNAPSHOT.dateLabel}. The source revision is pinned so the README, contract and evidence can be inspected together. Local tests prove their tested behavior; they do not fill public-chain or independent-audit milestones.`}
+            href={LINKS.reviewedSource}
+            hrefLabel="Open the pinned X3Lang source"
           />
         </div>
       </Section>
 
-      <Section title="Quote verification" alt>
+      <Section title="Quote verification">
         <div className="mb-4">
           <Tag>NEAR testnet · official 1Click quote · not a deposit</Tag>
         </div>
@@ -68,7 +73,7 @@ function ProofPage() {
           />
           <Row
             label="Live quote accepted, then stopped"
-            detail="An official 1Click live quote that matched the policy was accepted. The README says this stopped before any deposit. A valid signature authenticates provider terms, not a completed swap."
+            detail="This earlier testnet run accepted an official 1Click live quote and stopped before a deposit. Its acceptance is separate from the completed mainnet invoice_06 trade above."
             href={LINKS.liveQuoteTx}
             hrefLabel="Acceptance 6B6k5kre4mFoBq7RuJNadQgrhEvmgb9WDLepX22CxzUZ"
           />
@@ -81,7 +86,7 @@ function ProofPage() {
         </div>
       </Section>
 
-      <Section title="Refusal and acceptance">
+      <Section title="Refusal and acceptance" alt>
         <div className="mb-4">
           <Tag>NEAR testnet · x3lang.testnet · no swap-asset custody</Tag>
         </div>
@@ -104,7 +109,7 @@ function ProofPage() {
         </p>
       </Section>
 
-      <Section title="Settlement" alt>
+      <Section title="Settlement">
         <div className="mb-4 flex flex-wrap gap-2">
           <Tag>Historical</Tag>
           <Tag>Base Sepolia to NEAR testnet</Tag>
@@ -122,34 +127,36 @@ function ProofPage() {
           />
           <Row
             label="Destination · NEAR testnet"
-            detail="Payout to x3lang.testnet. This page provides no independently verified mainnet settlement evidence."
+            detail="Historical testnet payout to x3lang.testnet. These test assets and receipts are distinct from the mainnet USDC settlement above."
             href={LINKS.nearPayout}
             hrefLabel="EBEBxJNgV9U5tBFBLj18ZzukgArqwXH5rBsBStFyCm1d"
           />
         </div>
       </Section>
 
-      <Section title="Mainnet Guard setup">
+      <Section title="Mainnet Guard setup" alt>
         <p className="max-w-3xl text-muted">
           NEAR mainnet Guard deployment and setup are documented for x3lang.near. The archived
           records cover deployment, storage, scoped agent access, intent registration and owner
-          approval. They do not establish a funded official 1Click settlement.{" "}
+          approval. The later invoice_06 bundle above supplies the acceptance, deposit and payout
+          records; the setup note remains a historical record.{" "}
           <OutLink href="https://github.com/Cyptopimpinainteazy/x3lang/blob/0a2c5f08694a206838cf01e774dc5dc843dc42b7/docs/hackathon/MAINNET_GUARD_DEPLOYMENT.md">
             Inspect the mainnet setup evidence
           </OutLink>.
         </p>
       </Section>
 
-      <Section title="1Click Explorer history" alt>
+      <Section title="1Click Explorer history">
         <ExplorerEvidence />
       </Section>
 
-      <Section title="Not claimed">
+      <Section title="Not claimed" alt>
         <ul className="mx-auto max-w-3xl list-disc space-y-2 pl-5 text-muted">
-          <li>This page does not establish a funded official 1Click settlement.</li>
+          <li>The mainnet payment and mandate hashes are not yet matched to committed .x3 source files. The controller of the Solana funding wallet remains unconfirmed.</li>
           <li>No public audited vault. Guard does not custody swap assets; native NEAR used for storage and account operation is separate. An unrestricted origin key can bypass it.</li>
-          <li>No cryptographic atomic cross-chain causality for the Tidepool trade.</li>
-          <li>Inspect any release artifact&apos;s checksum and provenance against the exact source revision before using it.</li>
+          <li>No cryptographic atomic cross-chain causality for either the Tidepool testnet trade or the mainnet 1Click settlement.</li>
+          <li>Exact approved-program enforcement is still in <OutLink href={LINKS.programBindingPr}>open PR #202</OutLink>. A stored hash does not prove that enforcement.</li>
+          <li>No public scoped-vault refusal run, hostile-model mainnet run, independent audit or tagged release with build provenance is claimed by this snapshot.</li>
           <li>
             Report vulnerabilities in private. Do not file exploits, keys, or seeds in a public issue. <OutLink href={LINKS.security}>SECURITY.md</OutLink>
           </li>

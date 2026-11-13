@@ -58,7 +58,8 @@ class CompilerAPI(unittest.TestCase):
         import hashlib
         for row in manifest['files']:
             self.assertEqual(hashlib.sha256((ROOT / row['destination']).read_bytes()).hexdigest(), row['sha256'])
-        self.assertEqual(manifest['commit'], 'a120169cb41e8e30f7a5fd4002de2506388137b2')
+        self.assertEqual(manifest['commit'], 'efb514ffef2cdfdeb8ad8147747887c85356073c')
+        self.assertEqual(manifest, json.loads((ROOT / 'public/x3lang-port.json').read_text()))
 
 
 sync_spec = importlib.util.spec_from_file_location('sync_x3lang', ROOT / 'scripts/sync-x3lang.py')
@@ -126,22 +127,67 @@ class AttackPortTransformation(unittest.TestCase):
 
 
 class QuoteModePortTransformation(unittest.TestCase):
-    def test_proposal_is_reproducible_and_upstream_drift_requires_review(self):
+    def test_reviewed_upstream_fix_is_preserved_and_drift_requires_review(self):
         manifest = json.loads((ROOT / 'x3lang-port.json').read_text())
         for row in manifest['files']:
-            replacements = sync.QUOTE_MODE_BINDING_REPLACEMENTS.get(row['source'])
-            if not replacements:
+            expected = sync.REVIEWED_QUOTE_MODE_SOURCES.get(row['source'])
+            if not expected:
                 continue
             output = (ROOT / row['destination']).read_bytes()
-            source = output
-            for old, new in replacements.items():
-                source = source.replace(new.encode(), old.encode())
-            self.assertEqual(hashlib.sha256(source).hexdigest(), row['source_sha256'])
-            rebuilt, transformations = sync.transform_ported_file(row['source'], source, manifest['commit'])
+            self.assertEqual(hashlib.sha256(output).hexdigest(), expected)
+            self.assertEqual(row['source_sha256'], expected)
+            rebuilt, transformations = sync.transform_ported_file(row['source'], output, manifest['commit'])
             self.assertEqual(rebuilt, output)
-            self.assertEqual(transformations, row['local_transformations'])
+            self.assertEqual(transformations, [])
+            self.assertNotIn('local_transformations', row)
             with self.assertRaisesRegex(ValueError, 'review before syncing'):
-                sync.transform_ported_file(row['source'], output, manifest['commit'])
+                sync.transform_ported_file(row['source'], output + b'\n// Unreviewed drift\n', manifest['commit'])
+
+    def test_legacy_unpatched_sources_still_receive_exact_boolean_binding(self):
+        for source, replacements in sync.QUOTE_MODE_BINDING_REPLACEMENTS.items():
+            unpatched = '\n'.join(replacements).encode()
+            patched, transformations = sync.transform_ported_file(source, unpatched, 'legacy')
+            for replacement in replacements.values():
+                self.assertIn(replacement.encode(), patched)
+            self.assertEqual(transformations, [sync.QUOTE_MODE_BINDING_TRANSFORMATION])
+            with self.assertRaisesRegex(ValueError, 'review before syncing'):
+                sync.transform_ported_file(source, patched, 'legacy')
+
+
+class JudgeMainnetPortTransformation(unittest.TestCase):
+    def test_evidence_note_is_reproducible_from_pinned_source(self):
+        manifest = json.loads((ROOT / 'x3lang-port.json').read_text())
+        row = next(row for row in manifest['files'] if row['source'] == 'x3-lang/near/demo/judge.html')
+        output = (ROOT / row['destination']).read_bytes()
+        updated = sync.judge_mainnet_update(manifest['commit']).encode()
+        source = sync.remove_export_controls(output).replace(updated, sync.JUDGE_MAINNET_PENDING.encode()).replace(
+            sync.JUDGE_SCENARIO_NOTE.encode(), sync.JUDGE_SCENARIO_BOUNDARY.encode())
+        for old, new in sync.JUDGE_SETUP_COPY_REPLACEMENTS.items():
+            source = source.replace(new.encode(), old.encode())
+        self.assertEqual(hashlib.sha256(source).hexdigest(), row['source_sha256'])
+        rebuilt, transformations = sync.transform_ported_file(row['source'], source, manifest['commit'])
+        self.assertEqual(rebuilt, output)
+        self.assertEqual(transformations, row['local_transformations'])
+        with self.assertRaisesRegex(ValueError, 'review before syncing'):
+            sync.transform_ported_file(row['source'], source.replace(sync.JUDGE_MAINNET_PENDING.encode(), b''), manifest['commit'])
+
+
+class MainnetSetupPortTransformation(unittest.TestCase):
+    def test_current_code_pin_is_reproducible_and_unknown_source_requires_review(self):
+        manifest = json.loads((ROOT / 'x3lang-port.json').read_text())
+        row = next(row for row in manifest['files']
+                   if row['source'] == 'x3-lang/near/demo/judge/mainnet-setup.mjs')
+        output = (ROOT / row['destination']).read_bytes()
+        source = output
+        for old, new in sync.MAINNET_SETUP_REPLACEMENTS.items():
+            source = source.replace(new.encode(), old.encode())
+        self.assertEqual(hashlib.sha256(source).hexdigest(), row['source_sha256'])
+        rebuilt, transformations = sync.transform_ported_file(row['source'], source, manifest['commit'])
+        self.assertEqual(rebuilt, output)
+        self.assertEqual(transformations, row['local_transformations'])
+        with self.assertRaisesRegex(ValueError, 'review before syncing'):
+            sync.transform_ported_file(row['source'], source.replace(
+                b'GRy6z84ucCR9WMVXyepibVDC34TyKwjWtEi9rteKJtny', b'unreviewed'), manifest['commit'])
 
 
 if __name__ == '__main__':

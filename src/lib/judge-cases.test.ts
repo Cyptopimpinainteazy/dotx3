@@ -5,7 +5,7 @@
 // place and left stale in the other.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { LINKS, PROGRAM_SHA, TRADE } from "./front-door.ts";
+import { getProofSummary, hasMilestoneEvidence, LINKS, MAINNET, MILESTONES, PROGRAM_SHA, TRADE } from "./front-door.ts";
 import {
   ACCEPT_TX,
   BASE_TX,
@@ -62,4 +62,29 @@ test("the Situation Report links the same finalized transactions", () => {
       `${tx} missing from the report`,
     );
   }
+});
+
+test("a pending or empty evidence list cannot increase proof coverage", () => {
+  const pending = { title: "Pending", proof: "A finalized receipt", evidence: null };
+  const empty = { ...pending, evidence: [] };
+  const posted = { ...pending, evidence: [{ label: "Receipt", href: LINKS.mainnetGuardTx }] };
+  assert.equal(hasMilestoneEvidence(pending), false);
+  assert.equal(hasMilestoneEvidence(empty), false);
+  assert.deepEqual(getProofSummary([pending, empty, posted]), {
+    posted: 1, total: 3, progress: 1 / 3, percent: 33,
+  });
+  assert.deepEqual(getProofSummary([]), { posted: 0, total: 0, progress: 0, percent: 0 });
+});
+
+test("mainnet proof earns one existing gate without promoting unrelated pending claims", () => {
+  assert.deepEqual(getProofSummary(), { posted: 3, total: 8, progress: 0.375, percent: 38 });
+  assert.ok(LINKS.mainnetGuardTx.endsWith(`/${MAINNET.guardTx}`));
+  assert.ok(LINKS.mainnetDepositTx.endsWith(`/${MAINNET.depositTx}`));
+  assert.ok(LINKS.mainnetPayoutTx.endsWith(`/${MAINNET.payoutTx}`));
+  const mainnet = MILESTONES.find((m) => m.title === "One mainnet 1Click swap through Guard")!;
+  for (const href of [LINKS.mainnetEvidence, LINKS.mainnetGuardTx, LINKS.mainnetDepositTx, LINKS.mainnetPayoutTx]) {
+    assert.ok(mainnet.evidence?.some((e) => e.href === href));
+  }
+  assert.equal(hasMilestoneEvidence(MILESTONES.find((m) => m.title === "Guard checks the program hash")!), false);
+  assert.equal(hasMilestoneEvidence(MILESTONES.find((m) => m.title === "Scoped agent vault on testnet")!), false);
 });
