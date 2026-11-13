@@ -1,6 +1,6 @@
 # X3 Guard
 
-X3 Guard is the browser demo for X3 Force Field. An owner can use X3Lang to describe who an agent may pay, how much it may spend, and the terms it must accept. The demo checks a signed NEAR Intents 1Click dry quote against those rules. It uses no wallet and moves no funds.
+X3 Guard is the browser demo for X3 Shield. An owner can use X3Lang to describe who an agent may pay, how much it may spend, and the terms it must accept. The demo checks a signed NEAR Intents 1Click dry quote against those rules. It uses no wallet and moves no funds.
 
 ## Verify the evidence
 
