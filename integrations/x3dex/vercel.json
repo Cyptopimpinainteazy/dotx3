@@ -2,6 +2,16 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm run build:standalone",
   "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/api/x3dex/markets",
+      "destination": "https://dotx3.net/api/x3dex/markets"
+    },
+    {
+      "source": "/api/x3dex/ohlc",
+      "destination": "https://dotx3.net/api/x3dex/ohlc"
+    }
+  ],
   "git": {
     "deploymentEnabled": {
       "fix/oneclick-dry-mode-binding-20261112": false
