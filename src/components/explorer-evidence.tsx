@@ -4,8 +4,8 @@ import { BASE_TX, SITUATION_REPORT } from "@/lib/judge-cases";
 import { LINKS } from "@/lib/front-door";
 
 /**
- * Shown while live Explorer history is not connected on this deployment: the finalized
- * testnet transactions behind this page's claims, instead of an empty panel.
+ * Shown while live Explorer history is not connected on this deployment: published
+ * mainnet evidence and historical testnet records behind this page's claims.
  */
 function RecordedEvidence() {
   const rows = [
@@ -13,7 +13,7 @@ function RecordedEvidence() {
     {
       status: "SOURCE",
       tone: "good",
-      text: "Base Sepolia leg of the same trade: 1.000000 test USDC sent",
+      text: "Historical Tidepool testnet source: 1.000000 test USDC sent on Base Sepolia",
       href: LINKS.baseTx,
       link: `${BASE_TX.slice(0, 10)}…${BASE_TX.slice(-6)}`,
     },
@@ -21,9 +21,9 @@ function RecordedEvidence() {
   return (
     <div className="space-y-4">
       <p className="text-muted">
-        Live 1Click Explorer history is not connected on this site yet. Until it is, these are the
-        finalized testnet transactions behind the claims on this page. Open any of them on the
-        public block explorer.
+        Live 1Click Explorer history is not connected on this site yet. This panel shows the
+        published mainnet and historical testnet evidence instead. Open each link to inspect its
+        archived evidence or public explorer receipt.
       </p>
       <ul className="overflow-hidden rounded-xl border border-border bg-surface">
         {rows.map((row) => (
@@ -49,8 +49,9 @@ function RecordedEvidence() {
         ))}
       </ul>
       <p className="text-sm text-muted">
-        Testnet only. Explorer records, once connected, are provider-reported and are labeled as
-        such; they do not replace these on-chain receipts.
+        The MAINNET row links to the invoice_06 archive; the other rows are historical testnet
+        records. Live Explorer history, once connected, remains provider-reported and does not
+        independently prove chain finality, Guard authorization or cross-chain causality.
       </p>
     </div>
   );

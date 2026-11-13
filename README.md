@@ -1,6 +1,6 @@
 # dotx3
 
-dotx3 is the public website for the .x3 language and X3 Shield: documentation, developer bootcamp, local policy playground, historical execution evidence and a read-only DEX surface. The website is a React / TanStack Start application. The compiler, Guard contracts and chain evidence live in [X3Lang](https://github.com/Cyptopimpinainteazy/x3lang).
+dotx3 is the public website for the .x3 language and X3 Shield: documentation, developer bootcamp, local policy playground, mainnet and testnet execution evidence, and a read-only DEX surface. The website is a React / TanStack Start application. The compiler, Guard contracts and chain evidence live in [X3Lang](https://github.com/Cyptopimpinainteazy/x3lang).
 
 ## Start here
 
@@ -9,10 +9,29 @@ dotx3 is the public website for the .x3 language and X3 Shield: documentation, d
 - `/bootcamp`: the detailed source-backed developer course.
 - `/playground`: edit a policy and inspect local deterministic verdicts.
 - `/near`: NEAR competition hub with `/security`, `/agents` and `/defi` track pages.
-- `/proof`: historical Guard and finalized testnet transfer records.
+- `/proof`: the mainnet 1Click evidence archive, historical Guard calls and finalized testnet transfers, labeled by network and scope.
+- `/judge`: reproducible testnet cases and the separate mainnet evidence record.
 - `/dex`: read-only market interface; market observations do not authorize a trade.
 
 A `.x3` file expresses an owner's spending mandate or a payment intent. The NEAR path parses and checks that source, lowers supported payment terms and checks signed quote values through Guard. Guard acceptance authorizes a deposit address. Wallet custody and funded settlement are separate concerns. See [the language guide](docs/X3_GUIDE.md).
+
+## Evidence snapshot: November 12, 2026
+
+The site evidence is reviewed against X3Lang commit [`efb514ffef2cdfdeb8ad8147747887c85356073c`](https://github.com/Cyptopimpinainteazy/x3lang/commit/efb514ffef2cdfdeb8ad8147747887c85356073c).
+
+| Result | Network | Public evidence |
+| --- | --- | --- |
+| A restricted agent key accepted a signed live 1Click quote after 21 passing Guard checks. A separate wallet deposited 25.000000 USDC on Solana; 24.995200 USDC was delivered to `x3lang.near`. | Solana and NEAR mainnet | [invoice_06 archive](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/evidence/near-guard-mainnet-invoice06-2026-11-12/README.md) |
+| Guard refused the wrong recipient and registered the permitted intent. | NEAR testnet | [Guard evidence](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/evidence/near-guard-testnet-live-2026-11-06.md) |
+| A committed `.x3` program was hash-bound before 1 test USDC left Base Sepolia; 0.9974 test USDC arrived through the trusted Tidepool relay. | Base Sepolia and NEAR testnet | [Historical transfer evidence](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/docs/hackathon/FIRST_FINALIZED_SWAP_EVIDENCE.md) |
+
+The mainnet observer's [archived output](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/evidence/near-guard-mainnet-invoice06-2026-11-12/public-rpc-observation.json) reports 18 checks passed, zero failed and one fact unreadable on chain. [SHA256SUMS](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/evidence/near-guard-mainnet-invoice06-2026-11-12/SHA256SUMS) binds that archived observation.
+
+The shared proof meter in `src/lib/front-door.ts` counts **3 of the original 8 milestones: 37.5%, displayed as 38%**. A nonempty public evidence list is required. The mainnet record earns the settlement milestone without changing the denominator or completing unrelated gates.
+
+Still unproven: control of the Solana funding wallet, the original `.x3` files matching the two stored hashes, a recorded Guard settlement outcome, guarded USDC custody, and cryptographic cross-chain causality. Remaining meter milestones are a public scoped-vault testnet demonstration, hostile-model mainnet refusal, merged program-hash enforcement with mismatch tests, independent review, and a tagged release with checksum and build provenance. [Program-pin PR #202](https://github.com/Cyptopimpinainteazy/x3lang/pull/202) is open at this snapshot.
+
+Website evidence freshness and compiler freshness are separate. `x3lang-port.json` and its public copy record the actual compiler/lab source revision, file hashes and local transformations. Do not change those provenance records merely because the evidence pages were updated. Mainnet trading controls remain disabled in the embedded DEX until its execution integration is separately verified.
 
 ## Run the website
 

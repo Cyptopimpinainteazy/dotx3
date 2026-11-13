@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Circuit } from "@/components/circuit";
 import { SiteFooterNav, SiteHeader } from "@/components/site-nav";
 import { slugify } from "@/lib/site-nav";
+import { EVIDENCE_SNAPSHOT, LINKS } from "@/lib/front-door";
 
 export function SiteShell({
   children,
@@ -53,7 +54,11 @@ export function SiteShell({
           <div className="mt-10 border-t border-border pt-6 text-center text-sm text-muted">
             <p>dotx3.net — public front door for .x3</p>
             <p className="mt-2">
-              Testnet and local evidence. Not an offer of securities. Not a mainnet settlement.
+              Mainnet, testnet and local evidence are labeled separately. Guard authorization does
+              not establish custody or atomic settlement.
+            </p>
+            <p className="mt-2 text-xs">
+              Reviewed {EVIDENCE_SNAPSHOT.dateLabel} · <a href={LINKS.reviewedSource} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">X3Lang {EVIDENCE_SNAPSHOT.commit.slice(0, 7)}</a>
             </p>
           </div>
         </div>

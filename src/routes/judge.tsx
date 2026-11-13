@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { useState } from "react";
-import { ActionLink, SiteShell } from "@/components/site-shell";
+import { ActionLink, Section, SiteShell } from "@/components/site-shell";
+import { MainnetEvidence } from "@/components/mainnet-evidence";
 import { CopyButton } from "@/components/dossier";
 import { LINKS } from "@/lib/front-door";
 import {
@@ -19,7 +20,7 @@ export const Route = createFileRoute("/judge")({
       {
         name: "description",
         content:
-          "Three cases, each ending in a finalized testnet transaction: a prompt-injected payment refused, the honest one allowed, and a two-chain trade settled.",
+          "A signed 1Click quote accepted on NEAR, 25 USDC deposited on Solana and 24.9952 USDC delivered on NEAR mainnet, alongside three historical testnet cases.",
       },
     ],
   }),
@@ -237,7 +238,7 @@ function JudgeConsole() {
     <SiteShell
       eyebrow="X3 Force · War Room · Judge Console"
       title="The AI proposes. X3 General decides."
-      lede="Three cases, each ending in a finalized testnet transaction you can open. X3 General is the x3-guard contract on NEAR: it compares every agent intent to the owner's .x3 mandate. Evidence, not claims."
+      lede="Start with the completed mainnet 1Click trade, then inspect three historical testnet cases. X3 General is the x3-guard contract on NEAR: it checks agent intent and quote terms against the owner's mandate. Each result names its network and its limits."
       actions={
         <>
           <ActionLink to="/playground">Try to break it</ActionLink>
@@ -247,7 +248,11 @@ function JudgeConsole() {
         </>
       }
     >
+      <Section title="Mainnet settlement">
+        <MainnetEvidence />
+      </Section>
       <div className="mx-auto max-w-[1360px] space-y-8 px-5 py-14">
+        <h2 className="font-display text-3xl text-primary">Historical testnet cases</h2>
         <div className="flex flex-wrap gap-2 font-mono text-xs">
           <span className="rounded-full border border-border px-3.5 py-2 text-fg">
             NEAR testnet

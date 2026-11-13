@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CodeBlock, OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell } from "@/components/site-shell";
-import { LINKS, SITE } from "@/lib/front-door";
+import { EVIDENCE_SNAPSHOT, LINKS, SITE } from "@/lib/front-door";
 
 export const Route = createFileRoute("/developers")({ component: DevelopersPage });
 
@@ -59,11 +59,31 @@ function DevelopersPage() {
         </p>
       </Section>
 
+      <Section title="Current evidence snapshot" alt>
+        <p className="text-muted">
+          Reviewed {EVIDENCE_SNAPSHOT.dateLabel}: mainnet invoice_06 records a restricted NEAR
+          agent authorization, 25 USDC deposited on Solana and 24.9952 USDC delivered to
+          x3lang.near. The committed RPC observation, checksum and exact-revision CI are linked
+          below. Funding-wallet ownership, matching .x3 source files and guarded custody remain
+          separate unfinished work.
+        </p>
+        <p className="mt-5 flex flex-wrap gap-x-5 gap-y-3">
+          <OutLink href={LINKS.mainnetEvidence}>Mainnet archive</OutLink>
+          <OutLink href={LINKS.mainnetObservation}>RPC observations</OutLink>
+          <OutLink href={LINKS.mainnetChecksums}>SHA256SUMS</OutLink>
+          <OutLink href={LINKS.currentCi}>Reviewed revision CI</OutLink>
+        </p>
+        <p className="mt-5 break-all font-mono text-sm text-muted">
+          X3Lang source: {EVIDENCE_SNAPSHOT.commit}
+        </p>
+      </Section>
+
       <Section title="Install from source" alt>
         <CodeBlock
           title="Python intent tools"
           code={`git clone https://github.com/Cyptopimpinainteazy/x3lang.git
 cd x3lang
+git checkout ${EVIDENCE_SNAPSHOT.commit}
 python3 -m venv .venv && . .venv/bin/activate
 pip install -r x3-lang/requirements.txt pytest
 python3 x3-lang/cli.py x3-lang/examples/arb_solana_eth.x3`}
@@ -80,6 +100,19 @@ cargo run --manifest-path x3-lang/Cargo.toml -p x3-tools --bin x3c -- parse x3-l
           </OutLink>
           . This guide installs from source. Inspect release artifacts and their provenance
           separately before choosing a version.
+        </p>
+      </Section>
+
+      <Section title="Recheck the mainnet record">
+        <CodeBlock
+          title="Read-only public RPC observer, from the pinned X3Lang checkout"
+          code={`python3 scripts/hackathon/observe_mainnet_invoice06.py --out /tmp/x3-invoice06-observation.json`}
+        />
+        <p className="mt-4 text-sm text-muted">
+          This observer uses public RPC, signs nothing and sends no funds. The archived run
+          reported 18 checks passed, zero failed and one fact unreadable on chain. Fresh balances,
+          key allowances and final blocks may differ. The 1Click status record associates the
+          chains; the observer does not prove cryptographic cross-chain causality.
         </p>
       </Section>
 
@@ -208,7 +241,7 @@ const status = await response.json();`}
           </p>
           <p className="text-muted">
             Read the{" "}
-            <OutLink href="https://github.com/Cyptopimpinainteazy/x3lang/blob/0a2c5f08694a206838cf01e774dc5dc843dc42b7/docs/hackathon/JUDGE_GUIDE.md">
+            <OutLink href={`${LINKS.repo}/blob/${EVIDENCE_SNAPSHOT.commit}/docs/hackathon/JUDGE_GUIDE.md`}>
               judge guide at the reviewed source revision
             </OutLink>{" "}
             and the repo&apos;s <OutLink href={LINKS.security}>private vulnerability reporting steps</OutLink>.

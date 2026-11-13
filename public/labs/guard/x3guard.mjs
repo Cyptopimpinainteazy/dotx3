@@ -628,6 +628,8 @@ const ECHO_FIELDS = ["dry", "swapType", "slippageTolerance", "originAsset", "dep
   "refundTo", "refundType", "recipient", "recipientType", "deadline"];
 
 function same(field, sent, echoed) {
+  // Dry quotes do not sign deposit fields; only an exact boolean match can
+  // bind the response's signed quote kind to the requested authorization.
   if (field === "dry") return typeof sent === "boolean" && typeof echoed === "boolean" && sent === echoed;
   if (field === "deadline") {
     try { return parseTimestampMs(sent) === parseTimestampMs(echoed); } catch { return false; }

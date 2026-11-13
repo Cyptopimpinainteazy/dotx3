@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ActionLink, Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { OutLink } from "@/components/code-block";
 import { nearTracks } from "@/lib/near-tracks";
-import { LINKS } from "@/lib/front-door";
+import { EVIDENCE_SNAPSHOT, LINKS } from "@/lib/front-door";
 
 export const Route = createFileRoute("/near")({ component: NearPage });
 function NearPage() {
@@ -10,11 +10,11 @@ function NearPage() {
     <SiteShell
       eyebrow="NEAR competition · 2026"
       title="One policy. Three track perspectives."
-      lede="X3 Shield connects owner-defined rules, agent payment requests, and cross-chain quote checks. Explore each track with its own demonstration, source and evidence limits."
+      lede="A restricted agent call on NEAR, 21 passing policy and quote checks, and a funded Solana-to-NEAR mainnet swap. Explore what each result establishes for the three tracks."
     >
       <Section
         title="Choose a track"
-        intro="Three project perspectives are shown here. At the reviewed source snapshot, submission documents name Security and Agents; DeFi is proposed. Entry and judging status are not verified."
+        intro={`Evidence reviewed ${EVIDENCE_SNAPSHOT.dateLabel}. The repository's submission checklist names Security and Agents; DeFi remains a proposed perspective. These pages do not certify organizer acceptance or a submitted third track.`}
       >
         <CardGrid>
           {nearTracks.map((track) => (
@@ -41,6 +41,20 @@ function NearPage() {
       <div className="mx-auto max-w-6xl px-5 text-center">
         <ActionLink to="/labs">Open the learning labs</ActionLink>
       </div>
+      <Section title="The new mainnet evidence">
+        <p className="mx-auto max-w-3xl text-muted">
+          For invoice_06, x3-agent.x3lang.near used its restricted FunctionCall key to accept a
+          signed live quote on x3lang.near. The Solana deposit was 25.000000 USDC; the NEAR payout
+          was 24.995200 USDC. Guard authorization, funding and delivery have separate records.
+          The funding wallet&apos;s controller and the original .x3 source files remain unverified.
+        </p>
+        <p className="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-3">
+          <OutLink href={LINKS.mainnetEvidence}>Evidence and limits</OutLink>
+          <OutLink href={LINKS.mainnetGuardTx}>Agent authorization</OutLink>
+          <OutLink href={LINKS.mainnetDepositTx}>Solana deposit</OutLink>
+          <OutLink href={LINKS.mainnetPayoutTx}>NEAR payout</OutLink>
+        </p>
+      </Section>
       <Section title="Follow the evidence" alt>
         <CardGrid>
           <Card title="Local checks">
@@ -48,16 +62,26 @@ function NearPage() {
             not sign or move funds.
           </Card>
           <Card title="NEAR Guard">
-            Inspect historical testnet transactions and archived view results. A signed quote and a
-            policy decision establish different facts.
+            Inspect the mainnet agent authorization and the historical testnet refusal. A
+            restricted contract call does not establish control of the separate funding wallet.
           </Card>
           <Card title="Delivered funds">
-            Inspect both finalized testnet chain records and the relay trust assumptions. Quote
-            acceptance alone is insufficient.
+            Open the finalized mainnet deposit and payout, then read how 1Click status associates
+            them. Keep the older Tidepool testnet transfer and its trust assumptions separate.
           </Card>
         </CardGrid>
         <p className="mt-8 text-center">
           <OutLink href={LINKS.hackathonDocs}>Source evidence and judge walkthroughs</OutLink>
+        </p>
+      </Section>
+      <Section title="What moves the proof meter next">
+        <ol className="mx-auto max-w-3xl list-decimal space-y-4 pl-6 text-muted">
+          <li>Publish an allowed scoped-vault testnet payment and the cap, recipient, daily-window and refund refusal records.</li>
+          <li>Land and verify program-hash enforcement, including rejection of a mismatched program.</li>
+          <li>Complete the hostile-model mainnet demonstration, independent review and release provenance gates.</li>
+        </ol>
+        <p className="mt-6 text-center">
+          <ActionLink to="/proof">Inspect the evidence behind the meter</ActionLink>
         </p>
       </Section>
     </SiteShell>

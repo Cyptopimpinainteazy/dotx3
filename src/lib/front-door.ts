@@ -3,6 +3,34 @@ export const SITE = "dotx3.net";
 export const REPO = "https://github.com/Cyptopimpinainteazy/x3lang";
 export const RAW = "https://github.com/Cyptopimpinainteazy/x3lang/blob/master";
 
+/** Reviewed repository snapshot. A passing run here covers this commit, not a future branch tip. */
+export const EVIDENCE_SNAPSHOT = {
+  commit: "efb514ffef2cdfdeb8ad8147747887c85356073c",
+  checkedAt: "2026-11-13T03:24:21Z",
+  dateLabel: "November 12, 2026",
+  ciRun: `${REPO}/actions/runs/43349759535`,
+  checksPassed: 7,
+} as const;
+
+const PINNED = `${REPO}/blob/${EVIDENCE_SNAPSHOT.commit}`;
+const MAINNET_BUNDLE = `${PINNED}/evidence/near-guard-mainnet-invoice06-2026-11-12`;
+
+/** Historical mainnet observation, not a live balance or an executable quote. */
+export const MAINNET = {
+  amountIn: "25.000000",
+  amountOut: "24.995200",
+  owner: "x3lang.near",
+  agent: "x3-agent.x3lang.near",
+  nonce: "mainnet_demo_nov11_invoice_06",
+  guardChecks: 21,
+  observedAt: "2026-11-12 21:15 UTC",
+  observationSha256: "3e04b9fd801473a52c1f51460c406752ef898877c80bda920c32c8ddb3348be7",
+  quoteHash: "8ynPgyqDugkyL2gicfUuTtymMjTPQzcRMBjj4RKgKeSD",
+  guardTx: "Eg75uehwU4YJ86ZZPEPKiBqnjkr6PxwPmV23HFAgu153",
+  depositTx: "4zhGYyWNabYQ5gixTUzoVHVbgFKWAsQssSpCv3B1J1LjCRisEJW6wm3zuS2GVuDotAT93S8wm1qezHwsKX2RkXo5",
+  payoutTx: "8jfbACLSxrzi3fnajfAVGc4Fgo6XLCWA1mpiJWXPw43P",
+} as const;
+
 export const LINKS = {
   repo: REPO,
   readme: `${REPO}#readme`,
@@ -20,6 +48,19 @@ export const LINKS = {
   payment: `${RAW}/x3-lang/examples/near_intents_agent_payment.x3`,
   guardEvidence: `${RAW}/evidence/near-guard-testnet-live-2026-11-06.md`,
   tradeEvidence: `${RAW}/docs/hackathon/FIRST_FINALIZED_SWAP_EVIDENCE.md`,
+  mainnetEvidence: `${MAINNET_BUNDLE}/README.md`,
+  mainnetObservation: `${MAINNET_BUNDLE}/public-rpc-observation.json`,
+  mainnetChecksums: `${MAINNET_BUNDLE}/SHA256SUMS`,
+  mainnetObserver: `${PINNED}/scripts/hackathon/observe_mainnet_invoice06.py`,
+  mainnetObserverRun: `${REPO}/actions/runs/43307893891`,
+  mainnetGuardTx: `https://nearblocks.io/txns/${MAINNET.guardTx}`,
+  mainnetDepositTx: `https://solscan.io/tx/${MAINNET.depositTx}`,
+  mainnetPayoutTx: `https://nearblocks.io/txns/${MAINNET.payoutTx}`,
+  mainnetApprovalTx: "https://nearblocks.io/txns/GFdQLrzT5tnPPdZwKLtmwpNvSwrxVHDvVg2C3WX5fsK6",
+  currentCi: `${REPO}/commit/${EVIDENCE_SNAPSHOT.commit}/checks`,
+  reviewedSource: `${REPO}/tree/${EVIDENCE_SNAPSHOT.commit}`,
+  programBindingPr: `${REPO}/pull/202`,
+  vaultRunbook: `${PINNED}/docs/hackathon/VAULT_TESTNET_RUNBOOK.md`,
   baseTx: "https://sepolia.basescan.org/tx/0x46c21dc305a9271c4e74c6d0734fb50f847a1e53d3cad87976133d66fd6728d9",
   nearPayout: "https://testnet.nearblocks.io/txns/EBEBxJNgV9U5tBFBLj18ZzukgArqwXH5rBsBStFyCm1d",
   refuseTx: "https://testnet.nearblocks.io/txns/AhVBD7oXfwsixBipupjCzuhNdqunjdXJnLz3LXnmfnN8",
@@ -77,6 +118,20 @@ export interface Milestone {
    * The first link is the primary one; the meter shows it, /back shows them all.
    */
   evidence: { label: string; href: string }[] | null;
+  /** Concrete remaining work; never counted as completed evidence. */
+  nextAction?: string;
+  nextHref?: string;
+}
+
+export function hasMilestoneEvidence(milestone: Milestone): boolean {
+  return Boolean(milestone.evidence?.length);
+}
+
+export function getProofSummary(milestones: readonly Milestone[] = MILESTONES) {
+  const posted = milestones.filter(hasMilestoneEvidence).length;
+  const total = milestones.length;
+  const progress = total ? posted / total : 0;
+  return { posted, total, progress, percent: Math.round(progress * 100) };
 }
 
 /**
@@ -109,35 +164,48 @@ export const MILESTONES: Milestone[] = [
     proof:
       "One allowed payment, plus recorded refusals for over-cap, wrong recipient, 24-hour window and redirected refund.",
     evidence: null,
+    nextAction: "Publish the allowed payment and all four refusal cases from the public testnet runbook. Local Sandbox tests do not fill this milestone.",
+    nextHref: LINKS.vaultRunbook,
   },
   {
     title: "One mainnet 1Click swap through Guard",
     proof:
       "The signed quote, the Guard authorization, the deposit, and the delivery, each with a finalized transaction hash.",
-    evidence: null,
+    evidence: [
+      { label: "Mainnet evidence and limits", href: LINKS.mainnetEvidence },
+      { label: "Guard acceptance", href: LINKS.mainnetGuardTx },
+      { label: "25 USDC Solana deposit", href: LINKS.mainnetDepositTx },
+      { label: "24.9952 USDC NEAR delivery", href: LINKS.mainnetPayoutTx },
+    ],
   },
   {
     title: "Hostile model refused on mainnet",
     proof:
       "A red-team model's payments go through the same restricted key, and each refusal is on chain with an attack label.",
     evidence: null,
+    nextAction: "Publish labeled hostile-model attempts through the restricted mainnet key and their on-chain refusals. Current red-team evidence is local.",
   },
   {
     title: "Guard checks the program hash",
     proof:
       "An approved mandate carries only the exact .x3 program the owner saw. Contract tests cover a mismatched hash.",
     evidence: null,
+    nextAction: "Land reviewed program-hash enforcement with mismatch tests. PR #202 is still open at this snapshot; storing a hash alone does not satisfy this gate.",
+    nextHref: LINKS.programBindingPr,
   },
   {
     title: "Independent security review",
     proof: "A published report on Guard and the vault, with every finding and its fix.",
     evidence: null,
+    nextAction: "Publish an independent review and the disposition of every finding. Internal checks and this evidence review do not count as an independent audit.",
   },
   {
     title: "Tagged release",
     proof:
       "A GitHub release with a checksum and build provenance, so nobody has to trust a branch tip.",
     evidence: null,
+    nextAction: "Publish a versioned release with checksums and build provenance. A passing branch build is not a release.",
+    nextHref: `${REPO}/releases`,
   },
 ];
 

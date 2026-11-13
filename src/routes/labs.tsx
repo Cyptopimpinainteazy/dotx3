@@ -118,7 +118,7 @@ function Labs() {
             its decision.
           </p>
           <p>
-            Source for the Attack Lab is pinned at X3Lang commit a120169. The branch port preserves
+            Source for the Attack Lab is pinned at X3Lang commit efb514f. The reviewed port preserves
             its policy module and evidence links.{" "}
             <OutLink href="/labs/attack/provenance.json">
               Inspect copied-file hashes and provenance
@@ -127,8 +127,8 @@ function Labs() {
           </p>
           <p>
             Local browser results, real local Sandbox vault transactions, historical public Guard
-            transactions and two-chain testnet delivery are separate evidence classes. Each source
-            guide identifies which one it records.
+            transactions, two-chain testnet delivery and the published mainnet 1Click settlement are
+            separate evidence classes. Each source guide identifies which one it records.
           </p>
         </div>
         <div className="mt-8 text-center">

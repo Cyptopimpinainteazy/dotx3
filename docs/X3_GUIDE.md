@@ -2,6 +2,12 @@
 
 `.x3` is a source-file extension for X3Lang. On the NEAR path it expresses owner spending rules and agent payment requests as typed, deterministic input. dotx3 is the documentation and demo website; the [X3Lang repository](https://github.com/Cyptopimpinainteazy/x3lang) contains the executable Python frontend, contracts, tests and evidence. The separate Rust/X3BC runtime path must not be conflated with NEAR execution.
 
+## Current execution evidence
+
+Reviewed November 12, 2026 against [X3Lang `efb514ffef2cdfdeb8ad8147747887c85356073c`](https://github.com/Cyptopimpinainteazy/x3lang/commit/efb514ffef2cdfdeb8ad8147747887c85356073c): the [invoice_06 mainnet archive](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/evidence/near-guard-mainnet-invoice06-2026-11-12/README.md) records a restricted agent key accepting a signed live 1Click quote on NEAR after 21 passing checks. A separate Solana wallet deposited 25.000000 USDC, and 24.995200 USDC was delivered to `x3lang.near`. The public observer reports 18 passed checks, zero failures and one fact unreadable on chain.
+
+That record proves a restricted NEAR authorization and the two finalized transfer legs. Guard did not hold or move the USDC. The 1Click status record associates the deposit with the payout; cryptographic cross-chain causality is not established. The funding wallet's controller is unconfirmed. The original mandate and payment `.x3` files have not been matched to the two stored hashes, and Guard's settlement outcome remains unset. The language examples below are checked-in teaching examples, not the claimed source of invoice_06.
+
 ## Two files, two responsibilities
 
 An owner **mandate** defines owner and agent identities, spending asset, payment and rolling daily caps, recipient and output-asset allowlists, refund address, fee/slippage ceilings, approval threshold and expiry. The agent's **intent** states source asset and amount, destination asset and recipient, one supported NearIntents bridge leg, minimum output, mandate reference, unused nonce and timeout/refund behavior.
@@ -73,6 +79,7 @@ Run these commands from a checkout of **X3Lang**, not dotx3:
 ```sh
 git clone https://github.com/Cyptopimpinainteazy/x3lang.git
 cd x3lang
+git checkout efb514ffef2cdfdeb8ad8147747887c85356073c
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -r x3-lang/requirements.txt
@@ -93,4 +100,12 @@ A single-leg NearIntents route cannot promise multi-leg cross-chain atomic rollb
 
 ## Learn and verify
 
-Use `/bootcamp` for the course, `/playground` for browser-local experiments, and `/near` for the three track perspectives. [The judge guide](https://github.com/Cyptopimpinainteazy/x3lang/blob/master/docs/hackathon/JUDGE_GUIDE.md) separates local checks, Guard transactions and delivery. The historical Base Sepolia → NEAR transfer used a trusted Tidepool relay. It does not establish official funded 1Click mainnet settlement or cryptographic cross-chain atomicity.
+Use `/bootcamp` for the course, `/playground` for browser-local experiments, and `/near` for the three track perspectives. [The judge guide at the reviewed revision](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/docs/hackathon/JUDGE_GUIDE.md) separates local checks, Guard transactions and delivery. The historical Base Sepolia → NEAR transfer used a trusted Tidepool relay. The official 1Click mainnet settlement is recorded separately in the invoice_06 archive above. Neither record establishes cryptographic cross-chain atomicity.
+
+From the pinned X3Lang checkout, refresh the mainnet observations without signing or sending funds:
+
+```sh
+python3 scripts/hackathon/observe_mainnet_invoice06.py --out /tmp/x3-invoice06-observation.json
+```
+
+The observer needs public RPC access. Compare transaction records with the archived [observation](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/evidence/near-guard-mainnet-invoice06-2026-11-12/public-rpc-observation.json) and [checksum](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/evidence/near-guard-mainnet-invoice06-2026-11-12/SHA256SUMS). Current balances, key allowances and final blocks can change. A local preview, a signed quote and a successful Guard call each establish less than a finalized transfer.
