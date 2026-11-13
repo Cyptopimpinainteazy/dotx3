@@ -32,6 +32,12 @@ const views = [
     state: "Recorded evidence · no live calls",
     path: "/labs/force-field/index.html",
   },
+  {
+    id: "court",
+    label: "Agent Court",
+    state: "Game · real compiler and mandate checks",
+    path: "/labs/court/index.html",
+  },
 ] as const;
 function Labs() {
   const [selected, setSelected] = useState<string>("compiler");
@@ -124,8 +130,8 @@ function Labs() {
             its decision.
           </p>
           <p>
-            Source for the Attack Lab is pinned at X3Lang commit efb514f. The reviewed port preserves
-            its policy module and evidence links.{" "}
+            Source for the Attack Lab is pinned at X3Lang commit efb514f. The reviewed port
+            preserves its policy module and evidence links.{" "}
             <OutLink href="/labs/attack/provenance.json">
               Inspect copied-file hashes and provenance
             </OutLink>
