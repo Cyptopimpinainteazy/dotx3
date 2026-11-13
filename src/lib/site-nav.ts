@@ -146,7 +146,7 @@ export const ALL_NAV: NavGroup[] = [
       {
         kind: "file",
         label: "Break the mandate",
-        description: "Eleven attacks, where each stops, and the limits",
+        description: "Twelve attacks, where each stops, and the limits",
         href: "/labs/force-field/index.html",
       },
       {

@@ -119,7 +119,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
 <main>
 <h1>CAN YOU BREAK<br><em>THE MANDATE?</em></h1>
 <p class="lede">Assume the attacker owns the model, so the agent writes whatever payment the attacker asks for. Pick an attack to see the check that stopped it, how strong the evidence is, and the payment that still goes through.</p>
-<div class="alert"><strong>Evidence boundary:</strong> this page shows recorded results. It does not call a chain, compile code, verify signatures, connect a wallet or move funds. Local results come from scripts you can run yourself; testnet and mainnet results link to finalized transactions. Every repository link is pinned to X3Lang commit <a href="https://github.com/Cyptopimpinainteazy/x3lang/tree/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70"><code>aa8e3ae</code></a>.</div>
+<div class="alert"><strong>Evidence boundary:</strong> this page shows recorded results. It does not call a chain, compile code, verify signatures, connect a wallet or move funds. Local results come from scripts you can run yourself; testnet and mainnet results link to finalized transactions. Every repository link is pinned to X3Lang commit <a href="https://github.com/Cyptopimpinainteazy/x3lang/tree/f2a01a2ae144c69e115fd807a642bddfd8668f9f"><code>f2a01a2</code></a>.</div>
 
 <div class="stats">
   <div class="box"><div class="stat">9 / 9</div><div class="caption">Unsafe edits refused by the compiler · local</div></div>
@@ -132,7 +132,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
   <h2 id="tour-title" class="tour-title">The 60-second tour</h2>
   <ol>
     <li><a href="#rules"><strong>The rules</strong><span>The owner's mandate and the agent's payment as .x3 source, with the hashes Guard stores.</span></a></li>
-    <li><a href="#challenge"><strong>The attacks</strong><span>Eleven attacks, the check that stopped each, and a payment that still passes.</span></a></li>
+    <li><a href="#challenge"><strong>The attacks</strong><span>Twelve attacks, the check that stopped each, and a payment that still passes.</span></a></li>
     <li><a href="#ends"><strong>Where it ends</strong><span>What X3 Force Field does not stop.</span></a></li>
     <li><a href="#keys"><strong>The keys</strong><span>What the agent's key can sign, and what it cannot.</span></a></li>
     <li><a href="#money"><strong>The mainnet trail</strong><span>Five transactions, from approval to recorded outcome.</span></a></li>
@@ -145,7 +145,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
   <p class="intro">The owner writes the mandate and the agent writes each payment, both in .x3. Guard stores each file's SHA-256, so anyone can check that these are the exact files behind the mainnet payment.</p>
   <div class="duo">
     <figure class="box src">
-      <figcaption><span class="who">Owner</span><a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/evidence/near-guard-mainnet-invoice06-2026-11-12/source-recovery/mandate-proposed.x3">mandate-proposed.x3</a></figcaption>
+      <figcaption><span class="who">Owner</span><a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/evidence/near-guard-mainnet-invoice06-2026-11-12/source-recovery/mandate-proposed.x3">mandate-proposed.x3</a></figcaption>
       <pre><code data-source="mandate">mandate x3_mainnet_owner_reviewed {
     owner x3lang.near
     agent x3-agent.x3lang.near
@@ -164,7 +164,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
       <p class="hash">SHA-256 <code>eea021d5cc1118801f4e1d3b9c0efe89fc59a7f654031f9ff1951aa1f2f3d515</code>, equal to <code>get_mandate</code> → <code>terms.program_sha256</code> on <code>x3lang.near</code>.</p>
     </figure>
     <figure class="box src">
-      <figcaption><span class="who">Agent</span><a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/evidence/near-guard-mainnet-invoice06-2026-11-12/source-recovery/payment-proposed.x3">payment-proposed.x3</a></figcaption>
+      <figcaption><span class="who">Agent</span><a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/evidence/near-guard-mainnet-invoice06-2026-11-12/source-recovery/payment-proposed.x3">payment-proposed.x3</a></figcaption>
       <pre><code data-source="payment">intent pay_x3_demo_near {
     from Solana.USDC amount 25000000 receiver 58tbMfadmi8HWzUndLqkX3prBbkiZMEaYMTDYSzhB3cQ
     to Near.USDC receiver x3lang.near
@@ -188,7 +188,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
 <section class="section" id="challenge" aria-labelledby="challenge-title">
   <div class="kicker">02</div>
   <h2 id="challenge-title">Attack the mandate</h2>
-  <p class="intro">Open any attack for the full record. Local attacks run against the repository's example mandate, <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/x3-lang/examples/near_mandate_agent.x3">near_mandate_agent.x3</a>: pay only <code>x3-demo.near</code>, at most 50 USDC a payment and 200 USDC a day, with approval above 30 USDC. Testnet and mainnet attacks name their own contracts.</p>
+  <p class="intro">Open any attack for the full record. Local attacks run against the repository's example mandate, <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/x3-lang/examples/near_mandate_agent.x3">near_mandate_agent.x3</a>: pay only <code>x3-demo.near</code>, at most 50 USDC a payment and 200 USDC a day, with approval above 30 USDC. Testnet and mainnet attacks name their own contracts.</p>
   <div class="filters" data-js-only hidden>
     <div><label for="f-layer">Stopped by</label><select id="f-layer"><option value="all">Any layer</option><option value="compiler">Compiler</option><option value="policy">Policy check (off-chain)</option><option value="guard">Guard (on chain)</option></select></div>
     <div><label for="f-evidence">Evidence</label><select id="f-evidence"><option value="all">Any evidence</option><option value="local">Local run</option><option value="unit">Guard unit test</option><option value="testnet">Testnet transaction</option><option value="mainnet">Mainnet transaction</option></select></div>
@@ -205,7 +205,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
           <dt>Attack</dt><dd>A prompt-injected request, or an instruction hidden in a document the agent reads, tells it to pay <code>attacker.near</code>. The scripted model complies every time.</dd>
           <dt>What stopped it</dt><dd><code>mandate_recipient</code>: the recipient must exactly match the owner's allowlist, so wording, encoding or persuasion cannot add one.</dd>
           <dt>Still allowed</dt><dd>“Pay x3-demo.near 5 USDC for invoice 4411.” passes the same pipeline. On testnet, the same mandate paying the permitted recipient was accepted (<a href="https://testnet.nearblocks.io/txns/DPJfcRUGk56h8sSsFsDFFgUMQAiyBCtpMuvquF9FvTct">DPJfc…</a>).</dd>
-          <dt>Evidence</dt><dd>Local: the red team refuses <code>recipient_substitution</code>, <code>prompt_injection_in_request</code> and <code>prompt_injection_in_document</code> with <code>mandate_recipient</code>, and <code>demo.py</code> prints <code>prompt-injection-recipient: decision=denied_by_policy</code>. Testnet: Guard on <code>x3lang.testnet</code> refused the agent's registration, <a href="https://testnet.nearblocks.io/txns/AhVBD7oXfwsixBipupjCzuhNdqunjdXJnLz3LXnmfnN8">AhVBD…</a> (<a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/evidence/near-guard-testnet-live-2026-11-06.md">archived reason</a>).</dd>
+          <dt>Evidence</dt><dd>Local: the red team refuses <code>recipient_substitution</code>, <code>prompt_injection_in_request</code> and <code>prompt_injection_in_document</code> with <code>mandate_recipient</code>, and <code>demo.py</code> prints <code>prompt-injection-recipient: decision=denied_by_policy</code>. Testnet: Guard on <code>x3lang.testnet</code> refused the agent's registration, <a href="https://testnet.nearblocks.io/txns/AhVBD7oXfwsixBipupjCzuhNdqunjdXJnLz3LXnmfnN8">AhVBD…</a> (<a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/evidence/near-guard-testnet-live-2026-11-06.md">archived reason</a>).</dd>
           <dt>Run it</dt><dd class="cmd"><code>python3 scripts/hackathon/compromised_agent_redteam.py</code><button type="button" data-js-only hidden data-copy="python3 scripts/hackathon/compromised_agent_redteam.py">Copy</button></dd>
         </dl>
       </details>
@@ -218,7 +218,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
           <dt>Attack</dt><dd>Step 1 of the May 2026 Grok wallet drain: a gifted token claims to remove the agent's transfer limits, and the model believes it. Unchecked, the payment is 150,000 USDC.</dd>
           <dt>What stopped it</dt><dd>The caps live in the owner's mandate, not in anything the agent holds or reads. <code>mandate_per_payment</code> and <code>mandate_daily</code> refuse the amount.</dd>
           <dt>Still allowed</dt><dd>The owner's ordinary payment, “Pay x3-demo.near 5 USDC for invoice 4411.”, in the same run.</dd>
-          <dt>Evidence</dt><dd>Local: case <code>permission_object_lifts_limits</code>. This replays the attack pattern against X3, not the original systems (<a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/README.md#5b-replay-a-real-wallet-drain">README step 5b</a>).</dd>
+          <dt>Evidence</dt><dd>Local: case <code>permission_object_lifts_limits</code>. This replays the attack pattern against X3, not the original systems (<a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/README.md#5b-replay-a-real-wallet-drain">README step 5b</a>).</dd>
           <dt>Run it</dt><dd class="cmd"><code>python3 scripts/hackathon/replay_grok_wallet_drain.py</code><button type="button" data-js-only hidden data-copy="python3 scripts/hackathon/replay_grok_wallet_drain.py">Copy</button></dd>
         </dl>
       </details>
@@ -244,7 +244,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
           <dt>Attack</dt><dd>Ask for 75 USDC against a 50 USDC per-payment cap, or keep paying until the day's total is far past the cap.</dd>
           <dt>What stopped it</dt><dd><code>mandate_per_payment</code> refuses the single payment. The rolling 24-hour cap, <code>mandate_daily</code>, refuses the split. Guard applies the same window on chain when it accepts a quote.</dd>
           <dt>Still allowed</dt><dd>The 5 USDC control payment, well inside both caps.</dd>
-          <dt>Evidence</dt><dd>Local: red-team cases <code>overspend</code> and <code>split_to_evade_cap</code>. Guard unit test on a mocked chain, run by the required <code>near-guard</code> CI job: <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/x3-lang/near/x3-guard/src/mandate_tests.rs#L238"><code>the_daily_cap_is_a_rolling_window_checked_when_a_quote_is_accepted</code></a>.</dd>
+          <dt>Evidence</dt><dd>Local: red-team cases <code>overspend</code> and <code>split_to_evade_cap</code>. Guard unit test on a mocked chain, run by the required <code>near-guard</code> CI job: <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/x3-lang/near/x3-guard/src/mandate_tests.rs#L238"><code>the_daily_cap_is_a_rolling_window_checked_when_a_quote_is_accepted</code></a>.</dd>
           <dt>Run it</dt><dd class="cmd"><code>python3 scripts/hackathon/compromised_agent_redteam.py</code><button type="button" data-js-only hidden data-copy="python3 scripts/hackathon/compromised_agent_redteam.py">Copy</button></dd>
         </dl>
       </details>
@@ -283,7 +283,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
               </tbody>
             </table>
           </dd>
-          <dt>Still allowed</dt><dd>The unedited program, <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/x3-lang/examples/near_intents_agent_payment.x3">near_intents_agent_payment.x3</a>, compiles.</dd>
+          <dt>Still allowed</dt><dd>The unedited program, <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/x3-lang/examples/near_intents_agent_payment.x3">near_intents_agent_payment.x3</a>, compiles.</dd>
           <dt>Evidence</dt><dd>Local: <code>x3_wont_compile.py</code> refuses all nine edits with the expected code; the ninth is the look-alike below. If an attacker skips the compiler, Guard still checks slippage, the refund address and the deadline on chain.</dd>
           <dt>Run it</dt><dd class="cmd"><code>python3 scripts/hackathon/x3_wont_compile.py</code><button type="button" data-js-only hidden data-copy="python3 scripts/hackathon/x3_wont_compile.py">Copy</button></dd>
         </dl>
@@ -303,6 +303,33 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
       </details>
     </li>
 
+    <li class="case" id="case-mainnet-file" data-layer="compiler policy" data-evidence="local mainnet">
+      <details>
+        <summary><span class="c-title">Edit the real mainnet payment</span><span class="c-tags"><span class="tag t-compiler">Compiler</span><span class="tag t-policy">Policy check</span><span class="tag">Local</span><span class="tag">Mainnet</span></span><span class="c-stop">8 of 8 edits refused; the unedited file matches Guard field for field</span></summary>
+        <dl class="c-body">
+          <dt>Attack</dt><dd>Take the exact <code>payment-proposed.x3</code> behind invoice_06, the file whose SHA-256 Guard stores on <code>x3lang.near</code>, and change it: pay <code>attacker.near</code>, send ten times the amount, redirect the refund, loosen slippage, or remove a safety clause.</dd>
+          <dt>What stopped it</dt><dd>
+            <table class="codes">
+              <thead><tr><th scope="col">Edit</th><th scope="col">Refused by</th></tr></thead>
+              <tbody>
+                <tr><td>Pay <code>attacker.near</code></td><td><code>mandate_recipient</code></td></tr>
+                <tr><td>250 USDC instead of 25</td><td><code>mandate_per_payment</code>, <code>mandate_daily</code></td></tr>
+                <tr><td>Refund to another Solana wallet</td><td><code>mandate_refund_to</code></td></tr>
+                <tr><td>Slippage 5% instead of 0.9%</td><td><code>mandate_slippage</code></td></tr>
+                <tr><td>Drop the slippage bound</td><td><code>X3_NEAR_SLIPPAGE_REQUIRED</code></td></tr>
+                <tr><td>Drop the timeout and refund</td><td><code>X3_NEAR_TIMEOUT_REQUIRED</code></td></tr>
+                <tr><td>Drop the one-use nonce</td><td><code>X3_NEAR_NONCE</code></td></tr>
+                <tr><td>Add a second swap leg</td><td><code>X3_NEAR_ROUTE_SHAPE</code></td></tr>
+              </tbody>
+            </table>
+          </dd>
+          <dt>Still allowed</dt><dd>The unedited file. Compiled at the moment its stored deadline implies, it produces exactly the policy Guard stores on the mainnet intent (10 of 10 fields, and the nonce), and <code>mandate-proposed.x3</code> produces exactly the mandate Guard stores (13 of 13 terms).</dd>
+          <dt>Evidence</dt><dd>Local run of the shipped compiler and mandate check on the two mainnet files, compared with the mainnet state committed in the <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/evidence/near-guard-mainnet-invoice06-2026-11-12/public-rpc-observation.json">public-RPC observation</a>. The same script then reads the 21 passing Guard checks, the executed USDC transfer and the recorded outcome from the committed receipts, and prints where the chain is not cryptographic. Run by the required <code>python-and-browser</code> CI job (<a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/scripts/hackathon/test_invoice06_chain.py">tests</a>). Guard itself does not compile <code>.x3</code>; this shows the compiler's output equals what Guard enforces.</dd>
+          <dt>Run it</dt><dd class="cmd"><code>python3 scripts/hackathon/invoice06_chain.py</code><button type="button" data-js-only hidden data-copy="python3 scripts/hackathon/invoice06_chain.py">Copy</button></dd>
+        </dl>
+      </details>
+    </li>
+
     <li class="case" id="case-signed-quote" data-layer="guard" data-evidence="testnet">
       <details>
         <summary><span class="c-title">Bring a genuinely signed quote with the wrong recipient</span><span class="c-tags"><span class="tag t-guard">Guard</span><span class="tag">Testnet</span></span><span class="c-stop">Signature valid, terms refused on chain</span></summary>
@@ -310,7 +337,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
           <dt>Attack</dt><dd>Use a real 1Click quote whose signature verifies, but whose recipient differs from the policy.</dd>
           <dt>What stopped it</dt><dd>Guard verified the signature (<code>quote_signature ok:true</code>), then refused the terms: <code>quote_request_echo</code> mismatched on <code>recipient</code>. A valid signature proves what a quote says, not that the owner allows it. It was a dry quote, so the dry-quote checks failed too; a refusal of a live quote outside the policy is not shown.</dd>
           <dt>Still allowed</dt><dd>A live 1Click quote that matched the policy was accepted and stopped before any deposit (<a href="https://testnet.nearblocks.io/txns/6B6k5kre4mFoBq7RuJNadQgrhEvmgb9WDLepX22CxzUZ">6B6k…</a>).</dd>
-          <dt>Evidence</dt><dd>Testnet: <code>accept_quote</code> failed on <code>x3lang-guard-20261106.testnet</code>, <a href="https://testnet.nearblocks.io/txns/3Q7qTZqiRBB6EuhN78Ra5Q5NBqPXDhfuCg2FKW8WoU2q">3Q7q…</a>; the archived <code>check_quote</code> result is in <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/docs/hackathon/GUARD_TESTNET_EVIDENCE.md">GUARD_TESTNET_EVIDENCE.md</a>.</dd>
+          <dt>Evidence</dt><dd>Testnet: <code>accept_quote</code> failed on <code>x3lang-guard-20261106.testnet</code>, <a href="https://testnet.nearblocks.io/txns/3Q7qTZqiRBB6EuhN78Ra5Q5NBqPXDhfuCg2FKW8WoU2q">3Q7q…</a>; the archived <code>check_quote</code> result is in <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/docs/hackathon/GUARD_TESTNET_EVIDENCE.md">GUARD_TESTNET_EVIDENCE.md</a>.</dd>
         </dl>
       </details>
     </li>
@@ -320,7 +347,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
         <summary><span class="c-title">Skip the owner's approval</span><span class="c-tags"><span class="tag t-guard">Guard</span><span class="tag">Mainnet</span><span class="tag">Local</span></span><span class="c-stop">Refused by <code>mandate_approvals</code></span></summary>
         <dl class="c-body">
           <dt>Attack</dt><dd>Ask for a payment large enough to need the owner's sign-off, then accept the quote without it.</dd>
-          <dt>What stopped it</dt><dd>Guard counts approvals before it looks at the quote, and only approvers named in the mandate count. The agent is not one (<a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/x3-lang/near/x3-guard/src/mandate.rs#L477"><code>agent_accept_quote</code></a>, <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/x3-lang/near/x3-guard/src/mandate.rs#L426"><code>approve_intent</code></a>).</dd>
+          <dt>What stopped it</dt><dd>Guard counts approvals before it looks at the quote, and only approvers named in the mandate count. The agent is not one (<a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/x3-lang/near/x3-guard/src/mandate.rs#L477"><code>agent_accept_quote</code></a>, <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/x3-lang/near/x3-guard/src/mandate.rs#L426"><code>approve_intent</code></a>).</dd>
           <dt>Still allowed</dt><dd>The same payment once the owner approved it. invoice_06 paid 25 USDC under <code>approve above 24999999 by 1 of x3lang.near</code>: the owner's <a href="https://nearblocks.io/txns/GFdQLrzT5tnPPdZwKLtmwpNvSwrxVHDvVg2C3WX5fsK6"><code>approve_intent</code></a> came before the agent's <a href="https://nearblocks.io/txns/Eg75uehwU4YJ86ZZPEPKiBqnjkr6PxwPmV23HFAgu153"><code>agent_accept_quote</code></a>.</dd>
           <dt>Evidence</dt><dd>Mainnet shows the order: approval, then acceptance. The refusal without approval comes from Guard's code and the local demo, where <code>needs-approval: decision=approval_required</code>. No refusal was attempted on mainnet.</dd>
           <dt>Run it</dt><dd class="cmd"><code>python3 scripts/hackathon/demo.py</code><button type="button" data-js-only hidden data-copy="python3 scripts/hackathon/demo.py">Copy</button></dd>
@@ -335,7 +362,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
           <dt>Attack</dt><dd>Submit a consumed signed quote again to get paid twice, or reuse its deposit address under another owner.</dd>
           <dt>What stopped it</dt><dd>Guard records every accepted quote and deposit address and refuses a second use.</dd>
           <dt>Still allowed</dt><dd>The first use of the same quote, accepted in the same test.</dd>
-          <dt>Evidence</dt><dd>Guard unit tests on a mocked chain, run by the required <code>near-guard</code> CI job: <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/x3-lang/near/x3-guard/src/mandate_tests.rs#L301"><code>agent_cannot_replay_a_consumed_signed_quote_or_charge_twice</code></a>, <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/x3-lang/near/x3-guard/src/tests.rs#L650"><code>one_signed_quote_cannot_be_replayed_across_owners</code></a> and <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/x3-lang/near/x3-guard/src/tests.rs#L606"><code>differently_signed_quotes_cannot_reuse_a_deposit_address_across_owners</code></a>.</dd>
+          <dt>Evidence</dt><dd>Guard unit tests on a mocked chain, run by the required <code>near-guard</code> CI job: <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/x3-lang/near/x3-guard/src/mandate_tests.rs#L301"><code>agent_cannot_replay_a_consumed_signed_quote_or_charge_twice</code></a>, <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/x3-lang/near/x3-guard/src/tests.rs#L650"><code>one_signed_quote_cannot_be_replayed_across_owners</code></a> and <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/x3-lang/near/x3-guard/src/tests.rs#L606"><code>differently_signed_quotes_cannot_reuse_a_deposit_address_across_owners</code></a>.</dd>
         </dl>
       </details>
     </li>
@@ -345,9 +372,9 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
         <summary><span class="c-title">Steal the agent's key and skip the compiler</span><span class="c-tags"><span class="tag t-guard">Guard</span><span class="tag">Mainnet</span></span><span class="c-stop">Guard's mandate checks and the key's permissions still apply</span></summary>
         <dl class="c-body">
           <dt>Attack</dt><dd>Take the agent's restricted key and call Guard directly with a hand-written policy, bypassing the compiler and every local check.</dd>
-          <dt>What stopped it</dt><dd>Guard checks every intent and quote against the mandate on chain: active, asset, destination asset, recipient, refund address, per-payment cap, 24-hour cap, slippage, fees and deadline, plus approvals (<a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/x3-lang/near/x3-guard/src/mandate.rs#L208"><code>check_mandate</code></a>). The key can call only <code>agent_register_intent</code>, <code>agent_accept_quote</code> and <code>agent_record_outcome</code> on <code>x3lang.near</code>, so it cannot approve, change the mandate or move tokens.</dd>
+          <dt>What stopped it</dt><dd>Guard checks every intent and quote against the mandate on chain: active, asset, destination asset, recipient, refund address, per-payment cap, 24-hour cap, slippage, fees and deadline, plus approvals (<a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/x3-lang/near/x3-guard/src/mandate.rs#L208"><code>check_mandate</code></a>). The key can call only <code>agent_register_intent</code>, <code>agent_accept_quote</code> and <code>agent_record_outcome</code> on <code>x3lang.near</code>, so it cannot approve, change the mandate or move tokens.</dd>
           <dt>Still possible</dt><dd>Recording a false outcome. See <a href="#ends">where protection ends</a>.</dd>
-          <dt>Evidence</dt><dd>Mainnet: the key's permissions, listed under <a href="#keys">the keys</a> and in the <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/PROOF_CARD.md#accounts-keys-and-code">proof card</a>.</dd>
+          <dt>Evidence</dt><dd>Mainnet: the key's permissions, listed under <a href="#keys">the keys</a> and in the <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/PROOF_CARD.md#accounts-keys-and-code">proof card</a>.</dd>
         </dl>
       </details>
     </li>
@@ -362,7 +389,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
     <article class="box end">
       <h3>A false outcome report</h3>
       <p><strong>Not stopped.</strong> Guard stores the hashes and amount the agent reports and compares the amount with the quote's floor. It authenticates neither. Each accepted quote takes one outcome.</p>
-      <p class="src-line">Source: <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/x3-lang/near/x3-guard/src/lib.rs#L1094"><code>record_outcome_for</code></a> · proof card limit 4</p>
+      <p class="src-line">Source: <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/x3-lang/near/x3-guard/src/lib.rs#L1094"><code>record_outcome_for</code></a> · proof card limit 4</p>
     </article>
     <article class="box end">
       <h3>The funding wallet's key</h3>
@@ -381,9 +408,9 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
       <li>The deposit and the payout are linked by 1Click status, timing and amount, not by a cryptographic proof. The two legs are not atomic (limit 5).</li>
       <li>Guard checks stored .x3 hashes; it does not compile or run .x3. X3VM is not on the deployed authorization path (limit 6).</li>
       <li>One settlement of about $25. It does not establish production reliability (limit 7).</li>
-      <li>An accepted quote counts against the 24-hour cap even if it is never funded or is later refunded. The budget comes back only as the window rolls (<a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/x3-lang/near/x3-guard/src/mandate.rs#L497-L498">mandate.rs</a>). This errs toward refusing payments, not toward allowing them.</li>
+      <li>An accepted quote counts against the 24-hour cap even if it is never funded or is later refunded. The budget comes back only as the window rolls (<a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/x3-lang/near/x3-guard/src/mandate.rs#L497-L498">mandate.rs</a>). This errs toward refusing payments, not toward allowing them.</li>
     </ul>
-    <p style="margin:0"><a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/PROOF_CARD.md#seven-limits">The proof card's seven limits</a></p>
+    <p style="margin:0"><a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/PROOF_CARD.md#seven-limits">The proof card's seven limits</a></p>
   </div>
 </section>
 
@@ -438,17 +465,18 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
     </li>
   </ol>
   <div class="cmd" style="margin-top:12px"><button type="button" data-js-only hidden data-copy="GFdQLrzT5tnPPdZwKLtmwpNvSwrxVHDvVg2C3WX5fsK6&#10;Eg75uehwU4YJ86ZZPEPKiBqnjkr6PxwPmV23HFAgu153&#10;4zhGYyWNabYQ5gixTUzoVHVbgFKWAsQssSpCv3B1J1LjCRisEJW6wm3zuS2GVuDotAT93S8wm1qezHwsKX2RkXo5&#10;8jfbACLSxrzi3fnajfAVGc4Fgo6XLCWA1mpiJWXPw43P&#10;9sTn9pJ1ZbCVazBm9Wz9oEDh6aWw4FUVMoAJEKCCzuqE">Copy all five transaction hashes</button></div>
-  <p class="note">Sources: the proof card's <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/PROOF_CARD.md#the-five-transactions">five transactions</a> and the <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70/evidence/near-guard-mainnet-invoice06-2026-11-12/README.md">invoice_06 evidence bundle</a>.</p>
+  <p class="note">Sources: the proof card's <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/PROOF_CARD.md#the-five-transactions">five transactions</a> and the <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/evidence/near-guard-mainnet-invoice06-2026-11-12/README.md">invoice_06 evidence bundle</a>.</p>
 </section>
 
 <section class="section" id="check" aria-labelledby="check-title">
   <div class="kicker">06</div>
   <h2 id="check-title">Check it yourself</h2>
-  <p class="intro">No wallet, key or API key. Steps 2 to 5 run offline; step 6 reads public mainnet RPC and sends nothing.</p>
+  <p class="intro">No wallet, key or API key. Steps 2 to 6 run offline; step 7 reads public mainnet RPC and sends nothing.</p>
   <ol class="cmds">
-    <li><span>Clone the pinned commit</span><div class="cmd"><code>git clone https://github.com/Cyptopimpinainteazy/x3lang &amp;&amp; cd x3lang &amp;&amp; git checkout aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70</code><button type="button" data-js-only hidden data-copy="git clone https://github.com/Cyptopimpinainteazy/x3lang &amp;&amp; cd x3lang &amp;&amp; git checkout aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70">Copy</button></div></li>
+    <li><span>Clone the pinned commit</span><div class="cmd"><code>git clone https://github.com/Cyptopimpinainteazy/x3lang &amp;&amp; cd x3lang &amp;&amp; git checkout f2a01a2ae144c69e115fd807a642bddfd8668f9f</code><button type="button" data-js-only hidden data-copy="git clone https://github.com/Cyptopimpinainteazy/x3lang &amp;&amp; cd x3lang &amp;&amp; git checkout f2a01a2ae144c69e115fd807a642bddfd8668f9f">Copy</button></div></li>
     <li><span>Check both .x3 hashes: expect every file <code>OK</code></span><div class="cmd"><code>(cd evidence/near-guard-mainnet-invoice06-2026-11-12/source-recovery &amp;&amp; sha256sum --check SHA256SUMS)</code><button type="button" data-js-only hidden data-copy="(cd evidence/near-guard-mainnet-invoice06-2026-11-12/source-recovery &amp;&amp; sha256sum --check SHA256SUMS)">Copy</button></div></li>
     <li><span>Compiler refusals: expect <code>9/9 edits refused at compile time</code></span><div class="cmd"><code>python3 scripts/hackathon/x3_wont_compile.py</code><button type="button" data-js-only hidden data-copy="python3 scripts/hackathon/x3_wont_compile.py">Copy</button></div></li>
+    <li><span>The mainnet files, link by link: expect <code>5/5 links hold on the committed evidence.</code></span><div class="cmd"><code>python3 scripts/hackathon/invoice06_chain.py</code><button type="button" data-js-only hidden data-copy="python3 scripts/hackathon/invoice06_chain.py">Copy</button></div></li>
     <li><span>Compromised model: expect 8/8 refused and the control allowed</span><div class="cmd"><code>python3 scripts/hackathon/compromised_agent_redteam.py</code><button type="button" data-js-only hidden data-copy="python3 scripts/hackathon/compromised_agent_redteam.py">Copy</button></div></li>
     <li><span>Grok drain replay: expect 3/3 refused and the control allowed</span><div class="cmd"><code>python3 scripts/hackathon/replay_grok_wallet_drain.py</code><button type="button" data-js-only hidden data-copy="python3 scripts/hackathon/replay_grok_wallet_drain.py">Copy</button></div></li>
     <li><span>Read the mainnet record: expect <code>19/19 checks not failed; 0 failed</code>, of which one (who controls the funding wallet) is not readable on chain</span><div class="cmd"><code>python3 scripts/hackathon/observe_mainnet_invoice06.py --out /tmp/observation.json</code><button type="button" data-js-only hidden data-copy="python3 scripts/hackathon/observe_mainnet_invoice06.py --out /tmp/observation.json">Copy</button></div></li>
@@ -458,7 +486,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
 </section>
 <noscript><p class="alert">Filters and copy buttons need JavaScript. Everything else on this page works without it.</p></noscript>
 </main>
-<footer>X3 Force Field (formerly X3 Shield) · Recorded evidence from X3Lang commit aa8e3ae · No wallet connection or chain call from this page.</footer>
+<footer>X3 Force Field (formerly X3 Shield) · Recorded evidence from X3Lang commit f2a01a2 · No wallet connection or chain call from this page.</footer>
 
 <script type="module">
 // Presentation only: filters, expand/collapse, copy buttons, deep links and print.

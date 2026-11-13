@@ -12,7 +12,7 @@ const html = readFileSync(
   new URL("../public/labs/force-field/index.html", import.meta.url),
   "utf8",
 );
-const PIN = "aa8e3aeedf79fa0f8d00a95afc7e21afc1ccfc70";
+const PIN = "f2a01a2ae144c69e115fd807a642bddfd8668f9f";
 const MAINNET_TRAIL = [
   "GFdQLrzT5tnPPdZwKLtmwpNvSwrxVHDvVg2C3WX5fsK6",
   "Eg75uehwU4YJ86ZZPEPKiBqnjkr6PxwPmV23HFAgu153",
@@ -66,8 +66,8 @@ test("the mainnet trail lists the five invoice_06 transactions in order, and cop
 });
 
 test("every attack declares its layer and evidence, and its visible tags say the same", () => {
-  assert.equal(cases.length, 11);
-  assert.match(html, /Eleven attacks/);
+  assert.equal(cases.length, 12);
+  assert.match(html, /Twelve attacks/);
   const ids = new Set();
   for (const [, id, layers, evidence, body] of cases) {
     assert.ok(!ids.has(id), `duplicate case ${id}`);
