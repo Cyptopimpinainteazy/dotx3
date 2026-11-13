@@ -13,6 +13,14 @@ const html = readFileSync(
   "utf8",
 );
 const PIN = "f2a01a2ae144c69e115fd807a642bddfd8668f9f";
+// The local-node vault evidence and the agent-law status are committed in x3lang #233, on a
+// commit beside PIN rather than after it; only those files may be linked at this second commit.
+const EVIDENCE_PIN = "7cfde9ffc060f13c5523f5812af541a8b100b14e";
+const EVIDENCE_FILES = [
+  "evidence/agent-vault-local/complete-path-sandbox-20261113.json",
+  "evidence/agent-vault-local/complete-path-sandbox-20261113.txt",
+  "docs/security/X3_AGENT_CONSTITUTION_V1.md",
+];
 const MAINNET_TRAIL = [
   "GFdQLrzT5tnPPdZwKLtmwpNvSwrxVHDvVg2C3WX5fsK6",
   "Eg75uehwU4YJ86ZZPEPKiBqnjkr6PxwPmV23HFAgu153",
@@ -95,9 +103,11 @@ test("every repository link is pinned to one X3Lang commit, and other links go t
     const url = new URL(href);
     assert.equal(url.protocol, "https:", href);
     if (url.hostname === "github.com") {
+      const evidenceFile = EVIDENCE_FILES.find((file) => url.pathname.endsWith(`/${file}`));
+      const pin = evidenceFile ? EVIDENCE_PIN : PIN;
       assert.match(
         url.pathname,
-        new RegExp(`^/Cyptopimpinainteazy/x3lang/(blob|tree)/${PIN}(/|$)`),
+        new RegExp(`^/Cyptopimpinainteazy/x3lang/(blob|tree)/${pin}(/|$)`),
         href,
       );
     } else {
@@ -121,8 +131,44 @@ test("in-page links resolve", () => {
     assert.ok(ids.has(anchor), `#${anchor}`);
 });
 
+test("the custody section shows the four conditions, labelled as local evidence", () => {
+  const custody = between('id="custody"', 'id="keys"');
+  for (const heading of [
+    "Permitted payment executes",
+    "Forbidden actions cannot bypass it",
+    "Revocation stops later actions",
+    "The evidence is preserved",
+  ]) {
+    assert.ok(custody.includes(`<h3>${heading}</h3>`), heading);
+  }
+  for (const phrase of [
+    "Local evidence only",
+    "not testnet or mainnet",
+    "RequiresFullAccess",
+    "owner revoked mandate",
+  ]) {
+    assert.ok(custody.includes(phrase), phrase);
+  }
+  assert.match(custody, /contract's SHA-256 <code>[0-9a-f]{64}<\/code>/);
+  assert.ok(custody.includes("bash scripts/hackathon/vault_sandbox_smoke.sh"));
+  for (const file of EVIDENCE_FILES) {
+    assert.ok(custody.includes(`x3lang/blob/${EVIDENCE_PIN}/${file}`), file);
+  }
+  const stages = [...custody.matchAll(/<tr><th scope="row">([^<]+)<\/th>/g)].map((m) => m[1]);
+  assert.deepEqual(stages, [
+    "Birth",
+    "Compile",
+    "Test",
+    "Authorize and execute",
+    "Terminate",
+    "Court",
+    "Evolve",
+  ]);
+  assert.doesNotMatch(html, /@@[A-Z_]+@@/);
+});
+
 test("the limits are on the page, not only the refusals", () => {
-  const ends = between('id="ends"', 'id="keys"');
+  const ends = between('id="ends"', 'id="custody"');
   assert.equal((ends.match(/<strong>Not stopped\.<\/strong>/g) || []).length, 3);
   for (const phrase of [
     "It authenticates neither",

@@ -38,7 +38,7 @@ p{margin-top:0}
 .stat{font-weight:800;font-size:clamp(24px,3vw,37px);color:var(--lime);line-height:1.15}
 .caption{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin-top:4px}
 .tour{margin-top:18px}.tour-title{font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0 0 10px}
-.tour ol{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0;padding:0;list-style:none;counter-reset:stop}
+.tour ol{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:0;padding:0;list-style:none;counter-reset:stop}
 .tour li{counter-increment:stop}
 .tour a{display:block;height:100%;text-decoration:none;color:var(--text);border:1px solid var(--line2);border-radius:10px;padding:10px 12px}
 .tour a:hover,.tour a:focus-visible{border-color:var(--lime)}
@@ -82,6 +82,7 @@ button:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{
 .ends{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .end{border-color:#6b4a3a}.end h3{color:var(--amber)}
 .end p{font-size:14.5px}.end .src-line{font-size:12.5px;color:var(--dim);margin:0}
+.paths{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}.path h3{color:var(--lime)}.path p{font-size:14.5px;margin:0}.chain-title{margin-top:28px}
 .also{margin-top:12px}.also ul{margin:0 0 10px;padding-left:20px}.also li{margin-bottom:6px;font-size:14.5px}
 .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
 table.keys{width:100%;border-collapse:collapse;min-width:720px;font-size:14px;background:var(--panel2)}
@@ -100,9 +101,9 @@ table.keys tbody th{font-weight:700}
 .cmds li span{display:block;font-weight:650;margin-bottom:5px}
 .status-line{min-height:1.4em;font-size:13px;color:var(--lime);margin:8px 0 0}
 footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;padding-bottom:40px;margin-top:56px;font-size:13px}
-@media(max-width:1020px){.tour ol{grid-template-columns:repeat(3,minmax(0,1fr))}.ends{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:1020px){.paths{grid-template-columns:repeat(2,minmax(0,1fr))}.tour ol{grid-template-columns:repeat(3,minmax(0,1fr))}.ends{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:860px){.duo{grid-template-columns:minmax(0,1fr)}.stats{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.case summary{grid-template-columns:minmax(0,1fr) auto}.c-tags,.c-stop{grid-column:1/2}.c-body{grid-template-columns:minmax(0,1fr)}.c-body dt{padding-top:6px}.c-body dd{padding-top:0}}
-@media(max-width:560px){main,header,footer{padding-left:14px;padding-right:14px}.box{padding:16px}.tour ol{grid-template-columns:minmax(0,1fr)}nav.jump{display:none}h1{margin-top:30px}}
+@media(max-width:560px){main,header,footer{padding-left:14px;padding-right:14px}.box{padding:16px}.tour ol{grid-template-columns:minmax(0,1fr)}.paths{grid-template-columns:minmax(0,1fr)}nav.jump{display:none}h1{margin-top:30px}}
 @media print{body{background:#fff;color:#000}.page-export-controls,.filters,[data-js-only],nav.jump,.skip{display:none!important}.box,.case details,table.keys{background:#fff;border-color:#999}.case details,.trail li,.end{break-inside:avoid}a{color:#000}}
 </style>
 <link rel="stylesheet" href="/page-export.css">
@@ -113,7 +114,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
 <a class="skip" href="#challenge">Skip to the attacks</a>
 <header>
   <div class="brand">✳ X3 FORCE FIELD / BREAK THE MANDATE</div>
-  <nav class="jump" aria-label="Sections"><a href="#rules">Rules</a><a href="#challenge">Attacks</a><a href="#ends">Limits</a><a href="#keys">Keys</a><a href="#money">Mainnet</a><a href="#check">Check it</a></nav>
+  <nav class="jump" aria-label="Sections"><a href="#rules">Rules</a><a href="#challenge">Attacks</a><a href="#ends">Limits</a><a href="#custody">Custody</a><a href="#keys">Keys</a><a href="#money">Mainnet</a><a href="#check">Check it</a></nav>
   <div class="pill">RECORDED EVIDENCE · NO LIVE CALLS</div>
 </header>
 <main>
@@ -134,6 +135,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
     <li><a href="#rules"><strong>The rules</strong><span>The owner's mandate and the agent's payment as .x3 source, with the hashes Guard stores.</span></a></li>
     <li><a href="#challenge"><strong>The attacks</strong><span>Twelve attacks, the check that stopped each, and a payment that still passes.</span></a></li>
     <li><a href="#ends"><strong>Where it ends</strong><span>What X3 Force Field does not stop.</span></a></li>
+    <li><a href="#custody"><strong>The fix</strong><span>A vault that holds the money, proven on a local NEAR node.</span></a></li>
     <li><a href="#keys"><strong>The keys</strong><span>What the agent's key can sign, and what it cannot.</span></a></li>
     <li><a href="#money"><strong>The mainnet trail</strong><span>Five transactions, from approval to recorded outcome.</span></a></li>
   </ol>
@@ -414,8 +416,40 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
   </div>
 </section>
 
-<section class="section" id="keys" aria-labelledby="keys-title">
+<section class="section" id="custody" aria-labelledby="custody-title">
   <div class="kicker">04</div>
+  <h2 id="custody-title">Closing the gap: a vault that holds the money</h2>
+  <p class="intro">On mainnet, Guard checks each payment but holds no funds, so a wallet outside Guard can still pay. The NEAR agent vault holds the funds itself and gives the agent a key that can only ask it to pay. The whole path below ran on a local NEAR node, built from X3Lang commit <code>aa8e3ae</code>.</p>
+  <div class="paths">
+    <article class="box path"><h3>Permitted payment executes</h3><p>The 0.1 NEAR payment reached <code>Paid</code>.</p></article>
+    <article class="box path"><h3>Forbidden actions cannot bypass it</h3><p>A direct transfer with the agent's key failed with <code>RequiresFullAccess</code>, and attaching a deposit with <code>DepositWithFunctionCall</code>; balances were unchanged. Wrong recipient, over-cap and replayed payments got typed <code>X3_VAULT_DENIED</code> refusals, and the agent could not call owner recovery.</p></article>
+    <article class="box path"><h3>Revocation stops later actions</h3><p>A fresh payment after the owner revoked was refused (<code>owner revoked mandate</code>), and the earlier payment stayed <code>Paid</code>. An expired mandate refused a fresh payment too.</p></article>
+    <article class="box path"><h3>The evidence is preserved</h3><p>The harness output is committed with its SHA-256, beside the compiled contract's SHA-256 <code>705038833fad93e0b0e4573aa1bf8d69d896823bb9fe049214262abf7292c2a0</code>.</p></article>
+  </div>
+  <p class="note">Local evidence only: a disposable NEAR Sandbox 2.14.0 node, not testnet or mainnet. Runner observations are not consensus proofs, the owner's FullAccess key was trusted, and the vault is not deployed publicly. Record: <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/7cfde9ffc060f13c5523f5812af541a8b100b14e/evidence/agent-vault-local/complete-path-sandbox-20261113.json">complete-path-sandbox-20261113.json</a> and its <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/7cfde9ffc060f13c5523f5812af541a8b100b14e/evidence/agent-vault-local/complete-path-sandbox-20261113.txt">harness log</a>.</p>
+  <div class="cmd" style="margin-top:12px"><code>bash scripts/hackathon/vault_sandbox_smoke.sh</code><button type="button" data-js-only hidden data-copy="bash scripts/hackathon/vault_sandbox_smoke.sh">Copy</button></div>
+  <p class="note">Needs Rust 1.99.1 and the pinned NEAR Sandbox 2.14.0 binary that the script names. No key, wallet or network.</p>
+  <h3 class="chain-title">The agent-law chain today</h3>
+  <div class="table-wrap">
+    <table class="keys chain">
+      <caption>Birth to court: what X3 demonstrates now, and how strongly</caption>
+      <thead><tr><th scope="col">Stage</th><th scope="col">What exists</th><th scope="col">Evidence</th><th scope="col">Missing</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Birth</th><td>An owner-created mandate and a key limited to three Guard methods; signed admission checks for new agents</td><td>Mainnet for the mandate and key; local tests for admission</td><td>Admission is not wired to key issuance</td></tr>
+        <tr><th scope="row">Compile</th><td>The <code>.x3</code> compiler refuses unsafe payments</td><td>Local, 9/9</td><td>—</td></tr>
+        <tr><th scope="row">Test</th><td>Red-team and replay suites with a model that complies</td><td>Local, 8/8 and 3/3</td><td>Not required before an agent gets its key</td></tr>
+        <tr><th scope="row">Authorize and execute</th><td>Guard checks without custody; the vault holds the funds</td><td>Guard on mainnet; the vault on a local node</td><td>The vault is not deployed publicly</td></tr>
+        <tr><th scope="row">Terminate</th><td>Owner revocation and expiry</td><td>The vault on a local node; a Guard unit test</td><td>No automatic revocation on a violation</td></tr>
+        <tr><th scope="row">Court</th><td>Typed refusals, hashed logs and fail-closed evidence checkers</td><td>Local and CI</td><td>No independent review; on Guard the agent reports its own outcome</td></tr>
+        <tr><th scope="row">Evolve</th><td>Versioned mandates that only the owner can replace</td><td>Guard unit tests</td><td>No reviewed path from findings to new policy</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Source: <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/7cfde9ffc060f13c5523f5812af541a8b100b14e/docs/security/X3_AGENT_CONSTITUTION_V1.md#where-the-agent-law-chain-stands-2026-11-13">the agent constitution's status section</a>.</p>
+</section>
+
+<section class="section" id="keys" aria-labelledby="keys-title">
+  <div class="kicker">05</div>
   <h2 id="keys-title">Who can sign what</h2>
   <div class="table-wrap">
     <table class="keys">
@@ -434,7 +468,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
 </section>
 
 <section class="section" id="money" aria-labelledby="money-title">
-  <div class="kicker">05</div>
+  <div class="kicker">06</div>
   <h2 id="money-title">The mainnet trail: invoice_06</h2>
   <p class="intro">One real payment through Guard on <code>x3lang.near</code> (code hash <code>BPdpJAw8R4SDh6Wi7dPcXTs5T7ncJDVKCLgzuqZFb15T</code>), from approval to recorded outcome.</p>
   <ol class="trail">
@@ -469,7 +503,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
 </section>
 
 <section class="section" id="check" aria-labelledby="check-title">
-  <div class="kicker">06</div>
+  <div class="kicker">07</div>
   <h2 id="check-title">Check it yourself</h2>
   <p class="intro">No wallet, key or API key. Steps 2 to 6 run offline; step 7 reads public mainnet RPC and sends nothing.</p>
   <ol class="cmds">
