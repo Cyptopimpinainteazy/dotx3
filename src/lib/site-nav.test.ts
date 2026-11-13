@@ -7,7 +7,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { NAV, NAV_CTA, groupContainsPath, isCurrentPage, slugify } from "./site-nav.ts";
+import { ALL_NAV, NAV, NAV_CTA, groupContainsPath, isCurrentPage, slugify } from "./site-nav.ts";
+import { BACKING_LINKS_VISIBLE } from "./front-door.ts";
 
 const ROOT = join(import.meta.dirname, "..", "..");
 
@@ -33,7 +34,7 @@ function sectionIds(to: string): Set<string> {
   return ids;
 }
 
-const items = NAV.flatMap((group) => group.items.map((item) => ({ group: group.id, item })));
+const items = ALL_NAV.flatMap((group) => group.items.map((item) => ({ group: group.id, item })));
 
 test("slugify makes stable, url-safe section ids", () => {
   assert.equal(slugify("Proof meter"), "proof-meter");
@@ -71,7 +72,7 @@ test("every file item exists in public/", () => {
 });
 
 test("external items are https and none repeats within a group", () => {
-  for (const group of NAV) {
+  for (const group of ALL_NAV) {
     const seen = new Set<string>();
     for (const item of group.items) {
       const key = item.kind === "route" ? `${item.to}#${item.hash ?? ""}` : item.href;
@@ -84,8 +85,9 @@ test("external items are https and none repeats within a group", () => {
 });
 
 test("group ids are unique and every top-level page is reachable", () => {
-  assert.equal(new Set(NAV.map((g) => g.id)).size, NAV.length);
-  const linked = new Set(items.flatMap(({ item }) => (item.kind === "route" ? [item.to] : [])));
+  assert.equal(new Set(ALL_NAV.map((g) => g.id)).size, ALL_NAV.length);
+  const shown = NAV.flatMap((group) => group.items);
+  const linked = new Set(shown.flatMap((item) => (item.kind === "route" ? [item.to] : [])));
   // /proofs is intentionally unlinked; see the audit notes in the PR.
   for (const page of [
     "/near",
@@ -102,7 +104,7 @@ test("group ids are unique and every top-level page is reachable", () => {
     "/bootcamp",
     "/proof",
     "/developers",
-    "/back",
+    ...(BACKING_LINKS_VISIBLE ? ["/back"] : []),
   ]) {
     assert.ok(linked.has(page as never), `${page} is not in the menu`);
   }
@@ -117,4 +119,17 @@ test("current-page and group highlighting ignore section jumps and home", () => 
   assert.equal(groupContainsPath(docs, "/docs"), true);
   const hackathon = NAV.find((g) => g.id === "hackathon")!;
   assert.equal(groupContainsPath(hackathon, "/"), false);
+});
+
+test("BACKING_LINKS_VISIBLE controls every /back link in the menus", () => {
+  const backLinks = NAV.flatMap((g) => g.items).filter(
+    (i) => i.kind === "route" && i.to === "/back",
+  );
+  assert.equal(
+    NAV.some((g) => g.id === "back"),
+    BACKING_LINKS_VISIBLE,
+  );
+  if (!BACKING_LINKS_VISIBLE) assert.equal(backLinks.length, 0, "a /back link is still shown");
+  // The hidden group is kept intact so flipping the flag restores it.
+  assert.ok(ALL_NAV.find((g) => g.id === "back")!.items.length > 0);
 });

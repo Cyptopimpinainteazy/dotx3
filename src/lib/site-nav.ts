@@ -2,7 +2,7 @@
 // sitemap. site-nav.test.ts checks every internal path has a route file and every hash
 // matches a <Section> title on that page, so a renamed section cannot leave a dead link.
 import type { LinkProps } from "@tanstack/react-router";
-import { LINKS } from "./front-door.ts";
+import { ARCADE_URL, BACKING_LINKS_VISIBLE, LINKS } from "./front-door.ts";
 
 export type NavItem =
   | {
@@ -48,7 +48,8 @@ export const SITE_REPO = "https://github.com/Cyptopimpinainteazy/dotx3";
 export const PROGRAMMING_GUIDE =
   "https://github.com/Cyptopimpinainteazy/x3lang/blob/master/docs/x3-lang/PROGRAMMING_GUIDE.md";
 
-export const NAV: NavGroup[] = [
+/** Every group, including ones hidden for judging. Tests validate all of them. */
+export const ALL_NAV: NavGroup[] = [
   {
     id: "hackathon",
     label: "Hackathon",
@@ -121,6 +122,12 @@ export const NAV: NavGroup[] = [
         label: "Attack lab",
         description: "Attack a scoped vault in the browser",
         href: "/labs/attack/attack-lab.html",
+      },
+      {
+        kind: "file",
+        label: "Watch an Agent Play",
+        description: "MEME COIN BLAST under an .x3 mandate",
+        href: ARCADE_URL,
       },
       {
         kind: "route",
@@ -364,6 +371,18 @@ export const NAV: NavGroup[] = [
     ],
   },
 ];
+
+const isBackingLink = (item: NavItem) => item.kind === "route" && item.to === "/back";
+
+/**
+ * What the site renders. While BACKING_LINKS_VISIBLE is false (judging), the Back .x3 group
+ * and any /back entry are hidden; /back stays reachable by URL. Flip the flag to restore them.
+ */
+export const NAV: NavGroup[] = ALL_NAV.filter(
+  (group) => BACKING_LINKS_VISIBLE || group.id !== "back",
+).map((group) =>
+  BACKING_LINKS_VISIBLE ? group : { ...group, items: group.items.filter((i) => !isBackingLink(i)) },
+);
 
 /** The header's call to action, outside the dropdowns. */
 export const NAV_CTA = { label: "Try the Demo", to: "/demo" } as const;

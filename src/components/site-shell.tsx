@@ -121,3 +121,26 @@ export function ActionLink({
     </Link>
   );
 }
+
+/** ActionLink for a static file under public/ (such as the arcade), which the router must not handle. */
+export function StaticActionLink({
+  href,
+  children,
+  outline,
+}: {
+  href: string;
+  children: React.ReactNode;
+  outline?: boolean;
+}) {
+  const cls = outline
+    ? "border border-primary text-primary hover:bg-primary/10"
+    : "bg-primary text-bg hover:brightness-110";
+  return (
+    <a
+      href={href}
+      className={`tap inline-flex min-h-11 items-center justify-center rounded-full px-6 text-sm font-semibold ${cls}`}
+    >
+      {children}
+    </a>
+  );
+}
