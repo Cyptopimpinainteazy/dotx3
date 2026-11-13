@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 function fit(renderer: THREE.WebGLRenderer, camera: THREE.PerspectiveCamera, el: HTMLElement) {
@@ -12,13 +12,29 @@ function fit(renderer: THREE.WebGLRenderer, camera: THREE.PerspectiveCamera, el:
 export function MeterScene({ progress }: { progress: number }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef(progress);
+  const [unavailable, setUnavailable] = useState(false);
+  const percent = Math.round(Math.min(1, Math.max(0, progress)) * 100);
   progressRef.current = progress;
 
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      // Decorative graphics must not replace the whole page with a route error.
+      // Reuse the checked context instead of making Three.js probe it again.
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("webgl2", { antialias: true, alpha: true });
+      if (!context) {
+        setUnavailable(true);
+        return;
+      }
+      renderer = new THREE.WebGLRenderer({ canvas, context, antialias: true, alpha: true });
+    } catch {
+      setUnavailable(true);
+      return;
+    }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setClearColor(0x000000, 0);
     el.appendChild(renderer.domElement);
@@ -111,9 +127,24 @@ export function MeterScene({ progress }: { progress: number }) {
   return (
     <div
       ref={wrapRef}
-      className="mx-auto h-72 w-full max-w-xl"
+      className="mx-auto flex h-72 w-full max-w-xl flex-col items-center justify-center"
+      data-webgl={unavailable ? "unavailable" : undefined}
       role="img"
-      aria-label="Three.js ring showing how many milestone proofs are posted"
-    />
+      aria-label={`${unavailable ? "Static proof meter" : "Proof meter"}: ${percent}% of milestones have posted evidence`}
+    >
+      {unavailable && (
+        <>
+          <svg viewBox="0 0 100 100" className="size-48 text-primary" aria-hidden="true">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="4" opacity="0.2" />
+            <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="4"
+              pathLength="100" strokeDasharray={`${percent} 100`} transform="rotate(-90 50 50)" />
+            <text x="50" y="50" textAnchor="middle" dominantBaseline="central" fill="currentColor" fontSize="16">
+              {percent}%
+            </text>
+          </svg>
+          <p className="text-sm text-muted">Static proof meter</p>
+        </>
+      )}
+    </div>
   );
 }
