@@ -1,8 +1,8 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { CodeBlock, OutLink, Tag } from "@/components/code-block";
-import { Section, SiteShell } from "@/components/site-shell";
-import { LINKS, MANDATE } from "@/lib/front-door";
+import { Section, SiteShell, StaticActionLink } from "@/components/site-shell";
+import { ARCADE_URL, LINKS, MANDATE } from "@/lib/front-door";
 
 export const Route = createFileRoute("/demo")({ component: DemoPage });
 
@@ -28,6 +28,23 @@ function DemoPage() {
       lede="The rules stay on screen. Pick a payment. The verdict is the same one the published checks already returned. This page does not send a transaction."
     >
       <Section title="Run the integrated demos"><p className="text-center text-muted">The original page below replays published decisions. <a className="text-primary underline" href="/labs">Open the actual compiler, signed-quote demo, judge tests and attack lab →</a></p></Section>
+      <Section
+        title="Watch an agent play under a mandate"
+        intro="MEME COIN BLAST is a fish-table game with live NEAR Intents prices. Hand the turret to an agent: every volley it fires is a payment request, checked by the browser port of x3-guard's check_mandate. Some requests come from a prompt-injected feed."
+      >
+        <ul className="mx-auto grid max-w-3xl gap-3 text-muted">
+          <li className="rounded-xl border border-border bg-surface px-4 py-3">Coins outside your allowlist are refused (<code>mandate_destination_asset</code>).</li>
+          <li className="rounded-xl border border-border bg-surface px-4 py-3">Injected requests to pay <code>attacker.near</code>, redirect refunds or loosen slippage are refused.</li>
+          <li className="rounded-xl border border-border bg-surface px-4 py-3">Volleys above your approval line wait for you; past the per-volley or 24-hour cap they are refused.</li>
+          <li className="rounded-xl border border-border bg-surface px-4 py-3">Edit the mandate in the game, widen it to <code>attacker.near</code>, and watch the same request go through.</li>
+        </ul>
+        <p className="mt-6 text-center">
+          <StaticActionLink href={ARCADE_URL}>Play MEME COIN BLAST</StaticActionLink>
+        </p>
+        <p className="mt-4 text-center text-sm text-muted">
+          Play credits only. The agent is a scripted stand-in, not a language model. Nothing is signed or sent on chain.
+        </p>
+      </Section>
       <Section title="The owner's .x3 rules">
         <ul className="mx-auto grid max-w-3xl gap-3">
           {RULES.map((rule) => (

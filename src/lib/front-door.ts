@@ -37,6 +37,17 @@ export const LINKS = {
 } as const;
 
 /**
+ * Whether the site links to /back (liquidity, investing, backing) from the nav, the home
+ * page and the language page. Off while NEAR HACKATHON judging runs so the competition
+ * site reads as a technical submission. /back itself stays reachable by URL. Set to true
+ * after judging to restore every link.
+ */
+export const BACKING_LINKS_VISIBLE: boolean = false;
+
+/** MEME COIN BLAST: the fish-table game where an agent plays under an .x3 mandate. */
+export const ARCADE_URL = "/gallery/arcade/meme-coin-blast.html";
+
+/**
  * The .X3 token and its liquidity pool. Both are null until they exist on NEAR mainnet.
  * /back shows "not live" for each null field and never invents a value. When the token is
  * deployed and the Rhea pool is created, set these from the finalized transactions.
