@@ -1,3 +1,4 @@
+import { VaultPilotEvidence } from "@/components/vault-pilot-evidence";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   ActionLink,
@@ -135,8 +136,13 @@ function Home() {
     >
       <EnterGate />
 
+      <Section id="mainnet-vault-pilot" title="Mainnet: the agent paid from its vault" intro="A completed 5-USDC payment, from exact owner approval to a finalized NEAR payout.">
+        <VaultPilotEvidence />
+      </Section>
+
       <Section
-        title="Mainnet proof: invoice_06"
+        id="mainnet-proof-invoice-06"
+        title="Earlier proof: NEAR Guard authorized invoice_06"
         intro="One real payment on NEAR and Solana mainnet, from the owner's rule to the recorded outcome. What it does not prove is on the same screen."
       >
         <MainnetEvidence />
@@ -183,7 +189,7 @@ function Home() {
               breaks a cap, it does not compile or Guard refuses it.
             </Card>
             <Card title="Settlement is labeled">
-              Mainnet: 25 USDC from Solana, 24.9952 USDC delivered on NEAR after Guard accepted
+              Mainnet vault pilot: an agent sent 5 USDC and 4.999746 USDC reached NEAR. Earlier invoice_06: 25 USDC from Solana, 24.9952 USDC delivered on NEAR after Guard accepted
               the official signed 1Click quote. The earlier Base Sepolia trade remains testnet evidence.
               Guard authorization and wallet custody are different claims.
             </Card>

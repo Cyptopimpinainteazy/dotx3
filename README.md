@@ -10,20 +10,26 @@ dotx3 is the public website for X3 Force Field (formerly X3 Shield), powered by 
 - `/playground`: edit a policy and inspect local deterministic verdicts.
 - `/near`: NEAR competition hub with `/security`, `/agents` and `/defi` track pages.
 - `/proof`: the mainnet 1Click evidence archive, historical Guard calls and finalized testnet transfers, labeled by network and scope.
-- `/judge`: reproducible testnet cases and the separate mainnet evidence record.
+- `/judge`: the owner-approved, agent-executed 5-USDC vault proof, a local policy checker, and separately labeled historical evidence.
 - `/dex`: read-only market interface; market observations do not authorize a trade.
 
 A `.x3` file expresses an owner's spending mandate or a payment intent as reviewable typed source code. Invalid programs fail compilation before policy and quote checks; verified source hashes can be compared to Guard-stored identities. X3BC/X3VM are broader pre-hackathon language infrastructure, not the native on-chain Guard execution path. The NEAR path parses and checks that source, lowers supported payment terms and checks signed quote values through Guard. Guard acceptance authorizes a deposit address, and the historical `invoice_06` agent later recorded a `Settled` outcome. Wallet custody and funded settlement are separate concerns. See [the language guide](docs/X3_GUIDE.md).
+
+## Agent-paid vault proof: November 14, 2026
+
+The homepage, `/judge` and `/proof` show the archived 5-USDC Solana vault payment and finalized 4.999746-USDC payout to `x3lang.near`. Transaction links, the signed quote, settlement data and offline verifier are pinned to X3Lang commit `9ec3b48000bcada0ceb20df85d0d7e5eeed744bb`. The owner approved the exact quote before the dedicated agent executed from the PDA-owned vault. This pilot adds no new NEAR Guard call; provider linkage does not prove cryptographic cross-chain atomicity. The earlier 25-USDC Guard demonstration remains separate.
+
+Judges can open the policy checker without connecting a wallet or sending funds. `/demo` labels its published local decisions as replays. `scripts/vault-pilot.test.mjs` checks the amounts, archived state, pinned links and proof boundaries as part of `npm test`.
 
 ## Evidence snapshot: November 12, 2026 (historical site pin; X3Lang source update below)
 
 The earlier site evidence and vendored compiler are reviewed against X3Lang commit [`efb514ffef2cdfdeb8ad8147747887c85356073c`](https://github.com/Cyptopimpinainteazy/x3lang/commit/efb514ffef2cdfdeb8ad8147747887c85356073c).
 
-| Result | Network | Public evidence |
-| --- | --- | --- |
-| A restricted agent key accepted a signed live 1Click quote after 21 passing Guard checks. A separate wallet deposited 25.000000 USDC on Solana; 24.995200 USDC was delivered to `x3lang.near`. | Solana and NEAR mainnet | [invoice_06 archive](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/evidence/near-guard-mainnet-invoice06-2026-11-12/README.md) |
-| Guard refused the wrong recipient and registered the permitted intent. | NEAR testnet | [Guard evidence](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/evidence/near-guard-testnet-live-2026-11-06.md) |
-| A committed `.x3` program was hash-bound before 1 test USDC left Base Sepolia; 0.9974 test USDC arrived through the trusted Tidepool relay. | Base Sepolia and NEAR testnet | [Historical transfer evidence](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/docs/hackathon/FIRST_FINALIZED_SWAP_EVIDENCE.md) |
+| Result                                                                                                                                                                                         | Network                       | Public evidence                                                                                                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A restricted agent key accepted a signed live 1Click quote after 21 passing Guard checks. A separate wallet deposited 25.000000 USDC on Solana; 24.995200 USDC was delivered to `x3lang.near`. | Solana and NEAR mainnet       | [invoice_06 archive](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/evidence/near-guard-mainnet-invoice06-2026-11-12/README.md) |
+| Guard refused the wrong recipient and registered the permitted intent.                                                                                                                         | NEAR testnet                  | [Guard evidence](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/evidence/near-guard-testnet-live-2026-11-06.md)                 |
+| A committed `.x3` program was hash-bound before 1 test USDC left Base Sepolia; 0.9974 test USDC arrived through the trusted Tidepool relay.                                                    | Base Sepolia and NEAR testnet | [Historical transfer evidence](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/docs/hackathon/FIRST_FINALIZED_SWAP_EVIDENCE.md)  |
 
 The mainnet observer's [archived output](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/evidence/near-guard-mainnet-invoice06-2026-11-12/public-rpc-observation.json) reports 18 checks passed, zero failed and one fact unreadable on chain. [SHA256SUMS](https://github.com/Cyptopimpinainteazy/x3lang/blob/efb514ffef2cdfdeb8ad8147747887c85356073c/evidence/near-guard-mainnet-invoice06-2026-11-12/SHA256SUMS) binds that archived observation.
 
