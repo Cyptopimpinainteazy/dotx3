@@ -21,7 +21,7 @@ import {
 
 const CONTRACT_SOURCE =
   "https://github.com/Cyptopimpinainteazy/x3lang/tree/master/x3-lang/near/dx3-hackathon-coin";
-const RUNNER_SOURCE = "https://github.com/Cyptopimpinainteazy/x3lang/tree/master/x3-lang/dx3hack_faucet";
+const RUNNER_SOURCE = "https://github.com/Cyptopimpinainteazy/x3lang/tree/edc54b5c03cc87415f69402bf8babe8141243ab3/x3-lang/dx3hack_faucet";
 
 export const Route = createFileRoute("/faucet")({
   head: () => ({
