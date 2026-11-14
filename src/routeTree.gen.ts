@@ -19,6 +19,7 @@ import { Route as DemoRouteImport } from './routes/demo'
 import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DexRouteImport } from './routes/dex'
 import { Route as DocsRouteImport } from './routes/docs'
+import { Route as FaucetRouteImport } from './routes/faucet'
 import { Route as IdeRouteImport } from './routes/ide'
 import { Route as JudgeRouteImport } from './routes/judge'
 import { Route as LabsRouteImport } from './routes/labs'
@@ -83,6 +84,11 @@ const DexRoute = DexRouteImport.update({
 const DocsRoute = DocsRouteImport.update({
   id: '/docs',
   path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaucetRoute = FaucetRouteImport.update({
+  id: '/faucet',
+  path: '/faucet',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IdeRoute = IdeRouteImport.update({
@@ -172,6 +178,7 @@ export interface FileRoutesByFullPath {
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/faucet': typeof FaucetRoute
   '/ide': typeof IdeRoute
   '/judge': typeof JudgeRoute
   '/labs': typeof LabsRoute
@@ -199,6 +206,7 @@ export interface FileRoutesByTo {
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/faucet': typeof FaucetRoute
   '/ide': typeof IdeRoute
   '/judge': typeof JudgeRoute
   '/labs': typeof LabsRoute
@@ -227,6 +235,7 @@ export interface FileRoutesById {
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/faucet': typeof FaucetRoute
   '/ide': typeof IdeRoute
   '/judge': typeof JudgeRoute
   '/labs': typeof LabsRoute
@@ -256,6 +265,7 @@ export interface FileRouteTypes {
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/faucet'
     | '/ide'
     | '/judge'
     | '/labs'
@@ -283,6 +293,7 @@ export interface FileRouteTypes {
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/faucet'
     | '/ide'
     | '/judge'
     | '/labs'
@@ -310,6 +321,7 @@ export interface FileRouteTypes {
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/faucet'
     | '/ide'
     | '/judge'
     | '/labs'
@@ -338,6 +350,7 @@ export interface RootRouteChildren {
   DevelopersRoute: typeof DevelopersRoute
   DexRoute: typeof DexRoute
   DocsRoute: typeof DocsRoute
+  FaucetRoute: typeof FaucetRoute
   IdeRoute: typeof IdeRoute
   JudgeRoute: typeof JudgeRoute
   LabsRoute: typeof LabsRoute
@@ -425,6 +438,13 @@ declare module '@tanstack/react-router' {
       path: '/docs'
       fullPath: '/docs'
       preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faucet': {
+      id: '/faucet'
+      path: '/faucet'
+      fullPath: '/faucet'
+      preLoaderRoute: typeof FaucetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ide': {
@@ -546,6 +566,7 @@ const rootRouteChildren: RootRouteChildren = {
   DevelopersRoute: DevelopersRoute,
   DexRoute: DexRoute,
   DocsRoute: DocsRoute,
+  FaucetRoute: FaucetRoute,
   IdeRoute: IdeRoute,
   JudgeRoute: JudgeRoute,
   LabsRoute: LabsRoute,
