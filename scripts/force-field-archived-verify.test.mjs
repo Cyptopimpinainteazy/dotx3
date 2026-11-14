@@ -109,5 +109,5 @@ test("verify page links the proof card at a commit that has it", () => {
   );
   assert.ok(cards.length > 0);
   // PROOF_CARD.md first exists in aa8e3ae; 4f60ddb predates it.
-  for (const sha of cards) assert.notEqual(sha, "4f60ddb652188784ed44f64d8172cd2cd84da422");
+  for (const sha of cards) assert.equal(sha, "f2a01a2ae144c69e115fd807a642bddfd8668f9f");
 });
