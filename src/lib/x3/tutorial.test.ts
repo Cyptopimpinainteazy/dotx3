@@ -81,10 +81,10 @@ test("each lesson 8 scenario stops at the guard it is named for", () => {
   assert.deepEqual(failed(checkIntent(fields({ arrive: "Near.wNEAR" }), CLEAN)), ["mandate_destination_asset"]);
   assert.deepEqual(failed(checkIntent(fields(), { ...CLEAN, revoked: true })), ["mandate_active"]);
   assert.deepEqual(failed(checkIntent(fields(), { ...CLEAN, days: 30 })), ["mandate_active", "mandate_deadline"]);
-  // Forgetting the % turns 0.5 into a fraction: 5000 bps, which the mandate's 100 bps refuses.
+  // Forgetting the % no longer becomes a 5000 bps fraction: the compiler refuses the bound itself
+  // (x3lang #242), before any mandate check runs.
   const typo = checkIntent(fields({ slippage: "0.5" }), CLEAN);
-  assert.deepEqual(failed(typo), ["mandate_slippage"]);
-  assert.ok(typo.stage === "mandate" && typo.checks.some((c) => c.detail.startsWith("5000 bps")));
+  assert.ok(typo.stage === "compile" && typo.code === "X3_NEAR_BOUND_UNIT");
   const v = checkIntent(fields({ amount: "40" }), CLEAN);
   assert.ok(v.stage === "mandate" && v.decision === "approval_required" && v.approvals === 1);
 });
@@ -99,11 +99,11 @@ test("the daily cap counts every simulated payment, however many are entered", (
 
 test("lesson 4 teaches the bound spellings the compiler accepts", () => {
   const withSlip = (b: string) => checkIntent(INTENT_SOURCE.replace("require slippage <= 0.5%", `require slippage <= ${b}`), CLEAN);
-  for (const ok of ["0.5%", "50bps"]) {
+  for (const ok of ["0.5%", "50bps", "50 bps"]) {
     const v = withSlip(ok);
     assert.ok(v.stage === "mandate" && v.checks.find((c) => c.guard === "mandate_slippage")?.detail.startsWith("50 bps"), ok);
   }
-  for (const bad of ["50", "50 bps"]) {
+  for (const bad of ["50", "0.5", "0.005", "50 bps extra"]) {
     const v = withSlip(bad);
     assert.ok(v.stage === "compile" && v.code === "X3_NEAR_BOUND_UNIT", bad);
   }

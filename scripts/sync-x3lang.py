@@ -45,6 +45,13 @@ REVIEWED_QUOTE_MODE_SOURCES = {
     'x3-lang/near_intents.py': '9ee749438c5b33d656a1ced6af771e51ec9b9e0e87cb5ef0630b2808c92040bf',
     'x3-lang/near/demo/x3guard.mjs': '063164355bd558a43b37c38b2c1baf7e3bf66302b5e0203fab3450e03ddcfe5d',
 }
+# Reviewed at 184b6d17f61bd576eee34f6cad25b9e4256aa29e (x3lang #242, issue #241): the only
+# upstream change since efb514f to these two files is the slippage-unit fix (carry `bps`
+# through, refuse unitless NEAR bounds). The exact-boolean dry binding is unchanged.
+REVIEWED_QUOTE_MODE_SOURCES.update({
+    'x3-lang/near_intents.py': 'f390c562493b44ce21d850ac22a9e634c9f1d991d197017fff42b431aa456e49',
+    'x3-lang/near/demo/x3guard.mjs': '0b8991f2f2ad9d08a5bec81c05d0ee1bf6dbb8648fdff59cb60e0183a99881ea',
+})
 
 JUDGE_MAINNET_PENDING = (
     '    <p><strong>Pending evidence.</strong> Official mainnet swap settlement, a vault-funded payment,\n'

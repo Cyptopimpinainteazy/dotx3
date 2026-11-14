@@ -14,11 +14,11 @@ export const EVIDENCE_SNAPSHOT = {
 
 /**
  * The X3Lang revision the browser compiler and labs were vendored from. Kept separate from
- * EVIDENCE_SNAPSHOT: efb514f..f2a01a2 changes evidence, docs, scripts, tests and the
- * submission draft only (no vendored source), and the vendored bytes are
- * pinned to this commit by scripts/attack-lab.test.mjs. Re-vendor before changing it.
+ * EVIDENCE_SNAPSHOT, and pinned to the vendored bytes by scripts/attack-lab.test.mjs and
+ * src/lib/x3/vendor/PROVENANCE.md. Re-vendor (scripts/sync-x3lang.py) before changing it.
+ * 184b6d1 is efb514f plus x3lang #242: slippage bounds need a unit and `bps` is kept.
  */
-export const VENDOR_SNAPSHOT = { commit: "efb514ffef2cdfdeb8ad8147747887c85356073c" } as const;
+export const VENDOR_SNAPSHOT = { commit: "184b6d17f61bd576eee34f6cad25b9e4256aa29e" } as const;
 
 const PINNED = `${REPO}/blob/${EVIDENCE_SNAPSHOT.commit}`;
 const MAINNET_BUNDLE = `${PINNED}/evidence/near-guard-mainnet-invoice06-2026-11-12`;
