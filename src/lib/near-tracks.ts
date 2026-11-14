@@ -46,7 +46,7 @@ export const nearTracks = [
     evidenceHref: LINKS.mainnetEvidence,
     next:
       "Run the same mandate for a real counterparty: a vendor invoice paid from a contract-held budget, with recurring payments and a revenue split under owner-set caps.",
-    source: "mandate.rs",
+    source: "X3LANG_THREE_TRACK_CONTROL.md",
     demo: "/playground",
   },
   {
