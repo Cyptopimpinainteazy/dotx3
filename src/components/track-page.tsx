@@ -14,7 +14,7 @@ export function TrackPage({ slug }: { slug: (typeof nearTracks)[number]["slug"] 
         <>
           <ActionLink to={track.demo}>Run or inspect the demonstration</ActionLink>
           <ActionLink to="/near" outline>
-            All three tracks
+            All four tracks
           </ActionLink>
         </>
       }

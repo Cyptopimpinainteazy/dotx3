@@ -34,6 +34,22 @@ export const nearTracks = [
     demo: "/demo",
   },
   {
+    slug: "business",
+    title: "Autonomous Business",
+    question: "How does a business let an AI agent spend without handing it the treasury?",
+    detail:
+      "The owner sets the constraints once in a .x3 mandate: per-payment and 24-hour caps, an approval threshold, recipient and asset allowlists, a refund address and an expiry. The agent can only propose payments; Guard enforces the mandate on NEAR mainnet before any cross-chain payment through NEAR Intents.",
+    evidence:
+      "Mainnet invoice_06: a 25 USDC per-payment and daily cap, one allowed recipient, a pinned refund wallet and owner approval above 24.999999 USDC, all enforced by Guard before the Solana deposit; 24.9952 USDC was delivered on NEAR.",
+    limit:
+      "invoice_06 was owner-funded and paid to the owner's own account: x3lang.near is both the mandate owner and its only allowed recipient, and \"invoice\" is a nonce label. There are no treasury, sales, procurement, revenue-sharing or recurring-payment features; business uses are intended, not adopted.",
+    evidenceHref: LINKS.mainnetEvidence,
+    next:
+      "Run the same mandate for a real counterparty: a vendor invoice paid from a contract-held budget, with recurring payments and a revenue split under owner-set caps.",
+    source: "mandate.rs",
+    demo: "/playground",
+  },
+  {
     slug: "defi",
     title: "Unstoppable DeFi",
     question: "What cross-chain transfer can a judge verify?",

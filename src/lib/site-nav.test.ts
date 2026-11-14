@@ -93,6 +93,7 @@ test("group ids are unique and every top-level page is reachable", () => {
     "/near",
     "/security",
     "/agents",
+    "/business",
     "/defi",
     "/demo",
     "/playground",

@@ -307,7 +307,7 @@ function Home() {
         <ProofMeter />
       </Section>
 
-      <Section title="One demonstration, three tracks" alt>
+      <Section title="One demonstration, four tracks" alt>
         <CardGrid>
           <Card title="AI Security & Defense">
             Recipient and asset allowlists, caps, slippage, fees, expiry, one-use nonces. Compiler
@@ -318,6 +318,11 @@ function Home() {
             A restricted agent key accepted the mainnet quote after owner approval, and later
             recorded a Settled outcome. First-party records identify manual Solflare funding;
             Guard-controlled source custody is still unproven.
+          </Card>
+          <Card title="Autonomous Business">
+            The owner sets the constraints once: caps, approval threshold, allowlists, refund
+            address and expiry. Guard enforced them on mainnet. invoice_06 was owner-funded and
+            paid to the owner's own account; treasury and revenue features are not built.
           </Card>
           <Card title="Unstoppable DeFi">
             Official 1Click settlement from Solana to NEAR mainnet, plus the earlier Base Sepolia
