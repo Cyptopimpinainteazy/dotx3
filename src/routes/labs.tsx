@@ -208,7 +208,7 @@ function Labs() {
           <article className="rounded-xl border border-border p-6">
             <h3 className="font-display text-xl text-primary">Control Room</h3>
             <p className="my-4 text-muted">
-              Existing readiness and planning workspace. Owner access may be required. Jobs are
+              Existing readiness and planning workspace, behind the owner's sign-in. Jobs are
               planning claims until a real worker returns evidence.
             </p>
             <a
@@ -217,9 +217,11 @@ function Labs() {
               target="_blank"
               rel="noreferrer"
             >
-              Open existing Control Room ↗
+              Open Control Room (owner sign-in) ↗
             </a>
-            <p className="mt-4 text-sm text-muted">Linked · operational controls not ported</p>
+            <p className="mt-4 text-sm text-muted">
+              Owner sign-in required · operational controls not ported
+            </p>
           </article>
           <article className="rounded-xl border border-border p-6">
             <h3 className="font-display text-xl text-primary">Phantom</h3>
@@ -245,14 +247,14 @@ function Labs() {
           </article>
         </div>
         <p className="mt-8 text-sm text-muted">
-          Eye remains the desktop shell.{" "}
+          Eye remains the desktop shell, behind the owner's sign-in.{" "}
           <a
             className="text-primary"
             href="https://eye.x3star.net"
             target="_blank"
             rel="noreferrer"
           >
-            Open Eye ↗
+            Open Eye (owner sign-in) ↗
           </a>
           . Port provenance:{" "}
           <a className="text-primary" href="/x3lang-port.json">
