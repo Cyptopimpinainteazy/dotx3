@@ -2,7 +2,7 @@
 // faucet operator's scoped key; this page never signs anything. Every rule that matters is
 // enforced by the DX3HACK contract on NEAR, and every result links to its transaction.
 
-export const DEFAULT_FAUCET_API = "https://faucet.x3star.net";
+export const DEFAULT_FAUCET_API = "https://faucet.dotx3.net";
 export const BURN_AT_UTC = "2026-11-25 23:59:59 UTC";
 export const DX3HACK_DECIMALS = 6;
 

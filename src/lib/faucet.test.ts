@@ -20,7 +20,7 @@ test("waits are rounded up to whole minutes", () => {
 });
 
 test("the faucet API must be https (or local)", () => {
-  assert.equal(normalizeBase(undefined), "https://faucet.x3star.net");
+  assert.equal(normalizeBase(undefined), "https://faucet.dotx3.net");
   assert.equal(normalizeBase("https://faucet.example.org/"), "https://faucet.example.org");
   assert.equal(normalizeBase("http://127.0.0.1:8791"), "http://127.0.0.1:8791");
   assert.throws(() => normalizeBase("http://faucet.example.org"));
