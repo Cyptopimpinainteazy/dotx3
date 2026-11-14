@@ -58,7 +58,7 @@ class CompilerAPI(unittest.TestCase):
         import hashlib
         for row in manifest['files']:
             self.assertEqual(hashlib.sha256((ROOT / row['destination']).read_bytes()).hexdigest(), row['sha256'])
-        self.assertEqual(manifest['commit'], 'efb514ffef2cdfdeb8ad8147747887c85356073c')
+        self.assertEqual(manifest['commit'], '184b6d17f61bd576eee34f6cad25b9e4256aa29e')
         self.assertEqual(manifest, json.loads((ROOT / 'public/x3lang-port.json').read_text()))
 
 
