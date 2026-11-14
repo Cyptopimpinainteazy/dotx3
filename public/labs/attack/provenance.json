@@ -1,12 +1,12 @@
 {
   "repository": "Cyptopimpinainteazy/x3lang",
-  "commit": "efb514ffef2cdfdeb8ad8147747887c85356073c",
+  "commit": "184b6d17f61bd576eee34f6cad25b9e4256aa29e",
   "files": [
     {
       "source": "docs/hackathon/attack-lab.html",
       "destination": "public/labs/attack/attack-lab.html",
       "source_sha256": "39a4c4d6cfcb6f0796d03519ca91ee8fe9a62a59e70149dfc8843aacab757449",
-      "sha256": "d9ecea95158129ac7208aaa03b185a3def33480805ac270b5e8a3f9e1bbae764",
+      "sha256": "abda79c59e67ebe07fba6d0dfadd2b095076fdb3f181f79297668d3db29d3a7e",
       "local_transformations": [
         "Clarify local-server instructions refer to the X3Lang source repository.",
         "Add shared public-page Copy and Markdown controls; form values are excluded and upstream source_sha256 is retained."

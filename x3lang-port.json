@@ -1,13 +1,13 @@
 {
   "schema": "dotx3.x3lang-port.v1",
   "repository": "Cyptopimpinainteazy/x3lang",
-  "commit": "efb514ffef2cdfdeb8ad8147747887c85356073c",
+  "commit": "184b6d17f61bd576eee34f6cad25b9e4256aa29e",
   "files": [
     {
       "source": "x3-lang/near_intents.py",
       "destination": "vendor/x3lang/x3-lang/near_intents.py",
-      "source_sha256": "9ee749438c5b33d656a1ced6af771e51ec9b9e0e87cb5ef0630b2808c92040bf",
-      "sha256": "9ee749438c5b33d656a1ced6af771e51ec9b9e0e87cb5ef0630b2808c92040bf"
+      "source_sha256": "f390c562493b44ce21d850ac22a9e634c9f1d991d197017fff42b431aa456e49",
+      "sha256": "f390c562493b44ce21d850ac22a9e634c9f1d991d197017fff42b431aa456e49"
     },
     {
       "source": "x3-lang/near_mandate.py",
@@ -18,8 +18,8 @@
     {
       "source": "x3-lang/cli.py",
       "destination": "vendor/x3lang/x3-lang/cli.py",
-      "source_sha256": "b9b0af508483422b49b2e24c6377bfee9e032db064cf8c31e2b1489632c72d09",
-      "sha256": "b9b0af508483422b49b2e24c6377bfee9e032db064cf8c31e2b1489632c72d09"
+      "source_sha256": "21162579d5c46f4c66d1fd3f63501c930074ff83ba310eced9fa17df6deae7db",
+      "sha256": "21162579d5c46f4c66d1fd3f63501c930074ff83ba310eced9fa17df6deae7db"
     },
     {
       "source": "x3-lang/registry.py",
@@ -30,14 +30,14 @@
     {
       "source": "x3-lang/numeric.py",
       "destination": "vendor/x3lang/x3-lang/numeric.py",
-      "source_sha256": "933a26de36f7a3e72cc5a31b7b5b9f97cb1b2b0d178b48ad9b8909a4d1a58b47",
-      "sha256": "933a26de36f7a3e72cc5a31b7b5b9f97cb1b2b0d178b48ad9b8909a4d1a58b47"
+      "source_sha256": "5a6361694f42cdeeb9a993d7861e0fd17eaf8e88cfb1363ea4c26c25856a37f5",
+      "sha256": "5a6361694f42cdeeb9a993d7861e0fd17eaf8e88cfb1363ea4c26c25856a37f5"
     },
     {
       "source": "x3-lang/typechecker.py",
       "destination": "vendor/x3lang/x3-lang/typechecker.py",
-      "source_sha256": "69450656efcd8db9a51f05fbbc58fd32b849fcc54feb91e711d65001279e83a3",
-      "sha256": "69450656efcd8db9a51f05fbbc58fd32b849fcc54feb91e711d65001279e83a3"
+      "source_sha256": "b5404986ccfa63730981da2a73b9da0fb97a8d79650026681a3c4db7addb238b",
+      "sha256": "b5404986ccfa63730981da2a73b9da0fb97a8d79650026681a3c4db7addb238b"
     },
     {
       "source": "x3-lang/ed25519.py",
@@ -170,7 +170,7 @@
       "source": "x3-lang/near/demo/judge.html",
       "destination": "public/labs/guard/judge.html",
       "source_sha256": "d5e0c97424315dfd2cefe496d0e29523d6bc394430ceeff72b1310d9f10e26e7",
-      "sha256": "893d272a6fc5a4ba7e5dfd4c98e53952912312bd4c34815779118eed0b3e6cd0",
+      "sha256": "e59a80a92a3baade0b2d4ba1e8d85051647b90d9157565095b5a9d925016ef8f",
       "local_transformations": [
         "Add the separately published invoice_06 mainnet settlement and remaining evidence limits to the historical setup section; upstream source_sha256 is retained.",
         "Use the existing padded panel body and heading style for chain evidence, and label the video with its visible heading; content and media URLs are unchanged.",
@@ -180,14 +180,14 @@
     {
       "source": "x3-lang/near/demo/x3guard.mjs",
       "destination": "public/labs/guard/x3guard.mjs",
-      "source_sha256": "063164355bd558a43b37c38b2c1baf7e3bf66302b5e0203fab3450e03ddcfe5d",
-      "sha256": "063164355bd558a43b37c38b2c1baf7e3bf66302b5e0203fab3450e03ddcfe5d"
+      "source_sha256": "0b8991f2f2ad9d08a5bec81c05d0ee1bf6dbb8648fdff59cb60e0183a99881ea",
+      "sha256": "0b8991f2f2ad9d08a5bec81c05d0ee1bf6dbb8648fdff59cb60e0183a99881ea"
     },
     {
       "source": "docs/hackathon/attack-lab.html",
       "destination": "public/labs/attack/attack-lab.html",
       "source_sha256": "39a4c4d6cfcb6f0796d03519ca91ee8fe9a62a59e70149dfc8843aacab757449",
-      "sha256": "d9ecea95158129ac7208aaa03b185a3def33480805ac270b5e8a3f9e1bbae764",
+      "sha256": "abda79c59e67ebe07fba6d0dfadd2b095076fdb3f181f79297668d3db29d3a7e",
       "local_transformations": [
         "Clarify local-server instructions refer to the X3Lang source repository.",
         "Add shared public-page Copy and Markdown controls; form values are excluded and upstream source_sha256 is retained."
