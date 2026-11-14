@@ -27,7 +27,7 @@ function DemoPage() {
       title="Accepted payment. Rejected attack."
       lede="The rules stay on screen. Pick a payment. The verdict is the same one the published checks already returned. This page does not send a transaction."
     >
-      <Section title="Run the integrated demos"><p className="text-center text-muted">The original page below replays published decisions. <a className="text-primary underline" href="/labs">Open the actual compiler, signed-quote demo, judge tests and attack lab →</a></p></Section>
+      <Section title="Check your own payment"><p className="text-center text-muted">To edit a proposal and run its policy checks locally, <a className="text-primary underline" href="/playground">open the policy checker</a>. No wallet or funds are required. The examples below replay published decisions. <a className="text-primary underline" href="/labs">Explore the compiler and other labs</a>.</p></Section>
       <Section
         title="Watch an agent play under a mandate"
         intro="MEME COIN BLAST is a fish-table game with live NEAR Intents prices. Hand the turret to an agent: every volley it fires is a payment request, checked by the browser port of x3-guard's check_mandate. Some requests come from a prompt-injected feed."
@@ -59,21 +59,21 @@ function DemoPage() {
         </p>
       </Section>
 
-      <Section title="Run one payment" alt>
+      <Section title="Replay a published local decision" alt>
         <div className="mx-auto flex max-w-3xl flex-col gap-4 sm:flex-row">
           <button
             type="button"
             className="tap min-h-11 flex-1 rounded-full bg-primary px-5 text-sm font-semibold text-bg"
             onClick={() => setAttempt("pay")}
           >
-            Pay x3-demo.near 25 USDC
+            Replay allowed payment: 25 USDC
           </button>
           <button
             type="button"
             className="tap min-h-11 flex-1 rounded-full bg-accent px-5 text-sm font-semibold text-bg"
             onClick={() => setAttempt("attack")}
           >
-            Pay attacker.near 25 USDC
+            Replay rejected attacker payment
           </button>
         </div>
 
@@ -81,7 +81,7 @@ function DemoPage() {
           <article
             className={`mx-auto mt-8 max-w-3xl rounded-xl border p-6 ${accepted ? "border-primary bg-surface" : "border-accent bg-surface"}`}
           >
-            <Tag>{accepted ? "Accepted" : "Refused"}</Tag>
+            <Tag>{accepted ? "Archived local result · accepted" : "Archived local result · refused"}</Tag>
             <h3 className="mt-4 font-display text-2xl text-fg">
               {accepted ? "preflight_passed" : "denied_by_policy"}
             </h3>

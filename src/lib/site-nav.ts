@@ -57,6 +57,13 @@ export const ALL_NAV: NavGroup[] = [
     items: [
       {
         kind: "route",
+        label: "Agent-paid vault proof",
+        description: "5 USDC from the vault, 4.999746 USDC on NEAR",
+        to: "/",
+        hash: "mainnet-vault-pilot",
+      },
+      {
+        kind: "route",
         label: "Mainnet proof: invoice_06",
         description: "Five mainnet transactions and their limits",
         to: "/",
@@ -136,6 +143,12 @@ export const ALL_NAV: NavGroup[] = [
         label: "Playground",
         description: "Break a payment and watch it get refused",
         to: "/playground",
+      },
+      {
+        kind: "route",
+        label: "Judge faucet",
+        description: "Claim DX3HACK and watch the contract refuse a DEX",
+        to: "/faucet",
       },
       {
         kind: "route",
