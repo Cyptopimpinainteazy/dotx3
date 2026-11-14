@@ -30,6 +30,7 @@ import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as ProofRouteImport } from './routes/proof'
 import { Route as ProofsRouteImport } from './routes/proofs'
 import { Route as SecurityRouteImport } from './routes/security'
+import { Route as ApiAgentWriteRouteImport } from './routes/api/agent/write'
 import { Route as ApiExplorerStatusRouteImport } from './routes/api/explorer/status'
 import { Route as ApiExplorerTransactionsRouteImport } from './routes/api/explorer/transactions'
 import { Route as ApiNearTestnetRouteImport } from './routes/api/near/testnet'
@@ -141,6 +142,11 @@ const SecurityRoute = SecurityRouteImport.update({
   path: '/security',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAgentWriteRoute = ApiAgentWriteRouteImport.update({
+  id: '/api/agent/write',
+  path: '/api/agent/write',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiExplorerStatusRoute = ApiExplorerStatusRouteImport.update({
   id: '/api/explorer/status',
   path: '/api/explorer/status',
@@ -189,6 +195,7 @@ export interface FileRoutesByFullPath {
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/agent/write': typeof ApiAgentWriteRoute
   '/api/explorer/status': typeof ApiExplorerStatusRoute
   '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
   '/api/near/testnet': typeof ApiNearTestnetRoute
@@ -217,6 +224,7 @@ export interface FileRoutesByTo {
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/agent/write': typeof ApiAgentWriteRoute
   '/api/explorer/status': typeof ApiExplorerStatusRoute
   '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
   '/api/near/testnet': typeof ApiNearTestnetRoute
@@ -246,6 +254,7 @@ export interface FileRoutesById {
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/agent/write': typeof ApiAgentWriteRoute
   '/api/explorer/status': typeof ApiExplorerStatusRoute
   '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
   '/api/near/testnet': typeof ApiNearTestnetRoute
@@ -276,6 +285,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/agent/write'
     | '/api/explorer/status'
     | '/api/explorer/transactions'
     | '/api/near/testnet'
@@ -304,6 +314,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/agent/write'
     | '/api/explorer/status'
     | '/api/explorer/transactions'
     | '/api/near/testnet'
@@ -332,6 +343,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/agent/write'
     | '/api/explorer/status'
     | '/api/explorer/transactions'
     | '/api/near/testnet'
@@ -361,6 +373,7 @@ export interface RootRouteChildren {
   ProofRoute: typeof ProofRoute
   ProofsRoute: typeof ProofsRoute
   SecurityRoute: typeof SecurityRoute
+  ApiAgentWriteRoute: typeof ApiAgentWriteRoute
   ApiExplorerStatusRoute: typeof ApiExplorerStatusRoute
   ApiExplorerTransactionsRoute: typeof ApiExplorerTransactionsRoute
   ApiNearTestnetRoute: typeof ApiNearTestnetRoute
@@ -517,6 +530,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/agent/write': {
+      id: '/api/agent/write'
+      path: '/api/agent/write'
+      fullPath: '/api/agent/write'
+      preLoaderRoute: typeof ApiAgentWriteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/explorer/status': {
       id: '/api/explorer/status'
       path: '/api/explorer/status'
@@ -577,6 +597,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProofRoute: ProofRoute,
   ProofsRoute: ProofsRoute,
   SecurityRoute: SecurityRoute,
+  ApiAgentWriteRoute: ApiAgentWriteRoute,
   ApiExplorerStatusRoute: ApiExplorerStatusRoute,
   ApiExplorerTransactionsRoute: ApiExplorerTransactionsRoute,
   ApiNearTestnetRoute: ApiNearTestnetRoute,
