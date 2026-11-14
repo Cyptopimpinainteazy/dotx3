@@ -8,7 +8,9 @@ remains available under its original filename.
 ## Rebuild
 
 Requires Python, uv (or Pillow in a virtual environment), FFmpeg with libx264,
-AAC and loudnorm. From this directory run:
+AAC and loudnorm. The three exact DejaVu font files and their license are bundled
+in assets/fonts; no Linux system font path or font installation is required.
+From this directory run:
 
 ```bash
 uv run --with pillow python render.py
