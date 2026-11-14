@@ -53,7 +53,7 @@ export const ALL_NAV: NavGroup[] = [
   {
     id: "hackathon",
     label: "Hackathon",
-    summary: "The NEAR competition entry: one policy, three tracks, public proof.",
+    summary: "The NEAR competition entry: one policy, four tracks, public proof.",
     items: [
       {
         kind: "route",
@@ -78,7 +78,7 @@ export const ALL_NAV: NavGroup[] = [
       {
         kind: "route",
         label: "Competition overview",
-        description: "One policy seen from all three tracks",
+        description: "One policy seen from all four tracks",
         to: "/near",
       },
       {
@@ -92,6 +92,12 @@ export const ALL_NAV: NavGroup[] = [
         label: "Agent Economy",
         description: "Agent payments inside the owner's budget",
         to: "/agents",
+      },
+      {
+        kind: "route",
+        label: "Autonomous Business",
+        description: "Owner-set constraints on an AI-run business's spending",
+        to: "/business",
       },
       {
         kind: "route",

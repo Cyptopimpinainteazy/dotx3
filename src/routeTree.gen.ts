@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as BackRouteImport } from './routes/back'
 import { Route as BootcampRouteImport } from './routes/bootcamp'
+import { Route as BusinessRouteImport } from './routes/business'
 import { Route as DefiRouteImport } from './routes/defi'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as DevelopersRouteImport } from './routes/developers'
@@ -52,6 +53,11 @@ const BackRoute = BackRouteImport.update({
 const BootcampRoute = BootcampRouteImport.update({
   id: '/bootcamp',
   path: '/bootcamp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusinessRoute = BusinessRouteImport.update({
+  id: '/business',
+  path: '/business',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DefiRoute = DefiRouteImport.update({
@@ -160,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/agents': typeof AgentsRoute
   '/back': typeof BackRoute
   '/bootcamp': typeof BootcampRoute
+  '/business': typeof BusinessRoute
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
@@ -186,6 +193,7 @@ export interface FileRoutesByTo {
   '/agents': typeof AgentsRoute
   '/back': typeof BackRoute
   '/bootcamp': typeof BootcampRoute
+  '/business': typeof BusinessRoute
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
@@ -213,6 +221,7 @@ export interface FileRoutesById {
   '/agents': typeof AgentsRoute
   '/back': typeof BackRoute
   '/bootcamp': typeof BootcampRoute
+  '/business': typeof BusinessRoute
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
@@ -241,6 +250,7 @@ export interface FileRouteTypes {
     | '/agents'
     | '/back'
     | '/bootcamp'
+    | '/business'
     | '/defi'
     | '/demo'
     | '/developers'
@@ -267,6 +277,7 @@ export interface FileRouteTypes {
     | '/agents'
     | '/back'
     | '/bootcamp'
+    | '/business'
     | '/defi'
     | '/demo'
     | '/developers'
@@ -293,6 +304,7 @@ export interface FileRouteTypes {
     | '/agents'
     | '/back'
     | '/bootcamp'
+    | '/business'
     | '/defi'
     | '/demo'
     | '/developers'
@@ -320,6 +332,7 @@ export interface RootRouteChildren {
   AgentsRoute: typeof AgentsRoute
   BackRoute: typeof BackRoute
   BootcampRoute: typeof BootcampRoute
+  BusinessRoute: typeof BusinessRoute
   DefiRoute: typeof DefiRoute
   DemoRoute: typeof DemoRoute
   DevelopersRoute: typeof DevelopersRoute
@@ -370,6 +383,13 @@ declare module '@tanstack/react-router' {
       path: '/bootcamp'
       fullPath: '/bootcamp'
       preLoaderRoute: typeof BootcampRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/business': {
+      id: '/business'
+      path: '/business'
+      fullPath: '/business'
+      preLoaderRoute: typeof BusinessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/defi': {
@@ -520,6 +540,7 @@ const rootRouteChildren: RootRouteChildren = {
   AgentsRoute: AgentsRoute,
   BackRoute: BackRoute,
   BootcampRoute: BootcampRoute,
+  BusinessRoute: BusinessRoute,
   DefiRoute: DefiRoute,
   DemoRoute: DemoRoute,
   DevelopersRoute: DevelopersRoute,
