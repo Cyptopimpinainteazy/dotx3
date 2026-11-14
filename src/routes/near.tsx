@@ -9,7 +9,7 @@ function NearPage() {
   return (
     <SiteShell
       eyebrow="NEAR competition · 2026"
-      title="One policy. Three track perspectives."
+      title="One policy. Four track perspectives."
       lede="A restricted agent call on NEAR, 21 passing policy and quote checks, and a funded Solana-to-NEAR mainnet swap. Explore what each result establishes for the four tracks."
     >
       <Section
