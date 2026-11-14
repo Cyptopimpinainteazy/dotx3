@@ -1,6 +1,6 @@
 /**
- * The enter-page track: the "Who Gets Paid" music video, served from /public. The judge page in
- * x3lang plays the same file from dotx3.net, so keep the path stable.
+ * The enter-page track: the narrated mainnet evidence cut, served from /public.
+ * The website uses this new cut; historical filenames remain available as separate assets.
  */
 export const SONG: {
   title: string;
@@ -10,11 +10,11 @@ export const SONG: {
   poster: string;
   length: string;
 } = {
-  title: "Who Gets Paid",
-  video: "/media/x3-shield-who-gets-paid.mp4",
-  webm: "/media/x3-shield-who-gets-paid.webm",
-  poster: "/media/x3-shield-who-gets-paid-poster.jpg",
-  length: "2:56",
+  title: "X3 Force Field: Payment, Limits, Proof",
+  video: "/media/x3-force-field-mainnet-20261113.mp4",
+  webm: "/media/x3-force-field-mainnet-20261113.webm",
+  poster: "/media/x3-force-field-mainnet-20261113-poster.png",
+  length: "2:27",
 };
 
 export const BLAST_URL = "/gallery/arcade/meme-coin-blast.html";

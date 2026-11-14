@@ -286,7 +286,7 @@ export function EnterGate() {
             <div className="mx-auto mt-6 w-full max-w-md">
               <div className="flex items-center justify-between gap-3 text-xs text-muted">
                 <span>
-                  {soundOn ? "Now playing" : "Music video"} · <span className="text-fg">{SONG.title}</span>
+                  {soundOn ? "Now playing" : "Evidence video"} · <span className="text-fg">{SONG.title}</span>
                 </span>
                 <span className="flex items-center gap-3">
                   <span className="tabular-nums">{progress.length > 0 ? `-${clock(left)}` : SONG.length}</span>
