@@ -7,7 +7,7 @@ AS=ROOT/'assets';OUT=ROOT/'output';OUT.mkdir(exist_ok=True)
 n=json.loads((AS/'narration.json').read_text());r=json.loads((AS/'invoice06-verifier.json').read_text())
 W,H=1920,1080
 BG='#09111e';FG='#edf5fa';MUTED='#a4b4c9';ACCENT='#5ef0bf';PINK='#d69dff'
-FONT='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf';BOLD=FONT.replace('.ttf','-Bold.ttf');MONO=FONT.replace('DejaVuSans.ttf','DejaVuSansMono.ttf')
+FONT=str(AS/'fonts/DejaVuSans.ttf');BOLD=FONT.replace('.ttf','-Bold.ttf');MONO=FONT.replace('DejaVuSans.ttf','DejaVuSansMono.ttf')
 def font(size,bold=False,mono=False):return ImageFont.truetype(MONO if mono else BOLD if bold else FONT,size)
 def txt(d,xy,text,size=32,color=FG,bold=False,mono=False):
  d.text(xy,text,font=font(size,bold,mono),fill=color)

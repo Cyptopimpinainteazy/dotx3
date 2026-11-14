@@ -21,5 +21,10 @@
     "payment-proposed.x3": "9ee29a5603cfa1e7d9fdbd866cf330ce35e6b5f0907c6844dd2ef1a213768ba0",
     "invoice06-verifier.txt": "50ffc2866db002bbd5191846b790997491723d7ed7bd16efb86c8ac2003772a7",
     "narration.wav": "c9d417581aa3a73e042bf5626ad501c8a2aca1c71e96d365e87b606c4a52b30b"
+  },
+  "font_sha256": {
+    "DejaVuSansMono.ttf": "39c29931201f08dd89fdba4129c76288e6baeecf7c94fe4f6a757f2b50718b1b",
+    "DejaVuSans.ttf": "690243adfefe0ce154b547db6205794bd30ac4277275179517a90994f4980648",
+    "DejaVuSans-Bold.ttf": "d1c3ff99f1e1ce1827a33efd4dad81f40babda06bff9e43bd7591c86662a287b"
   }
 }

@@ -1,0 +1,109 @@
+{
+  "routes": [
+    {
+      "route": "/",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": [],
+      "video": {
+        "src": "https://dotx3.net/media/x3-force-field-mainnet-20261113.webm",
+        "duration": 146.67,
+        "time": 1.071013,
+        "playing": true,
+        "error": null
+      }
+    },
+    {
+      "route": "/proof",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "/judge",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "/demo",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "/labs/force-field/index.html",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "/labs/force-field/verify.html",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "errors": [],
+      "proof_links": [
+        "https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/PROOF_CARD.md"
+      ]
+    },
+    {
+      "route": "/",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": [],
+      "video": {
+        "src": "https://dotx3.net/media/x3-force-field-mainnet-20261113.webm",
+        "duration": 146.67,
+        "time": 1.306076,
+        "playing": true,
+        "error": null
+      }
+    },
+    {
+      "route": "/proof",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "/judge",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "/demo",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "/labs/force-field/index.html",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "route": "/labs/force-field/verify.html",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "errors": [],
+      "proof_links": [
+        "https://github.com/Cyptopimpinainteazy/x3lang/blob/f2a01a2ae144c69e115fd807a642bddfd8668f9f/PROOF_CARD.md"
+      ]
+    }
+  ],
+  "production_mp4_sha256": "15664503c8d8bda257d162cb3b9fbfce90bb251c700ce402c047fda2c33cb280"
+}
