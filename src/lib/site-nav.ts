@@ -146,6 +146,12 @@ export const ALL_NAV: NavGroup[] = [
       },
       {
         kind: "route",
+        label: "Judge faucet",
+        description: "Claim DX3HACK and watch the contract refuse a DEX",
+        to: "/faucet",
+      },
+      {
+        kind: "route",
         label: "Labs & integrations",
         description: "Write, challenge and inspect .x3",
         to: "/labs",
