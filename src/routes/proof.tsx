@@ -1,3 +1,4 @@
+import { VaultPilotEvidence } from "@/components/vault-pilot-evidence";
 import { ProviderIncidents } from '@/components/provider-incidents';
 import { ExplorerEvidence } from '@/components/explorer-evidence';
 import { MainnetEvidence } from '@/components/mainnet-evidence';
@@ -35,11 +36,14 @@ function ProofPage() {
     <SiteShell
       eyebrow="Inspect the Proof"
       title="Evidence by source and network."
-      lede="The official Solana-to-NEAR mainnet settlement is now published. Follow the signed quote, Guard acceptance, source deposit and destination payout, then inspect the separate testnet and local evidence."
+      lede="Compare two completed mainnet payments: the new owner-approved, agent-executed Solana vault pilot and the earlier owner-funded NEAR Guard demonstration. Each proof states what it establishes and what remains unproven."
     >
       <div className="mx-auto max-w-6xl px-5"><ProviderIncidents /></div>
 
-      <Section title="Mainnet settlement">
+      <Section title="Agent-executed vault payment · November 14">
+        <VaultPilotEvidence />
+      </Section>
+      <Section id="mainnet-settlement" title="Earlier NEAR Guard payment · invoice_06">
         <MainnetEvidence />
       </Section>
 

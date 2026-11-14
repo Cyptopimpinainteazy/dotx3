@@ -1,3 +1,4 @@
+import { VaultPilotEvidence } from "@/components/vault-pilot-evidence";
 import { createFileRoute } from "@tanstack/react-router";
 import { Check, X } from "lucide-react";
 import { useState } from "react";
@@ -20,7 +21,7 @@ export const Route = createFileRoute("/judge")({
       {
         name: "description",
         content:
-          "A signed 1Click quote accepted on NEAR, 25 USDC deposited on Solana and 24.9952 USDC delivered on NEAR mainnet, alongside three historical testnet cases.",
+          "An owner-approved agent executes 5 USDC from a Solana vault; 4.999746 USDC reaches NEAR. Inspect the separate earlier NEAR Guard proof and historical testnet cases.",
       },
     ],
   }),
@@ -236,19 +237,22 @@ function JudgeConsole() {
   const current = JUDGE_CASES.find((c) => c.id === active)!;
   return (
     <SiteShell
-      eyebrow="X3 Force · War Room · Judge Console"
-      title="The AI proposes. X3 General decides."
-      lede="Start with the completed mainnet 1Click trade, then inspect three historical testnet cases. X3 General is the x3-guard contract on NEAR: it checks agent intent and quote terms against the owner's mandate. Each result names its network and its limits."
+      eyebrow="X3 Force Field · Judge Console"
+      title="Check the policy. Verify the payment."
+      lede="Start with an agent-executed vault payment: 5 USDC on Solana, 4.999746 USDC delivered on NEAR. Try the local policy checker, inspect the finalized receipts, then compare the separate NEAR Guard and historical testnet evidence."
       actions={
         <>
-          <ActionLink to="/playground">Try to break it</ActionLink>
+          <ActionLink to="/playground">Try the policy checker</ActionLink>
           <ActionLink to="/proof" outline>
             Inspect the Proof
           </ActionLink>
         </>
       }
     >
-      <Section title="Mainnet settlement">
+      <Section title="Latest proof: agent-executed vault payment">
+        <VaultPilotEvidence />
+      </Section>
+      <Section title="Separate earlier proof: NEAR Guard authorization">
         <MainnetEvidence />
       </Section>
       <div className="mx-auto max-w-[1360px] space-y-8 px-5 py-14">
