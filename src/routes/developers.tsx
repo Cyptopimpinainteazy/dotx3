@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CodeBlock, OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell } from "@/components/site-shell";
-import { EVIDENCE_SNAPSHOT, LINKS, SITE } from "@/lib/front-door";
+import { EVIDENCE_SNAPSHOT, LINKS, SITE, SUBMISSION } from "@/lib/front-door";
 
 export const Route = createFileRoute("/developers")({ component: DevelopersPage });
 
@@ -95,12 +95,9 @@ python3 x3-lang/cli.py x3-lang/examples/arb_solana_eth.x3`}
 cargo run --manifest-path x3-lang/Cargo.toml -p x3-tools --bin x3c -- parse x3-lang/examples/trading_core_v1.x3`}
         />
         <p className="mt-4 text-sm text-muted">
-          Releases page:{" "}
-          <OutLink href={`${LINKS.repo}/releases`}>
-            github.com/Cyptopimpinainteazy/x3lang/releases
-          </OutLink>
-          . This guide installs from source. Inspect release artifacts and their provenance
-          separately before choosing a version.
+          No versioned release is published yet. The commit submitted to NEAR HACKATHON is tagged{" "}
+          <OutLink href={SUBMISSION.url}>{SUBMISSION.tag}</OutLink> ({SUBMISSION.commit.slice(0, 7)}
+          ). This guide installs from source.
         </p>
       </Section>
 

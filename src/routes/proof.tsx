@@ -159,7 +159,7 @@ function ProofPage() {
           <li>Mainnet invoice_06 is one owner-funded settlement of about $25 that the agent authorized but did not pay. Its seven limits are listed with the receipts above.</li>
           <li>No public audited vault. Guard does not custody swap assets; native NEAR used for storage and account operation is separate. An unrestricted origin key can bypass it.</li>
           <li>No cryptographic atomic cross-chain causality for either the Tidepool testnet trade or the mainnet 1Click settlement.</li>
-          <li>Exact approved-program enforcement is still in <OutLink href={LINKS.programBindingPr}>open PR #202</OutLink>. A stored hash does not prove that enforcement.</li>
+          <li>Exact approved-program enforcement is not implemented: <OutLink href={LINKS.programBindingPr}>PR #202</OutLink> proposed it and was closed without merging. A stored hash does not prove that enforcement.</li>
           <li>No public scoped-vault refusal run, hostile-model mainnet run, independent audit or tagged release with build provenance is claimed by this snapshot.</li>
           <li>
             Report vulnerabilities in private. Do not file exploits, keys, or seeds in a public issue. <OutLink href={LINKS.security}>SECURITY.md</OutLink>

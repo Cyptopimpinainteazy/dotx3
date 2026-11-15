@@ -1,4 +1,5 @@
 import { OutLink, Tag } from "@/components/code-block";
+import { SUBMISSION } from "@/lib/front-door";
 import {
   VAULT_PILOT as pilot,
   VAULT_PILOT_LIMITS,
@@ -111,8 +112,10 @@ export function VaultPilotEvidence() {
         <OutLink href={links.quote}>Inspect the signed quote</OutLink>
       </p>
       <p className="text-center text-xs text-muted">
-        Historical evidence pinned to X3Lang {pilot.sourceCommit.slice(0, 7)}. This page does not
-        request a quote, sign a transaction or spend funds.
+        Historical evidence pinned to X3Lang {pilot.sourceCommit.slice(0, 7)} on branch
+        docs/mainnet-vault-proof-20261114. That branch was not merged, so this archive is not part
+        of the submitted commit (tag {SUBMISSION.tag}, {SUBMISSION.commit.slice(0, 7)}). This page
+        does not request a quote, sign a transaction or spend funds.
       </p>
     </div>
   );
