@@ -277,6 +277,10 @@ function JudgeConsole() {
         <MainnetEvidence />
       </Section>
       <Section title="Complete evidence directory">
+        <p>
+          <a href="/security">Security</a> · <a href="/agents">Agents</a> ·{" "}
+          <a href="/defi">DeFi</a> · <a href="/business">Business</a>
+        </p>
         <p className="text-muted">
           Separate archived mainnet evidence from local demonstrations. Each
           route states its limits.
@@ -293,7 +297,7 @@ function JudgeConsole() {
           </li>
           <li>
             <a className="text-primary underline" href="/business">
-              Four track perspectives: Security, Agents, Business and DeFi
+              Business track: spending constraints and boundaries
             </a>{" "}
             — shared evidence, with no claim of customer adoption.
           </li>
