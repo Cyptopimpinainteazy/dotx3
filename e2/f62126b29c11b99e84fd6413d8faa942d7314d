@@ -1,0 +1,16 @@
+src/lib/site-agent.test.ts
+  h_e41068bed968d7 114-163
+src/lib/site-agent.ts
+  h_e41068bed968d7 7,141-185,196-197,200,215,217
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e2f62126b29c11b99e84fd6413d8faa942d7314d",
+  "prompts": {},
+  "humans": {
+    "h_e41068bed968d7": {
+      "author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
