@@ -4,6 +4,7 @@
 
 export const MAX_REQUEST_CHARS = 600;
 export const MAX_SOURCE_CHARS = 12_000;
+export const MAX_REQUEST_BYTES = 2 * MAX_SOURCE_CHARS + MAX_REQUEST_CHARS + 512;
 export const DEFAULT_MODEL = "qwen3:8b";
 
 export interface AgentWriteBody {
@@ -137,6 +138,51 @@ export function allowClient(client: string, now: number, perMinute = 6): boolean
   return true;
 }
 
+function meshBaseUrl(value: string): string {
+  let url: URL;
+  try { url = new URL(value); } catch {
+    throw new AgentError("The mesh URL is invalid.", 503, "not_configured");
+  }
+  const loopback = ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
+  if ((url.protocol !== "https:" && !(url.protocol === "http:" && loopback)) ||
+      url.username || url.password || url.search || url.hash || url.pathname !== "/") {
+    throw new AgentError("Use an https mesh origin, or http on localhost, without credentials or query parameters.", 503, "not_configured");
+  }
+  return url.origin;
+}
+
+async function boundedBody(request: Request): Promise<string> {
+  const declared = request.headers.get("content-length");
+  if (declared !== null && (!/^\d+$/.test(declared) || Number(declared) > MAX_REQUEST_BYTES)) {
+    await request.body?.cancel().catch(() => undefined);
+    throw new AgentError("Request too large or invalid Content-Length.", 413, "too_large");
+  }
+  const reader = request.body?.getReader();
+  if (!reader) return "";
+  const decoder = new TextDecoder("utf-8", { fatal: true });
+  let size = 0;
+  let raw = "";
+  try {
+    for (;;) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > MAX_REQUEST_BYTES) {
+        await reader.cancel().catch(() => undefined);
+        throw new AgentError("Request too large.", 413, "too_large");
+      }
+      raw += decoder.decode(value, { stream: true });
+    }
+    return raw + decoder.decode();
+  } catch (error) {
+    if (error instanceof AgentError) throw error;
+    await reader.cancel().catch(() => undefined);
+    throw new AgentError("Body is not valid UTF-8 JSON.", 400, "bad_request");
+  } finally {
+    reader.releaseLock();
+  }
+}
+
 export async function writeProgram(
   request: Request,
   env: AgentEnv,
@@ -147,16 +193,11 @@ export async function writeProgram(
   if (!env.meshUrl || !env.meshKey) {
     throw new AgentError("Site agents aren't connected to the GPU mesh yet.", 503, "not_configured");
   }
-  if (!/^https:\/\//.test(env.meshUrl) && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?/.test(env.meshUrl)) {
-    throw new AgentError("The mesh URL must be https.", 503, "not_configured");
-  }
-  if (!(request.headers.get("content-type") ?? "").startsWith("application/json")) {
+  const meshUrl = meshBaseUrl(env.meshUrl);
+  if ((request.headers.get("content-type") ?? "").split(";", 1)[0].trim().toLowerCase() !== "application/json") {
     throw new AgentError("application/json required.", 415, "bad_request");
   }
-  const raw = await request.text();
-  if (raw.length > 2 * MAX_SOURCE_CHARS + MAX_REQUEST_CHARS + 512) {
-    throw new AgentError("Request too large.", 413, "too_large");
-  }
+  const raw = await boundedBody(request);
   let parsed: unknown;
   try {
     parsed = JSON.parse(raw);
@@ -171,8 +212,9 @@ export async function writeProgram(
   const model = env.model || DEFAULT_MODEL;
   let response: Response;
   try {
-    response = await fetcher(`${env.meshUrl.replace(/\/+$/, "")}/v1/chat/completions`, {
+    response = await fetcher(`${meshUrl}/v1/chat/completions`, {
       method: "POST",
+      redirect: "error",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${env.meshKey}` },
       body: JSON.stringify({ model, messages: buildMessages(body), temperature: 0, max_tokens: 900 }),
       signal: AbortSignal.timeout(110_000),

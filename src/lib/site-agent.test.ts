@@ -111,3 +111,53 @@ test("one network can't flood the GPUs from one instance", async () => {
   });
   await writeProgram(req(BODY, ip), ENV, fetcher, t + 61_000);
 });
+
+
+test("oversized streamed input is cancelled before the remaining body is read", async () => {
+  let cancelled = false;
+  let reads = 0;
+  const stream = new ReadableStream<Uint8Array>({
+    pull(controller) {
+      reads++;
+      if (reads === 1) controller.enqueue(new Uint8Array(30_000).fill(120));
+      else controller.error(new Error("read past the byte limit"));
+    },
+    cancel() { cancelled = true; },
+  }, { highWaterMark: 0 });
+  const request = new Request("https://dotx3.net/api/agent/write", {
+    method: "POST", headers: { "content-type": "application/json", origin: "https://dotx3.net" },
+    body: stream, duplex: "half",
+  } as RequestInit);
+  const { fetcher, calls } = meshAnswer("intent pay {}\n");
+  await assert.rejects(writeProgram(request, ENV, fetcher, tick()), (error: unknown) => {
+    assert.ok(error instanceof AgentError);
+    assert.equal(error.status, 413);
+    return true;
+  });
+  assert.equal(reads, 1);
+  assert.equal(cancelled, true);
+  assert.equal(calls.length, 0);
+});
+
+test("request limit counts UTF-8 bytes, not JavaScript characters", async () => {
+  const { fetcher, calls } = meshAnswer("intent pay {}\n");
+  await assert.rejects(writeProgram(req({ ...BODY, program: "界".repeat(12_000) }), ENV, fetcher, tick()),
+    (error: unknown) => error instanceof AgentError && error.status === 413);
+  assert.equal(calls.length, 0);
+});
+
+for (const meshUrl of ["http://localhost.evil.example", "http://127.0.0.1.evil.example",
+  "http://localhost@evil.example", "https://user:password@gpu.dotx3.net", "https://gpu.dotx3.net?token=x"]) {
+  test(`rejects misleading or credential-bearing mesh URL ${meshUrl}`, async () => {
+    const { fetcher, calls } = meshAnswer("intent pay {}\n");
+    await assert.rejects(writeProgram(req(BODY), { ...ENV, meshUrl }, fetcher, tick()),
+      (error: unknown) => error instanceof AgentError && error.code === "not_configured");
+    assert.equal(calls.length, 0);
+  });
+}
+
+test("authenticated inference does not follow redirects", async () => {
+  const { fetcher, calls } = meshAnswer("intent pay {}\n");
+  await writeProgram(req(BODY), ENV, fetcher, tick());
+  assert.equal(calls[0].init.redirect, "error");
+});
