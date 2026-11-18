@@ -1,9 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { pageSeo } from "@/lib/seo";
 import { CodeBlock, OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell } from "@/components/site-shell";
 import { EVIDENCE_SNAPSHOT, LINKS, SITE } from "@/lib/front-door";
 
-export const Route = createFileRoute("/developers")({ component: DevelopersPage });
+export const Route = createFileRoute("/developers")({
+  head: () => pageSeo(
+    "/developers",
+    "X3Lang for Developers | Source, Setup and NEAR Integration",
+    "Find the X3Lang and dotx3 repositories, install language tools from a reviewed revision, and follow NEAR integration and evidence-verification guides.",
+  ),
+  component: DevelopersPage,
+});
 
 function DevelopersPage() {
   return (

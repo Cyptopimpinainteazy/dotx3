@@ -1,5 +1,6 @@
 import { VaultPilotEvidence } from "@/components/vault-pilot-evidence";
 import { createFileRoute } from "@tanstack/react-router";
+import { pageSeo } from "@/lib/seo";
 import {
   ActionLink,
   Card,
@@ -18,7 +19,14 @@ import { CaseFileCard, ChainOfCommand, FourDoors, SituationReport } from "@/comp
 import { MainnetEvidence } from "@/components/mainnet-evidence";
 import { ARCADE_URL, BACKING_LINKS_VISIBLE, EVIDENCE_SNAPSHOT, getProofSummary, hasMilestoneEvidence, LINKS, MILESTONES, SITE, TOKEN } from "@/lib/front-door";
 
-export const Route = createFileRoute("/")({ component: Home });
+export const Route = createFileRoute("/")({
+  head: () => pageSeo(
+    "/",
+    "X3Lang & X3 Force Field | AI Agent Payment Security",
+    "Explore typed .x3 mandates for AI agent payments, try policy checks, and inspect the published NEAR and Solana evidence and its limits.",
+  ),
+  component: Home,
+});
 
 function ProofMeter() {
   const { posted, total, progress, percent: pct } = getProofSummary();

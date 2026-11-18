@@ -1,10 +1,18 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { pageSeo } from "@/lib/seo";
 import { OutLink, Tag } from "@/components/code-block";
 import { ProofFlow } from "@/components/circuit";
 import { Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { BACKING_LINKS_VISIBLE, EVIDENCE_SNAPSHOT, LINKS } from "@/lib/front-door";
 
-export const Route = createFileRoute("/language")({ component: LanguagePage });
+export const Route = createFileRoute("/language")({
+  head: () => pageSeo(
+    "/language",
+    "X3Lang | .x3 Mandates, Compiler and Runtime",
+    "Learn how .x3 payment programs and owner mandates are checked, how NEAR Guard is used, and what the compiler and runtime evidence establishes.",
+  ),
+  component: LanguagePage,
+});
 
 const REFUSALS: { code: string; what: string }[] = [
   {

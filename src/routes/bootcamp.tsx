@@ -1,5 +1,6 @@
 import { IntentsPlanner } from '@/components/intents-planner';
 import { Link, createFileRoute } from '@tanstack/react-router';
+import { pageSeo } from '@/lib/seo';
 import { useEffect, useState } from 'react';
 import { BookOpen, Check, Search, Play, Download, ArrowRight } from 'lucide-react';
 import { SiteShell } from '@/components/site-shell';
@@ -8,7 +9,14 @@ import { LESSONS } from '@/lib/bootcamp/lessons';
 import reference from '@/lib/bootcamp/reference.json';
 import { DATA, ATTACKS, applyAttack } from '@/lib/x3/playground';
 import { evaluate } from '@/lib/x3/vendor/judge/judge.mjs';
-export const Route = createFileRoute('/bootcamp')({ component: Bootcamp });
+export const Route = createFileRoute('/bootcamp')({
+  head: () => pageSeo(
+    '/bootcamp',
+    'X3Lang Bootcamp | Learn .x3 Mandates and Intents',
+    'Work through .x3 lessons and browser exercises covering payment intents, owner mandates, policy refusals and the documented execution paths.',
+  ),
+  component: Bootcamp,
+});
 const BASE = `https://github.com/Cyptopimpinainteazy/x3lang/blob/${reference.revision}/`;
 const PROGRESS = 'x3.bootcamp.v1.completed';
 const button = 'tap inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border px-4 py-2 text-sm hover:border-primary focus-visible:outline-2 focus-visible:outline-primary';
