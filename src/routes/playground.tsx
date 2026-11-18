@@ -1,4 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { pageSeo } from "@/lib/seo";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell } from "@/components/site-shell";
@@ -7,7 +8,14 @@ import { ATTACKS, DATA, PRESETS, QUOTES, applyAttack, displayDecision, type Atta
 import * as judge from "@/lib/x3/vendor/judge/judge.mjs";
 import * as x3 from "@/lib/x3/vendor/x3guard.mjs";
 
-export const Route = createFileRoute("/playground")({ component: PlaygroundPage });
+export const Route = createFileRoute("/playground")({
+  head: () => pageSeo(
+    "/playground",
+    "X3Lang Playground | Test .x3 Payment Policies",
+    "Run the browser .x3 checker on payment programs and owner mandates. Compare allowed and refused inputs without signing or sending a transaction.",
+  ),
+  component: PlaygroundPage,
+});
 
 const VENDOR_COMMIT = VENDOR_SNAPSHOT.commit;
 const VENDOR_URL = `${LINKS.repo}/blob/${VENDOR_COMMIT}/x3-lang/near/demo/x3guard.mjs`;

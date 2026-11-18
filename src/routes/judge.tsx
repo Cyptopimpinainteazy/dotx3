@@ -1,5 +1,6 @@
 import { VaultPilotEvidence } from "@/components/vault-pilot-evidence";
 import { createFileRoute } from "@tanstack/react-router";
+import { canonicalLink } from "@/lib/seo";
 import { Check, X } from "lucide-react";
 import { useState } from "react";
 import { ActionLink, Section, SiteShell } from "@/components/site-shell";
@@ -16,6 +17,7 @@ import {
 
 export const Route = createFileRoute("/judge")({
   head: () => ({
+    links: [canonicalLink("/judge")],
     meta: [
       { title: "Judge Console · dotx3.net" },
       {

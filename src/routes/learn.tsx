@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site-shell";
 import { X3Tutorial } from "@/components/x3-tutorial";
+import { canonicalLink } from "@/lib/seo";
 
 export const Route = createFileRoute("/learn")({
   head: () => ({
+    links: [canonicalLink("/learn")],
     meta: [
       { title: "Learn .x3 — interactive tutorial · dotx3.net" },
       {
