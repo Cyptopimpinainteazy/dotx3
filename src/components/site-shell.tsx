@@ -3,7 +3,8 @@ import { Link } from "@tanstack/react-router";
 import { Circuit } from "@/components/circuit";
 import { SiteFooterNav, SiteHeader } from "@/components/site-nav";
 import { slugify } from "@/lib/site-nav";
-import { EVIDENCE_SNAPSHOT, LINKS } from "@/lib/front-door";
+import { EVIDENCE_SNAPSHOT, LINKS, SUBMISSION } from "@/lib/front-door";
+import { VAULT_PILOT, VAULT_PILOT_LINKS } from "@/lib/vault-pilot";
 
 export function SiteShell({
   children,
@@ -58,7 +59,12 @@ export function SiteShell({
               not establish custody or atomic settlement.
             </p>
             <p className="mt-2 text-xs">
-              Reviewed {EVIDENCE_SNAPSHOT.dateLabel} · <a href={LINKS.reviewedSource} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">X3Lang {EVIDENCE_SNAPSHOT.commit.slice(0, 7)}</a>
+              invoice_06 evidence reviewed {EVIDENCE_SNAPSHOT.dateLabel} at{" "}
+              <a href={LINKS.reviewedSource} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">X3Lang {EVIDENCE_SNAPSHOT.commit.slice(0, 7)}</a>
+              {" · "}vault pilot archived {VAULT_PILOT.date} at{" "}
+              <a href={VAULT_PILOT_LINKS.proof} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">X3Lang {VAULT_PILOT.sourceCommit.slice(0, 7)}</a>
+              {" · "}submitted commit{" "}
+              <a href={SUBMISSION.url} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">{SUBMISSION.tag} ({SUBMISSION.commit.slice(0, 7)})</a>
             </p>
           </div>
         </div>
