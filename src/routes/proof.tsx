@@ -46,6 +46,25 @@ function ProofPage() {
       title="Evidence by source and network."
       lede="Compare two completed mainnet payments: the new owner-approved, agent-executed Solana vault pilot and the earlier owner-funded NEAR Guard demonstration. Each proof states what it establishes and what remains unproven."
     >
+      <div className="mx-auto max-w-6xl px-5 pb-5">
+        <div className="rounded-xl border border-border bg-surface p-5 text-sm text-muted">
+          <p className="font-semibold text-fg">Submission snapshot vs. later evidence</p>
+          <p className="mt-2">
+            The <OutLink href="https://github.com/Cyptopimpinainteazy/x3lang/tree/73f3f17dfc3529cda59bb7077a31dac6a536833a">
+              frozen hackathon submission (73f3f17)
+            </OutLink> contains the invoice_06 NEAR Guard demonstration. The{" "}
+            <OutLink href="https://github.com/Cyptopimpinainteazy/x3lang/tree/9ec3b48000bcada0ceb20df85d0d7e5eeed744bb/evidence/solana-vault-mainnet-2026-11-14">
+              November 14 Solana source-vault pilot (9ec3b48)
+            </OutLink> is separate archived evidence, not part of that frozen submission.
+          </p>
+          <p className="mt-2">
+            The vault pilot's specialized archived verifier passes its documented checks, but
+            the generic near_intents receipt verifier rejects a difference between the signed
+            1Click request deadline and the compiled leg deadline. Neither archived transfer
+            proves cryptographic cross-chain atomicity or audited production custody.
+          </p>
+        </div>
+      </div>
       <div className="mx-auto max-w-6xl px-5"><ProviderIncidents /></div>
 
       <Section title="Agent-executed vault payment · November 14">
@@ -167,7 +186,7 @@ function ProofPage() {
           <li>Mainnet invoice_06 is one owner-funded settlement of about $25 that the agent authorized but did not pay. Its seven limits are listed with the receipts above.</li>
           <li>No public audited vault. Guard does not custody swap assets; native NEAR used for storage and account operation is separate. An unrestricted origin key can bypass it.</li>
           <li>No cryptographic atomic cross-chain causality for either the Tidepool testnet trade or the mainnet 1Click settlement.</li>
-          <li>Exact approved-program enforcement is still in <OutLink href={LINKS.programBindingPr}>open PR #202</OutLink>. A stored hash does not prove that enforcement.</li>
+          <li>Exact approved-program enforcement was proposed in <OutLink href={LINKS.programBindingPr}>PR #202 (closed, unmerged)</OutLink>. Storing a hash does not prove the deployed Guard enforces the program identity.</li>
           <li>No public scoped-vault refusal run, hostile-model mainnet run, independent audit or tagged release with build provenance is claimed by this snapshot.</li>
           <li>
             Report vulnerabilities in private. Do not file exploits, keys, or seeds in a public issue. <OutLink href={LINKS.security}>SECURITY.md</OutLink>
