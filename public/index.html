@@ -2,80 +2,104 @@
 <html lang="en">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>X3 Chain — Modular Blockchain Ecosystem</title>
+<title>X3 Chain — Fly The Ecosystem</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Syne:wght@700;800&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--p:#8b5cf6;--c:#00ffb2;--g:#ffd166;--r:#ff6b9d;--t:#e0e0f0;--t2:#707090}
-html,body{width:100%;height:100%;overflow:hidden;background:#02020a}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;cursor:crosshair}
 canvas{display:block;position:fixed;inset:0}
 
-/* HUD overlay */
-#hud{position:fixed;inset:0;pointer-events:none;z-index:10}
+#ui{position:fixed;inset:0;pointer-events:none;z-index:10;font-family:'IBM Plex Mono',monospace}
 
-#wordmark{position:fixed;top:28px;left:36px;font-family:Syne,sans-serif;font-size:1.5rem;font-weight:800;color:#e0e0f0;letter-spacing:-.01em;pointer-events:none}
-#wordmark span{color:var(--g)}
+/* HUD corners */
+#wordmark{position:fixed;top:22px;left:28px;font-family:Syne,sans-serif;font-size:1.4rem;font-weight:800;color:#e0e0f0;letter-spacing:-.01em}
+#wordmark span{color:#ffd166}
 
-#tagline{position:fixed;bottom:36px;left:0;right:0;text-align:center;font-family:IBM Plex Mono,monospace;font-size:.75rem;color:#404060;letter-spacing:.18em;text-transform:uppercase;pointer-events:none}
+#crosshair{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:28px;height:28px;pointer-events:none}
+#crosshair::before,#crosshair::after{content:'';position:absolute;background:#00ffb2;opacity:.7}
+#crosshair::before{width:2px;height:100%;left:50%;transform:translateX(-50%)}
+#crosshair::after{width:100%;height:2px;top:50%;transform:translateY(-50%)}
+#crosshair-ring{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border:1.5px solid rgba(0,255,178,.3);border-radius:50%;transition:border-color .1s,transform .1s}
+#crosshair-ring.locked{border-color:#00ffb2;transform:translate(-50%,-50%) scale(1.3)}
 
-#hint{position:fixed;top:28px;right:36px;font-family:IBM Plex Mono,monospace;font-size:.72rem;color:#404060;text-align:right;line-height:1.8;pointer-events:none}
+/* Speed / stats bar */
+#stats{position:fixed;bottom:28px;left:28px;font-size:.7rem;color:#404060;line-height:2;letter-spacing:.12em;text-transform:uppercase}
+#stats .val{color:#8b5cf6}
 
-/* Card tooltip */
+/* Controls hint */
+#hint{position:fixed;bottom:28px;right:28px;font-size:.68rem;color:#303050;line-height:2;text-align:right}
+
+/* Protocol tooltip card */
 #card{
   position:fixed;
   transform:translate(-50%,-110%);
-  background:#08081aee;
+  background:#06060eee;
   border:1px solid #8b5cf640;
   border-radius:10px;
-  padding:12px 18px;
+  padding:14px 20px;
   pointer-events:none;
   opacity:0;
   transition:opacity .15s;
-  backdrop-filter:blur(12px);
-  min-width:160px;
+  backdrop-filter:blur(16px);
+  min-width:180px;
   z-index:20;
 }
-#card.visible{opacity:1}
-#card-name{font-family:Syne,sans-serif;font-weight:800;font-size:1rem;color:#e0e0f0;margin-bottom:4px}
-#card-url{font-family:IBM Plex Mono,monospace;font-size:.72rem;color:var(--c)}
-#card-desc{font-family:Space Grotesk,sans-serif;font-size:.8rem;color:#707090;margin-top:6px;max-width:200px;line-height:1.4}
+#card.vis{opacity:1}
+#card-name{font-family:Syne,sans-serif;font-weight:800;font-size:1rem;color:#e0e0f0;margin-bottom:3px}
+#card-url{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:#00ffb2;margin-bottom:6px}
+#card-desc{font-family:'Space Grotesk',sans-serif;font-size:.8rem;color:#707090;line-height:1.5;max-width:220px}
+#card-cta{margin-top:8px;font-size:.7rem;color:#ffd166;letter-spacing:.1em}
 
-/* Click ripple */
-#ripple{position:fixed;border-radius:50%;pointer-events:none;z-index:30;opacity:0}
+/* Kill flash */
+#flash{position:fixed;inset:0;background:#00ffb240;opacity:0;pointer-events:none;transition:opacity .08s}
 
-/* Loading screen */
-#loading{
-  position:fixed;inset:0;background:#02020a;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  z-index:100;transition:opacity .6s .2s;
-}
-#loading.done{opacity:0;pointer-events:none}
-#load-logo{font-family:Syne,sans-serif;font-size:2.5rem;font-weight:800;color:#e0e0f0;margin-bottom:24px}
-#load-logo span{color:var(--g)}
-#load-bar-wrap{width:200px;height:2px;background:#ffffff12;border-radius:2px;overflow:hidden}
-#load-bar{height:100%;background:linear-gradient(90deg,var(--p),var(--c));width:0%;transition:width .08s}
-#load-text{font-family:IBM Plex Mono,monospace;font-size:.72rem;color:#404060;margin-top:12px;letter-spacing:.12em}
+/* Loading */
+#load{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;transition:opacity .5s}
+#load.done{opacity:0;pointer-events:none}
+#load-logo{font-family:Syne,sans-serif;font-size:2.6rem;font-weight:800;color:#e0e0f0;margin-bottom:20px;letter-spacing:-.02em}
+#load-logo span{color:#ffd166}
+#load-bar{width:200px;height:2px;background:#ffffff10;border-radius:2px;overflow:hidden;margin-bottom:12px}
+#load-bar-inner{height:100%;background:linear-gradient(90deg,#8b5cf6,#00ffb2);width:0%;transition:width .08s}
+#load-msg{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:#404060;letter-spacing:.15em}
+
+/* Score pop */
+.pop{position:fixed;font-family:Syne,sans-serif;font-weight:800;font-size:1.3rem;pointer-events:none;z-index:50;animation:popUp .8s ease-out forwards}
+@keyframes popUp{0%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}100%{opacity:0;transform:translate(-50%,-180%) scale(.8)}}
 </style>
 
-<div id="loading">
+<div id="load">
   <div id="load-logo">X3<span>★</span>CHAIN</div>
-  <div id="load-bar-wrap"><div id="load-bar"></div></div>
-  <div id="load-text">INITIALIZING UNIVERSE...</div>
+  <div id="load-bar"><div id="load-bar-inner"></div></div>
+  <div id="load-msg">CHARGING THRUSTERS...</div>
 </div>
 
-<div id="hud">
+<div id="ui">
   <div id="wordmark">X3<span>★</span>STAR</div>
-  <div id="hint">SCROLL · drag to orbit<br>click to enter</div>
-  <div id="tagline">X3 Chain — Modular Blockchain Infrastructure — 2026</div>
+  <div id="crosshair-ring"></div>
+  <div id="crosshair"></div>
+
+  <div id="stats">
+    SPEED &nbsp;<span class="val" id="sv">0</span> AU/s<br>
+    HITS &nbsp;&nbsp;<span class="val" id="hv">0</span><br>
+    NODES &nbsp;<span class="val" id="nv">26</span>
+  </div>
+
+  <div id="hint">
+    MOUSE — aim<br>
+    W/S — throttle<br>
+    A/D — strafe<br>
+    CLICK — fire laser
+  </div>
 </div>
 
 <div id="card">
   <div id="card-name"></div>
   <div id="card-url"></div>
   <div id="card-desc"></div>
+  <div id="card-cta">[ CLICK TO ENTER ]</div>
 </div>
 
-<div id="ripple"></div>
+<div id="flash"></div>
 
 <script type="importmap">
 {"imports":{"three":"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js"}}
@@ -83,347 +107,417 @@ canvas{display:block;position:fixed;inset:0}
 <script type="module">
 import * as THREE from 'three';
 
-// ─── DATA ───────────────────────────────────────────────────────────────────
+// ── PROTOCOLS ────────────────────────────────────────────────────────────────
 const PROTOCOLS = [
-  // Core
-  { name:'X3 Explorer',   url:'https://explorer.x3star.net', desc:'Browse blocks & transactions',  color:0x00ffb2, group:'core',    icon:'🔍' },
-  { name:'Tokenomics',    url:'https://tokenomics.x3star.net',desc:'Supply & emission schedule',   color:0xffd166, group:'core',    icon:'📊' },
-  { name:'Whitepaper',    url:'https://whitepaper.x3star.net',desc:'Technical architecture',       color:0xe0e0f0, group:'core',    icon:'📄' },
-  { name:'Roadmap',       url:'https://roadmap.x3star.net',   desc:'Development milestones',       color:0x8b5cf6, group:'core',    icon:'🗺️' },
-  // DeFi
-  { name:'X3 Swap',       url:'https://swap.x3star.net',      desc:'AMM token exchange',           color:0x00ffb2, group:'defi',    icon:'⚡' },
-  { name:'Staking',       url:'https://staking.x3star.net',   desc:'Earn protocol rewards',        color:0x8b5cf6, group:'defi',    icon:'🔒' },
-  { name:'Bridge',        url:'https://bridge.x3star.net',    desc:'Cross-chain transfers',        color:0xffd166, group:'defi',    icon:'🌉' },
-  { name:'Flash Loans',   url:'https://flash.x3star.net',     desc:'Uncollateralized loans',       color:0xff6b9d, group:'defi',    icon:'⚡' },
-  { name:'Analytics',     url:'https://analytics.x3star.net', desc:'Real-time DeFi metrics',       color:0x00ffb2, group:'defi',    icon:'📈' },
-  { name:'Portfolio',     url:'https://portfolio.x3star.net', desc:'Track your holdings',          color:0x8b5cf6, group:'defi',    icon:'💼' },
-  // NFT
-  { name:'NFT Studio',    url:'https://nft.x3star.net',       desc:'Mint & trade NFTs',            color:0xff6b9d, group:'nft',     icon:'🎨' },
-  { name:'Marketplace',   url:'https://marketplace.x3star.net',desc:'Buy & sell digital assets',  color:0xffd166, group:'nft',     icon:'🏪' },
-  { name:'Games',         url:'https://games.x3star.net',     desc:'Play-to-earn gaming',          color:0x00ffb2, group:'nft',     icon:'🎮' },
-  // Infra
-  { name:'Nodes',         url:'https://nodes.x3star.net',     desc:'Run the network',              color:0x8b5cf6, group:'infra',   icon:'🖥️' },
-  { name:'Validators',    url:'https://validators.x3star.net',desc:'Block production',             color:0xffd166, group:'infra',   icon:'✅' },
-  { name:'Security',      url:'https://security.x3star.net',  desc:'Audits & bug bounty',          color:0xff6b9d, group:'infra',   icon:'🛡️' },
-  { name:'Status',        url:'https://status.x3star.net',    desc:'Network health monitor',       color:0x00ffb2, group:'infra',   icon:'📡' },
-  { name:'AI Agents',     url:'https://agents.x3star.net',    desc:'Autonomous on-chain agents',   color:0xff6b9d, group:'infra',   icon:'🤖' },
-  // DAO
-  { name:'Governance',    url:'https://governance.x3star.net',desc:'Vote on proposals',            color:0x8b5cf6, group:'dao',     icon:'🏛️' },
-  { name:'Treasury',      url:'https://treasury.x3star.net',  desc:'DAO fund allocation',          color:0xffd166, group:'dao',     icon:'🏦' },
-  { name:'Grants',        url:'https://grants.x3star.net',    desc:'Builder funding',              color:0x00ffb2, group:'dao',     icon:'💰' },
-  { name:'Launchpad',     url:'https://launch.x3star.net',    desc:'Fair-launch IDOs',             color:0xff6b9d, group:'dao',     icon:'🚀' },
-  // Community
-  { name:'Community',     url:'https://community.x3star.net', desc:'Join 50K+ builders',           color:0x8b5cf6, group:'social',  icon:'👥' },
-  { name:'Academy',       url:'https://academy.x3star.net',   desc:'Learn X3 Chain',               color:0x00ffb2, group:'social',  icon:'📚' },
-  { name:'Developers',    url:'https://dev.x3star.net',       desc:'SDKs & documentation',         color:0xffd166, group:'social',  icon:'👨‍💻' },
-  { name:'Press',         url:'https://press.x3star.net',     desc:'Media kit & news',             color:0xe0e0f0, group:'social',  icon:'📰' },
+  { name:'X3 Explorer',   url:'https://explorer.x3star.net', desc:'Browse blocks & transactions',  col:0x00ffb2 },
+  { name:'Tokenomics',    url:'https://tokenomics.x3star.net',desc:'Supply & emission schedule',   col:0xffd166 },
+  { name:'Whitepaper',    url:'https://whitepaper.x3star.net',desc:'Technical architecture',       col:0xe0e0f0 },
+  { name:'Roadmap',       url:'https://roadmap.x3star.net',   desc:'Development milestones',       col:0x8b5cf6 },
+  { name:'X3 Swap',       url:'https://swap.x3star.net',      desc:'AMM token exchange',           col:0x00ffb2 },
+  { name:'Staking',       url:'https://staking.x3star.net',   desc:'Earn protocol rewards',        col:0x8b5cf6 },
+  { name:'Bridge',        url:'https://bridge.x3star.net',    desc:'Cross-chain transfers',        col:0xffd166 },
+  { name:'Flash Loans',   url:'https://flash.x3star.net',     desc:'Uncollateralized loans',       col:0xff6b9d },
+  { name:'Analytics',     url:'https://analytics.x3star.net', desc:'Real-time DeFi metrics',       col:0x00ffb2 },
+  { name:'Portfolio',     url:'https://portfolio.x3star.net', desc:'Track your holdings',          col:0x8b5cf6 },
+  { name:'NFT Studio',    url:'https://nft.x3star.net',       desc:'Mint & trade NFTs',            col:0xff6b9d },
+  { name:'Marketplace',   url:'https://marketplace.x3star.net',desc:'Buy & sell digital assets',  col:0xffd166 },
+  { name:'Games',         url:'https://games.x3star.net',     desc:'Play-to-earn gaming',          col:0x00ffb2 },
+  { name:'Nodes',         url:'https://nodes.x3star.net',     desc:'Run the network',              col:0x8b5cf6 },
+  { name:'Validators',    url:'https://validators.x3star.net',desc:'Block production',             col:0xffd166 },
+  { name:'Security',      url:'https://security.x3star.net',  desc:'Audits & bug bounty',          col:0xff6b9d },
+  { name:'Status',        url:'https://status.x3star.net',    desc:'Network health monitor',       col:0x00ffb2 },
+  { name:'AI Agents',     url:'https://agents.x3star.net',    desc:'Autonomous on-chain agents',   col:0xff6b9d },
+  { name:'Governance',    url:'https://governance.x3star.net',desc:'Vote on proposals',            col:0x8b5cf6 },
+  { name:'Treasury',      url:'https://treasury.x3star.net',  desc:'DAO fund allocation',          col:0xffd166 },
+  { name:'Grants',        url:'https://grants.x3star.net',    desc:'Builder funding',              col:0x00ffb2 },
+  { name:'Launchpad',     url:'https://launch.x3star.net',    desc:'Fair-launch IDOs',             col:0xff6b9d },
+  { name:'Community',     url:'https://community.x3star.net', desc:'Join 50K+ builders',           col:0x8b5cf6 },
+  { name:'Academy',       url:'https://academy.x3star.net',   desc:'Learn X3 Chain',               col:0x00ffb2 },
+  { name:'Developers',    url:'https://dev.x3star.net',       desc:'SDKs & documentation',         col:0xffd166 },
+  { name:'Press',         url:'https://press.x3star.net',     desc:'Media kit & news',             col:0xe0e0f0 },
 ];
 
-// ─── GROUP ORBITAL RADII ────────────────────────────────────────────────────
-const GROUP_RING = { core:3.2, defi:5.8, nft:8.0, infra:10.2, dao:12.0, social:14.0 };
-const GROUP_TILT = { core:0, defi:0.18, nft:-0.22, infra:0.30, dao:-0.14, social:0.24 };
-
-// ─── SCENE ──────────────────────────────────────────────────────────────────
-const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:false });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor(0x02020a);
+// ── RENDERER ─────────────────────────────────────────────────────────────────
+const renderer = new THREE.WebGLRenderer({ antialias:true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.setClearColor(0x000008);
 document.body.prepend(renderer.domElement);
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.1, 500);
-camera.position.set(0, 6, 22);
-camera.lookAt(0, 0, 0);
+scene.fog = new THREE.FogExp2(0x000008, 0.012);
 
-// ─── STARFIELD ──────────────────────────────────────────────────────────────
-const starCount = 6000;
-const starGeo = new THREE.BufferGeometry();
-const starPos = new Float32Array(starCount * 3);
-const starCol = new Float32Array(starCount * 3);
-for (let i = 0; i < starCount; i++) {
-  const r = 80 + Math.random() * 200;
-  const theta = Math.random() * Math.PI * 2;
-  const phi = Math.acos(2 * Math.random() - 1);
-  starPos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
-  starPos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
-  starPos[i*3+2] = r * Math.cos(phi);
-  const t = Math.random();
-  if (t < 0.33) { starCol[i*3]=0.54; starCol[i*3+1]=0.36; starCol[i*3+2]=0.96; }
-  else if (t < 0.66) { starCol[i*3]=0.0; starCol[i*3+1]=1.0; starCol[i*3+2]=0.7; }
-  else { starCol[i*3]=1.0; starCol[i*3+1]=0.82; starCol[i*3+2]=0.4; }
+const camera = new THREE.PerspectiveCamera(70, innerWidth/innerHeight, 0.1, 400);
+camera.position.set(0, 2, 20);
+
+// ── STARFIELD ────────────────────────────────────────────────────────────────
+const SN = 8000;
+const sg = new THREE.BufferGeometry();
+const sp = new Float32Array(SN*3), sc = new Float32Array(SN*3);
+for(let i=0;i<SN;i++){
+  const r = 30+Math.random()*200, t=Math.random()*Math.PI*2, p=Math.acos(2*Math.random()-1);
+  sp[i*3]=r*Math.sin(p)*Math.cos(t); sp[i*3+1]=r*Math.sin(p)*Math.sin(t); sp[i*3+2]=r*Math.cos(p);
+  const c=Math.random();
+  if(c<.33){sc[i*3]=.54;sc[i*3+1]=.36;sc[i*3+2]=.96;}
+  else if(c<.66){sc[i*3]=0;sc[i*3+1]=1;sc[i*3+2]=.7;}
+  else{sc[i*3]=1;sc[i*3+1]=.82;sc[i*3+2]=.4;}
 }
-starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-starGeo.setAttribute('color', new THREE.BufferAttribute(starCol, 3));
-const starMat = new THREE.PointsMaterial({ size:0.35, vertexColors:true, transparent:true, opacity:0.8, sizeAttenuation:true });
-scene.add(new THREE.Points(starGeo, starMat));
+sg.setAttribute('position',new THREE.BufferAttribute(sp,3));
+sg.setAttribute('color',new THREE.BufferAttribute(sc,3));
+scene.add(new THREE.Points(sg,new THREE.PointsMaterial({size:.4,vertexColors:true,transparent:true,opacity:.85,sizeAttenuation:true})));
 
-// ─── NEBULA CLOUDS (large blurred spheres) ───────────────────────────────────
-function makeNebula(color, x, y, z, scale) {
-  const geo = new THREE.SphereGeometry(1, 8, 8);
-  const mat = new THREE.MeshBasicMaterial({ color, transparent:true, opacity:0.03, side:THREE.FrontSide });
-  const mesh = new THREE.Mesh(geo, mat);
-  mesh.scale.set(scale * (1 + Math.random()), scale * 0.6, scale * (1 + Math.random()));
-  mesh.position.set(x, y, z);
-  scene.add(mesh);
-}
-makeNebula(0x8b5cf6, -8, 2, -5, 18);
-makeNebula(0x00ffb2, 10, -3, -8, 14);
-makeNebula(0xffd166, 0, -6, 0, 20);
-makeNebula(0xff6b9d, -4, 4, 8, 12);
+// ── NEBULA ───────────────────────────────────────────────────────────────────
+[[0x8b5cf6,-15,5,-30,22],[0x00ffb2,20,-4,-50,16],[0xffd166,-5,-8,-20,18],[0xff6b9d,10,8,-40,14]]
+  .forEach(([c,x,y,z,s])=>{
+    const m=new THREE.Mesh(new THREE.SphereGeometry(1,8,8),new THREE.MeshBasicMaterial({color:c,transparent:true,opacity:.04}));
+    m.scale.set(s*1.5,s*.7,s);m.position.set(x,y,z);scene.add(m);
+  });
 
-// ─── ORBITAL RING LINES ─────────────────────────────────────────────────────
-function makeOrbitRing(radius, tilt, color) {
-  const seg = 128;
-  const pts = [];
-  for (let i = 0; i <= seg; i++) {
-    const a = (i / seg) * Math.PI * 2;
-    pts.push(new THREE.Vector3(Math.cos(a) * radius, 0, Math.sin(a) * radius));
-  }
-  const geo = new THREE.BufferGeometry().setFromPoints(pts);
-  const mat = new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.08 });
-  const ring = new THREE.Line(geo, mat);
-  ring.rotation.x = tilt;
-  scene.add(ring);
-}
-Object.entries(GROUP_RING).forEach(([g, r]) => makeOrbitRing(r, GROUP_TILT[g], 0xffffff));
+// ── SPACESHIP ────────────────────────────────────────────────────────────────
+const shipGroup = new THREE.Group();
 
-// ─── CENTRAL X3 STAR ────────────────────────────────────────────────────────
-const coreGeo = new THREE.IcosahedronGeometry(0.9, 2);
-const coreMat = new THREE.MeshBasicMaterial({ color:0xffd166, wireframe:true });
-const coreMesh = new THREE.Mesh(coreGeo, coreMat);
-scene.add(coreMesh);
+// Main body
+const bodyGeo = new THREE.ConeGeometry(0.18, 0.9, 6);
+const bodyMat = new THREE.MeshBasicMaterial({color:0x8b5cf6,wireframe:false});
+const body = new THREE.Mesh(bodyGeo, bodyMat);
+body.rotation.x = -Math.PI/2;
+shipGroup.add(body);
 
-// Inner glow sphere
-const glowGeo = new THREE.SphereGeometry(1.4, 16, 16);
-const glowMat = new THREE.MeshBasicMaterial({ color:0xffd166, transparent:true, opacity:0.06 });
-scene.add(new THREE.Mesh(glowGeo, glowMat));
+// Wings
+const wingGeo = new THREE.BufferGeometry();
+const wingVerts = new Float32Array([
+  0,0,0,  -0.6,-0.1,0.3,  0,0,-0.4,
+  0,0,0,   0.6,-0.1,0.3,  0,0,-0.4,
+]);
+wingGeo.setAttribute('position',new THREE.BufferAttribute(wingVerts,3));
+const wingMat = new THREE.MeshBasicMaterial({color:0x6040c0,side:THREE.DoubleSide});
+const wings = new THREE.Mesh(wingGeo,wingMat);
+shipGroup.add(wings);
 
-// ─── PROTOCOL NODES ─────────────────────────────────────────────────────────
-const nodeObjects = []; // { mesh, ring, label, proto, angle, angularSpeed }
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2(-999, -999);
+// Engine glow
+const engGeo = new THREE.SphereGeometry(0.08,8,8);
+const engMat = new THREE.MeshBasicMaterial({color:0x00ffb2});
+const eng = new THREE.Mesh(engGeo,engMat);
+eng.position.set(0,0,0.45);
+shipGroup.add(eng);
 
-// Count per group for even spacing
-const groupCounts = {};
-const groupIdx = {};
-PROTOCOLS.forEach(p => { groupCounts[p.group] = (groupCounts[p.group]||0)+1; groupIdx[p.group] = 0; });
+// Engine trail particles
+const TRAIL = 60;
+const trailGeo = new THREE.BufferGeometry();
+const trailPos = new Float32Array(TRAIL*3);
+const trailAges = new Float32Array(TRAIL).fill(1);
+trailGeo.setAttribute('position',new THREE.BufferAttribute(trailPos,3));
+const trailMat = new THREE.PointsMaterial({size:0.12,color:0x8b5cf6,transparent:true,opacity:.7,sizeAttenuation:true});
+const trailMesh = new THREE.Points(trailGeo,trailMat);
+scene.add(trailMesh);
 
-PROTOCOLS.forEach((proto, i) => {
-  const radius = GROUP_RING[proto.group];
-  const tilt   = GROUP_TILT[proto.group];
-  const count  = groupCounts[proto.group];
-  const idx    = groupIdx[proto.group]++;
-  const angle  = (idx / count) * Math.PI * 2;
+shipGroup.position.set(0,0,0);
+scene.add(shipGroup);
 
-  // Node sphere
-  const geo = new THREE.SphereGeometry(0.22, 12, 12);
-  const mat = new THREE.MeshBasicMaterial({ color: proto.color });
-  const mesh = new THREE.Mesh(geo, mat);
+// ── PROTOCOL NODES ───────────────────────────────────────────────────────────
+const nodes = [];
+PROTOCOLS.forEach((p,i)=>{
+  const phi   = Math.acos(1 - 2*(i+.5)/PROTOCOLS.length);
+  const theta = Math.PI*(1+Math.sqrt(5))*i;
+  const r = 28 + (i%4)*6;
+  const pos = new THREE.Vector3(
+    r*Math.sin(phi)*Math.cos(theta),
+    r*Math.sin(phi)*Math.sin(theta)*0.4,
+    r*Math.cos(phi)
+  );
 
-  // Glow halo
-  const haloGeo = new THREE.SphereGeometry(0.38, 12, 12);
-  const haloMat = new THREE.MeshBasicMaterial({ color: proto.color, transparent:true, opacity:0.08 });
-  const halo = new THREE.Mesh(haloGeo, haloMat);
+  // Core sphere
+  const geo = new THREE.SphereGeometry(0.5,12,12);
+  const mat = new THREE.MeshBasicMaterial({color:p.col});
+  const mesh = new THREE.Mesh(geo,mat);
+  mesh.position.copy(pos);
+
+  // Halo
+  const halo = new THREE.Mesh(
+    new THREE.SphereGeometry(0.85,12,12),
+    new THREE.MeshBasicMaterial({color:p.col,transparent:true,opacity:.07})
+  );
   mesh.add(halo);
 
-  // Position on ring (tilt is around X axis)
-  const x = Math.cos(angle) * radius;
-  const z = Math.sin(angle) * radius;
-  const y = Math.tan(tilt) * z; // approximate tilt effect
-  mesh.position.set(x, y, z);
+  // Wireframe ring
+  const ring = new THREE.Mesh(
+    new THREE.TorusGeometry(0.72,0.03,8,32),
+    new THREE.MeshBasicMaterial({color:p.col,transparent:true,opacity:.4})
+  );
+  ring.rotation.x = Math.PI/2;
+  mesh.add(ring);
+
+  mesh.userData = { proto:p, basePos:pos.clone(), t:Math.random()*Math.PI*2, hit:false, dead:false };
+  scene.add(mesh);
+  nodes.push(mesh);
+});
+
+// ── LASERS ───────────────────────────────────────────────────────────────────
+const lasers = [];
+function fireLaser(){
+  const dir = new THREE.Vector3();
+  camera.getWorldDirection(dir);
+  const geo = new THREE.CylinderGeometry(0.015,0.015,2.5,4);
+  geo.rotateX(Math.PI/2);
+  const mat = new THREE.MeshBasicMaterial({color:0x00ffb2});
+  const mesh = new THREE.Mesh(geo,mat);
+  mesh.position.copy(shipGroup.position).addScaledVector(dir,1.5);
+  mesh.quaternion.copy(camera.quaternion);
   scene.add(mesh);
 
-  // Store orbital params
-  mesh.userData = { proto, angle, radius, tilt, idx, count, baseY: y };
+  // Glow
+  const glow = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.05,0.05,2.5,4),
+    new THREE.MeshBasicMaterial({color:0x00ffb2,transparent:true,opacity:.18})
+  );
+  glow.rotation.x=Math.PI/2;
+  mesh.add(glow);
 
-  // Angular speed varies slightly by orbit
-  const angSpeed = 0.025 + Math.random() * 0.015;
-
-  nodeObjects.push({ mesh, proto, angle, radius, tilt, angSpeed });
-});
-
-// ─── BACKGROUND PARTICLE DUST ───────────────────────────────────────────────
-const dustCount = 1200;
-const dustGeo = new THREE.BufferGeometry();
-const dustPos = new Float32Array(dustCount * 3);
-for (let i = 0; i < dustCount; i++) {
-  dustPos[i*3]   = (Math.random() - 0.5) * 60;
-  dustPos[i*3+1] = (Math.random() - 0.5) * 20;
-  dustPos[i*3+2] = (Math.random() - 0.5) * 60;
-}
-dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
-const dustMat = new THREE.PointsMaterial({ size:0.06, color:0x8b5cf6, transparent:true, opacity:0.4 });
-scene.add(new THREE.Points(dustGeo, dustMat));
-
-// ─── CAMERA ORBIT CONTROLS (manual) ─────────────────────────────────────────
-let isDragging = false, lastMX = 0, lastMY = 0;
-let camTheta = 0.0, camPhi = 0.9, camDist = 22;
-let targetTheta = 0, targetPhi = 0.9, targetDist = 22;
-const PHI_MIN = 0.15, PHI_MAX = 1.5;
-
-function updateCamera() {
-  camera.position.x = camDist * Math.sin(camPhi) * Math.sin(camTheta);
-  camera.position.y = camDist * Math.cos(camPhi);
-  camera.position.z = camDist * Math.sin(camPhi) * Math.cos(camTheta);
-  camera.lookAt(0, 0, 0);
+  lasers.push({mesh, dir:dir.clone(), life:1.0, speed:0.9});
+  // Sound via WebAudio
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.type='sawtooth';o.frequency.setValueAtTime(1200,ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(200,ctx.currentTime+.15);
+    g.gain.setValueAtTime(.12,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.15);
+    o.start();o.stop(ctx.currentTime+.15);
+  }catch(e){}
 }
 
-renderer.domElement.addEventListener('mousedown', e => {
-  isDragging = true; lastMX = e.clientX; lastMY = e.clientY;
-});
-window.addEventListener('mouseup', () => isDragging = false);
-window.addEventListener('mousemove', e => {
-  if (isDragging) {
-    targetTheta += (e.clientX - lastMX) * 0.006;
-    targetPhi   = Math.max(PHI_MIN, Math.min(PHI_MAX, targetPhi - (e.clientY - lastMY) * 0.006));
-    lastMX = e.clientX; lastMY = e.clientY;
+// ── EXPLOSIONS ───────────────────────────────────────────────────────────────
+const explosions = [];
+function explode(pos, color){
+  const count=24;
+  const geo=new THREE.BufferGeometry();
+  const positions=new Float32Array(count*3);
+  const velocities=[];
+  for(let i=0;i<count;i++){
+    positions[i*3]=pos.x;positions[i*3+1]=pos.y;positions[i*3+2]=pos.z;
+    velocities.push(new THREE.Vector3(
+      (Math.random()-.5)*4,(Math.random()-.5)*4,(Math.random()-.5)*4
+    ));
   }
-  mouse.x =  (e.clientX / window.innerWidth)  * 2 - 1;
-  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-});
-window.addEventListener('wheel', e => {
-  targetDist = Math.max(8, Math.min(40, targetDist + e.deltaY * 0.03));
-}, { passive:true });
-
-// Touch
-let lastTX = 0, lastTY = 0;
-renderer.domElement.addEventListener('touchstart', e => { lastTX = e.touches[0].clientX; lastTY = e.touches[0].clientY; }, { passive:true });
-renderer.domElement.addEventListener('touchmove', e => {
-  targetTheta += (e.touches[0].clientX - lastTX) * 0.008;
-  targetPhi   = Math.max(PHI_MIN, Math.min(PHI_MAX, targetPhi - (e.touches[0].clientY - lastTY) * 0.008));
-  lastTX = e.touches[0].clientX; lastTY = e.touches[0].clientY;
-}, { passive:true });
-
-// ─── TOOLTIP & HOVER ─────────────────────────────────────────────────────────
-const cardEl    = document.getElementById('card');
-const cardName  = document.getElementById('card-name');
-const cardUrl   = document.getElementById('card-url');
-const cardDesc  = document.getElementById('card-desc');
-let hovered = null;
-
-function showCard(proto, x, y) {
-  cardName.textContent = proto.name;
-  cardUrl.textContent  = proto.url.replace('https://','');
-  cardDesc.textContent = proto.desc;
-  cardEl.style.left = x + 'px';
-  cardEl.style.top  = y + 'px';
-  cardEl.classList.add('visible');
-}
-function hideCard() {
-  cardEl.classList.remove('visible');
+  geo.setAttribute('position',new THREE.BufferAttribute(positions,3));
+  const mat=new THREE.PointsMaterial({color,size:.2,transparent:true,opacity:1});
+  const pts=new THREE.Points(geo,mat);
+  scene.add(pts);
+  explosions.push({pts,velocities,life:1.0});
 }
 
-// ─── CLICK ───────────────────────────────────────────────────────────────────
-renderer.domElement.addEventListener('click', e => {
-  if (hovered) {
-    // Ripple effect
-    const rip = document.getElementById('ripple');
-    rip.style.left   = e.clientX - 24 + 'px';
-    rip.style.top    = e.clientY - 24 + 'px';
-    rip.style.width  = rip.style.height = '48px';
-    rip.style.background = `radial-gradient(circle, ${hovered.color|0 ? '#' + hovered.color.toString(16).padStart(6,'0') : '#8b5cf6'} 0%, transparent 70%)`;
-    rip.style.opacity = '0.8';
-    rip.style.transition = 'none';
-    setTimeout(() => {
-      rip.style.transition = 'opacity .4s, transform .4s';
-      rip.style.transform = 'scale(6)';
-      rip.style.opacity = '0';
-    }, 10);
-    setTimeout(() => { rip.style.transform = ''; rip.style.transition = 'none'; }, 450);
-    setTimeout(() => { window.location.href = hovered.url; }, 200);
-  }
+// ── FLIGHT STATE ─────────────────────────────────────────────────────────────
+const keys={w:false,s:false,a:false,d:false};
+let speed=0, hits=0;
+const shipVel=new THREE.Vector3();
+const targetQ=new THREE.Quaternion();
+const mouseXY={x:0,y:0};
+
+// Mouse for aiming
+window.addEventListener('mousemove',e=>{
+  mouseXY.x=(e.clientX/innerWidth)*2-1;
+  mouseXY.y=-(e.clientY/innerHeight)*2+1;
 });
-
-// ─── RESIZE ──────────────────────────────────────────────────────────────────
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-// ─── ANIMATE ─────────────────────────────────────────────────────────────────
-let t = 0;
-const clock = new THREE.Clock();
-
-// Fake loading
-let loadPct = 0;
-const loadBar = document.getElementById('load-bar');
-const loadText = document.getElementById('load-text');
-const loadMessages = ['INITIALIZING UNIVERSE...','SPAWNING PROTOCOLS...','ALIGNING ORBITS...','CHARGING NODES...','READY'];
-let loadMsg = 0;
-const loadInterval = setInterval(() => {
-  loadPct += 4 + Math.random() * 8;
-  loadBar.style.width = Math.min(loadPct, 100) + '%';
-  if (loadPct > 25 && loadMsg === 0) { loadText.textContent = loadMessages[1]; loadMsg=1; }
-  if (loadPct > 55 && loadMsg === 1) { loadText.textContent = loadMessages[2]; loadMsg=2; }
-  if (loadPct > 78 && loadMsg === 2) { loadText.textContent = loadMessages[3]; loadMsg=3; }
-  if (loadPct >= 100) {
-    clearInterval(loadInterval);
-    loadText.textContent = loadMessages[4];
-    setTimeout(() => document.getElementById('loading').classList.add('done'), 300);
-  }
-}, 60);
-
-function animate() {
-  requestAnimationFrame(animate);
-  const dt = clock.getDelta();
-  t += dt;
-
-  // Smooth camera
-  camTheta += (targetTheta - camTheta) * 0.08;
-  camPhi   += (targetPhi   - camPhi)   * 0.08;
-  camDist  += (targetDist  - camDist)  * 0.08;
-  // Slow auto-rotate
-  if (!isDragging) targetTheta += 0.0008;
-  updateCamera();
-
-  // Spin core
-  coreMesh.rotation.y = t * 0.4;
-  coreMesh.rotation.x = t * 0.17;
-
-  // Orbit nodes
-  nodeObjects.forEach(n => {
-    n.angle += n.angSpeed * dt;
-    const x = Math.cos(n.angle) * n.radius;
-    const z = Math.sin(n.angle) * n.radius;
-    const y = Math.tan(n.tilt) * z + Math.sin(t * 0.4 + n.radius) * 0.08;
-    n.mesh.position.set(x, y, z);
-    // Pulse scale
-    const pulse = 1 + 0.12 * Math.sin(t * 2 + n.radius);
-    n.mesh.scale.setScalar(pulse);
-  });
-
-  // Dust drift
-  dustGeo.attributes.position.array.forEach((v, i) => {
-    if (i % 3 === 1) dustGeo.attributes.position.array[i] += Math.sin(t * 0.3 + i) * 0.0002;
-  });
-  dustGeo.attributes.position.needsUpdate = true;
-
-  // Raycasting for hover
-  raycaster.setFromCamera(mouse, camera);
-  const meshes = nodeObjects.map(n => n.mesh);
-  const hits = raycaster.intersectObjects(meshes, true);
-
-  if (hits.length) {
-    let obj = hits[0].object;
-    while (obj.parent && !obj.userData.proto) obj = obj.parent;
-    const proto = obj.userData?.proto;
-    if (proto) {
-      hovered = proto;
-      renderer.domElement.style.cursor = 'pointer';
-      const p = obj.position.clone().project(camera);
-      const sx = (p.x + 1) / 2 * window.innerWidth;
-      const sy = (1 - p.y) / 2 * window.innerHeight;
-      showCard(proto, sx, sy);
-    } else hideCard();
+window.addEventListener('keydown',e=>{if(keys.hasOwnProperty(e.key.toLowerCase()))keys[e.key.toLowerCase()]=true});
+window.addEventListener('keyup',e=>{if(keys.hasOwnProperty(e.key.toLowerCase()))keys[e.key.toLowerCase()]=false});
+window.addEventListener('click',()=>{
+  if(lockedNode){
+    window.location.href=lockedNode.userData.proto.url;
   } else {
-    hovered = null;
-    renderer.domElement.style.cursor = 'default';
-    hideCard();
+    fireLaser();
+  }
+});
+window.addEventListener('resize',()=>{
+  camera.aspect=innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);
+});
+
+// ── RAYCASTER / LOCK-ON ───────────────────────────────────────────────────────
+const raycaster=new THREE.Raycaster();
+raycaster.params.Points={threshold:.5};
+let lockedNode=null;
+const cardEl=document.getElementById('card');
+const ring=document.getElementById('crosshair-ring');
+
+// ── TRAIL STATE ───────────────────────────────────────────────────────────────
+let trailIdx=0;
+const trailWorldPos=[];
+for(let i=0;i<TRAIL;i++) trailWorldPos.push(new THREE.Vector3());
+
+// ── CLOCK ─────────────────────────────────────────────────────────────────────
+const clock=new THREE.Clock();
+let t=0;
+
+// ── ANIMATE ──────────────────────────────────────────────────────────────────
+function animate(){
+  requestAnimationFrame(animate);
+  const dt=Math.min(clock.getDelta(),.05);
+  t+=dt;
+
+  // Camera yaw/pitch from mouse
+  const yaw   = -mouseXY.x * 0.9;
+  const pitch =  mouseXY.y * 0.6;
+  const camQ = new THREE.Quaternion();
+  const yawQ = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), yaw);
+  const pitchQ = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0), pitch);
+  camQ.multiplyQuaternions(yawQ, pitchQ);
+  camera.quaternion.slerp(camQ, 0.08);
+
+  // Ship trails camera
+  const fwd=new THREE.Vector3(0,0,-1).applyQuaternion(camera.quaternion);
+  const right=new THREE.Vector3(1,0,0).applyQuaternion(camera.quaternion);
+
+  if(keys.w) speed=Math.min(speed+6*dt,8);
+  else if(keys.s) speed=Math.max(speed-8*dt,0);
+  else speed=Math.max(speed-3*dt,0);
+
+  shipVel.copy(fwd).multiplyScalar(speed*dt);
+  if(keys.a) shipVel.addScaledVector(right,-4*dt);
+  if(keys.d) shipVel.addScaledVector(right, 4*dt);
+
+  shipGroup.position.add(shipVel);
+  shipGroup.quaternion.slerp(camera.quaternion, 0.12);
+
+  // Camera offset behind ship
+  const camOffset=fwd.clone().multiplyScalar(-3).add(new THREE.Vector3(0,.7,0));
+  camera.position.lerp(shipGroup.position.clone().add(camOffset), 0.1);
+
+  // Engine glow pulse
+  const ep=.5+.5*Math.sin(t*12);
+  eng.material.color.setHex(speed>0.5 ? 0x00ffb2 : 0x2a0a6a);
+  eng.scale.setScalar(.8+ep*.4);
+
+  // Trail
+  trailWorldPos[trailIdx].copy(shipGroup.position);
+  trailIdx=(trailIdx+1)%TRAIL;
+  for(let i=0;i<TRAIL;i++){
+    const idx=(trailIdx+i)%TRAIL;
+    const pos=trailWorldPos[idx];
+    trailPos[i*3]=pos.x; trailPos[i*3+1]=pos.y; trailPos[i*3+2]=pos.z;
+    trailAges[i]=i/TRAIL;
+  }
+  trailGeo.attributes.position.needsUpdate=true;
+  trailMat.opacity=speed>0.3 ? .5 : .0;
+
+  // Float nodes
+  nodes.forEach(n=>{
+    if(n.userData.dead) return;
+    const nd=n.userData;
+    nd.t+=dt*.3;
+    n.position.copy(nd.basePos).add(new THREE.Vector3(
+      Math.sin(nd.t)*0.4, Math.cos(nd.t*1.3)*0.3, Math.sin(nd.t*.7)*0.3
+    ));
+    n.rotation.y+=dt*.4;
+    n.children[0].material.opacity=.07+.04*Math.sin(t*2+nd.t);
+  });
+
+  // Lasers
+  for(let i=lasers.length-1;i>=0;i--){
+    const l=lasers[i];
+    l.mesh.position.addScaledVector(l.dir,l.speed);
+    l.life-=dt*2;
+    if(l.life<=0){scene.remove(l.mesh);lasers.splice(i,1);continue;}
+    // Check hits
+    const lp=l.mesh.position;
+    for(const n of nodes){
+      if(n.userData.dead) continue;
+      if(lp.distanceTo(n.position)<1.2){
+        // Hit!
+        const proto=n.userData.proto;
+        explode(n.position.clone(), proto.col);
+        n.userData.dead=true;
+        scene.remove(n);
+        nodes.splice(nodes.indexOf(n),1);
+        scene.remove(l.mesh);
+        lasers.splice(i,1);
+        hits++;
+        document.getElementById('hv').textContent=hits;
+        document.getElementById('nv').textContent=nodes.length;
+        // Flash
+        const f=document.getElementById('flash');
+        f.style.opacity='.7';f.style.background=`#${proto.col.toString(16).padStart(6,'0')}60`;
+        setTimeout(()=>f.style.opacity='0',100);
+        // Score pop
+        const pop=document.createElement('div');
+        pop.className='pop';pop.textContent='+'+proto.name;
+        pop.style.left=`${(mouseXY.x+1)/2*100}vw`;
+        pop.style.top=`${(-mouseXY.y+1)/2*100}vh`;
+        pop.style.color=`#${proto.col.toString(16).padStart(6,'0')}`;
+        document.body.appendChild(pop);
+        setTimeout(()=>pop.remove(),900);
+        // Navigate after 500ms
+        setTimeout(()=>{window.location.href=proto.url;},500);
+        break;
+      }
+    }
   }
 
-  renderer.render(scene, camera);
+  // Explosions
+  for(let i=explosions.length-1;i>=0;i--){
+    const e=explosions[i];
+    e.life-=dt*1.8;
+    const pa=e.pts.geometry.attributes.position.array;
+    for(let j=0;j<e.velocities.length;j++){
+      pa[j*3]+=e.velocities[j].x*dt;
+      pa[j*3+1]+=e.velocities[j].y*dt;
+      pa[j*3+2]+=e.velocities[j].z*dt;
+      e.velocities[j].multiplyScalar(0.95);
+    }
+    e.pts.geometry.attributes.position.needsUpdate=true;
+    e.pts.material.opacity=Math.max(0,e.life);
+    if(e.life<=0){scene.remove(e.pts);explosions.splice(i,1);}
+  }
+
+  // Lock-on
+  raycaster.setFromCamera({x:0,y:0},camera);
+  const hits2=raycaster.intersectObjects(nodes,true);
+  if(hits2.length){
+    let obj=hits2[0].object;
+    while(obj.parent&&!obj.userData.proto) obj=obj.parent;
+    if(obj.userData.proto){
+      lockedNode=obj;
+      ring.classList.add('locked');
+      const proto=obj.userData.proto;
+      document.getElementById('card-name').textContent=proto.name;
+      document.getElementById('card-url').textContent=proto.url.replace('https://','');
+      document.getElementById('card-desc').textContent=proto.desc;
+      // Project to screen
+      const p=obj.position.clone().project(camera);
+      cardEl.style.left=(p.x+1)/2*innerWidth+'px';
+      cardEl.style.top=(1-p.y)/2*innerHeight+'px';
+      cardEl.classList.add('vis');
+    }
+  } else {
+    lockedNode=null;
+    ring.classList.remove('locked');
+    cardEl.classList.remove('vis');
+  }
+
+  // HUD speed
+  document.getElementById('sv').textContent=speed.toFixed(1);
+
+  renderer.render(scene,camera);
 }
-animate();
+
+// ── FAKE LOAD ─────────────────────────────────────────────────────────────────
+let pct=0;
+const bar=document.getElementById('load-bar-inner');
+const msg=document.getElementById('load-msg');
+const msgs=['CHARGING THRUSTERS...','LOADING STAR MAP...','POWERING LASERS...','ALIGNING NODES...','LAUNCH'];
+let mi=0;
+const li=setInterval(()=>{
+  pct+=5+Math.random()*10;
+  bar.style.width=Math.min(pct,100)+'%';
+  if(pct>25&&mi===0){msg.textContent=msgs[1];mi=1;}
+  if(pct>50&&mi===1){msg.textContent=msgs[2];mi=2;}
+  if(pct>72&&mi===2){msg.textContent=msgs[3];mi=3;}
+  if(pct>=100){
+    clearInterval(li);msg.textContent=msgs[4];
+    setTimeout(()=>document.getElementById('load').classList.add('done'),300);
+    animate();
+  }
+},60);
 </script>
 </html>
