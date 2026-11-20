@@ -1,0 +1,35 @@
+src/routes/agent-law.tsx
+  s_31fd028fa06438::t_b7d6b0ecde36b1 1-92
+public/evidence/agent-law/lifecycle.json
+  s_31fd028fa06438::t_98dd48a38e6b15 1-149
+public/evidence/agent-law/provenance.json
+  s_31fd028fa06438::t_be5756528d2a6a 1-25
+public/evidence/agent-law/python-tests.txt
+  s_31fd028fa06438::t_e77e769c471a65 1-16
+public/evidence/agent-law/verification.json
+  s_31fd028fa06438::t_8a361e18920ed3 1-37
+src/lib/agent-law.ts
+  s_31fd028fa06438::t_cbf82259ea42a8 1-11
+src/lib/site-nav.ts
+  s_31fd028fa06438::t_164edf9d5fa47a 134-139
+src/routes/index.tsx
+  s_31fd028fa06438::t_b116eb62270921 194-207
+src/routes/labs.tsx
+  s_31fd028fa06438::t_4e9c07757f836c 84-91
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2c8e43c1f905bed4d14cbb1d023339fe7cc35a16",
+  "prompts": {},
+  "sessions": {
+    "s_31fd028fa06438": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "69bd2b58-7f31-4914-aa3b-33a64ae821c7",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "crypto pimpim <cryptopimpinainteazy@gmail.com>"
+    }
+  }
+}
