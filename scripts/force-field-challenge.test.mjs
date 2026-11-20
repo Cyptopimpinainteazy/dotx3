@@ -13,13 +13,14 @@ const html = readFileSync(
   "utf8",
 );
 const PIN = "f2a01a2ae144c69e115fd807a642bddfd8668f9f";
-// The local-node vault evidence and the agent-law status are committed in x3lang #233, on a
-// commit beside PIN rather than after it; only those files may be linked at this second commit.
-const EVIDENCE_PIN = "7cfde9ffc060f13c5523f5812af541a8b100b14e";
+// The vault evidence, the agent-law status and the runtime doc are committed in x3lang #233 (not
+// yet on master); only those files may be linked at this second commit.
+const EVIDENCE_PIN = "18c1fab931c958c1bd185f117e5e52eec724c562";
 const EVIDENCE_FILES = [
   "evidence/agent-vault-local/complete-path-sandbox-20261113.json",
   "evidence/agent-vault-local/complete-path-sandbox-20261113.txt",
   "docs/security/X3_AGENT_CONSTITUTION_V1.md",
+  "docs/security/AGENT_LAW_RUNTIME.md",
 ];
 const MAINNET_TRAIL = [
   "GFdQLrzT5tnPPdZwKLtmwpNvSwrxVHDvVg2C3WX5fsK6",
