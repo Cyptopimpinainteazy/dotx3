@@ -81,6 +81,14 @@ function Labs() {
           <CompilerWorkbench />
         )}
       </Section>
+      <Section title="Agent-law lifecycle evidence" id="agent-law-evidence" alt intro="Recorded local execution, not a live browser runtime or a new mainnet deployment.">
+        <div className="mx-auto max-w-3xl space-y-5 text-center text-muted">
+          <p>Follow signed agent birth, atomic budget delegation, real .x3 compilation, replay rejection and retirement after a recipient-policy violation. Reopening the database does not erase the stop.</p>
+          <p>The local court exports a signed regression proposal. Scripted jury signers demonstrate protocol checks, not independent AI judgment. No wallet or payment adapter runs here.</p>
+          <ActionLink to="/agent-law">Read the lifecycle and download the evidence</ActionLink>
+        </div>
+      </Section>
+
       <Section title="Choose an exercise">
         <CardGrid>
           <Card title="Write .x3">

@@ -133,6 +133,12 @@ export const ALL_NAV: NavGroup[] = [
       },
       {
         kind: "route",
+        label: "Agent-law lifecycle",
+        description: "Local implementation, demo evidence and limits",
+        to: "/agent-law",
+      },
+      {
+        kind: "route",
         label: "Labs & integrations",
         description: "Write, challenge and inspect .x3",
         to: "/labs",

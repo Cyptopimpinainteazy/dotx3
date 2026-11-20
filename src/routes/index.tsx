@@ -192,6 +192,20 @@ function Home() {
       </Section>
 
       <Section
+        title="Agent-law lifecycle"
+        id="agent-law-lifecycle"
+        alt
+        intro="A working local prototype: signed birth, scoped compilation, durable retirement and incident review. Separate from the mainnet Guard demonstration."
+      >
+        <div className="mx-auto max-w-3xl space-y-5 text-center text-muted">
+          <p className="font-display text-lg text-fg">Birth → compile → authorize → retire → review → propose improvements</p>
+          <p>The recorded demo uses real SQLite, Ed25519 signatures and the .x3 intent compiler. A redirected recipient is refused, and retirement survives restart. The adapter emits a plan; it does not move funds.</p>
+          <p>Jury identities in the demo are scripted signers. Independent AI judgments, production custody and automatic policy promotion are not demonstrated.</p>
+          <ActionLink to="/agent-law">Inspect the lifecycle and demo evidence</ActionLink>
+        </div>
+      </Section>
+
+      <Section
         title="Chain of command"
         intro="Authority runs one way. The agent is third in line and cannot approve itself."
         alt
