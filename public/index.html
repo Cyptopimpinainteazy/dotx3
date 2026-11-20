@@ -1,43 +1,429 @@
-<!doctype html><html lang=en><meta charset=UTF-8><meta content="width=device-width,initial-scale=1.0" name=viewport><title>X3 Chain — Modular Blockchain Hub</title><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Syne:wght@700;800&family=IBM+Plex+Mono&display=swap" rel=stylesheet><style>*{box-sizing:border-box;margin:0;padding:0}:root{--bg:#04040a;--bg2:#08081a;--p:#8b5cf6;--c:#00ffb2;--g:#ffd166;--r:#ff6b9d;--t:#e0e0f0;--t2:#707090;--b:#8b5cf62e}body{background:var(--bg);color:var(--t);min-height:100vh;font-family:Space Grotesk,sans-serif;overflow-x:hidden}nav{z-index:99;backdrop-filter:blur(18px);border-bottom:1px solid var(--b);background:#04040aeb;justify-content:space-between;align-items:center;height:64px;padding:0 32px;display:flex;position:fixed;top:0;left:0;right:0}.logo{font-family:Syne,sans-serif;font-size:1.3rem;font-weight:800;text-decoration:none;color:var(--t)}.logo span{color:var(--g)}.nl{gap:24px;display:flex}.nl a{color:var(--t2);font-size:.88rem;text-decoration:none}.nl a:hover{color:var(--c)}.orb{filter:blur(100px);opacity:.18;pointer-events:none;border-radius:50%;position:absolute}.o1{background:radial-gradient(circle,#8b5cf6,#0000);width:600px;height:400px;top:0;left:50%;transform:translate(-50%)}.o2{background:radial-gradient(circle,#00ffb2,#0000);width:400px;height:400px;bottom:-100px;right:-100px}.hero{text-align:center;padding:120px 32px 60px;position:relative;overflow:hidden}.hi{max-width:700px;margin:0 auto;position:relative}.tag{color:var(--p);background:#8b5cf612;border:1px solid var(--b);border-radius:20px;padding:4px 14px;font-size:.8rem;font-family:IBM Plex Mono,monospace;display:inline-block;margin-bottom:16px}.h1{font-family:Syne,sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.1;margin-bottom:16px}.accent{color:var(--c)}.accent-p{color:var(--p)}.accent-g{color:var(--g)}.accent-r{color:var(--r)}.sub{color:var(--t2);font-size:1.05rem;line-height:1.6;max-width:520px;margin:0 auto 32px}.btns{gap:12px;flex-wrap:wrap;justify-content:center;display:flex}.btn{border-radius:8px;padding:12px 28px;font-size:.95rem;font-weight:600;text-decoration:none;transition:.2s;cursor:pointer;border:none;font-family:Space Grotesk,sans-serif}.btn-p{background:var(--p);color:#fff}.btn-p:hover{opacity:.85}.btn-o{background:transparent;color:var(--t);border:1px solid var(--b)}.btn-o:hover{border-color:var(--p);color:var(--p)}.section{padding:80px 32px;max-width:1100px;margin:0 auto}.sec-head{text-align:center;margin-bottom:48px}.sec-tag{color:var(--p);font-family:IBM Plex Mono,monospace;font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}.sec-title{font-family:Syne,sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin-bottom:12px}.sec-sub{color:var(--t2);max-width:540px;margin:0 auto;line-height:1.6}.grid{display:grid;gap:20px}.grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}.grid-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}.grid-4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}.card{background:var(--bg2);border:1px solid var(--b);border-radius:12px;padding:28px;transition:.2s}.card:hover{border-color:var(--p);transform:translateY(-2px)}.card-icon{font-size:2rem;margin-bottom:12px}.card-title{font-weight:700;font-size:1.05rem;margin-bottom:8px}.card-text{color:var(--t2);font-size:.9rem;line-height:1.6}.stat-val{font-family:Syne,sans-serif;font-size:2rem;font-weight:800;margin-bottom:4px}.stat-label{color:var(--t2);font-size:.85rem}.mono{font-family:IBM Plex Mono,monospace;font-size:.85rem;color:var(--c)}.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.75rem;font-weight:600}.badge-p{background:#8b5cf622;color:var(--p)}.badge-c{background:#00ffb222;color:var(--c)}.badge-g{background:#ffd16622;color:var(--g)}.badge-r{background:#ff6b9d22;color:var(--r)}footer{border-top:1px solid var(--b);padding:40px 32px;text-align:center;color:var(--t2);font-size:.85rem;margin-top:80px}.footer-logo{font-family:Syne,sans-serif;font-size:1.1rem;font-weight:800;color:var(--t);margin-bottom:8px}.footer-logo span{color:var(--g)}.divider{height:1px;background:linear-gradient(90deg,#0000,var(--b),#0000);margin:60px 0}.hub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}.hub-card{background:var(--bg2);border:1px solid var(--b);border-radius:12px;padding:20px;text-decoration:none;color:var(--t);transition:.2s;display:block}.hub-card:hover{border-color:var(--p);transform:translateY(-2px)}.hub-card .ci{font-size:1.6rem;margin-bottom:8px}.hub-card .cn{font-weight:700;font-size:.95rem;margin-bottom:4px}.hub-card .cd{color:var(--t2);font-size:.8rem;line-height:1.5}.hub-section{padding:40px 32px;max-width:1200px;margin:0 auto}.hs-label{font-family:IBM Plex Mono,monospace;font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;color:var(--p);margin-bottom:16px}</style><nav><a class="logo" href="https://x3star.net">X3<span>★</span>STAR</a><div class="nl"><a href="https://swap.x3star.net">Swap</a><a href="https://explorer.x3star.net">Explorer</a><a href="https://staking.x3star.net">Staking</a><a href="https://nft.x3star.net">NFT</a><a href="https://dev.x3star.net">Dev</a><a href="https://x3star.net">Hub</a></div></nav>
-<main>
-<section class="hero"><div class="orb o1"></div><div class="orb o2"></div><div class="hi"><div class="tag">X3 Chain Ecosystem</div><h1 class="h1">The <span class="accent">X3 Chain</span> Universe</h1><p class="sub">Every protocol, tool, and service in the X3 Chain ecosystem. One blockchain, infinite possibility.</p></div></section>
-<div class="hub-section"><div class="hs-label">⬡ Core Protocol</div><div class="hub-grid">
-<a class="hub-card" href="https://explorer.x3star.net"><div class="ci">🔍</div><div class="cn">Explorer</div><div class="cd">Browse blocks, transactions, and addresses on X3 Chain</div></a>
-<a class="hub-card" href="https://tokenomics.x3star.net"><div class="ci">📊</div><div class="cn">Tokenomics</div><div class="cd">X3 token supply, distribution, and emission schedule</div></a>
-<a class="hub-card" href="https://whitepaper.x3star.net"><div class="ci">📄</div><div class="cn">Whitepaper</div><div class="cd">Technical architecture and protocol specification</div></a>
-<a class="hub-card" href="https://roadmap.x3star.net"><div class="ci">🗺️</div><div class="cn">Roadmap</div><div class="cd">Development milestones and upcoming releases</div></a>
-</div></div>
-<div class="hub-section"><div class="hs-label">💱 DeFi Suite</div><div class="hub-grid">
-<a class="hub-card" href="https://swap.x3star.net"><div class="ci">⚡</div><div class="cn">X3 Swap</div><div class="cd">AMM-powered token exchange with deep liquidity</div></a>
-<a class="hub-card" href="https://staking.x3star.net"><div class="ci">🔒</div><div class="cn">Staking</div><div class="cd">Stake X3 tokens and earn protocol rewards</div></a>
-<a class="hub-card" href="https://bridge.x3star.net"><div class="ci">🌉</div><div class="cn">Bridge</div><div class="cd">Cross-chain asset transfers and liquidity routing</div></a>
-<a class="hub-card" href="https://flash.x3star.net"><div class="ci">⚡</div><div class="cn">Flash Loans</div><div class="cd">Uncollateralized flash loans for arbitrage and liquidations</div></a>
-<a class="hub-card" href="https://analytics.x3star.net"><div class="ci">📈</div><div class="cn">Analytics</div><div class="cd">Real-time DeFi metrics, TVL, and volume data</div></a>
-<a class="hub-card" href="https://portfolio.x3star.net"><div class="ci">💼</div><div class="cn">Portfolio</div><div class="cd">Track your holdings, positions, and PnL across X3</div></a>
-</div></div>
-<div class="hub-section"><div class="hs-label">🎨 NFTs & Marketplace</div><div class="hub-grid">
-<a class="hub-card" href="https://nft.x3star.net"><div class="ci">🎨</div><div class="cn">NFT Studio</div><div class="cd">Mint, manage, and trade non-fungible tokens</div></a>
-<a class="hub-card" href="https://marketplace.x3star.net"><div class="ci">🏪</div><div class="cn">Marketplace</div><div class="cd">Buy, sell, and discover digital assets</div></a>
-<a class="hub-card" href="https://games.x3star.net"><div class="ci">🎮</div><div class="cn">Games</div><div class="cd">Play-to-earn games and onchain gaming experiences</div></a>
-</div></div>
-<div class="hub-section"><div class="hs-label">🏗️ Infrastructure</div><div class="hub-grid">
-<a class="hub-card" href="https://nodes.x3star.net"><div class="ci">🖥️</div><div class="cn">Nodes</div><div class="cd">Run an X3 node and secure the network</div></a>
-<a class="hub-card" href="https://validators.x3star.net"><div class="ci">✅</div><div class="cn">Validators</div><div class="cd">Become a validator and earn staking rewards</div></a>
-<a class="hub-card" href="https://security.x3star.net"><div class="ci">🛡️</div><div class="cn">Security</div><div class="cd">Audits, bug bounties, and protocol security</div></a>
-<a class="hub-card" href="https://status.x3star.net"><div class="ci">📡</div><div class="cn">Status</div><div class="cd">Real-time network health and incident tracker</div></a>
-<a class="hub-card" href="https://agents.x3star.net"><div class="ci">🤖</div><div class="cn">AI Agents</div><div class="cd">Autonomous agents operating on X3 Chain</div></a>
-</div></div>
-<div class="hub-section"><div class="hs-label">🏛️ Governance & DAO</div><div class="hub-grid">
-<a class="hub-card" href="https://governance.x3star.net"><div class="ci">🏛️</div><div class="cn">Governance</div><div class="cd">Vote on proposals and shape the protocol</div></a>
-<a class="hub-card" href="https://treasury.x3star.net"><div class="ci">🏦</div><div class="cn">Treasury</div><div class="cd">DAO treasury holdings and fund allocation</div></a>
-<a class="hub-card" href="https://grants.x3star.net"><div class="ci">💰</div><div class="cn">Grants</div><div class="cd">Apply for ecosystem grants and builder funding</div></a>
-<a class="hub-card" href="https://launch.x3star.net"><div class="ci">🚀</div><div class="cn">Launchpad</div><div class="cd">Fair-launch IDOs and token generation events</div></a>
-</div></div>
-<div class="hub-section"><div class="hs-label">🌐 Community & Resources</div><div class="hub-grid">
-<a class="hub-card" href="https://community.x3star.net"><div class="ci">👥</div><div class="cn">Community</div><div class="cd">Forums, chat, and community governance</div></a>
-<a class="hub-card" href="https://academy.x3star.net"><div class="ci">📚</div><div class="cn">Academy</div><div class="cd">Learn X3 Chain from beginner to expert</div></a>
-<a class="hub-card" href="https://dev.x3star.net"><div class="ci">👨‍💻</div><div class="cn">Developers</div><div class="cd">SDKs, APIs, and developer documentation</div></a>
-<a class="hub-card" href="https://press.x3star.net"><div class="ci">📰</div><div class="cn">Press</div><div class="cd">Media kit, news, and announcements</div></a>
-</div></div>
-</main>
-<footer><div class="footer-logo">X3<span>★</span>STAR</div><p>X3 Chain — Modular Blockchain Infrastructure</p></footer>
+<!doctype html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>X3 Chain — Modular Blockchain Ecosystem</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Syne:wght@700;800&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#8b5cf6;--c:#00ffb2;--g:#ffd166;--r:#ff6b9d;--t:#e0e0f0;--t2:#707090}
+html,body{width:100%;height:100%;overflow:hidden;background:#02020a}
+canvas{display:block;position:fixed;inset:0}
+
+/* HUD overlay */
+#hud{position:fixed;inset:0;pointer-events:none;z-index:10}
+
+#wordmark{position:fixed;top:28px;left:36px;font-family:Syne,sans-serif;font-size:1.5rem;font-weight:800;color:#e0e0f0;letter-spacing:-.01em;pointer-events:none}
+#wordmark span{color:var(--g)}
+
+#tagline{position:fixed;bottom:36px;left:0;right:0;text-align:center;font-family:IBM Plex Mono,monospace;font-size:.75rem;color:#404060;letter-spacing:.18em;text-transform:uppercase;pointer-events:none}
+
+#hint{position:fixed;top:28px;right:36px;font-family:IBM Plex Mono,monospace;font-size:.72rem;color:#404060;text-align:right;line-height:1.8;pointer-events:none}
+
+/* Card tooltip */
+#card{
+  position:fixed;
+  transform:translate(-50%,-110%);
+  background:#08081aee;
+  border:1px solid #8b5cf640;
+  border-radius:10px;
+  padding:12px 18px;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .15s;
+  backdrop-filter:blur(12px);
+  min-width:160px;
+  z-index:20;
+}
+#card.visible{opacity:1}
+#card-name{font-family:Syne,sans-serif;font-weight:800;font-size:1rem;color:#e0e0f0;margin-bottom:4px}
+#card-url{font-family:IBM Plex Mono,monospace;font-size:.72rem;color:var(--c)}
+#card-desc{font-family:Space Grotesk,sans-serif;font-size:.8rem;color:#707090;margin-top:6px;max-width:200px;line-height:1.4}
+
+/* Click ripple */
+#ripple{position:fixed;border-radius:50%;pointer-events:none;z-index:30;opacity:0}
+
+/* Loading screen */
+#loading{
+  position:fixed;inset:0;background:#02020a;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:100;transition:opacity .6s .2s;
+}
+#loading.done{opacity:0;pointer-events:none}
+#load-logo{font-family:Syne,sans-serif;font-size:2.5rem;font-weight:800;color:#e0e0f0;margin-bottom:24px}
+#load-logo span{color:var(--g)}
+#load-bar-wrap{width:200px;height:2px;background:#ffffff12;border-radius:2px;overflow:hidden}
+#load-bar{height:100%;background:linear-gradient(90deg,var(--p),var(--c));width:0%;transition:width .08s}
+#load-text{font-family:IBM Plex Mono,monospace;font-size:.72rem;color:#404060;margin-top:12px;letter-spacing:.12em}
+</style>
+
+<div id="loading">
+  <div id="load-logo">X3<span>★</span>CHAIN</div>
+  <div id="load-bar-wrap"><div id="load-bar"></div></div>
+  <div id="load-text">INITIALIZING UNIVERSE...</div>
+</div>
+
+<div id="hud">
+  <div id="wordmark">X3<span>★</span>STAR</div>
+  <div id="hint">SCROLL · drag to orbit<br>click to enter</div>
+  <div id="tagline">X3 Chain — Modular Blockchain Infrastructure — 2026</div>
+</div>
+
+<div id="card">
+  <div id="card-name"></div>
+  <div id="card-url"></div>
+  <div id="card-desc"></div>
+</div>
+
+<div id="ripple"></div>
+
+<script type="importmap">
+{"imports":{"three":"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+// ─── DATA ───────────────────────────────────────────────────────────────────
+const PROTOCOLS = [
+  // Core
+  { name:'X3 Explorer',   url:'https://explorer.x3star.net', desc:'Browse blocks & transactions',  color:0x00ffb2, group:'core',    icon:'🔍' },
+  { name:'Tokenomics',    url:'https://tokenomics.x3star.net',desc:'Supply & emission schedule',   color:0xffd166, group:'core',    icon:'📊' },
+  { name:'Whitepaper',    url:'https://whitepaper.x3star.net',desc:'Technical architecture',       color:0xe0e0f0, group:'core',    icon:'📄' },
+  { name:'Roadmap',       url:'https://roadmap.x3star.net',   desc:'Development milestones',       color:0x8b5cf6, group:'core',    icon:'🗺️' },
+  // DeFi
+  { name:'X3 Swap',       url:'https://swap.x3star.net',      desc:'AMM token exchange',           color:0x00ffb2, group:'defi',    icon:'⚡' },
+  { name:'Staking',       url:'https://staking.x3star.net',   desc:'Earn protocol rewards',        color:0x8b5cf6, group:'defi',    icon:'🔒' },
+  { name:'Bridge',        url:'https://bridge.x3star.net',    desc:'Cross-chain transfers',        color:0xffd166, group:'defi',    icon:'🌉' },
+  { name:'Flash Loans',   url:'https://flash.x3star.net',     desc:'Uncollateralized loans',       color:0xff6b9d, group:'defi',    icon:'⚡' },
+  { name:'Analytics',     url:'https://analytics.x3star.net', desc:'Real-time DeFi metrics',       color:0x00ffb2, group:'defi',    icon:'📈' },
+  { name:'Portfolio',     url:'https://portfolio.x3star.net', desc:'Track your holdings',          color:0x8b5cf6, group:'defi',    icon:'💼' },
+  // NFT
+  { name:'NFT Studio',    url:'https://nft.x3star.net',       desc:'Mint & trade NFTs',            color:0xff6b9d, group:'nft',     icon:'🎨' },
+  { name:'Marketplace',   url:'https://marketplace.x3star.net',desc:'Buy & sell digital assets',  color:0xffd166, group:'nft',     icon:'🏪' },
+  { name:'Games',         url:'https://games.x3star.net',     desc:'Play-to-earn gaming',          color:0x00ffb2, group:'nft',     icon:'🎮' },
+  // Infra
+  { name:'Nodes',         url:'https://nodes.x3star.net',     desc:'Run the network',              color:0x8b5cf6, group:'infra',   icon:'🖥️' },
+  { name:'Validators',    url:'https://validators.x3star.net',desc:'Block production',             color:0xffd166, group:'infra',   icon:'✅' },
+  { name:'Security',      url:'https://security.x3star.net',  desc:'Audits & bug bounty',          color:0xff6b9d, group:'infra',   icon:'🛡️' },
+  { name:'Status',        url:'https://status.x3star.net',    desc:'Network health monitor',       color:0x00ffb2, group:'infra',   icon:'📡' },
+  { name:'AI Agents',     url:'https://agents.x3star.net',    desc:'Autonomous on-chain agents',   color:0xff6b9d, group:'infra',   icon:'🤖' },
+  // DAO
+  { name:'Governance',    url:'https://governance.x3star.net',desc:'Vote on proposals',            color:0x8b5cf6, group:'dao',     icon:'🏛️' },
+  { name:'Treasury',      url:'https://treasury.x3star.net',  desc:'DAO fund allocation',          color:0xffd166, group:'dao',     icon:'🏦' },
+  { name:'Grants',        url:'https://grants.x3star.net',    desc:'Builder funding',              color:0x00ffb2, group:'dao',     icon:'💰' },
+  { name:'Launchpad',     url:'https://launch.x3star.net',    desc:'Fair-launch IDOs',             color:0xff6b9d, group:'dao',     icon:'🚀' },
+  // Community
+  { name:'Community',     url:'https://community.x3star.net', desc:'Join 50K+ builders',           color:0x8b5cf6, group:'social',  icon:'👥' },
+  { name:'Academy',       url:'https://academy.x3star.net',   desc:'Learn X3 Chain',               color:0x00ffb2, group:'social',  icon:'📚' },
+  { name:'Developers',    url:'https://dev.x3star.net',       desc:'SDKs & documentation',         color:0xffd166, group:'social',  icon:'👨‍💻' },
+  { name:'Press',         url:'https://press.x3star.net',     desc:'Media kit & news',             color:0xe0e0f0, group:'social',  icon:'📰' },
+];
+
+// ─── GROUP ORBITAL RADII ────────────────────────────────────────────────────
+const GROUP_RING = { core:3.2, defi:5.8, nft:8.0, infra:10.2, dao:12.0, social:14.0 };
+const GROUP_TILT = { core:0, defi:0.18, nft:-0.22, infra:0.30, dao:-0.14, social:0.24 };
+
+// ─── SCENE ──────────────────────────────────────────────────────────────────
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:false });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0x02020a);
+document.body.prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.1, 500);
+camera.position.set(0, 6, 22);
+camera.lookAt(0, 0, 0);
+
+// ─── STARFIELD ──────────────────────────────────────────────────────────────
+const starCount = 6000;
+const starGeo = new THREE.BufferGeometry();
+const starPos = new Float32Array(starCount * 3);
+const starCol = new Float32Array(starCount * 3);
+for (let i = 0; i < starCount; i++) {
+  const r = 80 + Math.random() * 200;
+  const theta = Math.random() * Math.PI * 2;
+  const phi = Math.acos(2 * Math.random() - 1);
+  starPos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+  starPos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+  starPos[i*3+2] = r * Math.cos(phi);
+  const t = Math.random();
+  if (t < 0.33) { starCol[i*3]=0.54; starCol[i*3+1]=0.36; starCol[i*3+2]=0.96; }
+  else if (t < 0.66) { starCol[i*3]=0.0; starCol[i*3+1]=1.0; starCol[i*3+2]=0.7; }
+  else { starCol[i*3]=1.0; starCol[i*3+1]=0.82; starCol[i*3+2]=0.4; }
+}
+starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+starGeo.setAttribute('color', new THREE.BufferAttribute(starCol, 3));
+const starMat = new THREE.PointsMaterial({ size:0.35, vertexColors:true, transparent:true, opacity:0.8, sizeAttenuation:true });
+scene.add(new THREE.Points(starGeo, starMat));
+
+// ─── NEBULA CLOUDS (large blurred spheres) ───────────────────────────────────
+function makeNebula(color, x, y, z, scale) {
+  const geo = new THREE.SphereGeometry(1, 8, 8);
+  const mat = new THREE.MeshBasicMaterial({ color, transparent:true, opacity:0.03, side:THREE.FrontSide });
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.scale.set(scale * (1 + Math.random()), scale * 0.6, scale * (1 + Math.random()));
+  mesh.position.set(x, y, z);
+  scene.add(mesh);
+}
+makeNebula(0x8b5cf6, -8, 2, -5, 18);
+makeNebula(0x00ffb2, 10, -3, -8, 14);
+makeNebula(0xffd166, 0, -6, 0, 20);
+makeNebula(0xff6b9d, -4, 4, 8, 12);
+
+// ─── ORBITAL RING LINES ─────────────────────────────────────────────────────
+function makeOrbitRing(radius, tilt, color) {
+  const seg = 128;
+  const pts = [];
+  for (let i = 0; i <= seg; i++) {
+    const a = (i / seg) * Math.PI * 2;
+    pts.push(new THREE.Vector3(Math.cos(a) * radius, 0, Math.sin(a) * radius));
+  }
+  const geo = new THREE.BufferGeometry().setFromPoints(pts);
+  const mat = new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.08 });
+  const ring = new THREE.Line(geo, mat);
+  ring.rotation.x = tilt;
+  scene.add(ring);
+}
+Object.entries(GROUP_RING).forEach(([g, r]) => makeOrbitRing(r, GROUP_TILT[g], 0xffffff));
+
+// ─── CENTRAL X3 STAR ────────────────────────────────────────────────────────
+const coreGeo = new THREE.IcosahedronGeometry(0.9, 2);
+const coreMat = new THREE.MeshBasicMaterial({ color:0xffd166, wireframe:true });
+const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+scene.add(coreMesh);
+
+// Inner glow sphere
+const glowGeo = new THREE.SphereGeometry(1.4, 16, 16);
+const glowMat = new THREE.MeshBasicMaterial({ color:0xffd166, transparent:true, opacity:0.06 });
+scene.add(new THREE.Mesh(glowGeo, glowMat));
+
+// ─── PROTOCOL NODES ─────────────────────────────────────────────────────────
+const nodeObjects = []; // { mesh, ring, label, proto, angle, angularSpeed }
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2(-999, -999);
+
+// Count per group for even spacing
+const groupCounts = {};
+const groupIdx = {};
+PROTOCOLS.forEach(p => { groupCounts[p.group] = (groupCounts[p.group]||0)+1; groupIdx[p.group] = 0; });
+
+PROTOCOLS.forEach((proto, i) => {
+  const radius = GROUP_RING[proto.group];
+  const tilt   = GROUP_TILT[proto.group];
+  const count  = groupCounts[proto.group];
+  const idx    = groupIdx[proto.group]++;
+  const angle  = (idx / count) * Math.PI * 2;
+
+  // Node sphere
+  const geo = new THREE.SphereGeometry(0.22, 12, 12);
+  const mat = new THREE.MeshBasicMaterial({ color: proto.color });
+  const mesh = new THREE.Mesh(geo, mat);
+
+  // Glow halo
+  const haloGeo = new THREE.SphereGeometry(0.38, 12, 12);
+  const haloMat = new THREE.MeshBasicMaterial({ color: proto.color, transparent:true, opacity:0.08 });
+  const halo = new THREE.Mesh(haloGeo, haloMat);
+  mesh.add(halo);
+
+  // Position on ring (tilt is around X axis)
+  const x = Math.cos(angle) * radius;
+  const z = Math.sin(angle) * radius;
+  const y = Math.tan(tilt) * z; // approximate tilt effect
+  mesh.position.set(x, y, z);
+  scene.add(mesh);
+
+  // Store orbital params
+  mesh.userData = { proto, angle, radius, tilt, idx, count, baseY: y };
+
+  // Angular speed varies slightly by orbit
+  const angSpeed = 0.025 + Math.random() * 0.015;
+
+  nodeObjects.push({ mesh, proto, angle, radius, tilt, angSpeed });
+});
+
+// ─── BACKGROUND PARTICLE DUST ───────────────────────────────────────────────
+const dustCount = 1200;
+const dustGeo = new THREE.BufferGeometry();
+const dustPos = new Float32Array(dustCount * 3);
+for (let i = 0; i < dustCount; i++) {
+  dustPos[i*3]   = (Math.random() - 0.5) * 60;
+  dustPos[i*3+1] = (Math.random() - 0.5) * 20;
+  dustPos[i*3+2] = (Math.random() - 0.5) * 60;
+}
+dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+const dustMat = new THREE.PointsMaterial({ size:0.06, color:0x8b5cf6, transparent:true, opacity:0.4 });
+scene.add(new THREE.Points(dustGeo, dustMat));
+
+// ─── CAMERA ORBIT CONTROLS (manual) ─────────────────────────────────────────
+let isDragging = false, lastMX = 0, lastMY = 0;
+let camTheta = 0.0, camPhi = 0.9, camDist = 22;
+let targetTheta = 0, targetPhi = 0.9, targetDist = 22;
+const PHI_MIN = 0.15, PHI_MAX = 1.5;
+
+function updateCamera() {
+  camera.position.x = camDist * Math.sin(camPhi) * Math.sin(camTheta);
+  camera.position.y = camDist * Math.cos(camPhi);
+  camera.position.z = camDist * Math.sin(camPhi) * Math.cos(camTheta);
+  camera.lookAt(0, 0, 0);
+}
+
+renderer.domElement.addEventListener('mousedown', e => {
+  isDragging = true; lastMX = e.clientX; lastMY = e.clientY;
+});
+window.addEventListener('mouseup', () => isDragging = false);
+window.addEventListener('mousemove', e => {
+  if (isDragging) {
+    targetTheta += (e.clientX - lastMX) * 0.006;
+    targetPhi   = Math.max(PHI_MIN, Math.min(PHI_MAX, targetPhi - (e.clientY - lastMY) * 0.006));
+    lastMX = e.clientX; lastMY = e.clientY;
+  }
+  mouse.x =  (e.clientX / window.innerWidth)  * 2 - 1;
+  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+});
+window.addEventListener('wheel', e => {
+  targetDist = Math.max(8, Math.min(40, targetDist + e.deltaY * 0.03));
+}, { passive:true });
+
+// Touch
+let lastTX = 0, lastTY = 0;
+renderer.domElement.addEventListener('touchstart', e => { lastTX = e.touches[0].clientX; lastTY = e.touches[0].clientY; }, { passive:true });
+renderer.domElement.addEventListener('touchmove', e => {
+  targetTheta += (e.touches[0].clientX - lastTX) * 0.008;
+  targetPhi   = Math.max(PHI_MIN, Math.min(PHI_MAX, targetPhi - (e.touches[0].clientY - lastTY) * 0.008));
+  lastTX = e.touches[0].clientX; lastTY = e.touches[0].clientY;
+}, { passive:true });
+
+// ─── TOOLTIP & HOVER ─────────────────────────────────────────────────────────
+const cardEl    = document.getElementById('card');
+const cardName  = document.getElementById('card-name');
+const cardUrl   = document.getElementById('card-url');
+const cardDesc  = document.getElementById('card-desc');
+let hovered = null;
+
+function showCard(proto, x, y) {
+  cardName.textContent = proto.name;
+  cardUrl.textContent  = proto.url.replace('https://','');
+  cardDesc.textContent = proto.desc;
+  cardEl.style.left = x + 'px';
+  cardEl.style.top  = y + 'px';
+  cardEl.classList.add('visible');
+}
+function hideCard() {
+  cardEl.classList.remove('visible');
+}
+
+// ─── CLICK ───────────────────────────────────────────────────────────────────
+renderer.domElement.addEventListener('click', e => {
+  if (hovered) {
+    // Ripple effect
+    const rip = document.getElementById('ripple');
+    rip.style.left   = e.clientX - 24 + 'px';
+    rip.style.top    = e.clientY - 24 + 'px';
+    rip.style.width  = rip.style.height = '48px';
+    rip.style.background = `radial-gradient(circle, ${hovered.color|0 ? '#' + hovered.color.toString(16).padStart(6,'0') : '#8b5cf6'} 0%, transparent 70%)`;
+    rip.style.opacity = '0.8';
+    rip.style.transition = 'none';
+    setTimeout(() => {
+      rip.style.transition = 'opacity .4s, transform .4s';
+      rip.style.transform = 'scale(6)';
+      rip.style.opacity = '0';
+    }, 10);
+    setTimeout(() => { rip.style.transform = ''; rip.style.transition = 'none'; }, 450);
+    setTimeout(() => { window.location.href = hovered.url; }, 200);
+  }
+});
+
+// ─── RESIZE ──────────────────────────────────────────────────────────────────
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// ─── ANIMATE ─────────────────────────────────────────────────────────────────
+let t = 0;
+const clock = new THREE.Clock();
+
+// Fake loading
+let loadPct = 0;
+const loadBar = document.getElementById('load-bar');
+const loadText = document.getElementById('load-text');
+const loadMessages = ['INITIALIZING UNIVERSE...','SPAWNING PROTOCOLS...','ALIGNING ORBITS...','CHARGING NODES...','READY'];
+let loadMsg = 0;
+const loadInterval = setInterval(() => {
+  loadPct += 4 + Math.random() * 8;
+  loadBar.style.width = Math.min(loadPct, 100) + '%';
+  if (loadPct > 25 && loadMsg === 0) { loadText.textContent = loadMessages[1]; loadMsg=1; }
+  if (loadPct > 55 && loadMsg === 1) { loadText.textContent = loadMessages[2]; loadMsg=2; }
+  if (loadPct > 78 && loadMsg === 2) { loadText.textContent = loadMessages[3]; loadMsg=3; }
+  if (loadPct >= 100) {
+    clearInterval(loadInterval);
+    loadText.textContent = loadMessages[4];
+    setTimeout(() => document.getElementById('loading').classList.add('done'), 300);
+  }
+}, 60);
+
+function animate() {
+  requestAnimationFrame(animate);
+  const dt = clock.getDelta();
+  t += dt;
+
+  // Smooth camera
+  camTheta += (targetTheta - camTheta) * 0.08;
+  camPhi   += (targetPhi   - camPhi)   * 0.08;
+  camDist  += (targetDist  - camDist)  * 0.08;
+  // Slow auto-rotate
+  if (!isDragging) targetTheta += 0.0008;
+  updateCamera();
+
+  // Spin core
+  coreMesh.rotation.y = t * 0.4;
+  coreMesh.rotation.x = t * 0.17;
+
+  // Orbit nodes
+  nodeObjects.forEach(n => {
+    n.angle += n.angSpeed * dt;
+    const x = Math.cos(n.angle) * n.radius;
+    const z = Math.sin(n.angle) * n.radius;
+    const y = Math.tan(n.tilt) * z + Math.sin(t * 0.4 + n.radius) * 0.08;
+    n.mesh.position.set(x, y, z);
+    // Pulse scale
+    const pulse = 1 + 0.12 * Math.sin(t * 2 + n.radius);
+    n.mesh.scale.setScalar(pulse);
+  });
+
+  // Dust drift
+  dustGeo.attributes.position.array.forEach((v, i) => {
+    if (i % 3 === 1) dustGeo.attributes.position.array[i] += Math.sin(t * 0.3 + i) * 0.0002;
+  });
+  dustGeo.attributes.position.needsUpdate = true;
+
+  // Raycasting for hover
+  raycaster.setFromCamera(mouse, camera);
+  const meshes = nodeObjects.map(n => n.mesh);
+  const hits = raycaster.intersectObjects(meshes, true);
+
+  if (hits.length) {
+    let obj = hits[0].object;
+    while (obj.parent && !obj.userData.proto) obj = obj.parent;
+    const proto = obj.userData?.proto;
+    if (proto) {
+      hovered = proto;
+      renderer.domElement.style.cursor = 'pointer';
+      const p = obj.position.clone().project(camera);
+      const sx = (p.x + 1) / 2 * window.innerWidth;
+      const sy = (1 - p.y) / 2 * window.innerHeight;
+      showCard(proto, sx, sy);
+    } else hideCard();
+  } else {
+    hovered = null;
+    renderer.domElement.style.cursor = 'default';
+    hideCard();
+  }
+
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+</html>
