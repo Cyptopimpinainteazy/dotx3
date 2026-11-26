@@ -1,0 +1,56 @@
+{
+  "repository": "Cyptopimpinainteazy/x3lang",
+  "commit": "7ade4061a60eb1a9cc1731ecacfcbf192b44337c",
+  "files": [
+    {
+      "source": "x3-lang/coin/ERC20-5.4.0.sol",
+      "destination": "vendor/x3lang/x3-lang/coin/ERC20-5.4.0.sol",
+      "sha256": "c2fc618df92450da3124da5fd9f717c8a3001ccddd45a29fd441525931b91f6b"
+    },
+    {
+      "source": "x3-lang/coin/__init__.py",
+      "destination": "vendor/x3lang/x3-lang/coin/__init__.py",
+      "sha256": "8c0f8bb761ca44ec96c62959b0a64292e9d96dc1e99b64e327b327af6b8832c0"
+    },
+    {
+      "source": "x3-lang/coin/evm.py",
+      "destination": "vendor/x3lang/x3-lang/coin/evm.py",
+      "sha256": "90f33450523c701285bac718ddb4a36a13cf8adbf38f430bf7171c3f2a342cf4"
+    },
+    {
+      "source": "x3-lang/coin/examples/dual_vm.json",
+      "destination": "vendor/x3lang/x3-lang/coin/examples/dual_vm.json",
+      "sha256": "af5ec62ba52672fcda3f167625d670c4dc3ae70a019184dd74955e64c36be7ae"
+    },
+    {
+      "source": "x3-lang/coin/examples/dual_vm.x3",
+      "destination": "vendor/x3lang/x3-lang/coin/examples/dual_vm.x3",
+      "sha256": "29f6ee8fe7f17a0e2870dfc456e0df7eed94fed07fae1e41d21b5e6c04ca796b"
+    },
+    {
+      "source": "x3-lang/coin/examples/ten_chain_sale.json",
+      "destination": "vendor/x3lang/x3-lang/coin/examples/ten_chain_sale.json",
+      "sha256": "800ef27e7c5262a675218fc98ae05cb0165e17a7976321ed669c46e19f935d89"
+    },
+    {
+      "source": "x3-lang/coin/sale.py",
+      "destination": "vendor/x3lang/x3-lang/coin/sale.py",
+      "sha256": "99f1688c7fbcabf8f566eb310f6291e1e4f178acfa9b029328b5b079446bc415"
+    },
+    {
+      "source": "x3-lang/coin/svm.py",
+      "destination": "vendor/x3lang/x3-lang/coin/svm.py",
+      "sha256": "20d1e54fa1f278da0ac47570f9b67ecbd1690b087eb455819a29ec52b63ee067"
+    },
+    {
+      "source": "x3-lang/ed25519.py",
+      "destination": "vendor/x3lang/x3-lang/ed25519.py",
+      "sha256": "ed297be4155d986491e6871415ca15b5fc2c8852556e465183ea670762f802f6"
+    },
+    {
+      "source": "x3-lang/emitter/_keccak.py",
+      "destination": "vendor/x3lang/x3-lang/emitter/_keccak.py",
+      "sha256": "386751ae5eae81b89dbd6c2d917c8908b02b0428ca0fa24ef4edf8d6b6c0099e"
+    }
+  ]
+}

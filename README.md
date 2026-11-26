@@ -5,6 +5,8 @@ dotx3 is the public website for X3 Force Field (formerly X3 Shield), powered by 
 ## Start here
 
 - `/labs`: vendored Python compiler API, signed-quote demo, judge policy cases and attack lab.
+- `/labs?view=coin`: author fixed-supply .x3 declarations and download Solidity, an unsigned SPL issuance plan and the manifest. The exact compiler files and their digests are listed in [coin source provenance](public/labs/coin-sources.json).
+- `/labs?view=sale`: quote a purchase on Ethereum against ten equal network quotas. The planner uses sample balances and shows the destination inventory needed for delivery.
 - `/docs`: what .x3 does, installation and language examples.
 - `/bootcamp`: the detailed source-backed developer course.
 - `/playground`: edit a policy and inspect local deterministic verdicts.
