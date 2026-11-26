@@ -81,7 +81,7 @@ canvas{display:block;position:fixed;inset:0}
   <div id="stats">
     SPEED &nbsp;<span class="val" id="sv">0</span> AU/s<br>
     HITS &nbsp;&nbsp;<span class="val" id="hv">0</span><br>
-    NODES &nbsp;<span class="val" id="nv">26</span>
+    NODES &nbsp;<span class="val" id="nv">—</span>
   </div>
 
   <div id="hint">
@@ -137,6 +137,8 @@ const PROTOCOLS = [
   { name:'Developers',    url:'https://dev.x3star.net',       desc:'SDKs & documentation',         col:0xffd166 },
   { name:'Press',         url:'https://press.x3star.net',     desc:'Media kit & news',             col:0xe0e0f0 },
 ];
+
+document.getElementById('nv').textContent=PROTOCOLS.length;
 
 // ── RENDERER ─────────────────────────────────────────────────────────────────
 const renderer = new THREE.WebGLRenderer({ antialias:true });
