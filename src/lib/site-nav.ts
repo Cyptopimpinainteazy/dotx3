@@ -158,6 +158,12 @@ export const ALL_NAV: NavGroup[] = [
       },
       {
         kind: "file",
+        label: "PHANTOM security",
+        description: "Repository security research and evidence; hosted scanner not enabled",
+        href: "/phantom.html",
+      },
+      {
+        kind: "file",
         label: "Attack lab",
         description: "Attack a scoped vault in the browser",
         href: "/labs/attack/attack-lab.html",
