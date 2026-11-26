@@ -227,6 +227,7 @@ export function CoinStudio() {
             <label className="block text-sm text-fg">
               Coin declaration
               <textarea
+                aria-label="Coin declaration"
                 value={source}
                 onChange={(event) => {
                   setSource(event.target.value);

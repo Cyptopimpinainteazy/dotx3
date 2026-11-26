@@ -62,7 +62,10 @@ try {
   await page.getByRole("tab", { name: "Coin Studio", exact: true }).click();
   await page.getByRole("button", { name: "Generate coin artifacts" }).click();
   await page.getByRole("region", { name: "Generated artifacts" }).waitFor();
-  assert.match(await page.getByLabel("Coin declaration").inputValue(), /coin DEMO/);
+  assert.match(
+    await page.getByLabel("Coin declaration", { exact: true }).inputValue(),
+    /coin DEMO/,
+  );
   for (const [label, name] of [
     ["Download .x3 source", "coin.x3"],
     ["Download Solidity", "X3IssuedCoin.sol"],
@@ -73,7 +76,7 @@ try {
     await page.getByRole("button", { name: label, exact: true }).click();
     assert.equal((await downloaded).suggestedFilename(), name);
   }
-  await page.getByLabel("Coin declaration").fill("coin BAD {");
+  await page.getByLabel("Coin declaration", { exact: true }).fill("coin BAD {");
   assert.equal(await page.getByRole("region", { name: "Generated artifacts" }).count(), 0);
   await page.getByRole("button", { name: "Build from source" }).click();
   await page.getByRole("alert").waitFor();
