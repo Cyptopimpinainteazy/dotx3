@@ -1,6 +1,6 @@
 {
   "repository": "Cyptopimpinainteazy/x3lang",
-  "commit": "7ade4061a60eb1a9cc1731ecacfcbf192b44337c",
+  "commit": "0aced7e76a86ce801248bacd67753e30c92ec0b1",
   "files": [
     {
       "source": "x3-lang/coin/ERC20-5.4.0.sol",
@@ -35,7 +35,7 @@
     {
       "source": "x3-lang/coin/sale.py",
       "destination": "vendor/x3lang/x3-lang/coin/sale.py",
-      "sha256": "99f1688c7fbcabf8f566eb310f6291e1e4f178acfa9b029328b5b079446bc415"
+      "sha256": "eb983fb201182a52ec7d3588975fc9f04166a0a69d8d5e0873f23b8551f9414d"
     },
     {
       "source": "x3-lang/coin/svm.py",
@@ -50,7 +50,7 @@
     {
       "source": "x3-lang/emitter/_keccak.py",
       "destination": "vendor/x3lang/x3-lang/emitter/_keccak.py",
-      "sha256": "386751ae5eae81b89dbd6c2d917c8908b02b0428ca0fa24ef4edf8d6b6c0099e"
+      "sha256": "f8e5649956e2106229e1fe85fdd458de338e0b27f51fde350ac944fef4a886e5"
     }
   ]
 }

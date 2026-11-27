@@ -1,10 +1,10 @@
 # Vendored from X3Lang
 
 These six files are byte-for-byte copies of
-[Cyptopimpinainteazy/x3lang](https://github.com/Cyptopimpinainteazy/x3lang/tree/184b6d17f61bd576eee34f6cad25b9e4256aa29e)
-at commit `184b6d17f61bd576eee34f6cad25b9e4256aa29e`, reviewed November 13, 2026. Since the previous
-port (`efb514f`, November 12) only `x3guard.mjs` changed upstream: x3lang #242 (issue #241)
-carries `bps` through the parser and refuses slippage bounds without a unit.
+[Cyptopimpinainteazy/x3lang](https://github.com/Cyptopimpinainteazy/x3lang/tree/0aced7e76a86ce801248bacd67753e30c92ec0b1)
+at commit `0aced7e76a86ce801248bacd67753e30c92ec0b1`, reviewed November 27, 2026. The browser checker now parses a declared
+application fee, validates its recipient and cap, and compares the fee to the
+provider's quote echo. The fee echo itself is outside the signed payload.
 They are MIT licensed; the license is copied beside them.
 
 Upstream now includes the exact-boolean binding between the request and the
@@ -20,7 +20,7 @@ Current mainnet claims and transaction links are presented on `/proof`.
 
 | File here | Source path in x3lang | SHA-256 |
 |---|---|---|
-| `x3guard.mjs` | `x3-lang/near/demo/x3guard.mjs` | `0b8991f2f2ad9d08a5bec81c05d0ee1bf6dbb8648fdff59cb60e0183a99881ea` |
+| `x3guard.mjs` | `x3-lang/near/demo/x3guard.mjs` | `630b6ace1dd6d477884473edc89392ae6ff2d3d6176c501c17f78944088eac43` |
 | `judge/judge.mjs` | `x3-lang/near/demo/judge/judge.mjs` | `523b8e117fff2fcf8034d6a110d932cafe211974fb12e60af951c284ffdc6d92` |
 | `judge/scenarios.json` | `x3-lang/near/demo/judge/scenarios.json` | `ee0c2d3d5019bd7e032666b9ac930d58fd9b5dbb63d44a329b92ebaa5daa6d06` |
 | `fixtures/near_intents_quote_dry_live_capture.json` | `x3-lang/tests/fixtures/near_intents_quote_dry_live_capture.json` | `3ca979e678a632b2d5c49c8a3f7098db8072f3329c4e5b54cd265a3e523c0a84` |

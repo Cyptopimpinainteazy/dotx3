@@ -47,6 +47,20 @@ class CompilerAPI(unittest.TestCase):
             self.assertFalse(report['wallet_authorized'])
             self.assertFalse(report['settlement_proven'])
 
+    def test_declared_fee_must_fit_the_program_cap(self):
+        example = json.loads((ROOT / 'public/labs/compiler/examples.json').read_text())
+        clause = '    require fees <= 100 bps'
+        for amount in (25, 101):
+            with self.subTest(amount=amount):
+                program = example['program'].replace(clause, f'    fee {amount} bps to fees.demo.near\n{clause}')
+                code, report = self.post({**example, 'program': program})
+                self.assertEqual(code, 200)
+                self.assertFalse(report['wallet_authorized'])
+                if amount == 25:
+                    self.assertEqual(report['leg']['app_fee'], {'recipient': 'fees.demo.near', 'bps': 25})
+                else:
+                    self.assertEqual(report['error']['code'], 'X3_NEAR_APP_FEE_OVER_CAP')
+
     def test_cross_origin_and_invalid_inputs_fail(self):
         self.assertEqual(self.post({}, {'Content-Type': 'application/json',
             'Origin': 'https://evil.example'})[0], 403)
@@ -92,7 +106,7 @@ class CompilerAPI(unittest.TestCase):
         import hashlib
         for row in manifest['files']:
             self.assertEqual(hashlib.sha256((ROOT / row['destination']).read_bytes()).hexdigest(), row['sha256'])
-        self.assertEqual(manifest['commit'], '184b6d17f61bd576eee34f6cad25b9e4256aa29e')
+        self.assertEqual(manifest['commit'], '0aced7e76a86ce801248bacd67753e30c92ec0b1')
         self.assertEqual(manifest, json.loads((ROOT / 'public/x3lang-port.json').read_text()))
 
 
@@ -142,6 +156,7 @@ class AttackPortTransformation(unittest.TestCase):
         prefix = ('https://github.com/Cyptopimpinainteazy/x3lang/blob/' + self.commit).encode()
         self.upstream = sync.remove_export_controls(self.output).replace(
             prefix + b'/evidence/', b'../../evidence/').replace(
+            prefix + b'/docs/hackathon/AGENT_LAW_PATH.md', b'AGENT_LAW_PATH.md').replace(
             prefix + b'/docs/hackathon/FIRST_SWAP_JUDGE_WALKTHROUGH.md',
             b'FIRST_SWAP_JUDGE_WALKTHROUGH.md').replace(
             b'from a clone of the X3Lang source repository, serve its root',
