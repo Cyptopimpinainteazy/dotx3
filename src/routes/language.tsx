@@ -90,8 +90,8 @@ const ENGINE: { title: string; body: string; href: string }[] = [
 const IDEAS: { title: string; body: string; status: string; href?: string }[] = [
   {
     title: "Guard enforces the program hash",
-    status: "Not merged (PR #202 closed)",
-    body: "Program-pin enforcement was proposed in PR #202, which was closed without merging on November 14, 2026. Storing a source hash does not prove the deployed Guard rejects a different program. The meter waits for the implementation and mismatch tests to land.",
+    status: "Closed, unmerged PR #202",
+    body: "PR #202 was closed without merge. Program-pin enforcement has not been established for the deployed Guard; storing a source hash alone cannot prove that an altered program is refused. Require reviewed, landed implementation and mismatch tests before raising this proof gate.",
     href: LINKS.programBindingPr,
   },
   {

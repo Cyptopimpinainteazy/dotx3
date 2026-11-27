@@ -251,7 +251,7 @@ export const MILESTONES: Milestone[] = [
       "An approved mandate carries only the exact .x3 program the owner saw. Contract tests cover a mismatched hash.",
     evidence: null,
     nextAction:
-      "Land reviewed program-hash enforcement with mismatch tests. PR #202 proposed it and was closed without merging on November 14, 2026; storing a hash alone does not satisfy this gate.",
+      "Implement and verify approved-program hash enforcement with mismatch tests. PR #202 was closed unmerged; storing a hash alone does not satisfy this gate.",
     nextHref: LINKS.programBindingPr,
   },
   {

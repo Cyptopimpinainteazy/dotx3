@@ -39,7 +39,7 @@ export const nearTracks = [
     title: "Autonomous Business",
     question: "How does a business let an AI agent spend without handing it the treasury?",
     detail:
-      "The owner sets the constraints once in a .x3 mandate: per-payment and 24-hour caps, an approval threshold, recipient and asset allowlists, a refund address and an expiry. The agent can only propose payments; Guard enforces the mandate on NEAR mainnet before any cross-chain payment through NEAR Intents.",
+      "For invoice_06, the owner set a .x3 mandate with spending limits, recipient, refund and approval rules, and NEAR Guard checked the signed 1Click quote before that owner-funded deposit. The later 5-USDC Solana vault pilot used a separate source-vault authorization path and did not call NEAR Guard.",
     evidence:
       "Mainnet invoice_06: a 25 USDC per-payment and daily cap, one allowed recipient, a pinned refund wallet and owner approval above 24.999999 USDC, all enforced by Guard before the Solana deposit; 24.9952 USDC was delivered on NEAR.",
     limit:
