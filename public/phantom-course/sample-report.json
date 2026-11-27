@@ -1,0 +1,35 @@
+{
+  "title": "Workshop directory label review",
+  "source_kind": "Instructor-authored training fixture",
+  "purpose": "Practice reviewing candidate alerts against supplied source. Both alerts were written for this exercise.",
+  "review_scope": "The fictional workshop directory, including the contract and the schedule display.",
+  "inspected_files": [
+    {
+      "path": "sample-contract.sol",
+      "sha256": "182233a830625118a257ad3f401cd90e1bbb67890921244841ee2bbcbcf13b43",
+      "line_numbering": "1-based, inclusive"
+    }
+  ],
+  "coverage_complete": false,
+  "coverage_gap": "Only the contract source is supplied. The schedule display source, deployment details and runtime test results are unavailable.",
+  "findings": [
+    {
+      "id": "LAB-01",
+      "rule_id": "TRAINING-LABEL-WRITE",
+      "summary": "Review the authorization of an externally callable label setter.",
+      "path": "sample-contract.sol",
+      "line_start": 22,
+      "line_end": 24,
+      "requires_review": true
+    },
+    {
+      "id": "LAB-02",
+      "rule_id": "TRAINING-LABEL-WRITE",
+      "summary": "Review the authorization of an externally callable label setter.",
+      "path": "sample-contract.sol",
+      "line_start": 26,
+      "line_end": 28,
+      "requires_review": true
+    }
+  ]
+}

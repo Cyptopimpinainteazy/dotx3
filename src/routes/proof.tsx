@@ -3,11 +3,19 @@ import { ProviderIncidents } from '@/components/provider-incidents';
 import { ExplorerEvidence } from '@/components/explorer-evidence';
 import { MainnetEvidence } from '@/components/mainnet-evidence';
 import { createFileRoute } from "@tanstack/react-router";
+import { pageSeo } from "@/lib/seo";
 import { OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell } from "@/components/site-shell";
 import { EVIDENCE_SNAPSHOT, LINKS, PROGRAM_SHA } from "@/lib/front-door";
 
-export const Route = createFileRoute("/proof")({ component: ProofPage });
+export const Route = createFileRoute("/proof")({
+  head: () => pageSeo(
+    "/proof",
+    "X3 Payment Evidence | Mainnet, Testnet and Local Proof",
+    "Inspect published X3 payment transactions, source revisions and test results, with mainnet, testnet and local evidence and limits clearly labeled.",
+  ),
+  component: ProofPage,
+});
 
 function Row({
   label,

@@ -1,10 +1,18 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { pageSeo } from "@/lib/seo";
 import { CodeBlock, OutLink, Tag } from "@/components/code-block";
 import { Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { EVIDENCE_SNAPSHOT, LINKS, MANDATE, TRADE } from "@/lib/front-door";
 import { PRESETS } from "@/lib/x3/playground";
 
-export const Route = createFileRoute("/docs")({ component: DocsPage });
+export const Route = createFileRoute("/docs")({
+  head: () => pageSeo(
+    "/docs",
+    "X3Lang Documentation | Mandates, Syntax and Payment Intents",
+    "Read the .x3 quickstart, owner-mandate and payment-intent examples, token units, compiler checks, and documented execution limits.",
+  ),
+  component: DocsPage,
+});
 
 function DocsPage() {
   return (

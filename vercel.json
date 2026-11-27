@@ -4,5 +4,34 @@
     "deploymentEnabled": {
       "fix/oneclick-dry-mode-binding-20261112": false
     }
-  }
+  },
+  "rewrites": [
+    {"source":"/","has":[{"type":"host","value":"www.x3star.net"}],"destination":"/index.html"},
+    {"source":"/","has":[{"type":"host","value":"swap.x3star.net"}],"destination":"/x3-swap.html"},
+    {"source":"/","has":[{"type":"host","value":"explorer.x3star.net"}],"destination":"/x3-explorer.html"},
+    {"source":"/","has":[{"type":"host","value":"nft.x3star.net"}],"destination":"/x3-nft.html"},
+    {"source":"/","has":[{"type":"host","value":"staking.x3star.net"}],"destination":"/x3-staking.html"},
+    {"source":"/","has":[{"type":"host","value":"bridge.x3star.net"}],"destination":"/x3-bridge.html"},
+    {"source":"/","has":[{"type":"host","value":"flash.x3star.net"}],"destination":"/x3-flashloans.html"},
+    {"source":"/","has":[{"type":"host","value":"analytics.x3star.net"}],"destination":"/x3-analytics.html"},
+    {"source":"/","has":[{"type":"host","value":"portfolio.x3star.net"}],"destination":"/x3-portfolio.html"},
+    {"source":"/","has":[{"type":"host","value":"nodes.x3star.net"}],"destination":"/x3-nodes.html"},
+    {"source":"/","has":[{"type":"host","value":"status.x3star.net"}],"destination":"/x3-status.html"},
+    {"source":"/","has":[{"type":"host","value":"tokenomics.x3star.net"}],"destination":"/x3-tokenomics.html"},
+    {"source":"/","has":[{"type":"host","value":"whitepaper.x3star.net"}],"destination":"/x3-whitepaper.html"},
+    {"source":"/","has":[{"type":"host","value":"roadmap.x3star.net"}],"destination":"/x3-roadmap.html"},
+    {"source":"/","has":[{"type":"host","value":"community.x3star.net"}],"destination":"/x3-community.html"},
+    {"source":"/","has":[{"type":"host","value":"academy.x3star.net"}],"destination":"/x3-academy.html"},
+    {"source":"/","has":[{"type":"host","value":"games.x3star.net"}],"destination":"/x3-games.html"},
+    {"source":"/","has":[{"type":"host","value":"agents.x3star.net"}],"destination":"/x3-agents.html"},
+    {"source":"/","has":[{"type":"host","value":"governance.x3star.net"}],"destination":"/x3-governance.html"},
+    {"source":"/","has":[{"type":"host","value":"launch.x3star.net"}],"destination":"/x3-launchpad.html"},
+    {"source":"/","has":[{"type":"host","value":"grants.x3star.net"}],"destination":"/x3-grants.html"},
+    {"source":"/","has":[{"type":"host","value":"treasury.x3star.net"}],"destination":"/x3-treasury.html"},
+    {"source":"/","has":[{"type":"host","value":"validators.x3star.net"}],"destination":"/x3-validators.html"},
+    {"source":"/","has":[{"type":"host","value":"security.x3star.net"}],"destination":"/x3-security.html"},
+    {"source":"/","has":[{"type":"host","value":"marketplace.x3star.net"}],"destination":"/x3-marketplace.html"},
+    {"source":"/","has":[{"type":"host","value":"dev.x3star.net"}],"destination":"/x3-developers.html"},
+    {"source":"/","has":[{"type":"host","value":"press.x3star.net"}],"destination":"/x3-press.html"}
+  ]
 }

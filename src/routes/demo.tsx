@@ -1,10 +1,18 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { pageSeo } from "@/lib/seo";
 import { useState } from "react";
 import { CodeBlock, OutLink, Tag } from "@/components/code-block";
 import { Section, SiteShell, StaticActionLink } from "@/components/site-shell";
 import { ARCADE_URL, LINKS, MANDATE } from "@/lib/front-door";
 
-export const Route = createFileRoute("/demo")({ component: DemoPage });
+export const Route = createFileRoute("/demo")({
+  head: () => pageSeo(
+    "/demo",
+    "X3 Force Field Demo | Published Payment Policy Decisions",
+    "Explore owner mandates and replay published allowed and refused payment decisions. This demonstration does not sign or send a transaction.",
+  ),
+  component: DemoPage,
+});
 
 type Attempt = "pay" | "attack";
 

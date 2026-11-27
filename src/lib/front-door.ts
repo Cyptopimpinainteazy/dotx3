@@ -18,6 +18,16 @@ export const EVIDENCE_SNAPSHOT = {
  * src/lib/x3/vendor/PROVENANCE.md. Re-vendor (scripts/sync-x3lang.py) before changing it.
  * 184b6d1 is efb514f plus x3lang #242: slippage bounds need a unit and `bps` is kept.
  */
+/**
+ * The commit submitted to NEAR HACKATHON on 2026-11-14 (before 23:59 UTC), tagged once and never
+ * moved. Evidence pinned elsewhere (such as the vault pilot at 9ec3b48) is labeled as outside it.
+ */
+export const SUBMISSION = {
+  tag: "hackathon-submission",
+  commit: "73f3f17dfc3529cda59bb7077a31dac6a536833a",
+  url: `${REPO}/tree/hackathon-submission`,
+} as const;
+
 export const VENDOR_SNAPSHOT = { commit: "184b6d17f61bd576eee34f6cad25b9e4256aa29e" } as const;
 
 const PINNED = `${REPO}/blob/${EVIDENCE_SNAPSHOT.commit}`;
@@ -257,8 +267,8 @@ export const MILESTONES: Milestone[] = [
       "A GitHub release with a checksum and build provenance, so nobody has to trust a branch tip.",
     evidence: null,
     nextAction:
-      "Publish a versioned release with checksums and build provenance. A passing branch build is not a release.",
-    nextHref: `${REPO}/releases`,
+      "Publish a versioned release with checksums and build provenance. None is published yet; the submitted commit carries the git tag hackathon-submission, which is not a release.",
+    nextHref: `${REPO}/tree/hackathon-submission`,
   },
 ];
 
