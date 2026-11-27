@@ -1,13 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import { ActionLink, Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { OutLink } from "@/components/code-block";
+import { CoinSalePreview } from "@/components/coin-sale-preview";
+import { CoinStudio } from "@/components/coin-studio";
 import { CompilerWorkbench } from "@/components/compiler-workbench";
 import { PartnerLink } from "@/components/partner-link";
 
-export const Route = createFileRoute("/labs")({ component: Labs });
 const views = [
   { id: "compiler", label: ".x3 compiler", state: "Real compiler API", path: null },
+  {
+    id: "sale",
+    label: "Ten-network sale",
+    state: "Illustrative inventories · planning only",
+    path: null,
+  },
+  { id: "coin", label: "Coin Studio", state: "EVM and Solana · offline issuance", path: null },
   {
     id: "guard",
     label: "Signed quote demo",
@@ -39,8 +46,18 @@ const views = [
     path: "/labs/court/index.html",
   },
 ] as const;
+
+export const Route = createFileRoute("/labs")({
+  component: Labs,
+  validateSearch: (search: Record<string, unknown>): { view?: string } => {
+    const view = views.find((item) => item.id === search.view);
+    return view ? { view: view.id } : {};
+  },
+});
+
 function Labs() {
-  const [selected, setSelected] = useState<string>("compiler");
+  const selected = Route.useSearch().view ?? "compiler";
+  const navigate = Route.useNavigate();
   const view = views.find((item) => item.id === selected) || views[0];
   return (
     <SiteShell
@@ -59,7 +76,13 @@ function Labs() {
               role="tab"
               aria-selected={selected === item.id}
               className={`min-h-11 rounded-lg border px-5 py-3 text-sm ${selected === item.id ? "border-primary bg-primary text-bg" : "border-border bg-surface text-fg"}`}
-              onClick={() => setSelected(item.id)}
+              onClick={() =>
+                void navigate({
+                  search: item.id === "compiler" ? {} : { view: item.id },
+                  replace: true,
+                  resetScroll: false,
+                })
+              }
             >
               {item.label}
             </button>
@@ -83,6 +106,10 @@ function Labs() {
               className="h-screen w-full rounded-xl border border-border"
             />
           </>
+        ) : view.id === "sale" ? (
+          <CoinSalePreview />
+        ) : view.id === "coin" ? (
+          <CoinStudio />
         ) : (
           <CompilerWorkbench />
         )}

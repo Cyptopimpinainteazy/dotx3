@@ -53,6 +53,40 @@ class CompilerAPI(unittest.TestCase):
         self.assertEqual(self.post([])[0], 400)
         self.assertEqual(self.post({'program': 'x' * 32769, 'mandate': 'x'})[0], 400)
 
+    def test_coin_authoring_then_rebuild_from_source(self):
+        examples = ROOT / 'vendor/x3lang/x3-lang/coin/examples'
+        spec = json.loads((examples / 'dual_vm.json').read_text())
+        code, generated = self.post({'kind': 'coin-v1', 'spec': spec})
+        self.assertEqual(code, 200, generated)
+        self.assertEqual(generated['source_sha256'], hashlib.sha256(
+            generated['source'].encode()).hexdigest())
+        self.assertIn('contract X3IssuedCoin', generated['evm_solidity'])
+        self.assertEqual(generated['svm_issuance']['allocation'], spec['svm']['allocation'])
+        self.assertEqual(generated['manifest']['cap'], spec['cap'])
+        self.assertEqual((code, generated),
+                         self.post({'kind': 'coin-v1', 'source': generated['source']}))
+        status, example = self.post({'kind': 'coin-v1', 'source': (examples / 'dual_vm.x3').read_text()})
+        self.assertEqual(status, 200)
+        self.assertEqual(example['declaration_hash'], generated['declaration_hash'])
+        spec['cap'] = '1'
+        code, refused = self.post({'kind': 'coin-v1', 'spec': spec})
+        self.assertEqual(code, 422)
+        self.assertEqual(set(refused), {'error'})
+        self.assertEqual(self.post({'kind': 'coin-v1', 'spec': spec, 'source': ''})[0], 400)
+
+    def test_sale_preview_quotes_all_ten_inventories(self):
+        fixture = ROOT / 'vendor/x3lang/x3-lang/coin/examples/ten_chain_sale.json'
+        spec = json.loads(fixture.read_text())
+        code, quote = self.post({'kind': 'coin-sale-v1', 'spec': spec})
+        self.assertEqual(code, 200, quote)
+        self.assertEqual(quote['status'], 'quote_only')
+        self.assertEqual(quote['amount'], '100000000')
+        self.assertEqual(quote['destination_receivable'], '90000000')
+        self.assertEqual([x['charge'] for x in quote['shares']], ['10000000'] * 10)
+        spec['amount'] = '1'
+        self.assertEqual(self.post({'kind': 'coin-sale-v1', 'spec': spec})[0], 422)
+        self.assertEqual(self.post({'kind': 'coin-v2', 'spec': spec})[0], 400)
+
     def test_ported_file_digests(self):
         manifest = json.loads((ROOT / 'x3lang-port.json').read_text())
         import hashlib

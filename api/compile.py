@@ -10,6 +10,36 @@ sys.path.insert(0, str(ROOT / 'vendor/x3lang/scripts/hackathon'))
 from dotx3_workbench import compile_sources, MAX_BODY
 
 
+def compile_request(payload):
+    if not isinstance(payload, dict) or 'kind' not in payload:
+        return 200, compile_sources(payload)
+    if payload['kind'] == 'coin-sale-v1':
+        if set(payload) != {'kind', 'spec'} or not isinstance(payload['spec'], dict):
+            return 400, {'error': 'Supply a sale specification'}
+        from coin import CoinError
+        from coin.sale import plan_sale
+        try:
+            return 200, plan_sale(payload['spec'])
+        except CoinError as error:
+            return 422, {'error': str(error)}
+    if payload['kind'] != 'coin-v1':
+        return 400, {'error': 'Unknown compiler request kind'}
+
+    from coin import CoinError, author_coin, compile_coin
+
+    try:
+        if set(payload) == {'kind', 'spec'} and isinstance(payload['spec'], dict):
+            source = author_coin(payload['spec'])
+        elif set(payload) == {'kind', 'source'} and isinstance(payload['source'], str):
+            source = payload['source']
+        else:
+            return 400, {'error': 'Supply a coin specification or .x3 source'}
+        bundle = compile_coin(source)
+    except CoinError as error:
+        return 422, {'error': str(error)}
+    return 200, {'source': source, **bundle}
+
+
 class handler(BaseHTTPRequestHandler):
     def log_message(self, *_args):
         pass
@@ -38,8 +68,8 @@ class handler(BaseHTTPRequestHandler):
             length = int(self.headers.get('Content-Length', '0'))
             if not 0 < length <= MAX_BODY:
                 return self.reply(413, {'error': 'Request too large or empty'})
-            report = compile_sources(json.loads(self.rfile.read(length)))
-            return self.reply(200, report)
+            status, report = compile_request(json.loads(self.rfile.read(length)))
+            return self.reply(status, report)
         except (ValueError, TypeError, KeyError, UnicodeError):
             return self.reply(400, {'error': 'Invalid bounded public .x3 input'})
         except Exception:

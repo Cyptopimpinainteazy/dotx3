@@ -7,7 +7,11 @@ assert.ok(
   ["localhost", "127.0.0.1"].includes(base.hostname),
   "Use the local site with the real compiler proxy",
 );
-const browser = await chromium.launch({ headless: true, args: ["--no-sandbox"] });
+const browser = await chromium.launch({
+  executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || undefined,
+  headless: true,
+  args: ["--no-sandbox"],
+});
 try {
   const page = await browser.newPage({ reducedMotion: "reduce" });
   const errors = [];
@@ -55,6 +59,40 @@ try {
   assert.equal(invalid.error.code, "X3_NEAR_NONCE");
   await page.getByRole("textbox", { name: "program", exact: true }).fill(original);
   await page.getByRole("heading", { name: "No current decision", exact: true }).waitFor();
+  await page.getByRole("tab", { name: "Coin Studio", exact: true }).click();
+  await page.getByRole("button", { name: "Generate coin artifacts" }).click();
+  await page.getByRole("region", { name: "Generated artifacts" }).waitFor();
+  assert.match(
+    await page.getByLabel("Coin declaration", { exact: true }).inputValue(),
+    /coin DEMO/,
+  );
+  for (const [label, name] of [
+    ["Download .x3 source", "coin.x3"],
+    ["Download Solidity", "X3IssuedCoin.sol"],
+    ["Download SPL issuance plan", "spl-issuance.json"],
+    ["Download manifest", "coin-manifest.json"],
+  ]) {
+    const downloaded = page.waitForEvent("download");
+    await page.getByRole("button", { name: label, exact: true }).click();
+    assert.equal((await downloaded).suggestedFilename(), name);
+  }
+  await page.getByLabel("Coin declaration", { exact: true }).fill("coin BAD {");
+  assert.equal(await page.getByRole("region", { name: "Generated artifacts" }).count(), 0);
+  await page.getByRole("button", { name: "Build from source" }).click();
+  await page.getByRole("alert").waitFor();
+
+  await page.getByRole("tab", { name: "Ten-network sale", exact: true }).click();
+  await page.getByRole("button", { name: "Preview purchase" }).click();
+  await page.getByRole("heading", { name: "100 tokens to the buyer on Ethereum" }).waitFor();
+  assert.equal(await page.getByRole("table").locator("tbody tr").count(), 10);
+  assert.deepEqual(
+    await page.getByRole("table").locator("tbody tr td:first-of-type").allTextContents(),
+    Array(10).fill("10"),
+  );
+  await page.getByLabel("Tokens to buy on Ethereum").fill("0.000001");
+  await page.getByRole("button", { name: "Preview purchase" }).click();
+  await page.getByRole("alert").filter({ hasText: "split equally" }).waitFor();
+  assert.equal(await page.getByRole("table").count(), 0);
   await page.getByRole("tab", { name: "Attack lab", exact: true }).click();
   await page
     .frameLocator('iframe[title="Attack lab"]')
@@ -67,7 +105,7 @@ try {
     .waitFor();
   assert.deepEqual(errors, []);
   console.log(
-    "PASS: real compiler allowed/recipient-denied/nonce-error, source hashes, review download, stale-result clearing and embedded Attack Lab",
+    "PASS: real compiler allowed/recipient-denied/nonce-error, source hashes, review download, stale-result clearing coin authoring and downloads, ten-network quotes and embedded Attack Lab",
   );
 } finally {
   await browser.close();
