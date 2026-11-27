@@ -7,7 +7,7 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'vendor/x3lang/scripts/hackathon'))
-from dotx3_workbench import compile_sources, MAX_BODY
+from offline_compiler import compile_sources, MAX_BODY
 
 
 def compile_request(payload):

@@ -1,13 +1,13 @@
 {
   "schema": "dotx3.x3lang-port.v1",
   "repository": "Cyptopimpinainteazy/x3lang",
-  "commit": "0aced7e76a86ce801248bacd67753e30c92ec0b1",
+  "commit": "9ced12dd1e98fabe73c00a31c2f4cca219fb7d8a",
   "files": [
     {
       "source": "x3-lang/near_intents.py",
       "destination": "vendor/x3lang/x3-lang/near_intents.py",
-      "source_sha256": "c1a28d41d5c2320e45760b9cf1135139abed8f7d44d4c8ea04259dfb0fa0f333",
-      "sha256": "c1a28d41d5c2320e45760b9cf1135139abed8f7d44d4c8ea04259dfb0fa0f333"
+      "source_sha256": "3c4099292ac184651c0f16cbbafa55095abbaff05b52d848673df1d11d20ac50",
+      "sha256": "3c4099292ac184651c0f16cbbafa55095abbaff05b52d848673df1d11d20ac50"
     },
     {
       "source": "x3-lang/near_mandate.py",
@@ -60,32 +60,14 @@
     {
       "source": "x3-lang/track_control.py",
       "destination": "vendor/x3lang/x3-lang/track_control.py",
-      "source_sha256": "b142b705e95f0b9bd67680c23a2d70fb320cf0975ea4c4658ad5a1039edab09e",
-      "sha256": "b142b705e95f0b9bd67680c23a2d70fb320cf0975ea4c4658ad5a1039edab09e"
+      "source_sha256": "bc6609837f12358258b688bbf52cf6b63695e670a55927e3c53d34ed99e64411",
+      "sha256": "bc6609837f12358258b688bbf52cf6b63695e670a55927e3c53d34ed99e64411"
     },
     {
-      "source": "x3-lang/agent_law.py",
-      "destination": "vendor/x3lang/x3-lang/agent_law.py",
-      "source_sha256": "c4b153100c1ecbc5db97d973027166f21231c7dc2c5d6cdaf6f9ba3798911a21",
-      "sha256": "c4b153100c1ecbc5db97d973027166f21231c7dc2c5d6cdaf6f9ba3798911a21"
-    },
-    {
-      "source": "x3-lang/forcefield.py",
-      "destination": "vendor/x3lang/x3-lang/forcefield.py",
-      "source_sha256": "c910947304d7f5d62b1e5010dd7fb1d6a85798c46055ecd72cfb54b026ff9b74",
-      "sha256": "c910947304d7f5d62b1e5010dd7fb1d6a85798c46055ecd72cfb54b026ff9b74"
-    },
-    {
-      "source": "scripts/hackathon/dotx3_workbench.py",
-      "destination": "vendor/x3lang/scripts/hackathon/dotx3_workbench.py",
-      "source_sha256": "00278fec7b72ebadf104f0e9cea2c14bc89f5c50ef96f6b5dfd11f048a519d72",
-      "sha256": "00278fec7b72ebadf104f0e9cea2c14bc89f5c50ef96f6b5dfd11f048a519d72"
-    },
-    {
-      "source": "scripts/hackathon/mainnet_agent_preflight.py",
-      "destination": "vendor/x3lang/scripts/hackathon/mainnet_agent_preflight.py",
-      "source_sha256": "f726827f8f6e2b72d41bd8cf237f3b01668545f1087652867227ec4c3b5988da",
-      "sha256": "f726827f8f6e2b72d41bd8cf237f3b01668545f1087652867227ec4c3b5988da"
+      "source": "scripts/hackathon/offline_compiler.py",
+      "destination": "vendor/x3lang/scripts/hackathon/offline_compiler.py",
+      "source_sha256": "26b8ee7f81db55d52ffe28e75300552fd077b9ee086fd62dd4b000140a962ad9",
+      "sha256": "26b8ee7f81db55d52ffe28e75300552fd077b9ee086fd62dd4b000140a962ad9"
     },
     {
       "source": "x3-lang/examples/near_mandate_agent.x3",
@@ -132,14 +114,14 @@
     {
       "source": "x3-lang/near/demo/cli.mjs",
       "destination": "public/labs/guard/cli.mjs",
-      "source_sha256": "60fc6d114f8ccc98a75a7a8cc45d90e2a076ed0ae1404fc5f0e7a34b98f1b8fb",
-      "sha256": "60fc6d114f8ccc98a75a7a8cc45d90e2a076ed0ae1404fc5f0e7a34b98f1b8fb"
+      "source_sha256": "c41f8d212244a8f49a33ab0ecf7b9e09f787fc41debf7a013d97897eeac7c237",
+      "sha256": "c41f8d212244a8f49a33ab0ecf7b9e09f787fc41debf7a013d97897eeac7c237"
     },
     {
       "source": "x3-lang/near/demo/index.html",
       "destination": "public/labs/guard/index.html",
-      "source_sha256": "5b21f62e7275cdcb065f050b650fae766f5192f74f83f1b39a09dd9bee46b64b",
-      "sha256": "4a812cc40444b25dc820c8c1da6d96bf6b430b2cee5c1078512c0378cd8d31a0",
+      "source_sha256": "c9649fbc86cf960bc5e3af95faa8c4d70affd7a747938e75ab58de89e29a3628",
+      "sha256": "8c32302c5c360b2473ad47626f7e1c48649e1e210935e04cac8e4e2e01c8721e",
       "local_transformations": [
         "Clarify dry quote and local mandate verdicts never establish live eligibility, on-chain authorization or settlement; upstream source_sha256 is retained.",
         "Add shared public-page Copy and Markdown controls; form values are excluded and upstream source_sha256 is retained."
@@ -160,8 +142,8 @@
     {
       "source": "x3-lang/near/demo/judge/judge.mjs",
       "destination": "public/labs/guard/judge/judge.mjs",
-      "source_sha256": "523b8e117fff2fcf8034d6a110d932cafe211974fb12e60af951c284ffdc6d92",
-      "sha256": "523b8e117fff2fcf8034d6a110d932cafe211974fb12e60af951c284ffdc6d92"
+      "source_sha256": "9d285a5893def25a316633624337f23acbedcbc89d7cb17e2a89df32d62a2273",
+      "sha256": "9d285a5893def25a316633624337f23acbedcbc89d7cb17e2a89df32d62a2273"
     },
     {
       "source": "x3-lang/near/demo/judge/mainnet-setup.mjs",
@@ -182,7 +164,7 @@
       "source": "x3-lang/near/demo/judge.html",
       "destination": "public/labs/guard/judge.html",
       "source_sha256": "d5e0c97424315dfd2cefe496d0e29523d6bc394430ceeff72b1310d9f10e26e7",
-      "sha256": "d466408c4f581b821b711aa05f4daefc5d1a2f063f4ce8eb00b37e259a82e2ae",
+      "sha256": "bd77ed9114759cf8debb03c696b07891f3e5e51ce460f053a3816cf81cea1d0a",
       "local_transformations": [
         "Add the separately published invoice_06 mainnet settlement and remaining evidence limits to the historical setup section; upstream source_sha256 is retained.",
         "Use the existing padded panel body and heading style for chain evidence, and label the video with its visible heading; content and media URLs are unchanged.",
@@ -192,14 +174,14 @@
     {
       "source": "x3-lang/near/demo/x3guard.mjs",
       "destination": "public/labs/guard/x3guard.mjs",
-      "source_sha256": "630b6ace1dd6d477884473edc89392ae6ff2d3d6176c501c17f78944088eac43",
-      "sha256": "630b6ace1dd6d477884473edc89392ae6ff2d3d6176c501c17f78944088eac43"
+      "source_sha256": "a08de782ca228caf07235c6b30bbf7cc4bd62e3079b045dae49aaeee0399eeb2",
+      "sha256": "a08de782ca228caf07235c6b30bbf7cc4bd62e3079b045dae49aaeee0399eeb2"
     },
     {
       "source": "docs/hackathon/attack-lab.html",
       "destination": "public/labs/attack/attack-lab.html",
-      "source_sha256": "159cdcf0015526601eb70290a566672b971ebbe8b7032e737058bbc702d106ed",
-      "sha256": "045885e7873ac13bfc86db884a665d4d34b252dc3e1776f8ad6aef2d13593a69",
+      "source_sha256": "309b0f16ca9411b2456c37676535edf94a67c40a9dc6ee93f20df72179f84c81",
+      "sha256": "8c1c7fee6e81566306986951cbb90d66ad5a8f18ba1a4579bf29bee333e33c0c",
       "local_transformations": [
         "Clarify local-server instructions refer to the X3Lang source repository.",
         "Add shared public-page Copy and Markdown controls; form values are excluded and upstream source_sha256 is retained."
@@ -214,8 +196,8 @@
     {
       "source": "docs/hackathon/agent-law-proof.html",
       "destination": "public/labs/attack/agent-law-proof.html",
-      "source_sha256": "79e5477d2a6a2df949de79a57a5b4793214e7d1f78d870e9b2f48d0fdb1c36fc",
-      "sha256": "79e5477d2a6a2df949de79a57a5b4793214e7d1f78d870e9b2f48d0fdb1c36fc"
+      "source_sha256": "0a7bd2e8544888be1ae1d70a69d99e4cb55d6374cf10d0973c1d17ab47b128a9",
+      "sha256": "0a7bd2e8544888be1ae1d70a69d99e4cb55d6374cf10d0973c1d17ab47b128a9"
     },
     {
       "source": "LICENSE",

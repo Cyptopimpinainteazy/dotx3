@@ -60,4 +60,5 @@ export function lower(intent: ParsedIntent, nowMs?: number): Leg;
 export function buildQuoteRequest(leg: Leg, tokens: unknown[], options?: { dry?: boolean }): Record<string, unknown>;
 export function policyFor(leg: Leg, request: Record<string, unknown>, programSha256: string): Record<string, unknown> & { amount: string };
 export function checkMandate(mandate: Record<string, unknown>, policy: Record<string, unknown>, nowMs: number): MandateCheck[];
+export function checkMandateForLeg(mandate: Record<string, unknown>, policy: Record<string, unknown>, nowMs: number, leg: Leg): MandateCheck[];
 export function approvalsNeeded(mandate: Record<string, unknown>, amount: string | bigint): number;

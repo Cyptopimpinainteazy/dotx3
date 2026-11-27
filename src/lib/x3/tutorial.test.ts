@@ -71,6 +71,12 @@ test("the real agent payment, and the form's default, both pass all ten checks",
   }
 });
 
+test("a declared fee must go to an owner-approved recipient", () => {
+  const recipient = (id: string) => INTENT_SOURCE.replace("    require fees", `    fee 25 bps to ${id}\n    require fees`);
+  assert.deepEqual(failed(checkIntent(recipient("outside.near"), CLEAN)), ["mandate_app_fee_recipient"]);
+  assert.deepEqual(failed(checkIntent(recipient("x3-demo.near"), CLEAN)), []);
+});
+
 test("each lesson 8 scenario stops at the guard it is named for", () => {
   assert.deepEqual(failed(checkIntent(fields({ recipient: "attacker.near" }), CLEAN)), ["mandate_recipient"]);
   assert.deepEqual(failed(checkIntent(fields({ amount: "60" }), CLEAN)), ["mandate_per_payment"]);

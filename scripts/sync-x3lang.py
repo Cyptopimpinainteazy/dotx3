@@ -37,11 +37,11 @@ QUOTE_MODE_BINDING_REPLACEMENTS = {
     },
 }
 
-# Reviewed Python and browser adapters at 0aced7e. Both bind dry mode as an
+# Reviewed Python and browser adapters at 9ced12d. Both bind dry mode as an
 # exact boolean. Unrecognized adapter changes still require review.
 REVIEWED_QUOTE_MODE_SOURCES = {
-    'x3-lang/near_intents.py': 'c1a28d41d5c2320e45760b9cf1135139abed8f7d44d4c8ea04259dfb0fa0f333',
-    'x3-lang/near/demo/x3guard.mjs': '630b6ace1dd6d477884473edc89392ae6ff2d3d6176c501c17f78944088eac43',
+    'x3-lang/near_intents.py': '3c4099292ac184651c0f16cbbafa55095abbaff05b52d848673df1d11d20ac50',
+    'x3-lang/near/demo/x3guard.mjs': 'a08de782ca228caf07235c6b30bbf7cc4bd62e3079b045dae49aaeee0399eeb2',
 }
 
 JUDGE_MAINNET_PENDING = (
@@ -211,11 +211,10 @@ def main():
         files.append(row)
 
     modules = ['near_intents', 'near_mandate', 'cli', 'registry', 'numeric', 'typechecker',
-               'ed25519', 'chain_evidence', 'helius_evidence', 'track_control', 'agent_law', 'forcefield']
+               'ed25519', 'chain_evidence', 'helius_evidence', 'track_control']
     for name in modules:
         copy(f'x3-lang/{name}.py', f'vendor/x3lang/x3-lang/{name}.py')
-    for name in ['dotx3_workbench', 'mainnet_agent_preflight']:
-        copy(f'scripts/hackathon/{name}.py', f'vendor/x3lang/scripts/hackathon/{name}.py')
+    copy('scripts/hackathon/offline_compiler.py', 'vendor/x3lang/scripts/hackathon/offline_compiler.py')
     for name in ['near_mandate_agent.x3', 'near_intents_agent_payment.x3']:
         copy(f'x3-lang/examples/{name}', f'vendor/x3lang/x3-lang/examples/{name}')
     copy('x3-lang/tests/fixtures/near_intents_tokens.json', 'vendor/x3lang/x3-lang/tests/fixtures/near_intents_tokens.json')

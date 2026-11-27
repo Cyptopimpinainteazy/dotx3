@@ -47,19 +47,28 @@ class CompilerAPI(unittest.TestCase):
             self.assertFalse(report['wallet_authorized'])
             self.assertFalse(report['settlement_proven'])
 
-    def test_declared_fee_must_fit_the_program_cap(self):
+    def test_declared_fee_checks_recipient_and_cap(self):
         example = json.loads((ROOT / 'public/labs/compiler/examples.json').read_text())
         clause = '    require fees <= 100 bps'
-        for amount in (25, 101):
-            with self.subTest(amount=amount):
-                program = example['program'].replace(clause, f'    fee {amount} bps to fees.demo.near\n{clause}')
+        cases = [
+            (25, 'x3-demo.near', 'preflight_passed'),
+            (25, 'outside.near', 'denied_by_policy'),
+            (101, 'x3-demo.near', 'compile_error'),
+        ]
+        for amount, recipient, decision in cases:
+            with self.subTest(amount=amount, recipient=recipient):
+                fee_clause = f'    fee {amount} bps to {recipient}\n'
+                program = example['program'].replace(clause, fee_clause + clause)
                 code, report = self.post({**example, 'program': program})
                 self.assertEqual(code, 200)
+                self.assertEqual(report['decision'], decision)
                 self.assertFalse(report['wallet_authorized'])
-                if amount == 25:
-                    self.assertEqual(report['leg']['app_fee'], {'recipient': 'fees.demo.near', 'bps': 25})
-                else:
+                if decision == 'compile_error':
                     self.assertEqual(report['error']['code'], 'X3_NEAR_APP_FEE_OVER_CAP')
+                else:
+                    self.assertEqual(report['leg']['app_fee'], {'recipient': recipient, 'bps': amount})
+                    if decision == 'denied_by_policy':
+                        self.assertIn('mandate_app_fee_recipient', report['policy']['denied_guards'])
 
     def test_cross_origin_and_invalid_inputs_fail(self):
         self.assertEqual(self.post({}, {'Content-Type': 'application/json',
@@ -106,7 +115,7 @@ class CompilerAPI(unittest.TestCase):
         import hashlib
         for row in manifest['files']:
             self.assertEqual(hashlib.sha256((ROOT / row['destination']).read_bytes()).hexdigest(), row['sha256'])
-        self.assertEqual(manifest['commit'], '0aced7e76a86ce801248bacd67753e30c92ec0b1')
+        self.assertEqual(manifest['commit'], '9ced12dd1e98fabe73c00a31c2f4cca219fb7d8a')
         self.assertEqual(manifest, json.loads((ROOT / 'public/x3lang-port.json').read_text()))
 
 

@@ -23,7 +23,7 @@ export const SUBMISSION = {
 } as const;
 
 /** Compiler and lab port, independent of the historical evidence and submission. */
-export const VENDOR_SNAPSHOT = { commit: "0aced7e76a86ce801248bacd67753e30c92ec0b1" } as const;
+export const VENDOR_SNAPSHOT = { commit: "9ced12dd1e98fabe73c00a31c2f4cca219fb7d8a" } as const;
 
 const PINNED = `${REPO}/blob/${EVIDENCE_SNAPSHOT.commit}`;
 const MAINNET_BUNDLE = `${PINNED}/evidence/near-guard-mainnet-invoice06-2026-11-12`;
