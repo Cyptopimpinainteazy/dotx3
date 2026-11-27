@@ -9,12 +9,12 @@ function NearPage() {
   return (
     <SiteShell
       eyebrow="NEAR competition · 2026"
-      title="One policy. Three track perspectives."
-      lede="A restricted agent call on NEAR, 21 passing policy and quote checks, and a funded Solana-to-NEAR mainnet swap. Explore what each result establishes for the three tracks."
+      title="One policy. Four track perspectives."
+      lede="A restricted agent call on NEAR, 21 passing policy and quote checks, and a funded Solana-to-NEAR mainnet swap. Explore what each result establishes for the four tracks."
     >
       <Section
         title="Choose a track"
-        intro={`Evidence reviewed ${EVIDENCE_SNAPSHOT.dateLabel}. The repository's submission checklist names Security and Agents; DeFi remains a proposed perspective. These pages do not certify organizer acceptance or a submitted third track.`}
+        intro={`Evidence reviewed ${EVIDENCE_SNAPSHOT.dateLabel}. Owner-selected tracks: AI Security & Defense (primary), Agent Economy, Autonomous Business and Unstoppable DeFi. These pages do not certify organizer acceptance or a saved submission.`}
       >
         <CardGrid>
           {nearTracks.map((track) => (
@@ -28,7 +28,9 @@ function NearPage() {
                       ? "/security"
                       : track.slug === "agents"
                         ? "/agents"
-                        : "/defi"
+                        : track.slug === "business"
+                          ? "/business"
+                          : "/defi"
                   }
                 >
                   Explore track

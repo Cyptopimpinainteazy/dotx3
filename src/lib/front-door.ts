@@ -14,11 +14,21 @@ export const EVIDENCE_SNAPSHOT = {
 
 /**
  * The X3Lang revision the browser compiler and labs were vendored from. Kept separate from
- * EVIDENCE_SNAPSHOT: efb514f..f2a01a2 changes evidence, docs, scripts, tests and the
- * submission draft only (no vendored source), and the vendored bytes are
- * pinned to this commit by scripts/attack-lab.test.mjs. Re-vendor before changing it.
+ * EVIDENCE_SNAPSHOT, and pinned to the vendored bytes by scripts/attack-lab.test.mjs and
+ * src/lib/x3/vendor/PROVENANCE.md. Re-vendor (scripts/sync-x3lang.py) before changing it.
+ * 184b6d1 is efb514f plus x3lang #242: slippage bounds need a unit and `bps` is kept.
  */
-export const VENDOR_SNAPSHOT = { commit: "efb514ffef2cdfdeb8ad8147747887c85356073c" } as const;
+/**
+ * The commit submitted to NEAR HACKATHON on 2026-11-14 (before 23:59 UTC), tagged once and never
+ * moved. Evidence pinned elsewhere (such as the vault pilot at 9ec3b48) is labeled as outside it.
+ */
+export const SUBMISSION = {
+  tag: "hackathon-submission",
+  commit: "73f3f17dfc3529cda59bb7077a31dac6a536833a",
+  url: `${REPO}/tree/hackathon-submission`,
+} as const;
+
+export const VENDOR_SNAPSHOT = { commit: "184b6d17f61bd576eee34f6cad25b9e4256aa29e" } as const;
 
 const PINNED = `${REPO}/blob/${EVIDENCE_SNAPSHOT.commit}`;
 const MAINNET_BUNDLE = `${PINNED}/evidence/near-guard-mainnet-invoice06-2026-11-12`;
@@ -241,7 +251,7 @@ export const MILESTONES: Milestone[] = [
       "An approved mandate carries only the exact .x3 program the owner saw. Contract tests cover a mismatched hash.",
     evidence: null,
     nextAction:
-      "Land reviewed program-hash enforcement with mismatch tests. PR #202 is still open at this snapshot; storing a hash alone does not satisfy this gate.",
+      "Implement and verify approved-program hash enforcement with mismatch tests. PR #202 was closed unmerged; storing a hash alone does not satisfy this gate.",
     nextHref: LINKS.programBindingPr,
   },
   {
@@ -257,8 +267,8 @@ export const MILESTONES: Milestone[] = [
       "A GitHub release with a checksum and build provenance, so nobody has to trust a branch tip.",
     evidence: null,
     nextAction:
-      "Publish a versioned release with checksums and build provenance. A passing branch build is not a release.",
-    nextHref: `${REPO}/releases`,
+      "Publish a versioned release with checksums and build provenance. None is published yet; the submitted commit carries the git tag hackathon-submission, which is not a release.",
+    nextHref: `${REPO}/tree/hackathon-submission`,
   },
 ];
 

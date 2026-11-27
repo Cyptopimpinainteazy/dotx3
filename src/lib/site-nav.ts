@@ -53,8 +53,15 @@ export const ALL_NAV: NavGroup[] = [
   {
     id: "hackathon",
     label: "Hackathon",
-    summary: "The NEAR competition entry: one policy, three tracks, public proof.",
+    summary: "The NEAR competition entry: one policy, four tracks, public proof.",
     items: [
+      {
+        kind: "route",
+        label: "Agent-paid vault proof",
+        description: "5 USDC from the vault, 4.999746 USDC on NEAR",
+        to: "/",
+        hash: "mainnet-vault-pilot",
+      },
       {
         kind: "route",
         label: "Mainnet proof: invoice_06",
@@ -78,7 +85,7 @@ export const ALL_NAV: NavGroup[] = [
       {
         kind: "route",
         label: "Competition overview",
-        description: "One policy seen from all three tracks",
+        description: "One policy seen from all four tracks",
         to: "/near",
       },
       {
@@ -92,6 +99,12 @@ export const ALL_NAV: NavGroup[] = [
         label: "Agent Economy",
         description: "Agent payments inside the owner's budget",
         to: "/agents",
+      },
+      {
+        kind: "route",
+        label: "Autonomous Business",
+        description: "Owner-set constraints on an AI-run business's spending",
+        to: "/business",
       },
       {
         kind: "route",
@@ -133,9 +146,21 @@ export const ALL_NAV: NavGroup[] = [
       },
       {
         kind: "route",
+        label: "Judge faucet",
+        description: "Claim DX3HACK and watch the contract refuse a DEX",
+        to: "/faucet",
+      },
+      {
+        kind: "route",
         label: "Labs & integrations",
         description: "Write, challenge and inspect .x3",
         to: "/labs",
+      },
+      {
+        kind: "file",
+        label: "PHANTOM security",
+        description: "Repository security research and evidence; hosted scanner not enabled",
+        href: "/phantom.html",
       },
       {
         kind: "file",

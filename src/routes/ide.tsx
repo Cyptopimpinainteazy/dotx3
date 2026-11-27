@@ -5,6 +5,9 @@ import { IdeDemo } from "@/components/ide-demo";
 import { Section, SiteShell } from "@/components/site-shell";
 
 const IDE_REMOTE_URL = "https://ide.dotx3.net";
+// Flip to true once deploy/ide-dotx3.sh has run on the X3 server and ide.dotx3.net answers
+// with the Cloudflare Access login. Until then the page must not link to a host with no DNS.
+const IDE_REMOTE_LIVE = false;
 
 export const Route = createFileRoute("/ide")({
   head: () => ({
@@ -115,7 +118,7 @@ function IdePage() {
         </div>
       </Section>
 
-      <Section alt title="Run the full IDE" intro="The full IDE can run a shell and sign transactions, so it never runs as a public page. Use it on your own machine, or from anywhere through the owner-only sign-in.">
+      <Section alt title="Run the full IDE" intro="The full IDE can run a shell and sign transactions, so it never runs as a public page. Use it on your own machine; an owner-only remote version is being set up.">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <div className="min-w-0 rounded-2xl border border-border bg-bg p-6">
             <h3 className="font-display text-xl text-fg">On your machine</h3>
@@ -125,15 +128,21 @@ function IdePage() {
           <div className="flex min-w-0 flex-col rounded-2xl border border-border bg-bg p-6">
             <h3 className="font-display text-xl text-fg">ide.dotx3.net</h3>
             <p className="mt-2 text-sm text-muted">
-              The same IDE, running on the X3 server and published through a Cloudflare Tunnel. Cloudflare Access asks you to sign in first, and only approved emails get through. The IDE then checks the Access token itself on every request.
+              {IDE_REMOTE_LIVE ? "" : "Not open yet. "}The same IDE, running on the X3 server and published through a Cloudflare Tunnel. Cloudflare Access asks you to sign in first, and only approved emails get through. The IDE then checks the Access token itself on every request.
             </p>
             <ul className="mt-4 space-y-2 text-sm text-muted">
               <li><span className="text-primary">▸</span> Owner and invited builders only</li>
               <li><span className="text-primary">▸</span> Terminal is off for remote sessions unless the owner turns it on</li>
             </ul>
-            <a href={IDE_REMOTE_URL} className="tap mt-6 inline-flex min-h-11 w-fit items-center justify-center self-start rounded-full border border-primary px-6 text-sm font-semibold text-primary hover:bg-primary/10">
-              Owner sign-in →
-            </a>
+            {IDE_REMOTE_LIVE ? (
+              <a href={IDE_REMOTE_URL} className="tap mt-6 inline-flex min-h-11 w-fit items-center justify-center self-start rounded-full border border-primary px-6 text-sm font-semibold text-primary hover:bg-primary/10">
+                Owner sign-in →
+              </a>
+            ) : (
+              <span className="mt-6 inline-flex min-h-11 w-fit items-center self-start rounded-full border border-border px-6 text-sm text-muted">
+                Opening soon
+              </span>
+            )}
           </div>
         </div>
       </Section>

@@ -1,4 +1,6 @@
+import { VaultPilotEvidence } from "@/components/vault-pilot-evidence";
 import { createFileRoute } from "@tanstack/react-router";
+import { canonicalLink } from "@/lib/seo";
 import { Check, X } from "lucide-react";
 import { useState } from "react";
 import { ActionLink, Section, SiteShell } from "@/components/site-shell";
@@ -15,12 +17,13 @@ import {
 
 export const Route = createFileRoute("/judge")({
   head: () => ({
+    links: [canonicalLink("/judge")],
     meta: [
       { title: "Judge Console · dotx3.net" },
       {
         name: "description",
         content:
-          "A signed 1Click quote accepted on NEAR, 25 USDC deposited on Solana and 24.9952 USDC delivered on NEAR mainnet, alongside three historical testnet cases.",
+          "An owner-approved agent executes 5 USDC from a Solana vault; 4.999746 USDC reaches NEAR. Inspect the separate earlier NEAR Guard proof and historical testnet cases.",
       },
     ],
   }),
@@ -36,8 +39,13 @@ function Stats() {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {JUDGE_STATS.map((s) => (
-        <div key={s.label} className="rounded-2xl border border-border bg-surface p-5">
-          <p className={`font-display text-4xl leading-none font-extrabold ${tone(s.tone).text}`}>
+        <div
+          key={s.label}
+          className="rounded-2xl border border-border bg-surface p-5"
+        >
+          <p
+            className={`font-display text-4xl leading-none font-extrabold ${tone(s.tone).text}`}
+          >
             {s.value}
           </p>
           <p className="mt-2 text-sm text-fg">{s.label}</p>
@@ -56,7 +64,11 @@ function CaseTabs({
   onPick: (id: JudgeCase["id"]) => void;
 }) {
   return (
-    <div role="tablist" aria-label="Evidence cases" className="grid gap-3 md:grid-cols-3">
+    <div
+      role="tablist"
+      aria-label="Evidence cases"
+      className="grid gap-3 md:grid-cols-3"
+    >
       {JUDGE_CASES.map((c, i) => {
         const on = c.id === active;
         const t = tone(c.tone);
@@ -75,7 +87,8 @@ function CaseTabs({
               e.preventDefault();
               const next =
                 JUDGE_CASES[
-                  (i + (e.key === "ArrowRight" ? 1 : -1) + JUDGE_CASES.length) % JUDGE_CASES.length
+                  (i + (e.key === "ArrowRight" ? 1 : -1) + JUDGE_CASES.length) %
+                    JUDGE_CASES.length
                 ];
               onPick(next.id);
               document.getElementById(`case-tab-${next.id}`)?.focus();
@@ -152,7 +165,10 @@ function CasePanel({ c }: { c: JudgeCase }) {
                     : "text-[#c9ccd4]"
                 }`}
               >
-                <span className="inline-block w-7 text-[#4c5262] select-none" aria-hidden="true">
+                <span
+                  className="inline-block w-7 text-[#4c5262] select-none"
+                  aria-hidden="true"
+                >
                   {i + 1}
                 </span>
                 {line || " "}
@@ -174,7 +190,11 @@ function CasePanel({ c }: { c: JudgeCase }) {
               >
                 {k.ok ? (
                   <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full border-[1.5px] border-primary text-primary">
-                    <Check className="size-3" strokeWidth={3} aria-hidden="true" />
+                    <Check
+                      className="size-3"
+                      strokeWidth={3}
+                      aria-hidden="true"
+                    />
                   </span>
                 ) : (
                   <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-accent text-bg">
@@ -186,7 +206,9 @@ function CasePanel({ c }: { c: JudgeCase }) {
                     {k.name}
                     <span className="sr-only">: {k.ok ? "pass" : "fail"}</span>
                   </span>
-                  <span className="block text-xs break-words text-muted">{k.detail}</span>
+                  <span className="block text-xs break-words text-muted">
+                    {k.detail}
+                  </span>
                 </span>
               </li>
             ))}
@@ -224,7 +246,9 @@ function CasePanel({ c }: { c: JudgeCase }) {
               </div>
             ))}
           </dl>
-          <p className="mt-auto border-t border-border pt-3 text-xs text-muted">{c.limit}</p>
+          <p className="mt-auto border-t border-border pt-3 text-xs text-muted">
+            {c.limit}
+          </p>
         </section>
       </div>
     </div>
@@ -236,23 +260,94 @@ function JudgeConsole() {
   const current = JUDGE_CASES.find((c) => c.id === active)!;
   return (
     <SiteShell
-      eyebrow="X3 Force · War Room · Judge Console"
-      title="The AI proposes. X3 General decides."
-      lede="Start with the completed mainnet 1Click trade, then inspect three historical testnet cases. X3 General is the x3-guard contract on NEAR: it checks agent intent and quote terms against the owner's mandate. Each result names its network and its limits."
+      eyebrow="X3 Force Field · Judge Console"
+      title="Check the policy. Verify the payment."
+      lede="Start with an agent-executed vault payment: 5 USDC on Solana, 4.999746 USDC delivered on NEAR. Try the local policy checker, inspect the finalized receipts, then compare the separate NEAR Guard and historical testnet evidence."
       actions={
         <>
-          <ActionLink to="/playground">Try to break it</ActionLink>
+          <ActionLink to="/playground">Try the policy checker</ActionLink>
           <ActionLink to="/proof" outline>
             Inspect the Proof
           </ActionLink>
         </>
       }
     >
-      <Section title="Mainnet settlement">
+      <Section title="Latest proof: agent-executed vault payment">
+        <VaultPilotEvidence />
+      </Section>
+      <Section title="Separate earlier proof: NEAR Guard authorization">
         <MainnetEvidence />
       </Section>
+      <Section title="Complete evidence directory">
+        <p>
+          <a href="/security">Security</a> · <a href="/agents">Agents</a> ·{" "}
+          <a href="/defi">DeFi</a> · <a href="/business">Business</a>
+        </p>
+        <p className="text-muted">
+          Separate archived mainnet evidence from local demonstrations. Each
+          route states its limits.
+        </p>
+        <ul className="mt-4 list-disc space-y-3 pl-5 text-fg">
+          <li>
+            <a
+              className="text-primary underline"
+              href="https://github.com/Cyptopimpinainteazy/x3lang/blob/master/JUDGES.md"
+            >
+              Repository judge directory: claims, sources, receipts and
+              reproduction commands
+            </a>
+          </li>
+          <li>
+            <a className="text-primary underline" href="/business">
+              Business track: spending constraints and boundaries
+            </a>{" "}
+            — shared evidence, with no claim of customer adoption.
+          </li>
+          <li>
+            <a
+              className="text-primary underline"
+              href="https://github.com/Cyptopimpinainteazy/x3lang/blob/master/JUDGES.md#additional-innovations--separate-local-evidence"
+            >
+              Signed admission, durable retirement, scripted incident jury and
+              scoped Sandbox vault
+            </a>{" "}
+            — local evidence; no independent AI jury or public-chain custody.
+          </li>
+          <li>
+            <a
+              className="text-primary underline"
+              href="/media/x3-force-field-mainnet-20261113.mp4"
+            >
+              Watch the 2:27 payment, limits and proof video
+            </a>{" "}
+            — shows the earlier invoice_06 payment; predates the newer vault
+            pilot.
+          </li>
+          <li>
+            <a
+              className="text-primary underline"
+              href="/labs/force-field/verify.html"
+            >
+              Run the archived evidence verifier
+            </a>{" "}
+            — historical records, not fresh chain consensus.
+          </li>
+          <li>
+            <a
+              className="text-primary underline"
+              href="https://github.com/Cyptopimpinainteazy/x3lang/blob/master/submission/judge-claims.json"
+            >
+              Machine-readable original nine-claim index
+            </a>{" "}
+            — the newer vault pilot has its own receipt and verifier links
+            above.
+          </li>
+        </ul>
+      </Section>
       <div className="mx-auto max-w-[1360px] space-y-8 px-5 py-14">
-        <h2 className="font-display text-3xl text-primary">Historical testnet cases</h2>
+        <h2 className="font-display text-3xl text-primary">
+          Historical testnet cases
+        </h2>
         <div className="flex flex-wrap gap-2 font-mono text-xs">
           <span className="rounded-full border border-border px-3.5 py-2 text-fg">
             NEAR testnet
@@ -280,8 +375,8 @@ function JudgeConsole() {
               <CopyButton text={JUDGE_COMMAND} />
             </div>
             <p className="text-sm text-muted">
-              Eight of the README&apos;s ten &quot;do X, see Y&quot; steps run offline with Python
-              and Node: no wallet, no key, no account.
+              Eight of the README&apos;s ten &quot;do X, see Y&quot; steps run
+              offline with Python and Node: no wallet, no key, no account.
             </p>
             <a
               href={LINKS.repo}

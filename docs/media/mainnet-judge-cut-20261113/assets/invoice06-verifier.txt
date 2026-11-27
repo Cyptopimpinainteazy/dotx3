@@ -1,0 +1,40 @@
+invoice_06, link by link (offline: committed files only, nothing signed or sent)
+
+1  Written policy                                                     PASS
+   payment-proposed.x3  sha256 9ee29a5603cf…  = program hash Guard stores on the intent
+   mandate-proposed.x3  sha256 eea021d5cc11…  = program hash Guard stores on the mandate
+
+2  Compiler (same compiler the agent path uses, run at 2026-11-12T01:49:21Z) PASS
+   payment compiles; its policy equals Guard's stored policy     10/10 fields, nonce equal
+   mandate compiles; its terms equal Guard's stored mandate      13/13 terms
+   payment passes its own mandate offline                        10/10 checks
+   the same payment, edited: 8/8 refused where expected
+     ok  pay attacker.near instead of x3lang.near   mandate refuses: mandate_recipient
+     ok  send 250 USDC instead of 25                mandate refuses: mandate_daily, mandate_per_payment
+     ok  send refunds to another Solana wallet      mandate refuses: mandate_refund_to
+     ok  allow 5% slippage instead of 0.9%          mandate refuses: mandate_slippage
+     ok  drop the slippage bound                    compiler refuses: X3_NEAR_SLIPPAGE_REQUIRED
+     ok  drop the timeout and refund                compiler refuses: X3_NEAR_TIMEOUT_REQUIRED
+     ok  drop the one-use nonce                     compiler refuses: X3_NEAR_NONCE
+     ok  add a second swap leg                      compiler refuses: X3_NEAR_ROUTE_SHAPE
+
+3  Guard on mainnet                                                   PASS
+   agent_accept_quote Eg75uehw… block 224149400, signed by x3-agent.x3lang.near's FunctionCall key (receiver x3lang.near)
+   returned 21 checks: 21 ok, 0 failed
+
+4  Payment                                                            PASS
+   Solana: 4zhGYyWN… slot 468354078, signed by the owner wallet 58tbMf…: 31.074779 -> 6.074779 USDC
+           quoted deposit address C6978A… received +25.000000 USDC
+   NEAR:   8jfbACLS… intents.near ft_withdraw, 84 s after the deposit; executed, all receipts successful
+           USDC contract ft_transfer: 24.995200 intents.near -> x3lang.near
+
+5  Recorded outcome                                                   PASS
+   agent_record_outcome 9sTn9pJ1… block 224319990: Settled, amount_out 24995200, floor_met true, cites the payout: yes
+
+Where the chain is not cryptographic:
+   - Guard -> payment: Guard accepted the quote; the owner signed the Solana deposit by hand. Guard does not hold or move the USDC.
+   - Deposit <-> payout: linked by 1Click status, timing and amount, not by a cryptographic cross-chain proof (the outcome verification records cross_chain_causality_proven: false).
+   - Payout -> outcome: the outcome is the agent's report. Guard stores the transaction hashes it is given and checks the amount against the floor; it does not authenticate the hashes.
+   - Compiler -> Guard: Guard checks the stored .x3 hashes and the policy fields; it does not compile or run .x3. This script shows the compiler's output equals what Guard stores.
+
+5/5 links hold on the committed evidence.

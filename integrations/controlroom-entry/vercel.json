@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "destination": "https://controlroom.x3star.net/:path*",
+      "permanent": false
+    }
+  ]
+}

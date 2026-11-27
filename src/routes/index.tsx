@@ -1,4 +1,6 @@
+import { VaultPilotEvidence } from "@/components/vault-pilot-evidence";
 import { createFileRoute } from "@tanstack/react-router";
+import { pageSeo } from "@/lib/seo";
 import {
   ActionLink,
   Card,
@@ -17,7 +19,14 @@ import { CaseFileCard, ChainOfCommand, FourDoors, SituationReport } from "@/comp
 import { MainnetEvidence } from "@/components/mainnet-evidence";
 import { ARCADE_URL, BACKING_LINKS_VISIBLE, EVIDENCE_SNAPSHOT, getProofSummary, hasMilestoneEvidence, LINKS, MILESTONES, SITE, TOKEN } from "@/lib/front-door";
 
-export const Route = createFileRoute("/")({ component: Home });
+export const Route = createFileRoute("/")({
+  head: () => pageSeo(
+    "/",
+    "X3Lang & X3 Force Field | AI Agent Payment Security",
+    "Explore typed .x3 mandates for AI agent payments, try policy checks, and inspect the published NEAR and Solana evidence and its limits.",
+  ),
+  component: Home,
+});
 
 function ProofMeter() {
   const { posted, total, progress, percent: pct } = getProofSummary();
@@ -135,8 +144,13 @@ function Home() {
     >
       <EnterGate />
 
+      <Section id="mainnet-vault-pilot" title="Mainnet: the agent paid from its vault" intro="A completed 5-USDC payment, from exact owner approval to a finalized NEAR payout.">
+        <VaultPilotEvidence />
+      </Section>
+
       <Section
-        title="Mainnet proof: invoice_06"
+        id="mainnet-proof-invoice-06"
+        title="Earlier proof: NEAR Guard authorized invoice_06"
         intro="One real payment on NEAR and Solana mainnet, from the owner's rule to the recorded outcome. What it does not prove is on the same screen."
       >
         <MainnetEvidence />
@@ -183,11 +197,79 @@ function Home() {
               breaks a cap, it does not compile or Guard refuses it.
             </Card>
             <Card title="Settlement is labeled">
-              Mainnet: 25 USDC from Solana, 24.9952 USDC delivered on NEAR after Guard accepted
+              Mainnet vault pilot: an agent sent 5 USDC and 4.999746 USDC reached NEAR. Earlier invoice_06: 25 USDC from Solana, 24.9952 USDC delivered on NEAR after Guard accepted
               the official signed 1Click quote. The earlier Base Sepolia trade remains testnet evidence.
               Guard authorization and wallet custody are different claims.
             </Card>
           </CardGrid>
+        </div>
+      </Section>
+
+      <Section
+        id="business-use-cases"
+        title="Give agents work. Set their spending boundaries."
+        intro="Business use cases for X3 Force Field: make payment authority explicit, reviewable, and tied to evidence."
+        alt
+      >
+        <div className="grid gap-5 md:grid-cols-2">
+          <Card title="Businesses using payment agents">
+            Check a proposed supplier or service payment against approved recipients, assets,
+            budgets, fees, and deadlines. Keep exceptions subject to owner approval before funding.
+          </Card>
+          <Card title="Treasury teams and DAOs">
+            Express delegated spending rules in readable, versioned .x3 mandates. Review what an
+            agent may propose and what needs approval before expanding its responsibilities.
+          </Card>
+          <Card title="Wallet and payment platform builders">
+            Integrate deterministic policy checks at the signing or execution boundary. The
+            protection depends on routing the actual spending authority through those checks.
+          </Card>
+          <Card title="Security and compliance teams">
+            Inspect the proposal, mandate, Guard decision, and settlement receipts together.
+            That trail supports review and incident investigation; it does not establish legal compliance.
+          </Card>
+        </div>
+        <p className="mx-auto mt-8 max-w-3xl text-center text-sm text-muted">
+          These are intended uses, not claims of customer adoption. The current proof shows Guard
+          authorization with a separately funded wallet; Guard cannot stop an independent wallet
+          keyholder from transferring directly.
+        </p>
+      </Section>
+
+      <Section
+        id="why-agents-and-blockchain"
+        title="A capable agent needs boundaries and receipts."
+        intro="The goal is an agent you can trust with useful work. AI, .x3, Guard, and blockchain each handle a different part of that job."
+      >
+        <CardGrid>
+          <Card title="AI proposes the work">
+            An agent can interpret a request and propose a payment program. A persuasive prompt
+            or a confident answer does not grant it spending authority.
+          </Card>
+          <Card title=".x3 and Guard check the terms">
+            The compiler checks the typed program; Guard evaluates the mandate and signed quote
+            terms. Approval belongs to the owner where the mandate requires it.
+          </Card>
+          <Card title="Blockchain records settlement">
+            A separately authorized funding wallet executes the payment. Finalized chain receipts
+            let reviewers inspect what settled, then compare it with the approved terms.
+          </Card>
+        </CardGrid>
+        <div className="mx-auto mt-8 max-w-3xl space-y-4 text-center text-muted">
+          <p>
+            This matters because a useful decision, permission to spend, and proof of delivery
+            are three separate questions. Connecting them can make delegation more accountable
+            and mistakes easier to investigate.
+          </p>
+          <p>
+            A “perfect agent” is the ambition, not a security guarantee. Blockchain can permanently
+            record a bad payment. Policy checks only cover their rules and enforcement path, and
+            a recorded outcome still needs independent receipt verification.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 pt-2">
+            <ActionLink to="/playground">Test the spending rules</ActionLink>
+            <ActionLink to="/proof" outline>Inspect receipts and limits</ActionLink>
+          </div>
         </div>
       </Section>
 
@@ -239,7 +321,7 @@ function Home() {
         <ProofMeter />
       </Section>
 
-      <Section title="One demonstration, three tracks" alt>
+      <Section title="One demonstration, four tracks" alt>
         <CardGrid>
           <Card title="AI Security & Defense">
             Recipient and asset allowlists, caps, slippage, fees, expiry, one-use nonces. Compiler
@@ -250,6 +332,11 @@ function Home() {
             A restricted agent key accepted the mainnet quote after owner approval, and later
             recorded a Settled outcome. First-party records identify manual Solflare funding;
             Guard-controlled source custody is still unproven.
+          </Card>
+          <Card title="Autonomous Business">
+            The owner sets the constraints once: caps, approval threshold, allowlists, refund
+            address and expiry. Guard enforced them on mainnet. invoice_06 was owner-funded and
+            paid to the owner's own account; treasury and revenue features are not built.
           </Card>
           <Card title="Unstoppable DeFi">
             Official 1Click settlement from Solana to NEAR mainnet, plus the earlier Base Sepolia

@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { INTRO_EVENT, SONG } from "@/lib/song";
 
 /**
- * The "Who Gets Paid" music video as a normal, always-on-the-page player. It is server
+ * The narrated mainnet evidence cut as a normal, always-on-the-page player. It is server
  * rendered, so it is there before any script runs, for visitors who skip the intro, and for
  * judges who come back later in the same session (the intro only opens once per session).
  * Nothing autoplays; the browser fetches only metadata until someone presses play.
@@ -27,10 +27,10 @@ export function WatchVideo() {
           Watch · {SONG.length}
         </p>
         <h2 id="watch-title" className="mt-3 text-center font-display text-3xl text-primary md:text-4xl">
-          Who gets paid?
+          Payment. Limits. Proof.
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-center text-muted">
-          An agent proposes a payment. The owner's .x3 mandate decides. Guard enforces it. Three minutes, set to music.
+          Follow invoice_06 from the original .x3 mandate through local refusals, mainnet authorization, the owner-funded payment and recorded outcome. Narrated with captions.
         </p>
 
         <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-bg shadow-[0_0_60px_rgba(46,200,255,0.18)]">
@@ -41,7 +41,7 @@ export function WatchVideo() {
             controls
             playsInline
             preload="metadata"
-            aria-label={`${SONG.title} music video, ${SONG.length}`}
+            aria-label={`${SONG.title} evidence video, ${SONG.length}`}
           >
             {SONG.webm !== null && <source src={SONG.webm} type='video/webm; codecs="vp9,opus"' />}
             <source src={SONG.video} type="video/mp4" />
@@ -51,8 +51,7 @@ export function WatchVideo() {
 
         <div className="mt-4 flex flex-col items-center justify-between gap-3 text-sm text-muted sm:flex-row">
           <p className="text-center sm:text-left">
-            Scenes marked DRAMATIZATION are AI-generated. Explorer cards are testnet. Terminal shots are local runs. Nothing
-            in the video is a mainnet settlement; the mainnet record is the invoice_06 section above.
+            Mainnet cards summarize archived receipts; terminal output is a local replay, not a new payment. The owner manually funded the deposit. Guard is noncustodial and does not authenticate outcome hashes; provider linkage is not cryptographic cross-chain atomicity.
           </p>
           <a
             href={SONG.video}
@@ -62,6 +61,11 @@ export function WatchVideo() {
             Download MP4
           </a>
         </div>
+        <p className="mt-3 text-center text-sm text-muted">
+          <a className="underline" href="/media/x3-force-field-mainnet-20261113.srt" download>Download captions</a>
+          {" · "}
+          <a className="underline" href="/media/x3-shield-who-gets-paid.mp4">Previous cut: dramatization, testnet and local scenes</a>
+        </p>
       </div>
     </section>
   );

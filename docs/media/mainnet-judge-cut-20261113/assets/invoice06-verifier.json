@@ -1,0 +1,176 @@
+{
+  "compiler": {
+    "compiled_at_utc": "2026-11-12T01:49:21.152000Z",
+    "edits": [
+      {
+        "case": "recipient_attacker",
+        "code": "X3_MANDATE_DENIED",
+        "expected_stop": "mandate",
+        "failed": [
+          "mandate_recipient"
+        ],
+        "pass": true,
+        "stopped_at": "mandate",
+        "tried": "pay attacker.near instead of x3lang.near"
+      },
+      {
+        "case": "ten_times_amount",
+        "code": "X3_MANDATE_DENIED",
+        "expected_stop": "mandate",
+        "failed": [
+          "mandate_daily",
+          "mandate_per_payment"
+        ],
+        "pass": true,
+        "stopped_at": "mandate",
+        "tried": "send 250 USDC instead of 25"
+      },
+      {
+        "case": "refund_redirect",
+        "code": "X3_MANDATE_DENIED",
+        "expected_stop": "mandate",
+        "failed": [
+          "mandate_refund_to"
+        ],
+        "pass": true,
+        "stopped_at": "mandate",
+        "tried": "send refunds to another Solana wallet"
+      },
+      {
+        "case": "loose_slippage",
+        "code": "X3_MANDATE_DENIED",
+        "expected_stop": "mandate",
+        "failed": [
+          "mandate_slippage"
+        ],
+        "pass": true,
+        "stopped_at": "mandate",
+        "tried": "allow 5% slippage instead of 0.9%"
+      },
+      {
+        "case": "no_slippage_bound",
+        "code": "X3_NEAR_SLIPPAGE_REQUIRED",
+        "expected_stop": "compile",
+        "pass": true,
+        "stopped_at": "compile",
+        "tried": "drop the slippage bound"
+      },
+      {
+        "case": "no_timeout",
+        "code": "X3_NEAR_TIMEOUT_REQUIRED",
+        "expected_stop": "compile",
+        "pass": true,
+        "stopped_at": "compile",
+        "tried": "drop the timeout and refund"
+      },
+      {
+        "case": "no_nonce",
+        "code": "X3_NEAR_NONCE",
+        "expected_stop": "compile",
+        "pass": true,
+        "stopped_at": "compile",
+        "tried": "drop the one-use nonce"
+      },
+      {
+        "case": "second_leg",
+        "code": "X3_NEAR_ROUTE_SHAPE",
+        "expected_stop": "compile",
+        "pass": true,
+        "stopped_at": "compile",
+        "tried": "add a second swap leg"
+      }
+    ],
+    "edits_refused": 8,
+    "file_mandate_checks": 10,
+    "file_mandate_checks_ok": true,
+    "mandate_terms": 13,
+    "mandate_terms_diff": {},
+    "mandate_terms_equal": 13,
+    "nonce_equal": true,
+    "owner_agent_equal": true,
+    "policy_diff": {},
+    "policy_fields": 10,
+    "policy_fields_equal": 10
+  },
+  "guard": {
+    "block": 224149400,
+    "checks": 21,
+    "executed": true,
+    "failed": [],
+    "ok": 21,
+    "public_key": "ed25519:J3NiU8J63HAfz2MTDu1zQVhFRYS5Pio21h1kNtJdP11x",
+    "signed_by_function_call_key": true,
+    "signer": "x3-agent.x3lang.near",
+    "tx": "Eg75uehwU4YJ86ZZPEPKiBqnjkr6PxwPmV23HFAgu153"
+  },
+  "links": {
+    "compiler": true,
+    "guard": true,
+    "outcome": true,
+    "payment": true,
+    "written": true
+  },
+  "not_cryptographic": [
+    "Guard -> payment: Guard accepted the quote; the owner signed the Solana deposit by hand. Guard does not hold or move the USDC.",
+    "Deposit <-> payout: linked by 1Click status, timing and amount, not by a cryptographic cross-chain proof (the outcome verification records cross_chain_causality_proven: false).",
+    "Payout -> outcome: the outcome is the agent's report. Guard stores the transaction hashes it is given and checks the amount against the floor; it does not authenticate the hashes.",
+    "Compiler -> Guard: Guard checks the stored .x3 hashes and the policy fields; it does not compile or run .x3. This script shows the compiler's output equals what Guard stores."
+  ],
+  "ok": true,
+  "outcome": {
+    "amount_out": "24995200",
+    "block": 224319990,
+    "cites_payout": true,
+    "cross_chain_causality_proven": false,
+    "executed": true,
+    "floor_met": true,
+    "status": "Settled",
+    "tx": "9sTn9pJ1ZbCVazBm9Wz9oEDh6aWw4FUVMoAJEKCCzuqE",
+    "tx_hashes": [
+      "4zhGYyWNabYQ5gixTUzoVHVbgFKWAsQssSpCv3B1J1LjCRisEJW6wm3zuS2GVuDotAT93S8wm1qezHwsKX2RkXo5",
+      "8jfbACLSxrzi3fnajfAVGc4Fgo6XLCWA1mpiJWXPw43P"
+    ]
+  },
+  "payment": {
+    "deposit_address": "C6978ATtM33Acw79Dh3y6K5syfzJtwcvo6t6b62UdkN",
+    "deposit_address_received": 25000000,
+    "payer": "58tbMfadmi8HWzUndLqkX3prBbkiZMEaYMTDYSzhB3cQ",
+    "payer_after": 6074779,
+    "payer_before": 31074779,
+    "payout_executed": true,
+    "payout_matches_quote": true,
+    "payout_signer": "intents.near",
+    "payout_transfers": [
+      {
+        "amount": "24995200",
+        "new_owner_id": "x3lang.near",
+        "old_owner_id": "intents.near"
+      }
+    ],
+    "payout_tx": "8jfbACLSxrzi3fnajfAVGc4Fgo6XLCWA1mpiJWXPw43P",
+    "payout_withdrawals": [
+      {
+        "amount": "24995200",
+        "intent": "ft_withdraw",
+        "min_gas": "17050000000000",
+        "receiver_id": "x3lang.near",
+        "token": "17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1"
+      }
+    ],
+    "seconds_deposit_to_payout": 84,
+    "solana_err": null,
+    "solana_signers": [
+      "58tbMfadmi8HWzUndLqkX3prBbkiZMEaYMTDYSzhB3cQ"
+    ],
+    "solana_slot": 468354078,
+    "solana_tx": "4zhGYyWNabYQ5gixTUzoVHVbgFKWAsQssSpCv3B1J1LjCRisEJW6wm3zuS2GVuDotAT93S8wm1qezHwsKX2RkXo5",
+    "transfer_matches_quote": true
+  },
+  "schema": "x3.invoice06_chain.v1",
+  "written": {
+    "mandate_matches_mandate": true,
+    "mandate_sha256": "eea021d5cc1118801f4e1d3b9c0efe89fc59a7f654031f9ff1951aa1f2f3d515",
+    "payment_matches_intent": true,
+    "payment_sha256": "9ee29a5603cfa1e7d9fdbd866cf330ce35e6b5f0907c6844dd2ef1a213768ba0"
+  }
+}

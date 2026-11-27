@@ -1,10 +1,18 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { pageSeo } from "@/lib/seo";
 import { OutLink, Tag } from "@/components/code-block";
 import { ProofFlow } from "@/components/circuit";
 import { Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { BACKING_LINKS_VISIBLE, EVIDENCE_SNAPSHOT, LINKS } from "@/lib/front-door";
 
-export const Route = createFileRoute("/language")({ component: LanguagePage });
+export const Route = createFileRoute("/language")({
+  head: () => pageSeo(
+    "/language",
+    "X3Lang | .x3 Mandates, Compiler and Runtime",
+    "Learn how .x3 payment programs and owner mandates are checked, how NEAR Guard is used, and what the compiler and runtime evidence establishes.",
+  ),
+  component: LanguagePage,
+});
 
 const REFUSALS: { code: string; what: string }[] = [
   {
@@ -82,8 +90,8 @@ const ENGINE: { title: string; body: string; href: string }[] = [
 const IDEAS: { title: string; body: string; status: string; href?: string }[] = [
   {
     title: "Guard enforces the program hash",
-    status: "Open PR #202",
-    body: "Program-pin enforcement is proposed in PR #202 and is not merged at this evidence snapshot. Storing a source hash does not prove the deployed Guard rejects a different program. The meter waits for the implementation and mismatch tests to land.",
+    status: "Closed, unmerged PR #202",
+    body: "PR #202 was closed without merge. Program-pin enforcement has not been established for the deployed Guard; storing a source hash alone cannot prove that an altered program is refused. Require reviewed, landed implementation and mismatch tests before raising this proof gate.",
     href: LINKS.programBindingPr,
   },
   {

@@ -1,8 +1,10 @@
 # Vendored from X3Lang
 
 These six files are byte-for-byte copies of
-[Cyptopimpinainteazy/x3lang](https://github.com/Cyptopimpinainteazy/x3lang/tree/efb514ffef2cdfdeb8ad8147747887c85356073c)
-at commit `efb514ffef2cdfdeb8ad8147747887c85356073c`, reviewed November 12, 2026.
+[Cyptopimpinainteazy/x3lang](https://github.com/Cyptopimpinainteazy/x3lang/tree/184b6d17f61bd576eee34f6cad25b9e4256aa29e)
+at commit `184b6d17f61bd576eee34f6cad25b9e4256aa29e`, reviewed November 13, 2026. Since the previous
+port (`efb514f`, November 12) only `x3guard.mjs` changed upstream: x3lang #242 (issue #241)
+carries `bps` through the parser and refuses slippage bounds without a unit.
 They are MIT licensed; the license is copied beside them.
 
 Upstream now includes the exact-boolean binding between the request and the
@@ -18,7 +20,7 @@ Current mainnet claims and transaction links are presented on `/proof`.
 
 | File here | Source path in x3lang | SHA-256 |
 |---|---|---|
-| `x3guard.mjs` | `x3-lang/near/demo/x3guard.mjs` | `063164355bd558a43b37c38b2c1baf7e3bf66302b5e0203fab3450e03ddcfe5d` |
+| `x3guard.mjs` | `x3-lang/near/demo/x3guard.mjs` | `0b8991f2f2ad9d08a5bec81c05d0ee1bf6dbb8648fdff59cb60e0183a99881ea` |
 | `judge/judge.mjs` | `x3-lang/near/demo/judge/judge.mjs` | `523b8e117fff2fcf8034d6a110d932cafe211974fb12e60af951c284ffdc6d92` |
 | `judge/scenarios.json` | `x3-lang/near/demo/judge/scenarios.json` | `ee0c2d3d5019bd7e032666b9ac930d58fd9b5dbb63d44a329b92ebaa5daa6d06` |
 | `fixtures/near_intents_quote_dry_live_capture.json` | `x3-lang/tests/fixtures/near_intents_quote_dry_live_capture.json` | `3ca979e678a632b2d5c49c8a3f7098db8072f3329c4e5b54cd265a3e523c0a84` |

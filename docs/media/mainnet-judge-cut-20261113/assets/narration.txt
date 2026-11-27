@@ -1,0 +1,15 @@
+An AI agent can propose a payment. But who decides whether it should happen? X3 Force Field puts the owner's rules outside the model. Here is one payment you can inspect, from written policy to recorded outcome.
+
+The owner wrote a typed dot X three mandate: twenty-five USDC per payment and per day, one permitted recipient, a pinned refund wallet, and bounded slippage and fees. This twenty-five dollar payment also required owner approval. The original mandate and payment files match the source hashes stored by NEAR Guard.
+
+First, test the same payment locally. Redirect the recipient, increase the amount, change the refund, or loosen slippage: the mandate check refuses them. Remove required safety terms: compilation fails. Eight edited copies are refused. These are local checks, not mainnet attack transactions.
+
+Now inspect the mainnet authorization. After owner approval, the agent's restricted key accepted a signed One Click quote. The Guard receipt reports twenty-one passing checks. The authenticated minimum exceeds the policy floor of twenty-four point seven five USDC. Quote acceptance authorizes a deposit address; it does not move money.
+
+The owner manually funded twenty-five USDC on Solana. The archived finalized payout shows twenty-four point nine nine five two USDC delivered to X three lang dot near, about eighty-four seconds later. Follow both transaction links. One Click associates these transfers; that is not cryptographic cross-chain atomicity.
+
+The restricted agent then recorded Settled on NEAR, with the output amount, both transaction hashes, and floor met. Guard stores that report and checks its amount against the floor. It does not authenticate the supplied transaction hashes. The transfer receipts are separate evidence.
+
+Six core payment capabilities connect typed policy, checks outside the model, signed terms, traceability, restricted authority, and reproducibility. Three additional local prototypes demonstrate signed child admission, durable retirement and incident review, and a scoped vault on a real local NEAR Sandbox. They are not public-chain custody.
+
+This is one owner-assisted payment, not production reliability. Guard is noncustodial, an owner recovery key remains, and no native X three virtual machine runs on chain. Start at the judge page, check out the pinned snapshot, and run the verifier. Inspect the policy, the limits, and the receipts. Every claim has a boundary.

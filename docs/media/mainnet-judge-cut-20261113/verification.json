@@ -1,0 +1,23 @@
+{
+  "classification": "NARRATED_ARCHIVED_EVIDENCE_CUT_NOT_NEW_CHAIN_EXECUTION",
+  "duration_seconds": 146.666667,
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "frame_rate": "30/1",
+  "audio_sample_rate": 48000,
+  "audio_integrated_lufs": -16.75,
+  "audio_true_peak_dbtp": -1.43,
+  "full_mp4_decode": "PASS no errors",
+  "website_typecheck": "PASS",
+  "website_focused_tests": "20 passed",
+  "browser_preview": "1440px and 390px: playback advances, no JS errors, no overflow",
+  "independent_review": "No blocking findings; corrected obsolete comment about separate X3Lang judge-page media.",
+  "artifact_sha256": {
+    "public/media/x3-force-field-mainnet-20261113.mp4": "15664503c8d8bda257d162cb3b9fbfce90bb251c700ce402c047fda2c33cb280",
+    "public/media/x3-force-field-mainnet-20261113.webm": "6c997df6672a4e92da983c2accd988718545388bc22886315a7fae545445c10a",
+    "public/media/x3-force-field-mainnet-20261113.srt": "0f8b7d49d5f7ef5c71d5c772dcc5685440a24bc1d30c1152c70c56d36d701845"
+  },
+  "deployment": "Draft only; production unchanged"
+}

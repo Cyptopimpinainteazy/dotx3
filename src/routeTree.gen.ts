@@ -13,11 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as BackRouteImport } from './routes/back'
 import { Route as BootcampRouteImport } from './routes/bootcamp'
+import { Route as BusinessRouteImport } from './routes/business'
 import { Route as DefiRouteImport } from './routes/defi'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as DexRouteImport } from './routes/dex'
 import { Route as DocsRouteImport } from './routes/docs'
+import { Route as FaucetRouteImport } from './routes/faucet'
 import { Route as IdeRouteImport } from './routes/ide'
 import { Route as JudgeRouteImport } from './routes/judge'
 import { Route as LabsRouteImport } from './routes/labs'
@@ -28,6 +30,7 @@ import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as ProofRouteImport } from './routes/proof'
 import { Route as ProofsRouteImport } from './routes/proofs'
 import { Route as SecurityRouteImport } from './routes/security'
+import { Route as ApiAgentWriteRouteImport } from './routes/api/agent/write'
 import { Route as ApiExplorerStatusRouteImport } from './routes/api/explorer/status'
 import { Route as ApiExplorerTransactionsRouteImport } from './routes/api/explorer/transactions'
 import { Route as ApiNearTestnetRouteImport } from './routes/api/near/testnet'
@@ -54,6 +57,11 @@ const BootcampRoute = BootcampRouteImport.update({
   path: '/bootcamp',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BusinessRoute = BusinessRouteImport.update({
+  id: '/business',
+  path: '/business',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DefiRoute = DefiRouteImport.update({
   id: '/defi',
   path: '/defi',
@@ -77,6 +85,11 @@ const DexRoute = DexRouteImport.update({
 const DocsRoute = DocsRouteImport.update({
   id: '/docs',
   path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaucetRoute = FaucetRouteImport.update({
+  id: '/faucet',
+  path: '/faucet',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IdeRoute = IdeRouteImport.update({
@@ -129,6 +142,11 @@ const SecurityRoute = SecurityRouteImport.update({
   path: '/security',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAgentWriteRoute = ApiAgentWriteRouteImport.update({
+  id: '/api/agent/write',
+  path: '/api/agent/write',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiExplorerStatusRoute = ApiExplorerStatusRouteImport.update({
   id: '/api/explorer/status',
   path: '/api/explorer/status',
@@ -160,11 +178,13 @@ export interface FileRoutesByFullPath {
   '/agents': typeof AgentsRoute
   '/back': typeof BackRoute
   '/bootcamp': typeof BootcampRoute
+  '/business': typeof BusinessRoute
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/faucet': typeof FaucetRoute
   '/ide': typeof IdeRoute
   '/judge': typeof JudgeRoute
   '/labs': typeof LabsRoute
@@ -175,6 +195,7 @@ export interface FileRoutesByFullPath {
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/agent/write': typeof ApiAgentWriteRoute
   '/api/explorer/status': typeof ApiExplorerStatusRoute
   '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
   '/api/near/testnet': typeof ApiNearTestnetRoute
@@ -186,11 +207,13 @@ export interface FileRoutesByTo {
   '/agents': typeof AgentsRoute
   '/back': typeof BackRoute
   '/bootcamp': typeof BootcampRoute
+  '/business': typeof BusinessRoute
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/faucet': typeof FaucetRoute
   '/ide': typeof IdeRoute
   '/judge': typeof JudgeRoute
   '/labs': typeof LabsRoute
@@ -201,6 +224,7 @@ export interface FileRoutesByTo {
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/agent/write': typeof ApiAgentWriteRoute
   '/api/explorer/status': typeof ApiExplorerStatusRoute
   '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
   '/api/near/testnet': typeof ApiNearTestnetRoute
@@ -213,11 +237,13 @@ export interface FileRoutesById {
   '/agents': typeof AgentsRoute
   '/back': typeof BackRoute
   '/bootcamp': typeof BootcampRoute
+  '/business': typeof BusinessRoute
   '/defi': typeof DefiRoute
   '/demo': typeof DemoRoute
   '/developers': typeof DevelopersRoute
   '/dex': typeof DexRoute
   '/docs': typeof DocsRoute
+  '/faucet': typeof FaucetRoute
   '/ide': typeof IdeRoute
   '/judge': typeof JudgeRoute
   '/labs': typeof LabsRoute
@@ -228,6 +254,7 @@ export interface FileRoutesById {
   '/proof': typeof ProofRoute
   '/proofs': typeof ProofsRoute
   '/security': typeof SecurityRoute
+  '/api/agent/write': typeof ApiAgentWriteRoute
   '/api/explorer/status': typeof ApiExplorerStatusRoute
   '/api/explorer/transactions': typeof ApiExplorerTransactionsRoute
   '/api/near/testnet': typeof ApiNearTestnetRoute
@@ -241,11 +268,13 @@ export interface FileRouteTypes {
     | '/agents'
     | '/back'
     | '/bootcamp'
+    | '/business'
     | '/defi'
     | '/demo'
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/faucet'
     | '/ide'
     | '/judge'
     | '/labs'
@@ -256,6 +285,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/agent/write'
     | '/api/explorer/status'
     | '/api/explorer/transactions'
     | '/api/near/testnet'
@@ -267,11 +297,13 @@ export interface FileRouteTypes {
     | '/agents'
     | '/back'
     | '/bootcamp'
+    | '/business'
     | '/defi'
     | '/demo'
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/faucet'
     | '/ide'
     | '/judge'
     | '/labs'
@@ -282,6 +314,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/agent/write'
     | '/api/explorer/status'
     | '/api/explorer/transactions'
     | '/api/near/testnet'
@@ -293,11 +326,13 @@ export interface FileRouteTypes {
     | '/agents'
     | '/back'
     | '/bootcamp'
+    | '/business'
     | '/defi'
     | '/demo'
     | '/developers'
     | '/dex'
     | '/docs'
+    | '/faucet'
     | '/ide'
     | '/judge'
     | '/labs'
@@ -308,6 +343,7 @@ export interface FileRouteTypes {
     | '/proof'
     | '/proofs'
     | '/security'
+    | '/api/agent/write'
     | '/api/explorer/status'
     | '/api/explorer/transactions'
     | '/api/near/testnet'
@@ -320,11 +356,13 @@ export interface RootRouteChildren {
   AgentsRoute: typeof AgentsRoute
   BackRoute: typeof BackRoute
   BootcampRoute: typeof BootcampRoute
+  BusinessRoute: typeof BusinessRoute
   DefiRoute: typeof DefiRoute
   DemoRoute: typeof DemoRoute
   DevelopersRoute: typeof DevelopersRoute
   DexRoute: typeof DexRoute
   DocsRoute: typeof DocsRoute
+  FaucetRoute: typeof FaucetRoute
   IdeRoute: typeof IdeRoute
   JudgeRoute: typeof JudgeRoute
   LabsRoute: typeof LabsRoute
@@ -335,6 +373,7 @@ export interface RootRouteChildren {
   ProofRoute: typeof ProofRoute
   ProofsRoute: typeof ProofsRoute
   SecurityRoute: typeof SecurityRoute
+  ApiAgentWriteRoute: typeof ApiAgentWriteRoute
   ApiExplorerStatusRoute: typeof ApiExplorerStatusRoute
   ApiExplorerTransactionsRoute: typeof ApiExplorerTransactionsRoute
   ApiNearTestnetRoute: typeof ApiNearTestnetRoute
@@ -372,6 +411,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BootcampRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/business': {
+      id: '/business'
+      path: '/business'
+      fullPath: '/business'
+      preLoaderRoute: typeof BusinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/defi': {
       id: '/defi'
       path: '/defi'
@@ -405,6 +451,13 @@ declare module '@tanstack/react-router' {
       path: '/docs'
       fullPath: '/docs'
       preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faucet': {
+      id: '/faucet'
+      path: '/faucet'
+      fullPath: '/faucet'
+      preLoaderRoute: typeof FaucetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ide': {
@@ -477,6 +530,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/agent/write': {
+      id: '/api/agent/write'
+      path: '/api/agent/write'
+      fullPath: '/api/agent/write'
+      preLoaderRoute: typeof ApiAgentWriteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/explorer/status': {
       id: '/api/explorer/status'
       path: '/api/explorer/status'
@@ -520,11 +580,13 @@ const rootRouteChildren: RootRouteChildren = {
   AgentsRoute: AgentsRoute,
   BackRoute: BackRoute,
   BootcampRoute: BootcampRoute,
+  BusinessRoute: BusinessRoute,
   DefiRoute: DefiRoute,
   DemoRoute: DemoRoute,
   DevelopersRoute: DevelopersRoute,
   DexRoute: DexRoute,
   DocsRoute: DocsRoute,
+  FaucetRoute: FaucetRoute,
   IdeRoute: IdeRoute,
   JudgeRoute: JudgeRoute,
   LabsRoute: LabsRoute,
@@ -535,6 +597,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProofRoute: ProofRoute,
   ProofsRoute: ProofsRoute,
   SecurityRoute: SecurityRoute,
+  ApiAgentWriteRoute: ApiAgentWriteRoute,
   ApiExplorerStatusRoute: ApiExplorerStatusRoute,
   ApiExplorerTransactionsRoute: ApiExplorerTransactionsRoute,
   ApiNearTestnetRoute: ApiNearTestnetRoute,

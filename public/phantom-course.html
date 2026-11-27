@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1113">
+  <meta name="description" content="Practice reviewing Solidity findings with PHANTOM. Try a free worked case and request a seat in X3's live, instructor-graded workshop.">
+  <title>Security Findings Review · PHANTOM Academy</title>
+  <link rel="stylesheet" href="phantom-course/course.css">
+  <script src="phantom-course/practice.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to course</a>
+<header><div class="shell">
+  <a class="brand" href="phantom.html" aria-label="X3 PHANTOM product page"><b>X3</b> PHANTOM</a>
+  <nav aria-label="Course"><a href="#sample">Free case</a><a href="#workshop">Workshop</a><a href="#cohort">Enrollment</a></nav>
+</div></header>
+<main id="main" class="shell">
+  <section class="hero" aria-labelledby="course-title">
+    <div>
+      <p class="kicker">PHANTOM Academy · Live workshop</p>
+      <h1 id="course-title">Security findings review</h1>
+      <p class="lead">Two Solidity functions change a setting. Only one enforces the owner’s policy. Which finding should a maintainer fix? Learn to trace the code, defend your call, and show how a team can verify the correction.</p>
+      <a class="button" href="#sample">Try the free case <span aria-hidden="true">↓</span></a>
+    </div>
+    <aside class="enroll" id="cohort" aria-labelledby="cohort-title">
+      <h2 id="cohort-title">Founding cohort</h2>
+      <strong class="price">$99 <small>USD / person</small></strong>
+      <p>10 seats planned · 75 minutes live<br>Take-home review and individual feedback included.</p>
+      <p>Dates are pending. Email X3 for the schedule and availability. You can confirm your seat and arrange payment after you receive the details.</p>
+      <a class="button" href="mailto:cryptopimpinainteazy@gmail.com?subject=PHANTOM%20course%20seat%20request&amp;body=I%27m%20interested%20in%20the%20%2499%20PHANTOM%20Security%20Findings%20Review%20cohort.%20Please%20send%20the%20date%20and%20availability.">Request a seat by email <span aria-hidden="true">↗</span></a>
+      <span class="email">cryptopimpinainteazy@gmail.com</span>
+    </aside>
+  </section>
+  <section class="section" id="sample" aria-labelledby="sample-title">
+    <p class="kicker">Free practice · 15 minutes</p>
+    <h2 id="sample-title">Who can rename the workshop?</h2>
+    <p class="lead">The classroom policy gives the curator sole authority to change session labels. Review two instructor-written alerts against this snapshot. Both ask whether a label setter enforces that policy.</p>
+    <div class="case-grid">
+      <section class="source" aria-label="Excerpt of the workshop contract">
+        <div class="file"><span>sample-contract.sol</span><small>Lines 17–28</small></div>
+        <div class="code-window" role="region" aria-label="Scrollable Solidity source" tabindex="0">
+          <div class="code-lines">
+            <span><i aria-hidden="true">17</i><code>    modifier onlyCurator() {</code></span>
+            <span><i aria-hidden="true">18</i><code>        if (msg.sender != curator) revert CuratorOnly();</code></span>
+            <span><i aria-hidden="true">19</i><code>        _;</code></span>
+            <span><i aria-hidden="true">20</i><code>    }</code></span>
+            <span><i aria-hidden="true">21</i><code></code></span>
+            <span><i aria-hidden="true">22</i><code>    function setMorningLabel(string calldata label) external onlyCurator {</code></span>
+            <span><i aria-hidden="true">23</i><code>        morningLabel = label;</code></span>
+            <span><i aria-hidden="true">24</i><code>    }</code></span>
+            <span><i aria-hidden="true">25</i><code></code></span>
+            <span><i aria-hidden="true">26</i><code>    function setEveningLabel(string calldata label) external {</code></span>
+            <span><i aria-hidden="true">27</i><code>        eveningLabel = label;</code></span>
+            <span><i aria-hidden="true">28</i><code>    }</code></span>
+          </div>
+        </div>
+        <div class="source-links"><a href="phantom-course/sample-contract.sol" download>Full source ↓</a><a href="phantom-course/sample-report.json" download>Practice report ↓</a></div>
+      </section>
+      <div class="exercise">
+        <h3>Decide each alert</h3>
+        <p>Follow the caller check through to the write. Choose “uphold” if the suspected missing guard is supported.</p>
+        <form id="practice" hidden>
+          <fieldset><legend>Morning label · line 22</legend>
+            <label><input required type="radio" name="morning" value="uphold"> Uphold</label>
+            <label><input required type="radio" name="morning" value="dismiss"> Dismiss</label>
+          </fieldset>
+          <fieldset><legend>Evening label · line 26</legend>
+            <label><input required type="radio" name="evening" value="uphold"> Uphold</label>
+            <label><input required type="radio" name="evening" value="dismiss"> Dismiss</label>
+          </fieldset>
+          <button class="button" type="submit">Check my decisions</button>
+        </form>
+        <p id="feedback" role="status" aria-live="polite"></p>
+        <noscript><p>Write down your two decisions, then open the worked answer below.</p></noscript>
+        <details id="worked-answer"><summary>Read the worked answer</summary>
+          <p><strong>Morning · dismiss.</strong> Line 22 attaches <code>onlyCurator</code>. Lines 17–20 reject a different caller before the write on line 23.</p>
+          <p><strong>Evening · uphold.</strong> Line 26 has no curator check. Line 27 writes the label directly. A different caller can change that piece of schedule metadata.</p>
+          <p><strong>Maintainer action.</strong> Apply the existing modifier to the evening setter. Verify that the curator can update both labels and another caller is refused with the previous values intact.</p>
+          <p><strong>Scope.</strong> The schedule display was outside the supplied snapshot. Ask for its data-loading code before claiming students would see a changed label. These acceptance checks are proposed.</p>
+          <a href="phantom-course/sample-answer.md" download>Download the model report</a>
+        </details>
+      </div>
+    </div>
+    <details><summary>Compare the actual X3 Sentinel scan</summary>
+      <p>X3 Sentinel 0.1.0 scanned this exact file and returned <strong>zero findings</strong>. Its three Solidity patterns and three general secret patterns did not test the curator rule. The two alerts above were written by the instructor. Their source-file hash matches the one in the original scan.</p>
+      <p>The scanner covered its one-file input. The schedule display and its data source are still missing from the wider review.</p>
+      <p><a href="phantom-course/sentinel-report.json" download>Download original scan JSON</a> · <a href="phantom-course/sentinel-walkthrough.md" download>Read the scan walkthrough</a></p>
+    </details>
+  </section>
+  <section class="section" id="workshop" aria-labelledby="workshop-title">
+    <p class="kicker">Founding cohort · Course outline</p>
+    <h2 id="workshop-title">From scanner alert to maintainer report</h2>
+    <p class="lead">For developers and junior reviewers who can read a basic Solidity function. Bring a browser and a text editor. All cases use supplied, fictional code.</p>
+    <div class="lesson-list">
+      <article><h3>Live review · 75 min</h3><p>Pin a source snapshot, follow a guard across function boundaries, and compare your decision with the instructor’s. Discuss what the evidence leaves open.</p></article>
+      <article><h3>Individual case · 45–60 min</h3><p>Review a fresh configuration case and submit a one-page report privately. Explain each verdict, the impact, a fix, and an acceptance check.</p></article>
+      <article><h3>Feedback and one revision</h3><p>Receive a written score and actionable feedback. Passing earns the X3-issued PHANTOM Security Findings Review Certificate, edition 1.0.</p></article>
+    </div>
+    <details><summary>How the certificate is earned</summary>
+      <p>Pass with at least <strong>80 out of 100</strong> and meet all four essential checks. Both verdicts must be accurate, both must cite decisive source lines, at least one proposed check must distinguish the fix from the original behavior, and the report must state a material coverage limit.</p>
+      <p>The certificate records the individual’s performance on this source-review assignment. One revision is included after instructor feedback.</p>
+      <a href="phantom-course/rubric.md" download>Download the full grading rubric</a>
+    </details>
+  </section>
+</main>
+<footer><div class="shell"><span>PHANTOM Academy · X3</span><a href="phantom.html">About PHANTOM</a></div></footer>
+</body>
+</html>

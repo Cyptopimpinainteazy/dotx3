@@ -269,7 +269,7 @@ timeout ${tnum}${tunit} refund Solana.USDC
 on_fail rollback`;
   const notes = [
     { k: "require slippage", v: `${pct}% and ${slip}bps are the same bound. 1Click gets slippageTolerance = ${slip} bps, rounded down so it is never looser than you wrote. ${slip > 100 ? "Above the example mandate's 100 bps, so mandate_slippage would fail." : "Within the example mandate's 100 bps."}` },
-    { k: "Careful with units", v: "A bare 50 is refused (X3_NEAR_BOUND_UNIT), and so is 50 bps with a space: write 0.5% or 50bps. A bare number below 1 is read as a fraction, so 0.5 means 50%, not 0.5%." },
+    { k: "Careful with units", v: "A bound needs a unit: write 0.5%, 50 bps or 50bps. A bare number is refused (X3_NEAR_BOUND_UNIT), whether 50, 0.005 or 0.5. A bare 0.5 used to be read as a fraction, 50% rather than 0.5%, so the compiler no longer guesses." },
     { k: "require fees", v: `Checked on the quote's effective cost and, separately, on the refund fee a failed swap would be charged. Decimals round down. ${Number.isNaN(feeN) ? "Enter a number." : Math.floor(feeN) > 100 ? "Above the example mandate's 100 bps, so mandate_fees would fail." : "Within the example mandate's 100 bps."}` },
     { k: "require nonce unused", v: "Exactly one per intent. A reused nonce is a refusal, never something to patch in a receipt." },
     { k: "timeout … refund", v: `Sets the deadline to now + ${tnum}${tunit}. The refund must be in the deposited asset. A live quote whose deadline runs past this timeout is refused.` },
