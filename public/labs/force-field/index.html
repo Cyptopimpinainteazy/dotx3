@@ -428,7 +428,7 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
     <article class="box path"><h3>Revocation stops later actions</h3><p>A fresh payment after the owner revoked was refused (<code>owner revoked mandate</code>), and the earlier payment stayed <code>Paid</code>. An expired mandate refused a fresh payment too.</p></article>
     <article class="box path"><h3>The evidence is preserved</h3><p>The harness output is committed with its SHA-256, beside the compiled contract's SHA-256 <code>705038833fad93e0b0e4573aa1bf8d69d896823bb9fe049214262abf7292c2a0</code>.</p></article>
   </div>
-  <p class="note">Local evidence only: a disposable NEAR Sandbox 2.14.0 node, not testnet or mainnet. Runner observations are not consensus proofs, the owner's FullAccess key was trusted, and the vault is not deployed publicly. Record: <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/7cfde9ffc060f13c5523f5812af541a8b100b14e/evidence/agent-vault-local/complete-path-sandbox-20261113.json">complete-path-sandbox-20261113.json</a> and its <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/7cfde9ffc060f13c5523f5812af541a8b100b14e/evidence/agent-vault-local/complete-path-sandbox-20261113.txt">harness log</a>.</p>
+  <p class="note">Local evidence only: a disposable NEAR Sandbox 2.14.0 node, not testnet or mainnet. Runner observations are not consensus proofs, the owner's FullAccess key was trusted, and the vault is not deployed publicly. Record: <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/18c1fab931c958c1bd185f117e5e52eec724c562/evidence/agent-vault-local/complete-path-sandbox-20261113.json">complete-path-sandbox-20261113.json</a> and its <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/18c1fab931c958c1bd185f117e5e52eec724c562/evidence/agent-vault-local/complete-path-sandbox-20261113.txt">harness log</a>.</p>
   <div class="cmd" style="margin-top:12px"><code>bash scripts/hackathon/vault_sandbox_smoke.sh</code><button type="button" data-js-only hidden data-copy="bash scripts/hackathon/vault_sandbox_smoke.sh">Copy</button></div>
   <p class="note">Needs Rust 1.99.1 and the pinned NEAR Sandbox 2.14.0 binary that the script names. No key, wallet or network.</p>
   <h3 class="chain-title">The agent-law chain today</h3>
@@ -437,17 +437,19 @@ footer{color:var(--mute);border-top:1px solid var(--line);padding-top:20px;paddi
       <caption>Birth to court: what X3 demonstrates now, and how strongly</caption>
       <thead><tr><th scope="col">Stage</th><th scope="col">What exists</th><th scope="col">Evidence</th><th scope="col">Missing</th></tr></thead>
       <tbody>
-        <tr><th scope="row">Birth</th><td>An owner-created mandate and a key limited to three Guard methods; signed admission checks for new agents</td><td>Mainnet for the mandate and key; local tests for admission</td><td>Admission is not wired to key issuance</td></tr>
+        <tr><th scope="row">Birth</th><td>An owner-created mandate and a key limited to three Guard methods; signed births in the local agent-law runtime</td><td>Mainnet for the mandate and key; the runtime locally</td><td>A runtime birth creates no Guard mandate or NEAR key</td></tr>
         <tr><th scope="row">Compile</th><td>The <code>.x3</code> compiler refuses unsafe payments</td><td>Local, 9/9</td><td>—</td></tr>
         <tr><th scope="row">Test</th><td>Red-team and replay suites with a model that complies</td><td>Local, 8/8 and 3/3</td><td>Not required before an agent gets its key</td></tr>
-        <tr><th scope="row">Authorize and execute</th><td>Guard checks without custody; the vault holds the funds</td><td>Guard on mainnet; the vault on a local node</td><td>The vault is not deployed publicly</td></tr>
-        <tr><th scope="row">Terminate</th><td>Owner revocation and expiry</td><td>The vault on a local node; a Guard unit test</td><td>No automatic revocation on a violation</td></tr>
-        <tr><th scope="row">Court</th><td>Typed refusals, hashed logs and fail-closed evidence checkers</td><td>Local and CI</td><td>No independent review; on Guard the agent reports its own outcome</td></tr>
-        <tr><th scope="row">Evolve</th><td>Versioned mandates that only the owner can replace</td><td>Guard unit tests</td><td>No reviewed path from findings to new policy</td></tr>
+        <tr><th scope="row">Authorize and execute</th><td>Guard checks without custody; the vault holds the funds; the runtime authorizes exact-source actions and emits plans only</td><td>Guard on mainnet; the vault on a local node; the runtime locally</td><td>The vault is not deployed publicly; a wallet key held outside the runtime bypasses it</td></tr>
+        <tr><th scope="row">Terminate</th><td>Owner revocation and expiry; the runtime retires an agent automatically when it breaks a policy</td><td>The vault on a local node; the runtime locally; a Guard unit test</td><td>Automatic retirement exists only in the runtime, not in Guard or the vault</td></tr>
+        <tr><th scope="row">Court</th><td>Typed refusals and hashed logs; the runtime freezes each incident and a fixed jury signs findings</td><td>The runtime locally; CI</td><td>The jurors are scripted, not independent; on Guard the agent reports its own outcome</td></tr>
+        <tr><th scope="row">Evolve</th><td>Versioned mandates that only the owner can replace; court findings become proposals</td><td>Guard and runtime tests</td><td>A proposal changes nothing until a reviewed change adopts it</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="note">Source: <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/7cfde9ffc060f13c5523f5812af541a8b100b14e/docs/security/X3_AGENT_CONSTITUTION_V1.md#where-the-agent-law-chain-stands-2026-11-13">the agent constitution's status section</a>.</p>
+  <p class="note">Run the agent-law lifecycle, including automatic retirement and the jury:</p>
+  <div class="cmd"><code>python3 scripts/hackathon/agent_law_local_demo.py --output /tmp/agent-law-lifecycle.json</code><button type="button" data-js-only hidden data-copy="python3 scripts/hackathon/agent_law_local_demo.py --output /tmp/agent-law-lifecycle.json">Copy</button></div>
+  <p class="note">Needs Python 3.12 and <code>x3-lang/requirements-agent-security.txt</code>. Sources: <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/18c1fab931c958c1bd185f117e5e52eec724c562/docs/security/X3_AGENT_CONSTITUTION_V1.md#where-the-agent-law-chain-stands-2026-11-13">the agent constitution's status section</a> and <a href="https://github.com/Cyptopimpinainteazy/x3lang/blob/18c1fab931c958c1bd185f117e5e52eec724c562/docs/security/AGENT_LAW_RUNTIME.md">the runtime's scope and limits</a>.</p>
 </section>
 
 <section class="section" id="keys" aria-labelledby="keys-title">
