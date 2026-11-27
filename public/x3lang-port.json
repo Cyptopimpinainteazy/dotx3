@@ -134,6 +134,17 @@
       "sha256": "a75b4463d9a586b4d2db806b6a19faea7080d71a85eec13c5ddedc18f2a9b79e"
     },
     {
+      "source": "x3-lang/near/demo/judge.html",
+      "destination": "public/labs/guard/judge.html",
+      "source_sha256": "d5e0c97424315dfd2cefe496d0e29523d6bc394430ceeff72b1310d9f10e26e7",
+      "sha256": "bd77ed9114759cf8debb03c696b07891f3e5e51ce460f053a3816cf81cea1d0a",
+      "local_transformations": [
+        "Add the separately published invoice_06 mainnet settlement and remaining evidence limits to the historical setup section; upstream source_sha256 is retained.",
+        "Use the existing padded panel body and heading style for chain evidence, and label the video with its visible heading; content and media URLs are unchanged.",
+        "Add shared public-page Copy and Markdown controls; form values are excluded and upstream source_sha256 is retained."
+      ]
+    },
+    {
       "source": "x3-lang/near/demo/judge/bnb-readiness.json",
       "destination": "public/labs/guard/judge/bnb-readiness.json",
       "source_sha256": "09c1a84b4b53c2e69ac9315b9cc2da12a90b89bff38899ad424597d002492f7a",
@@ -159,17 +170,6 @@
       "destination": "public/labs/guard/judge/scenarios.json",
       "source_sha256": "ee0c2d3d5019bd7e032666b9ac930d58fd9b5dbb63d44a329b92ebaa5daa6d06",
       "sha256": "ee0c2d3d5019bd7e032666b9ac930d58fd9b5dbb63d44a329b92ebaa5daa6d06"
-    },
-    {
-      "source": "x3-lang/near/demo/judge.html",
-      "destination": "public/labs/guard/judge.html",
-      "source_sha256": "d5e0c97424315dfd2cefe496d0e29523d6bc394430ceeff72b1310d9f10e26e7",
-      "sha256": "bd77ed9114759cf8debb03c696b07891f3e5e51ce460f053a3816cf81cea1d0a",
-      "local_transformations": [
-        "Add the separately published invoice_06 mainnet settlement and remaining evidence limits to the historical setup section; upstream source_sha256 is retained.",
-        "Use the existing padded panel body and heading style for chain evidence, and label the video with its visible heading; content and media URLs are unchanged.",
-        "Add shared public-page Copy and Markdown controls; form values are excluded and upstream source_sha256 is retained."
-      ]
     },
     {
       "source": "x3-lang/near/demo/x3guard.mjs",

@@ -4,7 +4,6 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-import shutil
 import subprocess
 
 GUARD_VERDICT_REPLACEMENTS = {
@@ -188,6 +187,27 @@ def transform_ported_file(src, data, sha):
     return data, transformations
 
 
+def source_blob(checkout, commit, path):
+    return subprocess.check_output(['git', '-C', str(checkout), 'cat-file', 'blob', f'{commit}:{path}'])
+
+
+def guard_demo_sources(checkout, commit):
+    base = Path('x3-lang/near/demo')
+    tree = subprocess.check_output(['git', '-C', str(checkout), 'ls-tree', '-rz', commit, '--', str(base)])
+    for entry in tree.split(b'\0'):
+        if not entry:
+            continue
+        header, filename = entry.split(b'\t', 1)
+        mode, kind, _ = header.split()
+        path = Path(filename.decode())
+        rel = path.relative_to(base)
+        if 'test' in rel.parts or path.name == 'evidence.json' or path.suffix not in {'.html', '.mjs', '.json', '.css', '.md'}:
+            continue
+        if mode not in {b'100644', b'100755'} or kind != b'blob':
+            raise ValueError(f'Demo asset must be a regular committed file: {path}')
+        yield path, rel
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('checkout', type=Path)
@@ -199,7 +219,7 @@ def main():
         raise SystemExit('Refuse a dirty source checkout')
     files = []
     def copy(src, dest):
-        data = (source / src).read_bytes()
+        data = source_blob(source, sha, src)
         target = root / dest
         target.parent.mkdir(parents=True, exist_ok=True)
         original_hash = hashlib.sha256(data).hexdigest()
@@ -218,12 +238,8 @@ def main():
     for name in ['near_mandate_agent.x3', 'near_intents_agent_payment.x3']:
         copy(f'x3-lang/examples/{name}', f'vendor/x3lang/x3-lang/examples/{name}')
     copy('x3-lang/tests/fixtures/near_intents_tokens.json', 'vendor/x3lang/x3-lang/tests/fixtures/near_intents_tokens.json')
-    base = source / 'x3-lang/near/demo'
-    for path in sorted(base.rglob('*')):
-        rel = path.relative_to(base)
-        if (path.is_file() and 'test' not in rel.parts and path.suffix in {'.html', '.mjs', '.json', '.css', '.md'}
-                and path.name != 'evidence.json'):
-            copy(str(path.relative_to(source)), str(Path('public/labs/guard') / rel))
+    for path, rel in guard_demo_sources(source, sha):
+        copy(str(path), str(Path('public/labs/guard') / rel))
     for name in ['attack-lab.html', 'attack-lab-policy.mjs', 'agent-law-proof.html']:
         copy('docs/hackathon/' + name, 'public/labs/attack/' + name)
     copy('LICENSE', 'vendor/x3lang/LICENSE')
@@ -251,7 +267,7 @@ def main():
         'LICENSE': 'LICENSE',
     }
     for src, dest in browser_assets.items():
-        shutil.copyfile(source / src, root / 'src/lib/x3/vendor' / dest)
+        (root / 'src/lib/x3/vendor' / dest).write_bytes(source_blob(source, sha, src))
 
     coin_files = [
         'coin/ERC20-5.4.0.sol', 'coin/__init__.py', 'coin/evm.py',
@@ -263,7 +279,7 @@ def main():
     for name in coin_files:
         src = 'x3-lang/' + name
         dest = 'vendor/x3lang/' + src
-        data = (source / src).read_bytes()
+        data = source_blob(source, sha, src)
         (root / dest).write_bytes(data)
         coin_rows.append({'source': src, 'destination': dest, 'sha256': hashlib.sha256(data).hexdigest()})
     coin_manifest = {'repository': manifest['repository'], 'commit': sha, 'files': coin_rows}

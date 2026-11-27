@@ -3,6 +3,8 @@ import hashlib
 from http.server import ThreadingHTTPServer
 import importlib.util
 import json
+import subprocess
+import tempfile
 from pathlib import Path
 from threading import Thread
 import unittest
@@ -122,6 +124,27 @@ class CompilerAPI(unittest.TestCase):
 sync_spec = importlib.util.spec_from_file_location('sync_x3lang', ROOT / 'scripts/sync-x3lang.py')
 sync = importlib.util.module_from_spec(sync_spec)
 sync_spec.loader.exec_module(sync)
+
+
+class GitSourcePort(unittest.TestCase):
+    def test_only_bytes_from_the_selected_commit_can_be_ported(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            demo = root / 'x3-lang/near/demo'
+            demo.mkdir(parents=True)
+            def git(*args):
+                return subprocess.check_output(['git', '-C', tmp, *args], text=True).strip()
+            git('init', '--quiet')
+            (root / '.gitignore').write_text('private.json\n')
+            (demo / 'index.html').write_bytes(b'committed')
+            git('add', '.gitignore', 'x3-lang/near/demo/index.html')
+            git('-c', 'user.name=Test', '-c', 'user.email=test@example.org', 'commit', '-qm', 'fixture')
+            commit = git('rev-parse', 'HEAD')
+            (demo / 'private.json').write_bytes(b'ignored')
+            (demo / 'index.html').write_bytes(b'later edit')
+            self.assertEqual(list(sync.guard_demo_sources(root, commit)),
+                             [(Path('x3-lang/near/demo/index.html'), Path('index.html'))])
+            self.assertEqual(sync.source_blob(root, commit, 'x3-lang/near/demo/index.html'), b'committed')
 
 
 class GuardPortTransformation(unittest.TestCase):
