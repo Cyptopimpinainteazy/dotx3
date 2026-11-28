@@ -1,0 +1,25 @@
+{
+  "classification": "LOCAL_ONLY_NO_PAYMENT",
+  "source_repo": "https://github.com/Cyptopimpinainteazy/x3lang",
+  "source_commit": "98d23cf499d3f17c2a9f29f62bfddaeb1c0ada59",
+  "recorded_date": "2026-11-13",
+  "files": {
+    "lifecycle.json": {
+      "source_path": "audit-artifacts/agent-law-local-20261113/lifecycle.json",
+      "sha256": "abd00a16018f358c6ec4017e2fd322d590b7c052ed9ed98d4d489f42b2a70f8e"
+    },
+    "verification.json": {
+      "source_path": "audit-artifacts/agent-law-local-20261113/verification.json",
+      "sha256": "299045638c3d4a0a23e3a8e3d1fe50769d2b32e47249abf2009326bae7f564d5"
+    },
+    "python-tests.txt": {
+      "source_path": "audit-artifacts/agent-law-local-20261113/python-tests.txt",
+      "sha256": "e6a7df50834209c8e6a9226c21fc2d76a6e54c6d7d91cafe22a328c674171182"
+    }
+  },
+  "limits": [
+    "Copied records; not reexecuted by this site",
+    "Jury uses scripted signing identities, not independent AI judgment",
+    "No mainnet enforcement, custody, payments or automatic policy activation"
+  ]
+}

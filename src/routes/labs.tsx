@@ -1,5 +1,5 @@
 import { VENDOR_SNAPSHOT } from "@/lib/front-door";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ActionLink, Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { OutLink } from "@/components/code-block";
 import { CoinSalePreview } from "@/components/coin-sale-preview";
@@ -164,6 +164,10 @@ function Labs() {
               Inspect copied-file hashes and provenance
             </OutLink>
             .
+          </p>
+          <p>
+            The <Link className="text-primary underline underline-offset-4" to="/agent-law">Agent Law evidence archive</Link> records
+            signed agent identities, replay refusal and retirement across a process restart.
           </p>
           <p>
             Local browser results, real local Sandbox vault transactions, historical public Guard

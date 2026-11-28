@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AgentLawRouteImport } from './routes/agent-law'
 import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as BackRouteImport } from './routes/back'
 import { Route as BootcampRouteImport } from './routes/bootcamp'
@@ -40,6 +41,11 @@ import { Route as ApiX3dexSplatRouteImport } from './routes/api/x3dex/$'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentLawRoute = AgentLawRouteImport.update({
+  id: '/agent-law',
+  path: '/agent-law',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgentsRoute = AgentsRouteImport.update({
@@ -175,6 +181,7 @@ const ApiX3dexSplatRoute = ApiX3dexSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agent-law': typeof AgentLawRoute
   '/agents': typeof AgentsRoute
   '/back': typeof BackRoute
   '/bootcamp': typeof BootcampRoute
@@ -204,6 +211,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agent-law': typeof AgentLawRoute
   '/agents': typeof AgentsRoute
   '/back': typeof BackRoute
   '/bootcamp': typeof BootcampRoute
@@ -234,6 +242,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agent-law': typeof AgentLawRoute
   '/agents': typeof AgentsRoute
   '/back': typeof BackRoute
   '/bootcamp': typeof BootcampRoute
@@ -265,6 +274,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/agent-law'
     | '/agents'
     | '/back'
     | '/bootcamp'
@@ -294,6 +304,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/agent-law'
     | '/agents'
     | '/back'
     | '/bootcamp'
@@ -323,6 +334,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/agent-law'
     | '/agents'
     | '/back'
     | '/bootcamp'
@@ -353,6 +365,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgentLawRoute: typeof AgentLawRoute
   AgentsRoute: typeof AgentsRoute
   BackRoute: typeof BackRoute
   BootcampRoute: typeof BootcampRoute
@@ -388,6 +401,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agent-law': {
+      id: '/agent-law'
+      path: '/agent-law'
+      fullPath: '/agent-law'
+      preLoaderRoute: typeof AgentLawRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/agents': {
@@ -577,6 +597,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgentLawRoute: AgentLawRoute,
   AgentsRoute: AgentsRoute,
   BackRoute: BackRoute,
   BootcampRoute: BootcampRoute,
