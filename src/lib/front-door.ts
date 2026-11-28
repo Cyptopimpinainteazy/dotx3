@@ -13,12 +13,6 @@ export const EVIDENCE_SNAPSHOT = {
 } as const;
 
 /**
- * The X3Lang revision the browser compiler and labs were vendored from. Kept separate from
- * EVIDENCE_SNAPSHOT, and pinned to the vendored bytes by scripts/attack-lab.test.mjs and
- * src/lib/x3/vendor/PROVENANCE.md. Re-vendor (scripts/sync-x3lang.py) before changing it.
- * 184b6d1 is efb514f plus x3lang #242: slippage bounds need a unit and `bps` is kept.
- */
-/**
  * The commit submitted to NEAR HACKATHON on 2026-11-14 (before 23:59 UTC), tagged once and never
  * moved. Evidence pinned elsewhere (such as the vault pilot at 9ec3b48) is labeled as outside it.
  */
@@ -28,7 +22,8 @@ export const SUBMISSION = {
   url: `${REPO}/tree/hackathon-submission`,
 } as const;
 
-export const VENDOR_SNAPSHOT = { commit: "184b6d17f61bd576eee34f6cad25b9e4256aa29e" } as const;
+/** Compiler and lab port, independent of the historical evidence and submission. */
+export const VENDOR_SNAPSHOT = { commit: "9ced12dd1e98fabe73c00a31c2f4cca219fb7d8a" } as const;
 
 const PINNED = `${REPO}/blob/${EVIDENCE_SNAPSHOT.commit}`;
 const MAINNET_BUNDLE = `${PINNED}/evidence/near-guard-mainnet-invoice06-2026-11-12`;

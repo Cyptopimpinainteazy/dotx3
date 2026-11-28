@@ -3,6 +3,8 @@ import hashlib
 from http.server import ThreadingHTTPServer
 import importlib.util
 import json
+import subprocess
+import tempfile
 from pathlib import Path
 from threading import Thread
 import unittest
@@ -46,6 +48,29 @@ class CompilerAPI(unittest.TestCase):
             self.assertEqual(report['decision'], decision)
             self.assertFalse(report['wallet_authorized'])
             self.assertFalse(report['settlement_proven'])
+
+    def test_declared_fee_checks_recipient_and_cap(self):
+        example = json.loads((ROOT / 'public/labs/compiler/examples.json').read_text())
+        clause = '    require fees <= 100 bps'
+        cases = [
+            (25, 'x3-demo.near', 'preflight_passed'),
+            (25, 'outside.near', 'denied_by_policy'),
+            (101, 'x3-demo.near', 'compile_error'),
+        ]
+        for amount, recipient, decision in cases:
+            with self.subTest(amount=amount, recipient=recipient):
+                fee_clause = f'    fee {amount} bps to {recipient}\n'
+                program = example['program'].replace(clause, fee_clause + clause)
+                code, report = self.post({**example, 'program': program})
+                self.assertEqual(code, 200)
+                self.assertEqual(report['decision'], decision)
+                self.assertFalse(report['wallet_authorized'])
+                if decision == 'compile_error':
+                    self.assertEqual(report['error']['code'], 'X3_NEAR_APP_FEE_OVER_CAP')
+                else:
+                    self.assertEqual(report['leg']['app_fee'], {'recipient': recipient, 'bps': amount})
+                    if decision == 'denied_by_policy':
+                        self.assertIn('mandate_app_fee_recipient', report['policy']['denied_guards'])
 
     def test_cross_origin_and_invalid_inputs_fail(self):
         self.assertEqual(self.post({}, {'Content-Type': 'application/json',
@@ -92,13 +117,34 @@ class CompilerAPI(unittest.TestCase):
         import hashlib
         for row in manifest['files']:
             self.assertEqual(hashlib.sha256((ROOT / row['destination']).read_bytes()).hexdigest(), row['sha256'])
-        self.assertEqual(manifest['commit'], '184b6d17f61bd576eee34f6cad25b9e4256aa29e')
+        self.assertEqual(manifest['commit'], '9ced12dd1e98fabe73c00a31c2f4cca219fb7d8a')
         self.assertEqual(manifest, json.loads((ROOT / 'public/x3lang-port.json').read_text()))
 
 
 sync_spec = importlib.util.spec_from_file_location('sync_x3lang', ROOT / 'scripts/sync-x3lang.py')
 sync = importlib.util.module_from_spec(sync_spec)
 sync_spec.loader.exec_module(sync)
+
+
+class GitSourcePort(unittest.TestCase):
+    def test_only_bytes_from_the_selected_commit_can_be_ported(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            demo = root / 'x3-lang/near/demo'
+            demo.mkdir(parents=True)
+            def git(*args):
+                return subprocess.check_output(['git', '-C', tmp, *args], text=True).strip()
+            git('init', '--quiet')
+            (root / '.gitignore').write_text('private.json\n')
+            (demo / 'index.html').write_bytes(b'committed')
+            git('add', '.gitignore', 'x3-lang/near/demo/index.html')
+            git('-c', 'user.name=Test', '-c', 'user.email=test@example.org', 'commit', '-qm', 'fixture')
+            commit = git('rev-parse', 'HEAD')
+            (demo / 'private.json').write_bytes(b'ignored')
+            (demo / 'index.html').write_bytes(b'later edit')
+            self.assertEqual(list(sync.guard_demo_sources(root, commit)),
+                             [(Path('x3-lang/near/demo/index.html'), Path('index.html'))])
+            self.assertEqual(sync.source_blob(root, commit, 'x3-lang/near/demo/index.html'), b'committed')
 
 
 class GuardPortTransformation(unittest.TestCase):
@@ -142,6 +188,7 @@ class AttackPortTransformation(unittest.TestCase):
         prefix = ('https://github.com/Cyptopimpinainteazy/x3lang/blob/' + self.commit).encode()
         self.upstream = sync.remove_export_controls(self.output).replace(
             prefix + b'/evidence/', b'../../evidence/').replace(
+            prefix + b'/docs/hackathon/AGENT_LAW_PATH.md', b'AGENT_LAW_PATH.md').replace(
             prefix + b'/docs/hackathon/FIRST_SWAP_JUDGE_WALKTHROUGH.md',
             b'FIRST_SWAP_JUDGE_WALKTHROUGH.md').replace(
             b'from a clone of the X3Lang source repository, serve its root',

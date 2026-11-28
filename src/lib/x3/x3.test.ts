@@ -10,7 +10,7 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import * as judge from "./vendor/judge/judge.mjs";
 import * as x3 from "./vendor/x3guard.mjs";
-import { MANDATE } from "../front-door.ts";
+import { MANDATE, VENDOR_SNAPSHOT } from "../front-door.ts";
 import { PRESETS, applyAttack, ATTACKS, displayDecision } from "./playground.ts";
 
 const vendor = new URL("./vendor/", import.meta.url);
@@ -25,6 +25,13 @@ test("vendored files match the hashes in PROVENANCE.md", () => {
     const actual = createHash("sha256").update(read(file)).digest("hex");
     assert.equal(actual, expected, `${file} differs from the recorded copy`);
   }
+});
+
+test("static lab and playground load the same reviewed Guard", () => {
+  const staticLab = new URL("../../../public/labs/guard/x3guard.mjs", import.meta.url);
+  const port = JSON.parse(readFileSync(new URL("../../../x3lang-port.json", import.meta.url), "utf8"));
+  assert.equal(VENDOR_SNAPSHOT.commit, port.commit);
+  assert.deepEqual(read("x3guard.mjs"), readFileSync(staticLab));
 });
 
 for (const scenario of DATA.scenarios) {

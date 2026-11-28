@@ -1,10 +1,11 @@
 # Vendored from X3Lang
 
 These six files are byte-for-byte copies of
-[Cyptopimpinainteazy/x3lang](https://github.com/Cyptopimpinainteazy/x3lang/tree/184b6d17f61bd576eee34f6cad25b9e4256aa29e)
-at commit `184b6d17f61bd576eee34f6cad25b9e4256aa29e`, reviewed November 13, 2026. Since the previous
-port (`efb514f`, November 12) only `x3guard.mjs` changed upstream: x3lang #242 (issue #241)
-carries `bps` through the parser and refuses slippage bounds without a unit.
+[Cyptopimpinainteazy/x3lang](https://github.com/Cyptopimpinainteazy/x3lang/tree/9ced12dd1e98fabe73c00a31c2f4cca219fb7d8a)
+at commit `9ced12dd1e98fabe73c00a31c2f4cca219fb7d8a`, reviewed November 27, 2026. The browser checker now parses a declared
+application fee, validates its recipient and cap, and compares the fee to the
+provider's quote echo. Both the judge and tutorial now check the fee recipient
+against the mandate. The fee echo itself is outside the signed payload.
 They are MIT licensed; the license is copied beside them.
 
 Upstream now includes the exact-boolean binding between the request and the
@@ -20,8 +21,8 @@ Current mainnet claims and transaction links are presented on `/proof`.
 
 | File here | Source path in x3lang | SHA-256 |
 |---|---|---|
-| `x3guard.mjs` | `x3-lang/near/demo/x3guard.mjs` | `0b8991f2f2ad9d08a5bec81c05d0ee1bf6dbb8648fdff59cb60e0183a99881ea` |
-| `judge/judge.mjs` | `x3-lang/near/demo/judge/judge.mjs` | `523b8e117fff2fcf8034d6a110d932cafe211974fb12e60af951c284ffdc6d92` |
+| `x3guard.mjs` | `x3-lang/near/demo/x3guard.mjs` | `a08de782ca228caf07235c6b30bbf7cc4bd62e3079b045dae49aaeee0399eeb2` |
+| `judge/judge.mjs` | `x3-lang/near/demo/judge/judge.mjs` | `9d285a5893def25a316633624337f23acbedcbc89d7cb17e2a89df32d62a2273` |
 | `judge/scenarios.json` | `x3-lang/near/demo/judge/scenarios.json` | `ee0c2d3d5019bd7e032666b9ac930d58fd9b5dbb63d44a329b92ebaa5daa6d06` |
 | `fixtures/near_intents_quote_dry_live_capture.json` | `x3-lang/tests/fixtures/near_intents_quote_dry_live_capture.json` | `3ca979e678a632b2d5c49c8a3f7098db8072f3329c4e5b54cd265a3e523c0a84` |
 | `fixtures/near_intents_quote_dry_implicit_capture.json` | `x3-lang/tests/fixtures/near_intents_quote_dry_implicit_capture.json` | `6ab94fb3d09efe95723c70de9d50c7cf7262fd2be9a5637db24276ebb81d3bb1` |

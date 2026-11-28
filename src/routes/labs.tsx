@@ -1,3 +1,4 @@
+import { VENDOR_SNAPSHOT } from "@/lib/front-door";
 import { createFileRoute } from "@tanstack/react-router";
 import { ActionLink, Card, CardGrid, Section, SiteShell } from "@/components/site-shell";
 import { OutLink } from "@/components/code-block";
@@ -157,7 +158,7 @@ function Labs() {
             its decision.
           </p>
           <p>
-            Source for the Attack Lab is pinned at X3Lang commit 184b6d1. The reviewed port
+            Source for the Attack Lab is pinned at X3Lang commit {VENDOR_SNAPSHOT.commit.slice(0, 7)}. The reviewed port
             preserves its policy module and evidence links.{" "}
             <OutLink href="/labs/attack/provenance.json">
               Inspect copied-file hashes and provenance

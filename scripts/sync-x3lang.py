@@ -4,7 +4,6 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-import shutil
 import subprocess
 
 GUARD_VERDICT_REPLACEMENTS = {
@@ -37,21 +36,12 @@ QUOTE_MODE_BINDING_REPLACEMENTS = {
     },
 }
 
-# Reviewed at efb514ffef2cdfdeb8ad8147747887c85356073c: the upstream fix now
-# includes exact-boolean dry binding. Accept these exact bytes without claiming
-# a local patch. Unknown changes still require a review, including already-patched
-# files with additional edits; the legacy transformation remains fail-closed.
+# Reviewed Python and browser adapters at 9ced12d. Both bind dry mode as an
+# exact boolean. Unrecognized adapter changes still require review.
 REVIEWED_QUOTE_MODE_SOURCES = {
-    'x3-lang/near_intents.py': '9ee749438c5b33d656a1ced6af771e51ec9b9e0e87cb5ef0630b2808c92040bf',
-    'x3-lang/near/demo/x3guard.mjs': '063164355bd558a43b37c38b2c1baf7e3bf66302b5e0203fab3450e03ddcfe5d',
+    'x3-lang/near_intents.py': '3c4099292ac184651c0f16cbbafa55095abbaff05b52d848673df1d11d20ac50',
+    'x3-lang/near/demo/x3guard.mjs': 'a08de782ca228caf07235c6b30bbf7cc4bd62e3079b045dae49aaeee0399eeb2',
 }
-# Reviewed at 184b6d17f61bd576eee34f6cad25b9e4256aa29e (x3lang #242, issue #241): the only
-# upstream change since efb514f to these two files is the slippage-unit fix (carry `bps`
-# through, refuse unitless NEAR bounds). The exact-boolean dry binding is unchanged.
-REVIEWED_QUOTE_MODE_SOURCES.update({
-    'x3-lang/near_intents.py': 'f390c562493b44ce21d850ac22a9e634c9f1d991d197017fff42b431aa456e49',
-    'x3-lang/near/demo/x3guard.mjs': '0b8991f2f2ad9d08a5bec81c05d0ee1bf6dbb8648fdff59cb60e0183a99881ea',
-})
 
 JUDGE_MAINNET_PENDING = (
     '    <p><strong>Pending evidence.</strong> Official mainnet swap settlement, a vault-funded payment,\n'
@@ -189,11 +179,33 @@ def transform_ported_file(src, data, sha):
         data = data.replace(old, new)
         transformations.append('Clarify local-server instructions refer to the X3Lang source repository.')
         data = data.replace(b'href="../../evidence/', b'href="https://github.com/Cyptopimpinainteazy/x3lang/blob/' + sha.encode() + b'/evidence/')
+        data = data.replace(b'href="AGENT_LAW_PATH.md"', b'href="https://github.com/Cyptopimpinainteazy/x3lang/blob/' + sha.encode() + b'/docs/hackathon/AGENT_LAW_PATH.md"')
         data = data.replace(b'href="FIRST_SWAP_JUDGE_WALKTHROUGH.md"', b'href="https://github.com/Cyptopimpinainteazy/x3lang/blob/' + sha.encode() + b'/docs/hackathon/FIRST_SWAP_JUDGE_WALKTHROUGH.md"')
     if src in EXPORT_SOURCES:
         data = add_export_controls(data)
         transformations.append(EXPORT_TRANSFORMATION)
     return data, transformations
+
+
+def source_blob(checkout, commit, path):
+    return subprocess.check_output(['git', '-C', str(checkout), 'cat-file', 'blob', f'{commit}:{path}'])
+
+
+def guard_demo_sources(checkout, commit):
+    base = Path('x3-lang/near/demo')
+    tree = subprocess.check_output(['git', '-C', str(checkout), 'ls-tree', '-rz', commit, '--', str(base)])
+    for entry in tree.split(b'\0'):
+        if not entry:
+            continue
+        header, filename = entry.split(b'\t', 1)
+        mode, kind, _ = header.split()
+        path = Path(filename.decode())
+        rel = path.relative_to(base)
+        if 'test' in rel.parts or path.name == 'evidence.json' or path.suffix not in {'.html', '.mjs', '.json', '.css', '.md'}:
+            continue
+        if mode not in {b'100644', b'100755'} or kind != b'blob':
+            raise ValueError(f'Demo asset must be a regular committed file: {path}')
+        yield path, rel
 
 
 def main():
@@ -207,7 +219,7 @@ def main():
         raise SystemExit('Refuse a dirty source checkout')
     files = []
     def copy(src, dest):
-        data = (source / src).read_bytes()
+        data = source_blob(source, sha, src)
         target = root / dest
         target.parent.mkdir(parents=True, exist_ok=True)
         original_hash = hashlib.sha256(data).hexdigest()
@@ -222,18 +234,13 @@ def main():
                'ed25519', 'chain_evidence', 'helius_evidence', 'track_control']
     for name in modules:
         copy(f'x3-lang/{name}.py', f'vendor/x3lang/x3-lang/{name}.py')
-    for name in ['dotx3_workbench', 'mainnet_agent_preflight']:
-        copy(f'scripts/hackathon/{name}.py', f'vendor/x3lang/scripts/hackathon/{name}.py')
+    copy('scripts/hackathon/offline_compiler.py', 'vendor/x3lang/scripts/hackathon/offline_compiler.py')
     for name in ['near_mandate_agent.x3', 'near_intents_agent_payment.x3']:
         copy(f'x3-lang/examples/{name}', f'vendor/x3lang/x3-lang/examples/{name}')
     copy('x3-lang/tests/fixtures/near_intents_tokens.json', 'vendor/x3lang/x3-lang/tests/fixtures/near_intents_tokens.json')
-    base = source / 'x3-lang/near/demo'
-    for path in sorted(base.rglob('*')):
-        rel = path.relative_to(base)
-        if (path.is_file() and 'test' not in rel.parts and path.suffix in {'.html', '.mjs', '.json', '.css', '.md'}
-                and path.name != 'evidence.json'):
-            copy(str(path.relative_to(source)), str(Path('public/labs/guard') / rel))
-    for name in ['attack-lab.html', 'attack-lab-policy.mjs']:
+    for path, rel in guard_demo_sources(source, sha):
+        copy(str(path), str(Path('public/labs/guard') / rel))
+    for name in ['attack-lab.html', 'attack-lab-policy.mjs', 'agent-law-proof.html']:
         copy('docs/hackathon/' + name, 'public/labs/attack/' + name)
     copy('LICENSE', 'vendor/x3lang/LICENSE')
     manifest = {'schema': 'dotx3.x3lang-port.v1', 'repository': 'Cyptopimpinainteazy/x3lang',
@@ -250,6 +257,33 @@ def main():
         )),
     }
     (root / 'public/labs/attack/provenance.json').write_text(json.dumps(attack_manifest, indent=2) + '\n')
+    # The playground imports a separate copy of the same upstream Guard.
+    browser_assets = {
+        'x3-lang/near/demo/x3guard.mjs': 'x3guard.mjs',
+        'x3-lang/near/demo/judge/judge.mjs': 'judge/judge.mjs',
+        'x3-lang/near/demo/judge/scenarios.json': 'judge/scenarios.json',
+        'x3-lang/tests/fixtures/near_intents_quote_dry_live_capture.json': 'fixtures/near_intents_quote_dry_live_capture.json',
+        'x3-lang/tests/fixtures/near_intents_quote_dry_implicit_capture.json': 'fixtures/near_intents_quote_dry_implicit_capture.json',
+        'LICENSE': 'LICENSE',
+    }
+    for src, dest in browser_assets.items():
+        (root / 'src/lib/x3/vendor' / dest).write_bytes(source_blob(source, sha, src))
+
+    coin_files = [
+        'coin/ERC20-5.4.0.sol', 'coin/__init__.py', 'coin/evm.py',
+        'coin/examples/dual_vm.json', 'coin/examples/dual_vm.x3',
+        'coin/examples/ten_chain_sale.json', 'coin/sale.py', 'coin/svm.py',
+        'ed25519.py', 'emitter/_keccak.py',
+    ]
+    coin_rows = []
+    for name in coin_files:
+        src = 'x3-lang/' + name
+        dest = 'vendor/x3lang/' + src
+        data = source_blob(source, sha, src)
+        (root / dest).write_bytes(data)
+        coin_rows.append({'source': src, 'destination': dest, 'sha256': hashlib.sha256(data).hexdigest()})
+    coin_manifest = {'repository': manifest['repository'], 'commit': sha, 'files': coin_rows}
+    (root / 'public/labs/coin-sources.json').write_text(json.dumps(coin_manifest, indent=2) + '\n')
     print(f'Ported {len(files)} files from {sha}')
 
 

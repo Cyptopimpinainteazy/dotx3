@@ -247,7 +247,7 @@ export function checkIntent(source: string, state: GuardState): Verdict {
     amount: (state.spentToday / BigInt(count) + (i === 0 ? state.spentToday % BigInt(count) : 0n)).toString(),
   }));
   const view = { ...mandate.value, version: null, revoked: state.revoked, spends };
-  const checks = x3.checkMandate(view, policy, nowMs);
+  const checks = x3.checkMandateForLeg(view, policy, nowMs, leg);
   if (leg.mandate_owner && leg.mandate_owner !== mandate.value.owner) {
     checks.unshift({ guard: "mandate_owner", ok: false, detail: `${leg.mandate_owner}, mandate owner ${mandate.value.owner}` });
   }

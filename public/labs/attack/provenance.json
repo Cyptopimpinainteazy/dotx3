@@ -1,12 +1,12 @@
 {
   "repository": "Cyptopimpinainteazy/x3lang",
-  "commit": "184b6d17f61bd576eee34f6cad25b9e4256aa29e",
+  "commit": "9ced12dd1e98fabe73c00a31c2f4cca219fb7d8a",
   "files": [
     {
       "source": "docs/hackathon/attack-lab.html",
       "destination": "public/labs/attack/attack-lab.html",
-      "source_sha256": "39a4c4d6cfcb6f0796d03519ca91ee8fe9a62a59e70149dfc8843aacab757449",
-      "sha256": "abda79c59e67ebe07fba6d0dfadd2b095076fdb3f181f79297668d3db29d3a7e",
+      "source_sha256": "309b0f16ca9411b2456c37676535edf94a67c40a9dc6ee93f20df72179f84c81",
+      "sha256": "8c1c7fee6e81566306986951cbb90d66ad5a8f18ba1a4579bf29bee333e33c0c",
       "local_transformations": [
         "Clarify local-server instructions refer to the X3Lang source repository.",
         "Add shared public-page Copy and Markdown controls; form values are excluded and upstream source_sha256 is retained."
@@ -17,6 +17,12 @@
       "destination": "public/labs/attack/attack-lab-policy.mjs",
       "source_sha256": "f271a8028d457b6e2191b54b7d97fd5a32af2d0ab04f1000c73ceb9296c87197",
       "sha256": "f271a8028d457b6e2191b54b7d97fd5a32af2d0ab04f1000c73ceb9296c87197"
+    },
+    {
+      "source": "docs/hackathon/agent-law-proof.html",
+      "destination": "public/labs/attack/agent-law-proof.html",
+      "source_sha256": "0a7bd2e8544888be1ae1d70a69d99e4cb55d6374cf10d0973c1d17ab47b128a9",
+      "sha256": "0a7bd2e8544888be1ae1d70a69d99e4cb55d6374cf10d0973c1d17ab47b128a9"
     }
   ],
   "boundary": "Offline native-NEAR vault policy preview only. Browser ledger is not on-chain enforcement or settlement.",
